@@ -26,11 +26,13 @@
         android:layout_marginTop="47dp"
         android:text="藥袋拍攝"
         android:textAllCaps="false"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/btn_confirm"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_display" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_display"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <Button
         android:id="@+id/btn_confirm"
@@ -39,9 +41,11 @@
         android:layout_marginTop="47dp"
         android:text="確定"
         android:textAllCaps="false"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@id/btn_camera"
-        app:layout_constraintTop_toBottomOf="@+id/iv_display" />
+        app:layout_constraintTop_toBottomOf="@+id/iv_display"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
