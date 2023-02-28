@@ -64,6 +64,7 @@ class DrugsRecordManagementActivity : AppCompatActivity(), DrugsRecordManagement
             Drug(id="2", appearance = "", dosage = 2, drug_name = "banana", start_date = "", end_date = "", hospital_department = "", indications = "", interacting_drugs = listOf(), side_effect = "", stock = 12, time_slot = listOf("")),
             Drug(id="3", appearance = "", dosage = 1, drug_name = "orange", start_date = "", end_date = "", hospital_department = "", indications = "", interacting_drugs = listOf(), side_effect = "", stock = 14, time_slot = listOf("")),
             Drug(id="4", appearance = "", dosage = 3, drug_name = "watermelon", start_date = "", end_date = "", hospital_department = "", indications = "", interacting_drugs = listOf(), side_effect = "", stock = 16, time_slot = listOf("")),
+            Drug(id="5", appearance = "", dosage = 1, drug_name = "pineapple", start_date = "", end_date = "", hospital_department = "", indications = "", interacting_drugs = listOf(), side_effect = "", stock = 18, time_slot = listOf("")),
         )
 
         runOnUiThread {
