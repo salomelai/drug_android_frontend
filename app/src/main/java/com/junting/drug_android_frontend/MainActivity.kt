@@ -1,5 +1,6 @@
 package com.junting.drug_android_frontend
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -12,6 +13,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun btn_camera_onclick(view: View) {
-        Toast.makeText(this,"測試", Toast.LENGTH_SHORT).show()
+        startActivity(Intent(this, TakePhoto::class.java))
     }
 }
