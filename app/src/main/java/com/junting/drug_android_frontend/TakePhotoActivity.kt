@@ -15,7 +15,7 @@ import androidx.core.content.ContextCompat
 import com.junting.drug_android_frontend.databinding.ActivityTakePhotoBinding
 
 
-class TakePhoto : AppCompatActivity() {
+class TakePhotoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTakePhotoBinding
     val CAMERA_PERM_CODE = 101

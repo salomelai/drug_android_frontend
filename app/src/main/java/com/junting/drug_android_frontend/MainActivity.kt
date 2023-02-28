@@ -4,7 +4,6 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,6 +12,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun btn_camera_onclick(view: View) {
-        startActivity(Intent(this, TakePhoto::class.java))
+        startActivity(Intent(this, TakePhotoActivity::class.java))
+    }
+
+    fun btn_drugs_record_management_onclick(view: View) {
+        startActivity(Intent(this, DrugsRecordManagementActivity::class.java))
     }
 }
