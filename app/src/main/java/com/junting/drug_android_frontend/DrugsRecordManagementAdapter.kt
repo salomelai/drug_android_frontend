@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.junting.drug_android_frontend.databinding.DrugItemViewBinding
-import com.junting.drug_android_frontend.model.Drug
+import com.junting.drug_android_frontend.model.Record
 
 class DrugsRecordManagementAdapter(private val context: Context, private val viewModel: DrugsViewModel) :
     RecyclerView.Adapter<DrugsRecordManagementAdapter.MyViewHolder>() {
@@ -21,17 +21,17 @@ class DrugsRecordManagementAdapter(private val context: Context, private val vie
     }
 
     override fun getItemCount(): Int {
-        return viewModel.drugs.value?.size ?: 0
+        return viewModel.records.value?.size ?: 0
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val drag: Drug = viewModel.drugs.value!!.get(position)
-        holder.drugItemViewBinding.tvDrugName.text = drag.drug_name
-        holder.drugItemViewBinding.tvDosage.text = drag.dosage.toString()
-        holder.drugItemViewBinding.tvStock.text = drag.stock.toString()
+        val record: Record = viewModel.records.value!!.get(position)
+        holder.drugItemViewBinding.tvDrugName.text = record.drug.name
+        holder.drugItemViewBinding.tvDosage.text = record.dosage.toString()
+        holder.drugItemViewBinding.tvStock.text = record.stock.toString()
 
         holder.drugItemViewBinding.layoutItem.setOnClickListener {
-            Toast.makeText(context, String.format("You clicked %s", drag.drug_name), Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, String.format("You clicked %s", record.drug.name), Toast.LENGTH_SHORT).show()
         }
     }
 

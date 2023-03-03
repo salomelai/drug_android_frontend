@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.junting.drug_android_frontend.databinding.ActivityDrugsRecordManagementBinding
-import com.junting.drug_android_frontend.model.Drug
+import com.junting.drug_android_frontend.model.Record
 import com.junting.drug_android_frontend.services.DrugService
 import kotlinx.coroutines.launch
 
@@ -49,8 +49,8 @@ class DrugsRecordManagementActivity : AppCompatActivity() {
     private fun initRecyclerViewModel() {
         binding.progressBar.visibility = View.VISIBLE
         viewModel = DrugsViewModel()
-        viewModel.fetchFrags()
-        viewModel.drugs.observe(this, Observer {
+        viewModel.fetchRecords()
+        viewModel.records.observe(this, Observer {
             viewAdapter.notifyDataSetChanged()
             binding.progressBar.visibility = View.GONE
         })
@@ -60,15 +60,15 @@ class DrugsRecordManagementActivity : AppCompatActivity() {
 
 class DrugsViewModel: ViewModel() {
 
-    var drugs = MutableLiveData<List<Drug>>()
+    var records = MutableLiveData<List<Record>>()
 
-    fun fetchFrags() {
+    fun fetchRecords() {
         viewModelScope.launch {
             val drugService = DrugService.getInstance()
             try {
-                drugs.value = drugService.getDrugs()
+                records.value = drugService.getDrugs()
             } catch (e: Exception) {
-                Log.d("DrugsViewModel", "fetch drugs failed")
+                Log.d("DrugsViewModel", "fetch records failed")
                 Log.e("DrugsViewModel", e.toString())
             }
         }
