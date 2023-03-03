@@ -1,13 +1,13 @@
 package com.junting.drug_android_frontend.services
 
-import com.junting.drug_android_frontend.model.Drug
+import com.junting.drug_android_frontend.model.Record
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
 interface DrugService {
-    @GET("drugs/")
-    suspend fun getDrugs(): List<Drug>
+    @GET("records/")
+    suspend fun getDrugs(): List<Record>
 
     companion object {
         var drugService: DrugService? = null

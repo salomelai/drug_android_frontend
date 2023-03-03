@@ -16,9 +16,4 @@ class ExampleUnitTest {
         assertEquals(4, 2 + 2)
     }
 
-    @Test
-    fun getData(){
-        val drugService = DrugService.getInstance()
-        print(drugService.getDrugs())
-    }
 }
