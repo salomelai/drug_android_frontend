@@ -1,49 +1,42 @@
 package com.junting.drug_android_frontend
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.junting.drug_android_frontend.databinding.ActivityDrugsRecordManagementBinding
 import com.junting.drug_android_frontend.model.Drug
 import com.junting.drug_android_frontend.services.DrugService
-import okhttp3.Response
+import kotlinx.coroutines.launch
 
-
-class DrugsRecordManagementActivity : AppCompatActivity(), DrugsRecordManagementAdapter.IItemClickListener {
+class DrugsRecordManagementActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDrugsRecordManagementBinding
     private lateinit var viewAdapter: DrugsRecordManagementAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
-
+    private lateinit var viewModel: DrugsViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_drugs_record_management)
         binding = ActivityDrugsRecordManagementBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        initView()
-
-        getDrugsData()
+        initRecyclerViewModel()
+        initRecyclerView()
     }
 
-    private fun initView() {
-        // 定義 LayoutManager 為 LinearLayoutManager
+    private fun initRecyclerView() {
         viewManager = LinearLayoutManager(this)
-
-        // 自定義 Adapte 為 DrugsRecordManagementAdapter，稍後再定義 DrugsRecordManagementAdapter 這個類別
-        viewAdapter = DrugsRecordManagementAdapter(this)
-
-        // 定義從佈局當中，拿到 recycler_view 元件，
+        viewAdapter = DrugsRecordManagementAdapter(this, viewModel)
         binding.recyclerView.apply {
-            // 透過 kotlin 的 apply 語法糖，設定 LayoutManager 和 Adapter
             layoutManager = viewManager
             adapter = viewAdapter
-
             addItemDecoration(
                 DividerItemDecoration(
                     this@DrugsRecordManagementActivity,
@@ -53,32 +46,31 @@ class DrugsRecordManagementActivity : AppCompatActivity(), DrugsRecordManagement
         }
     }
 
-    private fun getDrugsData() {
-        //顯示忙碌圈圈
+    private fun initRecyclerViewModel() {
         binding.progressBar.visibility = View.VISIBLE
-
-        val drugService = DrugService.getInstance()
-//        val drugInfo = drugService.getDrugs()
-        val drugInfo = listOf<Drug>(
-            Drug(id="1", appearance = "", dosage = 1, drug_name = "apple", start_date = "", end_date = "", hospital_department = "", indications = "", interacting_drugs = listOf(), side_effect = "", stock = 10, time_slot = listOf("")),
-            Drug(id="2", appearance = "", dosage = 2, drug_name = "banana", start_date = "", end_date = "", hospital_department = "", indications = "", interacting_drugs = listOf(), side_effect = "", stock = 12, time_slot = listOf("")),
-            Drug(id="3", appearance = "", dosage = 1, drug_name = "orange", start_date = "", end_date = "", hospital_department = "", indications = "", interacting_drugs = listOf(), side_effect = "", stock = 14, time_slot = listOf("")),
-            Drug(id="4", appearance = "", dosage = 3, drug_name = "watermelon", start_date = "", end_date = "", hospital_department = "", indications = "", interacting_drugs = listOf(), side_effect = "", stock = 16, time_slot = listOf("")),
-            Drug(id="5", appearance = "", dosage = 1, drug_name = "pineapple", start_date = "", end_date = "", hospital_department = "", indications = "", interacting_drugs = listOf(), side_effect = "", stock = 18, time_slot = listOf("")),
-        )
-
-        runOnUiThread {
-            //將下載資料，指定給 DrugsRecordManagementAdapter
-            viewAdapter.drugsList = drugInfo
-
-            //關閉忙碌圈圈
+        viewModel = DrugsViewModel()
+        viewModel.fetchFrags()
+        viewModel.drugs.observe(this, Observer {
+            viewAdapter.notifyDataSetChanged()
             binding.progressBar.visibility = View.GONE
+        })
+    }
+
+}
+
+class DrugsViewModel: ViewModel() {
+
+    var drugs = MutableLiveData<List<Drug>>()
+
+    fun fetchFrags() {
+        viewModelScope.launch {
+            val drugService = DrugService.getInstance()
+            try {
+                drugs.value = drugService.getDrugs()
+            } catch (e: Exception) {
+                Log.d("DrugsViewModel", "fetch drugs failed")
+                Log.e("DrugsViewModel", e.toString())
+            }
         }
     }
-
-    override fun onItemClickListener(data: Drug) {
-        Toast.makeText(this,"You clicked ${data.drug_name}", Toast.LENGTH_SHORT).show()
-    }
-
-
 }

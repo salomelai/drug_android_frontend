@@ -1,23 +1,15 @@
 package com.junting.drug_android_frontend
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.junting.drug_android_frontend.databinding.DrugItemViewBinding
 import com.junting.drug_android_frontend.model.Drug
 
-class DrugsRecordManagementAdapter(private val itemClickListener: DrugsRecordManagementActivity) :
+class DrugsRecordManagementAdapter(private val context: Context, private val viewModel: DrugsViewModel) :
     RecyclerView.Adapter<DrugsRecordManagementAdapter.MyViewHolder>() {
-
-    var drugsList: List<Drug> = emptyList()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
-
-    interface IItemClickListener {
-        fun onItemClickListener(data: Drug)
-    }
 
     class MyViewHolder(val drugItemViewBinding: DrugItemViewBinding) :
         RecyclerView.ViewHolder(drugItemViewBinding.root)
@@ -29,16 +21,17 @@ class DrugsRecordManagementAdapter(private val itemClickListener: DrugsRecordMan
     }
 
     override fun getItemCount(): Int {
-        return drugsList.size
+        return viewModel.drugs.value?.size ?: 0
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.drugItemViewBinding.tvDrugName.text = drugsList[position].drug_name
-        holder.drugItemViewBinding.tvDosage.text = drugsList[position].dosage.toString()
-        holder.drugItemViewBinding.tvStock.text = drugsList[position].stock.toString()
+        val drag: Drug = viewModel.drugs.value!!.get(position)
+        holder.drugItemViewBinding.tvDrugName.text = drag.drug_name
+        holder.drugItemViewBinding.tvDosage.text = drag.dosage.toString()
+        holder.drugItemViewBinding.tvStock.text = drag.stock.toString()
 
         holder.drugItemViewBinding.layoutItem.setOnClickListener {
-            itemClickListener.onItemClickListener(drugsList[position])
+            Toast.makeText(context, String.format("You clicked %s", drag.drug_name), Toast.LENGTH_SHORT).show()
         }
     }
 
