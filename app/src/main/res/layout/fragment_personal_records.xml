@@ -6,6 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".ui.personalRecords.PersonalRecordsFragment">
 
+    <com.google.android.material.tabs.TabLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabMode="fixed"
+        tools:ignore="MissingConstraints">
+<!-- 這邊暫時忽略constraintlayout布局約束，因為我知道不是這樣設計        -->
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全部" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="醫院" />
+
+        <com.google.android.material.tabs.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="科別" />
+
+    </com.google.android.material.tabs.TabLayout>
+
     <TextView
         android:id="@+id/text_personalRecords"
         android:layout_width="match_parent"
