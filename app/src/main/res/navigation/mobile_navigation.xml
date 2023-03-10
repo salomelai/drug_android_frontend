@@ -3,23 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_todayReminder">
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.junting.drug_android_frontend.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_todayReminder"
+        android:name="com.junting.drug_android_frontend.ui.todayReminder.TodayReminderFragment"
+        android:label="@string/title_todayReminder"
+        tools:layout="@layout/fragment_today_reminder" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.junting.drug_android_frontend.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_personalRecords"
+        android:name="com.junting.drug_android_frontend.ui.personalRecords.PersonalRecordsFragment"
+        android:label="@string/title_personalRecords"
+        tools:layout="@layout/fragment_personal_records" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.junting.drug_android_frontend.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_pillBoxManagement"
+        android:name="com.junting.drug_android_frontend.ui.pillBoxManagement.PillBoxManagementFragment"
+        android:label="@string/title_pillBoxManagement"
+        tools:layout="@layout/fragment_pill_box_management" />
 </navigation>

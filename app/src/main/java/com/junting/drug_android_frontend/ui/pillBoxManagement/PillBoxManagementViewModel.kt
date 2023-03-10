@@ -1,13 +1,13 @@
-package com.junting.drug_android_frontend.ui.dashboard
+package com.junting.drug_android_frontend.ui.pillBoxManagement
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class DashboardViewModel : ViewModel() {
+class PillBoxManagementViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is dashboard Fragment"
+        value = "This is Pill Box Management Fragment"
     }
     val text: LiveData<String> = _text
 }

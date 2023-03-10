@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">藥要好好吃</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_todayReminder">今日提醒</string>
+    <string name="title_personalRecords">個人紀錄</string>
+    <string name="title_pillBoxManagement">藥盒管理</string>
     
 </resources>
