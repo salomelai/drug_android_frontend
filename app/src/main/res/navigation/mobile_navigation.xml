@@ -22,4 +22,10 @@
         android:name="com.junting.drug_android_frontend.ui.pillBoxManagement.PillBoxManagementFragment"
         android:label="@string/title_pillBoxManagement"
         tools:layout="@layout/fragment_pill_box_management" />
+
+    <fragment
+        android:id="@+id/navigation_tools"
+        android:name="com.junting.drug_android_frontend.ui.tools.ToolsFragment"
+        android:label="@string/title_tools"
+        tools:layout="@layout/fragment_tools" />
 </navigation>

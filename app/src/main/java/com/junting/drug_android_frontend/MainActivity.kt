@@ -20,13 +20,19 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val navView: BottomNavigationView = binding.navView
+        // 設定顯示小紅點圖標
+        navView.getOrCreateBadge(R.id.navigation_todayReminder).apply {
+            number = 1
+            isVisible = true
+        }
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_todayReminder, R.id.navigation_personalRecords, R.id.navigation_pillBoxManagement
+                R.id.navigation_todayReminder, R.id.navigation_personalRecords,
+                R.id.navigation_pillBoxManagement, R.id.navigation_tools
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)

@@ -16,4 +16,8 @@
         android:icon="@drawable/ic_outline_inbox_24"
         android:title="@string/title_pillBoxManagement" />
 
+    <item
+        android:id="@+id/navigation_tools"
+        android:icon="@drawable/ic_outline_build_24"
+        android:title="@string/title_tools" />
 </menu>
