@@ -18,6 +18,12 @@
         tools:layout="@layout/fragment_personal_records" />
 
     <fragment
+        android:id="@+id/navigation_takeRecords"
+        android:name="com.junting.drug_android_frontend.ui.takeRecords.TakeRecordsFragment"
+        android:label="@string/title_takeRecords"
+        tools:layout="@layout/fragment_take_records" />
+
+    <fragment
         android:id="@+id/navigation_pillBoxManagement"
         android:name="com.junting.drug_android_frontend.ui.pillBoxManagement.PillBoxManagementFragment"
         android:label="@string/title_pillBoxManagement"

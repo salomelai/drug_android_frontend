@@ -4,5 +4,6 @@
     <string name="title_personalRecords">個人紀錄</string>
     <string name="title_pillBoxManagement">藥盒管理</string>
     <string name="title_tools">小工具</string>
+    <string name="title_takeRecords">服用紀錄</string>
 
 </resources>

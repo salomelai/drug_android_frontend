@@ -6,41 +6,40 @@
     android:layout_height="match_parent"
     tools:context=".ui.personalRecords.PersonalRecordsFragment">
 
-    <com.google.android.material.tabs.TabLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabMode="fixed"
-        tools:ignore="MissingConstraints">
-<!-- 這邊暫時忽略constraintlayout布局約束，因為我知道不是這樣設計        -->
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/personal_records_tab_layout"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="全部" />
+            app:tabMode="fixed"
+            tools:ignore="MissingConstraints">
+            <!-- 這邊暫時忽略constraintlayout布局約束，因為我知道不是這樣設計        -->
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="醫院" />
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="全部" />
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="科別" />
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="醫院" />
 
-    </com.google.android.material.tabs.TabLayout>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="科別" />
 
-    <TextView
-        android:id="@+id/text_personalRecords"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/personal_records_view_pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
