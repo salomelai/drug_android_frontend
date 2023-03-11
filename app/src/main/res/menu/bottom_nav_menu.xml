@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/navigation_todayReminder"
         android:icon="@drawable/ic_outline_calendar_today_24"
-        android:title="@string/title_todayReminder" />
+        android:title="@string/title_todayReminder"
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/navigation_personalRecords"
         android:icon="@drawable/ic_outline_folder_24"
-        android:title="@string/title_personalRecords" />
+        android:title="@string/title_personalRecords"
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/navigation_pillBoxManagement"
         android:icon="@drawable/ic_outline_inbox_24"
-        android:title="@string/title_pillBoxManagement" />
+        android:title="@string/title_pillBoxManagement"
+        app:showAsAction="always"/>
 
     <item
         android:id="@+id/navigation_tools"
         android:icon="@drawable/ic_outline_build_24"
-        android:title="@string/title_tools" />
+        android:title="@string/title_tools"
+        app:showAsAction="always"/>
 </menu>
