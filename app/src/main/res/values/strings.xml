@@ -4,6 +4,10 @@
     <string name="title_personalRecords">個人紀錄</string>
     <string name="title_pillBoxManagement">藥盒管理</string>
     <string name="title_tools">小工具</string>
+    <string name="title_drugRecords">藥物紀錄</string>
     <string name="title_takeRecords">服用紀錄</string>
+    <string name="tab_all">全部</string>
+    <string name="tab_hospital">醫院</string>
+    <string name="tab_department">科別</string>
 
 </resources>

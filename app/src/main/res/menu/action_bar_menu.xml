@@ -5,7 +5,7 @@
         android:id="@+id/personal_records_option"
         app:showAsAction="collapseActionView"
         android:orderInCategory="0"
-        android:title="@string/title_personalRecords" />
+        android:title="@string/title_drugRecords" />
     <item
         android:id="@+id/take_records_option"
         app:showAsAction="collapseActionView"

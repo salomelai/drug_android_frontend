@@ -14,25 +14,22 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/personal_records_tab_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabMode="fixed"
-            tools:ignore="MissingConstraints">
-            <!-- 這邊暫時忽略constraintlayout布局約束，因為我知道不是這樣設計        -->
+            android:layout_height="wrap_content">
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="全部" />
+                android:text="@string/tab_all" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="醫院" />
+                android:text="@string/tab_hospital" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="科別" />
+                android:text="@string/tab_department" />
 
         </com.google.android.material.tabs.TabLayout>
 

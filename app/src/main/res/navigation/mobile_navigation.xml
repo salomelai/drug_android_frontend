@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/navigation_personalRecords"
         android:name="com.junting.drug_android_frontend.ui.personalRecords.PersonalRecordsFragment"
-        android:label="@string/title_personalRecords"
+        android:label="@string/title_drugRecords"
         tools:layout="@layout/fragment_personal_records" />
 
     <fragment
