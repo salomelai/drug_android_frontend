@@ -3,7 +3,10 @@ package com.junting.drug_android_frontend
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.TextureView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.forEach
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -51,7 +54,11 @@ class MainActivity : AppCompatActivity() {
         supportActionBar!!.setCustomView(R.layout.action_bar_view)
 
         // refresh the actionbar menu when change fragment
-        navController.addOnDestinationChangedListener { _: NavController, _: NavDestination, _: Bundle? ->
+        navController.addOnDestinationChangedListener { _: NavController, d: NavDestination, _: Bundle? ->
+            supportActionBar!!.customView.findViewById<TextView>(R.id.action_bar_title).text = d.label
+            if (d.id == R.id.navigation_takeRecords) {
+                navView.menu.findItem(R.id.navigation_personalRecords).isChecked = true
+            }
             invalidateOptionsMenu()
         }
     }
