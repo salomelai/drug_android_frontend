@@ -1,4 +1,4 @@
-package com.junting.drug_android_frontend.ui.personalRecords
+package com.junting.drug_android_frontend.ui.drugRecords
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,12 +8,12 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayout.TabLayoutOnPageChangeListener
-import com.junting.drug_android_frontend.databinding.FragmentPersonalRecordsBinding
+import com.junting.drug_android_frontend.databinding.FragmentDrugRecordsBinding
 
-class PersonalRecordsFragment : Fragment() {
+class DrugRecordsFragment : Fragment() {
 
-    private var _binding: FragmentPersonalRecordsBinding? = null
-    private var personalRecordsPagerAdapter: PersonalRecordsPagerAdapter? = null
+    private var _binding: FragmentDrugRecordsBinding? = null
+    private var drugRecordsPagerAdapter: DrugRecordsPagerAdapter? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -24,19 +24,19 @@ class PersonalRecordsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentPersonalRecordsBinding.inflate(inflater, container, false)
+        _binding = FragmentDrugRecordsBinding.inflate(inflater, container, false)
         setViewPager()
         return binding.root
     }
 
     private fun setViewPager() {
-        personalRecordsPagerAdapter = PersonalRecordsPagerAdapter(this.requireContext())
-        binding.personalRecordsViewPager.adapter = personalRecordsPagerAdapter
-        binding.personalRecordsViewPager.addOnPageChangeListener(TabLayoutOnPageChangeListener(binding.personalRecordsTabLayout))
-        binding.personalRecordsTabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
+        drugRecordsPagerAdapter = DrugRecordsPagerAdapter(this.requireContext())
+        binding.drugRecordsViewPager.adapter = drugRecordsPagerAdapter
+        binding.drugRecordsViewPager.addOnPageChangeListener(TabLayoutOnPageChangeListener(binding.drugRecordsTabLayout))
+        binding.drugRecordsTabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 val position = tab.position
-                binding.personalRecordsViewPager.currentItem = position
+                binding.drugRecordsViewPager.currentItem = position
             }
             override fun onTabUnselected(tab: TabLayout.Tab) {}
             override fun onTabReselected(tab: TabLayout.Tab) {}

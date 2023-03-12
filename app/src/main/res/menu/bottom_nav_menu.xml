@@ -9,7 +9,7 @@
         app:showAsAction="always"/>
 
     <item
-        android:id="@+id/navigation_personalRecords"
+        android:id="@+id/navigation_drugRecords"
         android:icon="@drawable/ic_outline_folder_24"
         android:title="@string/title_personalRecords"
         app:showAsAction="always"/>

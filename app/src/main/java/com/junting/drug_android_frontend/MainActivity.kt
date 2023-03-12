@@ -3,10 +3,8 @@ package com.junting.drug_android_frontend
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.TextureView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.forEach
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -41,7 +39,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_todayReminder, R.id.navigation_personalRecords, R.id.navigation_takeRecords,
+                R.id.navigation_todayReminder, R.id.navigation_drugRecords, R.id.navigation_takeRecords,
                 R.id.navigation_pillBoxManagement, R.id.navigation_tools
             )
         )
@@ -57,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _: NavController, d: NavDestination, _: Bundle? ->
             supportActionBar!!.customView.findViewById<TextView>(R.id.action_bar_title).text = d.label
             if (d.id == R.id.navigation_takeRecords) {
-                navView.menu.findItem(R.id.navigation_personalRecords).isChecked = true
+                navView.menu.findItem(R.id.navigation_drugRecords).isChecked = true
             }
             invalidateOptionsMenu()
         }
@@ -65,7 +63,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         // only records fragment should display action bar menu
-        if (navController.currentDestination!!.id == R.id.navigation_personalRecords
+        if (navController.currentDestination!!.id == R.id.navigation_drugRecords
             || navController.currentDestination!!.id == R.id.navigation_takeRecords) {
             menuInflater.inflate(R.menu.action_bar_menu, menu)
         }
@@ -77,8 +75,8 @@ class MainActivity : AppCompatActivity() {
         return if (id == R.id.take_records_option) {
             navController.navigate(R.id.navigation_takeRecords)
             true
-        } else if (id == R.id.personal_records_option) {
-            navController.navigate(R.id.navigation_personalRecords)
+        } else if (id == R.id.drug_records_option) {
+            navController.navigate(R.id.navigation_drugRecords)
             true
         } else super.onOptionsItemSelected(item)
     }

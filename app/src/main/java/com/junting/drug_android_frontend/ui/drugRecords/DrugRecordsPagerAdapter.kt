@@ -1,4 +1,4 @@
-package com.junting.drug_android_frontend.ui.personalRecords
+package com.junting.drug_android_frontend.ui.drugRecords
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.viewpager.widget.PagerAdapter
 import com.junting.drug_android_frontend.R
 
-class PersonalRecordsPagerAdapter(context: Context): PagerAdapter() {
+class DrugRecordsPagerAdapter(context: Context): PagerAdapter() {
 
     private val context: Context
 
@@ -26,17 +26,17 @@ class PersonalRecordsPagerAdapter(context: Context): PagerAdapter() {
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         if (position == 0) {
             val view: View =
-                LayoutInflater.from(context).inflate(R.layout.personal_records_all_tab, container, false)
+                LayoutInflater.from(context).inflate(R.layout.drug_records_all_tab, container, false)
             container.addView(view)
             return view
         } else if (position == 1) {
             val view: View =
-                LayoutInflater.from(context).inflate(R.layout.personal_records_hospital_tab, container, false)
+                LayoutInflater.from(context).inflate(R.layout.drug_records_hospital_tab, container, false)
             container.addView(view)
             return view
         } else {
             val view: View =
-                LayoutInflater.from(context).inflate(R.layout.personal_records_department_tab, container, false)
+                LayoutInflater.from(context).inflate(R.layout.drug_records_department_tab, container, false)
             container.addView(view)
             return view
         }

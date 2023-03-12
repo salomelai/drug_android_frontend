@@ -1,10 +1,10 @@
-package com.junting.drug_android_frontend.ui.personalRecords
+package com.junting.drug_android_frontend.ui.drugRecords
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class PersonalRecordsViewModel : ViewModel() {
+class DrugRecordsViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
         value = "This is Personal Records Fragment"

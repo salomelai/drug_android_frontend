@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.personalRecords.PersonalRecordsFragment">
+    tools:context=".ui.drugRecords.DrugRecordsFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,7 +12,7 @@
         android:orientation="vertical">
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/personal_records_tab_layout"
+            android:id="@+id/drug_records_tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -34,7 +34,7 @@
         </com.google.android.material.tabs.TabLayout>
 
         <androidx.viewpager.widget.ViewPager
-            android:id="@+id/personal_records_view_pager"
+            android:id="@+id/drug_records_view_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>

@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_today_reminder" />
 
     <fragment
-        android:id="@+id/navigation_personalRecords"
-        android:name="com.junting.drug_android_frontend.ui.personalRecords.PersonalRecordsFragment"
+        android:id="@+id/navigation_drugRecords"
+        android:name="com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsFragment"
         android:label="@string/title_drugRecords"
-        tools:layout="@layout/fragment_personal_records" />
+        tools:layout="@layout/fragment_drug_records" />
 
     <fragment
         android:id="@+id/navigation_takeRecords"
