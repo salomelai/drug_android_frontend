@@ -5,7 +5,7 @@ data class Record(
     val drug: Drug,
     val endDate: String,
     val id: Int,
-    val interactingDrugs: List<InteractingDrug>?,
+    val interactingDrugs: List<InteractingDrug>,
     val startDate: String,
     val stock: Int,
     val timeSlot: List<String>

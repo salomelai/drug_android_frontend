@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
 interface DrugService {
-    @GET("drugsRecords/")
+    @GET("records/")
     suspend fun getDrugs(): List<Record>
 
     companion object {
