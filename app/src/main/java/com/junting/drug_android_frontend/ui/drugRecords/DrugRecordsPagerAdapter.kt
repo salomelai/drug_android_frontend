@@ -4,12 +4,25 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import com.junting.drug_android_frontend.R
+import com.junting.drug_android_frontend.model.Drug
+import com.junting.drug_android_frontend.model.Record
 
-class DrugRecordsPagerAdapter(context: Context): PagerAdapter() {
+class DrugRecordsPagerAdapter(context: Context): PagerAdapter(), LifecycleOwner {
 
     private val context: Context
+
+    private lateinit var viewAdapter: DrugsRecordViewAdapter
+    private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var viewModel: DrugRecordsViewModel
 
     init {
         this.context = context
@@ -27,6 +40,28 @@ class DrugRecordsPagerAdapter(context: Context): PagerAdapter() {
         if (position == 0) {
             val view: View =
                 LayoutInflater.from(context).inflate(R.layout.drug_records_all_tab, container, false)
+
+            view.findViewById<ProgressBar>(R.id.progressBar).visibility = View.VISIBLE
+            viewModel = DrugRecordsViewModel()
+            viewModel.fetchRecords()
+            viewModel.records.observe(this, Observer {
+                viewAdapter.notifyDataSetChanged()
+                view.findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
+            })
+
+            viewManager = LinearLayoutManager(context)
+            viewAdapter = DrugsRecordViewAdapter(context, viewModel)
+
+            view.findViewById<RecyclerView>(R.id.recycler_view).apply {
+                layoutManager = viewManager
+                adapter = viewAdapter
+                addItemDecoration(
+                    DividerItemDecoration(
+                        context,
+                        DividerItemDecoration.VERTICAL
+                    )
+                )
+            }
             container.addView(view)
             return view
         } else if (position == 1) {
@@ -44,5 +79,9 @@ class DrugRecordsPagerAdapter(context: Context): PagerAdapter() {
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
         container.removeView(`object` as View)
+    }
+
+    override fun getLifecycle(): Lifecycle {
+        TODO("Not yet implemented")
     }
 }
