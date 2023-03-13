@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
@@ -14,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.PagerAdapter
 import com.junting.drug_android_frontend.R
 
-class DrugRecordsPagerAdapter(context: Context): PagerAdapter(), LifecycleOwner {
+class DrugRecordsPagerAdapter(context: Context): PagerAdapter() {
 
     private val context: Context
 
@@ -42,7 +43,7 @@ class DrugRecordsPagerAdapter(context: Context): PagerAdapter(), LifecycleOwner 
             view.findViewById<ProgressBar>(R.id.progressBar).visibility = View.VISIBLE
             viewModel = DrugRecordsViewModel()
             viewModel.fetchRecords()
-            viewModel.records.observe(this, Observer {
+            viewModel.records.observe(context as AppCompatActivity, Observer {
                 viewAdapter.notifyDataSetChanged()
                 view.findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
             })
@@ -79,8 +80,5 @@ class DrugRecordsPagerAdapter(context: Context): PagerAdapter(), LifecycleOwner 
         container.removeView(`object` as View)
     }
 
-    override fun getLifecycle(): Lifecycle {
-        TODO("Not yet implemented")
-    }
 
 }
