@@ -10,4 +10,6 @@
     <string name="tab_hospital">醫院</string>
     <string name="tab_department">科別</string>
 
+    <string name="add">新增</string>
+
 </resources>

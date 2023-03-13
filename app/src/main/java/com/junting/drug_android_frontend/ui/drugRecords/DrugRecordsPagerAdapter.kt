@@ -39,27 +39,8 @@ class DrugRecordsPagerAdapter(context: Context): PagerAdapter() {
         if (position == 0) {
             val view: View =
                 LayoutInflater.from(context).inflate(R.layout.drug_records_all_tab, container, false)
-
-            view.findViewById<ProgressBar>(R.id.progressBar).visibility = View.VISIBLE
-            viewModel = DrugRecordsViewModel()
-            viewModel.fetchRecords()
-            viewModel.records.observe(context as AppCompatActivity, Observer {
-                viewAdapter.notifyDataSetChanged()
-                view.findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
-            })
-
-            viewManager = LinearLayoutManager(context)
-            viewAdapter = DrugsRecordViewAdapter(context, viewModel)
-            view.findViewById<RecyclerView>(R.id.recycler_view).apply {
-                layoutManager = viewManager
-                adapter = viewAdapter
-                addItemDecoration(
-                    DividerItemDecoration(
-                        context,
-                        DividerItemDecoration.VERTICAL
-                    )
-                )
-            }
+            initRecyclerViewModel(view)
+            initRecyclerView(view)
 
             container.addView(view)
             return view
@@ -80,5 +61,28 @@ class DrugRecordsPagerAdapter(context: Context): PagerAdapter() {
         container.removeView(`object` as View)
     }
 
+    fun initRecyclerViewModel(view: View){
+        view.findViewById<ProgressBar>(R.id.progressBar).visibility = View.VISIBLE
+        viewModel = DrugRecordsViewModel()
+        viewModel.fetchRecords()
+        viewModel.records.observe(context as AppCompatActivity, Observer {
+            viewAdapter.notifyDataSetChanged()
+            view.findViewById<ProgressBar>(R.id.progressBar).visibility = View.GONE
+        })
+    }
+    fun initRecyclerView(view: View){
+        viewManager = LinearLayoutManager(context)
+        viewAdapter = DrugsRecordViewAdapter(context, viewModel)
+        view.findViewById<RecyclerView>(R.id.recycler_view).apply {
+            layoutManager = viewManager
+            adapter = viewAdapter
+            addItemDecoration(
+                DividerItemDecoration(
+                    context,
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+        }
+    }
 
 }
