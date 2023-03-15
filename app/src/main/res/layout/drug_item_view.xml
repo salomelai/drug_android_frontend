@@ -12,7 +12,6 @@
         android:id="@+id/layout_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/cardview_light_background"
         android:clickable="true"
         android:focusable="true"
         android:paddingBottom="20dp">
