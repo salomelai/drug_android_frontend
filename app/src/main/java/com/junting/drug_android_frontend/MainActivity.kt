@@ -39,8 +39,8 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_todayReminder, R.id.navigation_drugRecords, R.id.navigation_takeRecords,
-                R.id.navigation_pillBoxManagement, R.id.navigation_tools
+                R.id.navigation_todayReminder, R.id.navigation_drugRecords,
+                R.id.navigation_takeRecords, R.id.navigation_pillBoxManagement
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -54,30 +54,8 @@ class MainActivity : AppCompatActivity() {
         // refresh the actionbar menu when change fragment
         navController.addOnDestinationChangedListener { _: NavController, d: NavDestination, _: Bundle? ->
             supportActionBar!!.customView.findViewById<TextView>(R.id.action_bar_title).text = d.label
-            if (d.id == R.id.navigation_takeRecords) {
-                navView.menu.findItem(R.id.navigation_drugRecords).isChecked = true
-            }
             invalidateOptionsMenu()
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        // only records fragment should display action bar menu
-        if (navController.currentDestination!!.id == R.id.navigation_drugRecords
-            || navController.currentDestination!!.id == R.id.navigation_takeRecords) {
-            menuInflater.inflate(R.menu.action_bar_menu, menu)
-        }
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-        return if (id == R.id.take_records_option) {
-            navController.navigate(R.id.navigation_takeRecords)
-            true
-        } else if (id == R.id.drug_records_option) {
-            navController.navigate(R.id.navigation_drugRecords)
-            true
-        } else super.onOptionsItemSelected(item)
-    }
 }

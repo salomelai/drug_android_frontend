@@ -10,8 +10,13 @@
 
     <item
         android:id="@+id/navigation_drugRecords"
-        android:icon="@drawable/ic_outline_folder_24"
-        android:title="@string/title_personalRecords"
+        android:icon="@drawable/ic_outline_pill_24px"
+        android:title="@string/title_drugRecords"
+        app:showAsAction="always"/>
+    <item
+        android:id="@+id/navigation_takeRecords"
+        android:icon="@drawable/ic_outline_history_24"
+        android:title="@string/title_takeRecords"
         app:showAsAction="always"/>
 
     <item
@@ -20,9 +25,4 @@
         android:title="@string/title_pillBoxManagement"
         app:showAsAction="always"/>
 
-    <item
-        android:id="@+id/navigation_tools"
-        android:icon="@drawable/ic_outline_build_24"
-        android:title="@string/title_tools"
-        app:showAsAction="always"/>
 </menu>
