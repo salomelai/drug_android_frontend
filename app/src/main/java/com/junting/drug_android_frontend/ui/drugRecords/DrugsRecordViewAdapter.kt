@@ -56,7 +56,7 @@ class DrugsRecordViewAdapter(private val context: Context, private val viewModel
         }
 
 
-        holder.drugItemViewBinding.layoutItem.setOnClickListener {
+        holder.drugItemViewBinding.cardView.setOnClickListener {
             Toast.makeText(context, String.format("You clicked %s", drugRecord.drug.name), Toast.LENGTH_SHORT).show()
         }
     }
