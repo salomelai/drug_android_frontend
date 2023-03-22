@@ -61,6 +61,7 @@ class ResultActivity: AppCompatActivity() {
                     text.value = if (response.textAnnotations != null)
                         response.textAnnotations.get(0).description
                         else "no text"
+                    Log.d("DrugsViewModel", text.value!!)
                 } catch (e: Exception) {
                     Log.d("DrugsViewModel", "fetch records failed")
                     Log.e("DrugsViewModel", e.toString())

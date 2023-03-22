@@ -1,5 +1,6 @@
 package com.junting.drug_android_frontend.services
 
+import com.junting.drug_android_frontend.BuildConfig
 import com.junting.drug_android_frontend.model.cloud_vision.ImageAnnotateResponse
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody
@@ -26,7 +27,7 @@ interface ICloudVisionService {
                                     .url()
                                     .newBuilder()
                                     // Change the GCP key here
-                                    .addQueryParameter("key", "xxxxx")
+                                    .addQueryParameter("key", BuildConfig.Cloud_Vision_API)
                                     .build()
                                 chain.proceed(chain.request().newBuilder().url(url).build())
                             }
