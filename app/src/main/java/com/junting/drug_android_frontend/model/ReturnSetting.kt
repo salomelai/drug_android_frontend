@@ -4,5 +4,5 @@ data class ReturnSetting(
     val date: String,
     val left: Int,
     val repeat: Int,
-    val status: Int
+    val status: Boolean
 )

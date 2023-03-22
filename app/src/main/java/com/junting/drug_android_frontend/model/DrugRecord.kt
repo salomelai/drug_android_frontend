@@ -8,11 +8,11 @@ data class DrugRecord(
     val hospitalName: String,
     val id: Int,
 //    val interaction: List<Any>?,
-//    val notificationSetting: NotificationSetting,
-//    val onDemand: Boolean,
-//    val position: List<Int>,
-//    val returnSetting: ReturnSetting,
-//    val stock: Int,
+    val notificationSetting: NotificationSetting,
+    val onDemand: Boolean,
+    val position: List<Int>,
+    val returnSetting: ReturnSetting,
+    val stock: Int,
     val timeSlot: List<String>,
 //    val timings: Int
 )

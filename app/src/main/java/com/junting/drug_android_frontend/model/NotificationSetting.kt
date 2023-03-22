@@ -4,5 +4,5 @@ data class NotificationSetting(
     val remind: Int,
     val repeat: Int,
     val startDate: String,
-    val status: Int
+    val status: Boolean
 )

@@ -4,60 +4,93 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="10dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginRight="10dp"
-    app:cardCornerRadius="8dp">
-
-    <LinearLayout
-        android:id="@+id/layout_item"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_drug_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="藥物英文學名"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-        <TextView
-            android:id="@+id/tv_indication"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="藥物適應症"
-            android:textSize="20sp"/>
-        <TextView
-            android:id="@+id/tv_frequency_dosage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="吃藥頻率  每次劑量"
-            android:textSize="20sp"/>
-        <TextView
-            android:id="@+id/tv_time_slot"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="吃藥時間點"
-            android:textSize="20sp"/>
-        <TextView
-            android:id="@+id/tv_hospital_department"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:text="醫院名  科別名"
-            android:textSize="20sp"/>
+    android:layout_margin="10dp"
+    app:contentPadding="20dp"
+    app:cardCornerRadius="18dp">
 
 
-    </LinearLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/layout_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/tv_drug_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="藥物英文學名"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_indication"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="藥物適應症"
+                android:textSize="10sp" />
+
+            <TextView
+                android:id="@+id/tv_frequency_dosage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="吃藥頻率  每次劑量"
+                android:textSize="20sp" />
+
+            <TextView
+                android:id="@+id/tv_time_slot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="吃藥時間點"
+                android:textSize="20sp" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_stock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="庫存" />
+
+            <TextView
+                android:id="@+id/tv_hospital_department"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:text="醫院名  科別名"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
+
+
+        <ImageView
+            android:id="@+id/iv_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_outline_notifications_24" />
+
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.cardview.widget.CardView>
