@@ -15,7 +15,12 @@
         android:theme="@style/Theme.Drug_android_frontend"
         tools:targetApi="31">
         <activity
-            android:name=".InputManuallyActivity"
+            android:name=".AutoRecognizeDrugbagInfoActivity"
+            android:exported="false"
+            android:label="修改藥袋資訊"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".InputManuallyDrugbagInfoActivity"
             android:exported="false"
             android:label="輸入藥袋資訊"
             android:parentActivityName=".MainActivity"/>

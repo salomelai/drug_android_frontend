@@ -13,9 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dynamsoft.core.CoreException
-import com.junting.drug_android_frontend.databinding.ActivityMainBinding
 import com.junting.drug_android_frontend.databinding.ActivityResultBinding
-import com.junting.drug_android_frontend.model.drugbag_info.DrugbagInformation
 import com.junting.drug_android_frontend.services.CloudVisionService
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
@@ -45,7 +43,7 @@ class ResultActivity: AppCompatActivity() {
             Toast.makeText(this, viewModel.text.value, Toast.LENGTH_SHORT).show()
         })
         binding.btnConfirm.setOnClickListener() {
-            val intent = Intent(this, InputManuallyActivity::class.java)
+            val intent = Intent(this, AutoRecognizeDrugbagInfoActivity::class.java)
             startActivity(intent)
         }
     }

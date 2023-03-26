@@ -9,5 +9,5 @@ data class DrugbagInformation(
     val id: Int,
     val onDemand: Boolean,
     val stock: Int,
-    val timings: List<Any>
+    val timings: List<Int>
 )

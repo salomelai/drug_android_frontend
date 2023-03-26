@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.junting.drug_android_frontend.model.drug_record.DrugRecord
-import com.junting.drug_android_frontend.services.DrugRecordService
+import com.junting.drug_android_frontend.services.IDrugRecordService
 import kotlinx.coroutines.launch
 
 class DrugRecordsViewModel : ViewModel() {
@@ -14,7 +14,7 @@ class DrugRecordsViewModel : ViewModel() {
 
     fun fetchRecords() {
         viewModelScope.launch {
-            val drugRecordService = DrugRecordService.getInstance()
+            val drugRecordService = IDrugRecordService.getInstance()
             try {
                 records.value = drugRecordService.getDrugs()
             } catch (e: Exception) {

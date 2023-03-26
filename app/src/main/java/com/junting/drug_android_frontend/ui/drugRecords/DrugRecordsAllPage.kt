@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.Observer
@@ -14,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.junting.drug_android_frontend.InputManuallyActivity
+import com.junting.drug_android_frontend.InputManuallyDrugbagInfoActivity
 import com.junting.drug_android_frontend.R
 import com.junting.drug_android_frontend.TakePhotoActivity
 
@@ -73,7 +72,7 @@ class DrugRecordsAllPage(context: Context, container: ViewGroup) {
                 .setTitle("詢問")
                 .setMessage("請問您要使用何種方式輸入藥品?")
                 .setPositiveButton("手動") { dialogInterface, i ->
-                    startActivity(context, Intent(context, InputManuallyActivity::class.java), null)
+                    startActivity(context, Intent(context, InputManuallyDrugbagInfoActivity::class.java), null)
                     dialogInterface.dismiss()
                 }
                 .setNegativeButton("拍攝") { dialogInterface, i ->
