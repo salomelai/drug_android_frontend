@@ -20,4 +20,14 @@ class DrugbagInfoViewModel : ViewModel() {
             }
         }
     }
+    fun sendDrugbagInfo(drugbagInfo: DrugbagInformation) {
+        viewModelScope.launch {
+            val service = IDrugbagService.getInstance()
+            try {
+                service.postDrugInfo(drugbagInfo)
+            }catch (e: Exception) {
+                Log.e("DrugbagInfoViewModel", "Error: ${e.message}")
+            }
+        }
+    }
 }

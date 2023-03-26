@@ -9,6 +9,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.junting.drug_android_frontend.databinding.ActivityInputManuallyBinding
+import com.junting.drug_android_frontend.model.drugbag_info.Drug
+import com.junting.drug_android_frontend.model.drugbag_info.DrugbagInformation
 
 class AutoRecognizeDrugbagInfoActivity : AppCompatActivity() {
 
@@ -32,8 +34,8 @@ class AutoRecognizeDrugbagInfoActivity : AppCompatActivity() {
         initFrequencyDropdown()
         initTimingsCheckbox()
         initDosageDropdown()
-        initButton()
         initDrugbagInfoViewModel()
+        initButton()
 
     }
 
@@ -65,6 +67,26 @@ class AutoRecognizeDrugbagInfoActivity : AppCompatActivity() {
     private fun initButton() {
         binding.btnCancel.setOnClickListener {
             super.onBackPressed()
+        }
+        binding.btnConfirm.setOnClickListener{
+            val drugbagInfo = DrugbagInformation(
+                id = 0,
+                drug = Drug(
+                    id = 0,
+                    name = binding.tilDrugName.editText?.text.toString(),
+                    indications = binding.tilIndication.editText?.text.toString(),
+                    sideEffect = binding.tilSideEffect.editText?.text.toString(),
+                    appearance = binding.tilAppearance.editText?.text.toString()
+                ),
+                hospitalName = binding.tilHospitalName.editText?.text.toString(),
+                hospitalDepartment = binding.tilDepartment.editText?.text.toString(),
+                onDemand = binding.cbOnDemand.isChecked,
+                frequency = binding.actvFrequency.text.toString().toInt(),
+                timings = checkBoxes.filter { it.isChecked }.map { checkBoxes.indexOf(it) },
+                dosage = binding.actvDosage.text.toString().toInt(),
+                stock = binding.tilStock.editText?.text.toString().toInt()
+            )
+            viewModel.sendDrugbagInfo(drugbagInfo)
         }
     }
 
