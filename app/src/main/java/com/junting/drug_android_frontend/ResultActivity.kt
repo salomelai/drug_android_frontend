@@ -1,5 +1,6 @@
 package com.junting.drug_android_frontend;
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Base64
@@ -12,17 +13,22 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dynamsoft.core.CoreException
+import com.junting.drug_android_frontend.databinding.ActivityMainBinding
+import com.junting.drug_android_frontend.databinding.ActivityResultBinding
+import com.junting.drug_android_frontend.model.drugbag_info.DrugbagInformation
 import com.junting.drug_android_frontend.services.CloudVisionService
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
 class ResultActivity: AppCompatActivity() {
 
+    private lateinit var binding: ActivityResultBinding
     private val viewModel: CloudVisionViewModel = CloudVisionViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_result)
+        binding = ActivityResultBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         val ivNormalize: ImageView = findViewById(R.id.iv_normalize);
 
@@ -38,6 +44,10 @@ class ResultActivity: AppCompatActivity() {
             // handle your text result there
             Toast.makeText(this, viewModel.text.value, Toast.LENGTH_SHORT).show()
         })
+        binding.btnConfirm.setOnClickListener() {
+            val intent = Intent(this, InputManuallyActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun toBase64(bitmap: Bitmap): String {

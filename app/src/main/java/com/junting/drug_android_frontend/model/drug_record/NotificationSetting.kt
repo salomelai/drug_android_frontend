@@ -1,4 +1,4 @@
-package com.junting.drug_android_frontend.model
+package com.junting.drug_android_frontend.model.drug_record
 
 data class NotificationSetting(
     val remind: Int,

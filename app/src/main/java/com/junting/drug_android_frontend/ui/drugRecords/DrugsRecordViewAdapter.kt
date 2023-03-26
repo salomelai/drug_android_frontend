@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.junting.drug_android_frontend.R
 import com.junting.drug_android_frontend.databinding.DrugItemViewBinding
-import com.junting.drug_android_frontend.model.DrugRecord
+import com.junting.drug_android_frontend.model.drug_record.DrugRecord
 
 class DrugsRecordViewAdapter(private val context: Context, private val viewModel: DrugRecordsViewModel) :
     RecyclerView.Adapter<DrugsRecordViewAdapter.MyViewHolder>() {
