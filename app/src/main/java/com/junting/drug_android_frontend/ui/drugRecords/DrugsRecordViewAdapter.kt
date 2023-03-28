@@ -1,11 +1,15 @@
 package com.junting.drug_android_frontend.ui.drugRecords
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.junting.drug_android_frontend.AutoRecognizeDrugbagInfoActivity
+import com.junting.drug_android_frontend.EditDrugRecordActivity
 import com.junting.drug_android_frontend.R
 import com.junting.drug_android_frontend.databinding.DrugItemViewBinding
 import com.junting.drug_android_frontend.model.drug_record.DrugRecord
@@ -57,6 +61,8 @@ class DrugsRecordViewAdapter(private val context: Context, private val viewModel
 
 
         holder.drugItemViewBinding.cardView.setOnClickListener {
+            val intent = Intent(context, EditDrugRecordActivity::class.java)
+            context.startActivity(intent)
             Toast.makeText(context, String.format("You clicked %s", drugRecord.drug.name), Toast.LENGTH_SHORT).show()
         }
     }

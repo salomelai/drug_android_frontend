@@ -26,12 +26,21 @@ class DrugInteractionViewAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val interactingDrugs = viewModel.drugInteractions.value!!.get(position)
-        holder.drugInteractionViewBinding.tvDrugName.text = interactingDrugs.name
-        holder.drugInteractionViewBinding.tvDegree.text = interactingDrugs.degree
-        holder.drugInteractionViewBinding.tvCause.text = interactingDrugs.cause
+        val interactingDrug = viewModel.drugInteractions.value!!.get(position)
+        holder.drugInteractionViewBinding.tvDrugName.text = interactingDrug.name
+
+        holder.drugInteractionViewBinding.tvDegree.text = interactingDrug.degree
+        if (interactingDrug.degree == "Major") {
+            holder.drugInteractionViewBinding.tvDegree.setTextColor(context.getColor(com.google.android.material.R.color.design_default_color_error))
+        } else if (interactingDrug.degree == "Moderate") {
+            holder.drugInteractionViewBinding.tvDegree.setTextColor(context.getColor(com.google.android.material.R.color.design_default_color_primary))
+        }else if (interactingDrug.degree == "Minor") {
+            holder.drugInteractionViewBinding.tvDegree.setTextColor(context.getColor(com.google.android.material.R.color.design_default_color_secondary))
+        }
+
+        holder.drugInteractionViewBinding.tvCause.text = interactingDrug.cause
+
+
     }
-
-
 }
 
