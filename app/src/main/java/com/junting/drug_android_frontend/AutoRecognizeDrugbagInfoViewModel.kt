@@ -8,7 +8,7 @@ import com.junting.drug_android_frontend.model.drugbag_info.DrugbagInformation
 import com.junting.drug_android_frontend.services.IDrugbagService
 import kotlinx.coroutines.launch
 
-class DrugbagInfoViewModel : ViewModel() {
+class AutoRecognizeDrugbagInfoViewModel : ViewModel() {
     val drugbagInfo = MutableLiveData<DrugbagInformation>()
     fun fetchDrugbagInfo() {
         viewModelScope.launch {

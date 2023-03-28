@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import com.junting.drug_android_frontend.AutoRecognizeDrugbagInfoActivity
 import com.junting.drug_android_frontend.InputManuallyDrugbagInfoActivity
 import com.junting.drug_android_frontend.R
 import com.junting.drug_android_frontend.TakePhotoActivity

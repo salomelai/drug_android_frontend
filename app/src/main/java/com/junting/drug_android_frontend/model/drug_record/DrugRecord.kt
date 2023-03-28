@@ -7,7 +7,7 @@ data class DrugRecord(
     val hospitalDepartment: String,
     val hospitalName: String,
     val id: Int,
-    val interactingDrugs: List<InteractingDrugs>?,
+    val interactingDrugs: List<InteractingDrug>?,
     val notificationSetting: NotificationSetting,
     val onDemand: Boolean,
     val position: Int,

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:layout_marginLeft="10dp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackgroundBorderless"
+    app:cardCornerRadius="18dp"
+    app:cardElevation="20dp"
+    app:contentPadding="20dp">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="藥學名: "
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:drawableLeft="@drawable/ic_outline_pill_24px"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_drug_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="Acertil"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="交互作用等級: "
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:drawableLeft="@drawable/ic_outline_bar_chart_24"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_degree"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="Major"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="原因: "
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:drawableLeft="@drawable/ic_outline_lightbulb_24"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_cause"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="互相影響療效或增加副作用的嚴重度"/>
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.cardview.widget.CardView>

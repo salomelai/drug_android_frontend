@@ -1,5 +1,6 @@
 package com.junting.drug_android_frontend
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
@@ -8,19 +9,17 @@ import android.widget.CheckBox
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.junting.drug_android_frontend.databinding.ActivityInputManuallyBinding
-import com.junting.drug_android_frontend.model.drugbag_info.Drug
-import com.junting.drug_android_frontend.model.drugbag_info.DrugbagInformation
+import com.junting.drug_android_frontend.databinding.ActivityDrugbagInfoBinding
 
 class AutoRecognizeDrugbagInfoActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityInputManuallyBinding
-    private lateinit var viewModel: DrugbagInfoViewModel
+    private lateinit var binding: ActivityDrugbagInfoBinding
+    private lateinit var viewModel: AutoRecognizeDrugbagInfoViewModel
     private var checkBoxes: Array<CheckBox> = arrayOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityInputManuallyBinding.inflate(layoutInflater)
+        binding = ActivityDrugbagInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         checkBoxes = arrayOf<CheckBox>(
@@ -41,7 +40,7 @@ class AutoRecognizeDrugbagInfoActivity : AppCompatActivity() {
 
     private fun initDrugbagInfoViewModel() {
         binding.progressBar.visibility = View.VISIBLE
-        viewModel = DrugbagInfoViewModel()
+        viewModel = AutoRecognizeDrugbagInfoViewModel()
         viewModel.fetchDrugbagInfo()
         viewModel.drugbagInfo.observe(this, Observer {
             binding.tilDrugName.editText?.setText(it.drug.name)
@@ -69,24 +68,8 @@ class AutoRecognizeDrugbagInfoActivity : AppCompatActivity() {
             super.onBackPressed()
         }
         binding.btnConfirm.setOnClickListener{
-            val drugbagInfo = DrugbagInformation(
-                id = 0,
-                drug = Drug(
-                    id = 0,
-                    name = binding.tilDrugName.editText?.text.toString(),
-                    indications = binding.tilIndication.editText?.text.toString(),
-                    sideEffect = binding.tilSideEffect.editText?.text.toString(),
-                    appearance = binding.tilAppearance.editText?.text.toString()
-                ),
-                hospitalName = binding.tilHospitalName.editText?.text.toString(),
-                hospitalDepartment = binding.tilDepartment.editText?.text.toString(),
-                onDemand = binding.cbOnDemand.isChecked,
-                frequency = binding.actvFrequency.text.toString().toInt(),
-                timings = checkBoxes.filter { it.isChecked }.map { checkBoxes.indexOf(it) },
-                dosage = binding.actvDosage.text.toString().toInt(),
-                stock = binding.tilStock.editText?.text.toString().toInt()
-            )
-            viewModel.sendDrugbagInfo(drugbagInfo)
+            val intent = Intent(this, DrugInteractionActivity::class.java)
+            startActivity(intent)
         }
     }
 
