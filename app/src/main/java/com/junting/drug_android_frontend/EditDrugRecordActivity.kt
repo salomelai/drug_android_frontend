@@ -12,10 +12,8 @@ class EditDrugRecordActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEditDrugRecordBinding
 
-    lateinit var groupList: MutableList<String>
-    lateinit var childList: MutableList<String>
-    lateinit var mobileCollection: Map<String, List<String>>
-    lateinit var expandableListAdapter: ExpandableListAdapter
+    internal var adapter: ExpandableListAdapter? = null
+    internal var titleList: List<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,48 +21,66 @@ class EditDrugRecordActivity : AppCompatActivity() {
         binding = ActivityEditDrugRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        createGroupList()
-        createCollection()
+        if (binding.expandableListInteraction != null) {
+            val listData = data
+            titleList = ArrayList(listData.keys)
+            adapter = EditRrugExpandableListAdapter(this, titleList as ArrayList<String>, listData)
+            binding.expandableListInteraction!!.setAdapter(adapter)
 
-        expandableListAdapter = EditRrugExpandableListAdapter(this, groupList, mobileCollection)
-        binding.expandableListInteraction.setAdapter(expandableListAdapter)
-        binding.expandableListInteraction.setOnGroupExpandListener(object : OnGroupExpandListener {
-            var lastExpandedPosition = -1
-            override fun onGroupExpand(i: Int) {
-                if (lastExpandedPosition != -1 && i != lastExpandedPosition) {
-                    binding.expandableListInteraction.collapseGroup(lastExpandedPosition)
-                }
-                lastExpandedPosition = i
+            binding.expandableListInteraction!!.setOnGroupExpandListener { groupPosition ->
+                Toast.makeText(
+                    applicationContext,
+                    (titleList as ArrayList<String>)[groupPosition] + " List Expanded.",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        })
-        binding.expandableListInteraction.setOnChildClickListener { expandableListView, view, i, i1, l ->
-            val selected = expandableListAdapter.getChild(i, i1).toString()
-            Toast.makeText(applicationContext, "Selected: $selected", Toast.LENGTH_SHORT).show()
-            true
         }
     }
 
-    private fun createCollection() {
-        val samsungModels = arrayOf(
-            "Samsung Galaxy M21", "Samsung Galaxy F41",
-            "Samsung Galaxy M51", "Samsung Galaxy A50s"
-        )
-        mobileCollection = HashMap()
-        for (group in groupList) {
-            loadChild(samsungModels)
-            (mobileCollection as HashMap<String, List<String>>)[group] = childList
-        }
-    }
+    val data: HashMap<String, List<String>>
+        get() {
+            val listData = HashMap<String, List<String>>()
 
-    private fun loadChild(mobileModels: Array<String>) {
-        childList = ArrayList()
-        for (model in mobileModels) {
-            childList.add(model)
-        }
-    }
+            val redmiMobiles = ArrayList<String>()
+            redmiMobiles.add("Redmi Y2")
+            redmiMobiles.add("Redmi S2")
+            redmiMobiles.add("Redmi Note 5 Pro")
+            redmiMobiles.add("Redmi Note 5")
+            redmiMobiles.add("Redmi 5 Plus")
+            redmiMobiles.add("Redmi Y1")
+            redmiMobiles.add("Redmi 3S Plus")
 
-    private fun createGroupList() {
-        groupList = ArrayList()
-        groupList.add("Samsung")
-    }
+            val micromaxMobiles = ArrayList<String>()
+            micromaxMobiles.add("Micromax Bharat Go")
+            micromaxMobiles.add("Micromax Bharat 5 Pro")
+            micromaxMobiles.add("Micromax Bharat 5")
+            micromaxMobiles.add("Micromax Canvas 1")
+            micromaxMobiles.add("Micromax Dual 5")
+
+            val appleMobiles = ArrayList<String>()
+            appleMobiles.add("iPhone 8")
+            appleMobiles.add("iPhone 8 Plus")
+            appleMobiles.add("iPhone X")
+            appleMobiles.add("iPhone 7 Plus")
+            appleMobiles.add("iPhone 7")
+            appleMobiles.add("iPhone 6 Plus")
+
+            val samsungMobiles = ArrayList<String>()
+            samsungMobiles.add("Samsung Galaxy S9+")
+            samsungMobiles.add("Samsung Galaxy Note 7")
+            samsungMobiles.add("Samsung Galaxy Note 5 Dual")
+            samsungMobiles.add("Samsung Galaxy S8")
+            samsungMobiles.add("Samsung Galaxy A8")
+            samsungMobiles.add("Samsung Galaxy Note 4")
+
+            // set multiple list to header title position
+            listData["Redmi"] = redmiMobiles
+            listData["Micromax"] = micromaxMobiles
+            listData["Apple"] = appleMobiles
+            listData["Samsung"] = samsungMobiles
+
+            return listData
+        }
+
+
 }

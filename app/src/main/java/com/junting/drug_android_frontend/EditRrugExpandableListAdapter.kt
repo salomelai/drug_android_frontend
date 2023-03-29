@@ -11,67 +11,71 @@ import android.widget.ImageView
 import android.widget.TextView
 
 
-class EditRrugExpandableListAdapter(
-    private val context: Context, private val groupList: List<String>,
-    private val mobileCollection: Map<String, List<String>>,
-) : BaseExpandableListAdapter() {
+class EditRrugExpandableListAdapter internal constructor(
+    private val context: Context,
+    private val titleList: List<String>,
+    private val dataList: HashMap<String, List<String>>) : BaseExpandableListAdapter() {
+
+    override fun getChild(listPosition: Int, expandedListPosition: Int): Any {
+        return this.dataList[this.titleList[listPosition]]!![expandedListPosition]
+    }
+
+    override fun getChildId(listPosition: Int, expandedListPosition: Int): Long {
+        return expandedListPosition.toLong()
+    }
+
+    override fun getChildView(listPosition: Int, expandedListPosition: Int, isLastChild: Boolean, convertView: View?, parent: ViewGroup): View {
+        var convertView = convertView
+        val expandedListText = getChild(listPosition, expandedListPosition) as String
+        if (convertView == null)
+        {
+            val layoutInflater = this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            convertView = layoutInflater.inflate(R.layout.interaction_expandable_child_item, null)
+        }
+
+        val expandedListTextView = convertView!!.findViewById<TextView>(R.id.expandedListItem)
+        expandedListTextView.text = expandedListText
+
+        return convertView
+    }
+
+    override fun getChildrenCount(listPosition: Int): Int {
+        return this.dataList[this.titleList[listPosition]]!!.size
+    }
+
+    override fun getGroup(listPosition: Int): Any {
+        return this.titleList[listPosition]
+    }
+
     override fun getGroupCount(): Int {
-        return mobileCollection.size
+        return this.titleList.size
     }
 
-    override fun getChildrenCount(i: Int): Int {
-        return mobileCollection[groupList[i]]!!.size
+    override fun getGroupId(listPosition: Int): Long {
+        return listPosition.toLong()
     }
 
-    override fun getGroup(i: Int): Any {
-        return groupList[i]
-    }
+    override fun getGroupView(listPosition: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup): View {
+        var convertView = convertView
+        val listTitle = getGroup(listPosition) as String
+        if (convertView == null)
+        {
+            val layoutInflater = this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            convertView = layoutInflater.inflate(R.layout.interaction_expandable_group_item, null)
+        }
 
-    override fun getChild(i: Int, i1: Int): Any {
-        return mobileCollection[groupList[i]]!![i1]
-    }
+        val listTitleTextView = convertView!!.findViewById<TextView>(R.id.listTitle)
+        listTitleTextView.setTypeface(null, Typeface.BOLD)
+        listTitleTextView.text = listTitle
 
-    override fun getGroupId(i: Int): Long {
-        return i.toLong()
-    }
-
-    override fun getChildId(i: Int, i1: Int): Long {
-        return i1.toLong()
+        return convertView
     }
 
     override fun hasStableIds(): Boolean {
-        return true
+        return false
     }
 
-    override fun getGroupView(i: Int, b: Boolean, view: View, viewGroup: ViewGroup): View {
-        var view = view
-        val mobileName = getGroup(i).toString()
-        if (view == null) {
-            val inflater =
-                context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            view = inflater.inflate(R.layout.interaction_expandable_group_item, null)
-        }
-        val item = view.findViewById<TextView>(R.id.mobile)
-        item.setTypeface(null, Typeface.BOLD)
-        item.text = mobileName
-        return view
-    }
-
-    override fun getChildView(i: Int, i1: Int, b: Boolean, view: View, viewGroup: ViewGroup): View {
-        var view = view
-        val model = getChild(i, i1).toString()
-        if (view == null) {
-            val inflater =
-                context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            view = inflater.inflate(R.layout.interaction_expandable_child_item, null)
-        }
-        val item = view.findViewById<TextView>(R.id.model)
-        item.text = model
-
-        return view
-    }
-
-    override fun isChildSelectable(i: Int, i1: Int): Boolean {
+    override fun isChildSelectable(listPosition: Int, expandedListPosition: Int): Boolean {
         return true
     }
 }

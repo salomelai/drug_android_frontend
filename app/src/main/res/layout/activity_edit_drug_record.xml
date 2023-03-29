@@ -84,12 +84,12 @@
             android:text="復健科"
             android:layout_marginBottom="15dp"/>
 
-        <ExpandableListView
-            android:id="@+id/expandable_list_interaction"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
     </LinearLayout>
+
+    <ExpandableListView
+        android:id="@+id/expandable_list_interaction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>
