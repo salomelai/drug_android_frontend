@@ -1,12 +1,20 @@
 package com.junting.drug_android_frontend
 
+import android.app.TimePickerDialog
 import android.os.Bundle
+import android.view.ViewGroup
 import android.widget.ExpandableListAdapter
 import android.widget.ExpandableListView
 import android.widget.ExpandableListView.OnGroupExpandListener
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.res.ResourcesCompat
 import com.junting.drug_android_frontend.databinding.ActivityEditDrugRecordBinding
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class EditDrugRecordActivity : AppCompatActivity() {
 
@@ -21,63 +29,62 @@ class EditDrugRecordActivity : AppCompatActivity() {
         binding = ActivityEditDrugRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (binding.expandableListInteraction != null) {
-            val listData = data
-            titleList = ArrayList(listData.keys)
-            adapter = EditRrugExpandableListAdapter(this, titleList as ArrayList<String>, listData)
-            binding.expandableListInteraction!!.setAdapter(adapter)
+        initExpandableListInteraction()
+        initTimeSection()
 
-            binding.expandableListInteraction!!.setOnGroupExpandListener { groupPosition ->
-                Toast.makeText(
-                    applicationContext,
-                    (titleList as ArrayList<String>)[groupPosition] + " List Expanded.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+    }
+
+    private fun initTimeSection() {
+        binding.tvTimeSlot.setOnClickListener {
+            val parent = it.parent as ViewGroup
+            parent.removeView(it)
         }
+        binding.tvTimeSlotAdd.setOnClickListener{
+            val calendar = Calendar.getInstance()
+            val hour = calendar.get(Calendar.HOUR_OF_DAY)
+            val minute = calendar.get(Calendar.MINUTE)
+
+            val timePickerDialog = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
+                val time = String.format("%02d:%02d", hourOfDay, minute)
+                val newTimeSlot = AppCompatTextView(this)
+                newTimeSlot.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+                newTimeSlot.background = ResourcesCompat.getDrawable(resources, android.R.drawable.list_selector_background, null)
+                newTimeSlot.setPadding(10, 10, 10, 10)
+                newTimeSlot.textSize = 16f
+                newTimeSlot.text = time
+                newTimeSlot.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_outline_delete_24, 0)
+                newTimeSlot.compoundDrawablePadding = 15
+
+                val parent = binding.tvTimeSlot.parent as ViewGroup
+                parent.addView(newTimeSlot, parent.indexOfChild(binding.tvTimeSlot) + 1)
+
+                newTimeSlot.setOnClickListener {
+                    parent.removeView(newTimeSlot)
+                }
+            }, hour, minute, false)
+
+            timePickerDialog.show()
+        }
+    }
+
+    private fun initExpandableListInteraction() {
+        val listData = data
+        titleList = ArrayList(listData.keys)
+        adapter = EditRrugExpandableListAdapter(this, titleList as ArrayList<String>, listData)
+        binding.expandableListInteraction!!.setAdapter(adapter)
     }
 
     val data: HashMap<String, List<String>>
         get() {
             val listData = HashMap<String, List<String>>()
 
-            val redmiMobiles = ArrayList<String>()
-            redmiMobiles.add("Redmi Y2")
-            redmiMobiles.add("Redmi S2")
-            redmiMobiles.add("Redmi Note 5 Pro")
-            redmiMobiles.add("Redmi Note 5")
-            redmiMobiles.add("Redmi 5 Plus")
-            redmiMobiles.add("Redmi Y1")
-            redmiMobiles.add("Redmi 3S Plus")
+            val interactionGroup = ArrayList<String>()
+            interactionGroup.add("Acertil")
+            interactionGroup.add("Rifampin")
 
-            val micromaxMobiles = ArrayList<String>()
-            micromaxMobiles.add("Micromax Bharat Go")
-            micromaxMobiles.add("Micromax Bharat 5 Pro")
-            micromaxMobiles.add("Micromax Bharat 5")
-            micromaxMobiles.add("Micromax Canvas 1")
-            micromaxMobiles.add("Micromax Dual 5")
-
-            val appleMobiles = ArrayList<String>()
-            appleMobiles.add("iPhone 8")
-            appleMobiles.add("iPhone 8 Plus")
-            appleMobiles.add("iPhone X")
-            appleMobiles.add("iPhone 7 Plus")
-            appleMobiles.add("iPhone 7")
-            appleMobiles.add("iPhone 6 Plus")
-
-            val samsungMobiles = ArrayList<String>()
-            samsungMobiles.add("Samsung Galaxy S9+")
-            samsungMobiles.add("Samsung Galaxy Note 7")
-            samsungMobiles.add("Samsung Galaxy Note 5 Dual")
-            samsungMobiles.add("Samsung Galaxy S8")
-            samsungMobiles.add("Samsung Galaxy A8")
-            samsungMobiles.add("Samsung Galaxy Note 4")
 
             // set multiple list to header title position
-            listData["Redmi"] = redmiMobiles
-            listData["Micromax"] = micromaxMobiles
-            listData["Apple"] = appleMobiles
-            listData["Samsung"] = samsungMobiles
+            listData["交互作用"] = interactionGroup
 
             return listData
         }

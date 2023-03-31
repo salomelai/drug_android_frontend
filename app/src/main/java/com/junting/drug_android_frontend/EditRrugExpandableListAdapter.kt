@@ -30,11 +30,11 @@ class EditRrugExpandableListAdapter internal constructor(
         if (convertView == null)
         {
             val layoutInflater = this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-            convertView = layoutInflater.inflate(R.layout.interaction_expandable_child_item, null)
+            convertView = layoutInflater.inflate(R.layout.drug_interaction_view, null)
         }
 
-        val expandedListTextView = convertView!!.findViewById<TextView>(R.id.expandedListItem)
-        expandedListTextView.text = expandedListText
+        val tvDrugName = convertView!!.findViewById<TextView>(R.id.tv_drug_name)
+        tvDrugName.text = expandedListText
 
         return convertView
     }
@@ -67,6 +67,13 @@ class EditRrugExpandableListAdapter internal constructor(
         val listTitleTextView = convertView!!.findViewById<TextView>(R.id.listTitle)
         listTitleTextView.setTypeface(null, Typeface.BOLD)
         listTitleTextView.text = listTitle
+
+        val expandIndicator = convertView.findViewById<ImageView>(R.id.expandIndicator)
+        if (isExpanded) {
+            expandIndicator.setImageResource(R.drawable.ic_baseline_expand_less_24)
+        } else {
+            expandIndicator.setImageResource(R.drawable.ic_baseline_expand_more_24)
+        }
 
         return convertView
     }

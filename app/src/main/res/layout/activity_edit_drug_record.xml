@@ -22,7 +22,8 @@
             android:text="藥物名稱: "
             android:textStyle="bold"
             android:textSize="20sp"
-            android:drawableLeft="@drawable/ic_outline_pill_24px"/>
+            android:drawableLeft="@drawable/ic_outline_pill_24px"
+            android:drawablePadding="15dp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_drug_name"
@@ -48,7 +49,8 @@
             android:text="醫院: "
             android:textStyle="bold"
             android:textSize="20sp"
-            android:drawableLeft="@drawable/ic_outline_local_hospital_24"/>
+            android:drawableLeft="@drawable/ic_outline_local_hospital_24"
+            android:drawablePadding="15dp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_hospital"
@@ -74,7 +76,8 @@
             android:text="科別: "
             android:textStyle="bold"
             android:textSize="20sp"
-            android:drawableLeft="@drawable/ic_stethoscope_24px"/>
+            android:drawableLeft="@drawable/ic_stethoscope_24px"
+            android:drawablePadding="15dp"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_department"
@@ -89,7 +92,155 @@
     <ExpandableListView
         android:id="@+id/expandable_list_interaction"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:groupIndicator="@drawable/ic_outline_shuffle_24"
+        android:layout_marginBottom="15dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="適應症: "
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:drawableLeft="@drawable/ic_baseline_check_circle_outline_24"
+            android:drawablePadding="15dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_indication"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="血管收縮素轉換酶抑制劑，用來治療高血壓、心臟衰竭。"
+            android:layout_marginBottom="15dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="副作用: "
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:drawableLeft="@drawable/ic_baseline_remove_circle_outline_24"
+            android:drawablePadding="15dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_side_effect"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="咳嗽、頭痛、頭暈、想睡、噁心、嘔吐、消化不良或輕微的腹瀉"
+            android:layout_marginBottom="15dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="外觀: "
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:drawableLeft="@drawable/ic_outline_remove_red_eye_24"
+            android:drawablePadding="15dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_appearance"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="淡綠色桿狀膜衣錠，一面刻有兩個三角形及一個圓圈，雙邊緣有刻痕。"
+            android:layout_marginBottom="15dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+
+        android:layout_marginBottom="15dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="按需要服用"
+            android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:drawableStart="@drawable/ic_touch_app_24px"
+            android:drawablePadding="15dp"
+            android:textSize="20sp"/>
+
+        <CheckBox
+            android:id="@+id/cb_on_demand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="時間: "
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:drawableLeft="@drawable/ic_outline_access_time_24"
+            android:drawablePadding="15dp"
+            android:layout_marginBottom="15dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_time_slot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:padding="10dp"
+            android:textSize="16sp"
+            android:text="14:00"
+            android:drawableRight="@drawable/ic_outline_delete_24" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_time_slot_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?android:attr/selectableItemBackground"
+            android:padding="10dp"
+            android:textSize="16sp"
+            android:text="新增服藥時間"
+            android:drawableRight="@drawable/ic_baseline_add_24" />
+
+    </LinearLayout>
+
+
 
 
 </androidx.appcompat.widget.LinearLayoutCompat>
