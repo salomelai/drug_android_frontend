@@ -88,7 +88,7 @@ class AutoRecognizeDrugbagInfoActivity : AppCompatActivity() {
     private fun initOndemandCheckbox() {
         binding.cbOnDemand.setOnCheckedChangeListener { _, isChecked ->
             binding.tilFrequency.visibility = if (isChecked) View.GONE else View.VISIBLE
-            binding.timingsOuterContainer.visibility = if (isChecked) View.GONE else View.VISIBLE
+            binding.llTimings.visibility = if (isChecked) View.GONE else View.VISIBLE
         }
 
     }

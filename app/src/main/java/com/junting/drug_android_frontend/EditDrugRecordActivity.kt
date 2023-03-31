@@ -1,20 +1,16 @@
 package com.junting.drug_android_frontend
 
-import android.app.TimePickerDialog
 import android.os.Bundle
+import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ExpandableListAdapter
-import android.widget.ExpandableListView
-import android.widget.ExpandableListView.OnGroupExpandListener
-import android.widget.LinearLayout
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.content.res.ResourcesCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import com.junting.drug_android_frontend.databinding.ActivityEditDrugRecordBinding
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class EditDrugRecordActivity : AppCompatActivity() {
 
@@ -29,9 +25,64 @@ class EditDrugRecordActivity : AppCompatActivity() {
         binding = ActivityEditDrugRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.llDrugName.setOnClickListener {
+            val builder = MaterialAlertDialogBuilder(this)
+            builder.setTitle("修改藥物名稱")
+
+            // 建立一個 EditText 供使用者輸入新的藥物名稱
+            val input = EditText(this)
+            input.setText(binding.tvDrugName.text)
+            builder.setView(input)
+
+            // 設定確認和取消按鈕
+            builder.setPositiveButton("確定") { dialog, which ->
+                binding.tvDrugName.text = input.text.toString()
+            }
+            builder.setNegativeButton("取消") { dialog, which ->
+                dialog.cancel()
+            }
+
+            // 顯示對話框
+            builder.show()
+        }
+
         initExpandableListInteraction()
         initTimeSection()
+        initOndemandCheckbox()
+        initTimingsCheckbox()
 
+    }
+
+    private fun initTimingsCheckbox() {
+        binding.cbBeforeMeal.setOnCheckedChangeListener { buttonView, isChecked ->
+            binding.cbAfterMeal.isEnabled = !isChecked
+            binding.cbWithFood.isEnabled = !isChecked
+        }
+
+        binding.cbAfterMeal.setOnCheckedChangeListener { buttonView, isChecked ->
+            binding.cbBeforeMeal.isEnabled = !isChecked
+            binding.cbWithFood.isEnabled = !isChecked
+        }
+
+        binding.cbWithFood.setOnCheckedChangeListener { buttonView, isChecked ->
+            binding.cbBeforeMeal.isEnabled = !isChecked
+            binding.cbAfterMeal.isEnabled = !isChecked
+        }
+    }
+
+    private fun initOndemandCheckbox() {
+        binding.llOnDemand.setOnClickListener {
+            binding.cbOnDemand.isChecked = !binding.cbOnDemand.isChecked
+        }
+        binding.cbOnDemand.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (isChecked) {
+                binding.llTimeSlot.visibility = View.GONE
+                binding.llTimings.visibility = View.GONE
+            } else {
+                binding.llTimeSlot.visibility = View.VISIBLE
+                binding.llTimings.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun initTimeSection() {
@@ -39,34 +90,19 @@ class EditDrugRecordActivity : AppCompatActivity() {
             val parent = it.parent as ViewGroup
             parent.removeView(it)
         }
-        binding.tvTimeSlotAdd.setOnClickListener{
-            val calendar = Calendar.getInstance()
-            val hour = calendar.get(Calendar.HOUR_OF_DAY)
-            val minute = calendar.get(Calendar.MINUTE)
-
-            val timePickerDialog = TimePickerDialog(this, TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-                val time = String.format("%02d:%02d", hourOfDay, minute)
-                val newTimeSlot = AppCompatTextView(this)
-                newTimeSlot.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT)
-                newTimeSlot.background = ResourcesCompat.getDrawable(resources, android.R.drawable.list_selector_background, null)
-                newTimeSlot.setPadding(10, 10, 10, 10)
-                newTimeSlot.textSize = 16f
-                newTimeSlot.text = time
-                newTimeSlot.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0, R.drawable.ic_outline_delete_24, 0)
-                newTimeSlot.compoundDrawablePadding = 15
-
-                val parent = binding.tvTimeSlot.parent as ViewGroup
-                parent.addView(newTimeSlot, parent.indexOfChild(binding.tvTimeSlot) + 1)
-
-                newTimeSlot.setOnClickListener {
-                    parent.removeView(newTimeSlot)
-                }
-            }, hour, minute, false)
-
-            timePickerDialog.show()
+        binding.tvTimeSlotAdd.setOnClickListener {
+            val timePicker = MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_24H)
+                .setHour(12)
+                .setMinute(10)
+                .setTitleText("Select time")
+                .build()
+            timePicker.show(supportFragmentManager, "time_picker")
+            timePicker.addOnPositiveButtonClickListener {
+                val time = "${timePicker.hour}:${timePicker.minute}"
+            }
         }
     }
-
     private fun initExpandableListInteraction() {
         val listData = data
         titleList = ArrayList(listData.keys)
