@@ -24,7 +24,7 @@ class ResultActivity: AppCompatActivity() {
         binding = ActivityResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val imageBase64 = intent.getStringExtra("IMAGE")!!
+        val imageBase64 = TakePhotoActivity.photoResultBase64
         binding.ivNormalize.setImageBitmap(BitmapUtils.base64ToBitmap(imageBase64))
         viewModel.recognize(imageBase64)
 

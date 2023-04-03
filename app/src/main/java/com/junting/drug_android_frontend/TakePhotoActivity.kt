@@ -62,9 +62,8 @@ class TakePhotoActivity: AppCompatActivity() {
             val buffer = image.planes[0].buffer
             val byteArray = ByteArray(buffer.remaining())
             buffer.get(byteArray)
-            val base64 = encodeToString(byteArray, Base64.DEFAULT)
+            photoResultBase64 = encodeToString(byteArray, Base64.DEFAULT)
             val intent = Intent(baseContext, ResultActivity::class.java)
-            intent.putExtra("IMAGE", base64)
             startActivity(intent)
         }
 
@@ -135,5 +134,6 @@ class TakePhotoActivity: AppCompatActivity() {
                     add(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 }
             }.toTypedArray()
+        var photoResultBase64 = ""
     }
 }
