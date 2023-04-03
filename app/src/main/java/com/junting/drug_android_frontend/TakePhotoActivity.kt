@@ -63,6 +63,7 @@ class TakePhotoActivity: AppCompatActivity() {
             val byteArray = ByteArray(buffer.remaining())
             buffer.get(byteArray)
             photoResultBase64 = encodeToString(byteArray, Base64.DEFAULT)
+            image.close();
             val intent = Intent(baseContext, ResultActivity::class.java)
             startActivity(intent)
         }
