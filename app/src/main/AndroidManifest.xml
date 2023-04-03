@@ -4,6 +4,10 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-feature android:name="android.hardware.camera.any" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
 
     <application
         android:allowBackup="true"
@@ -39,15 +43,10 @@
             android:label="藥袋拍攝"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name=".QuadEditActivity"
-            android:exported="false"
-            android:label="請截取藥袋區域"
-            android:parentActivityName=".TakePhotoActivity" />
-        <activity
             android:name=".ResultActivity"
             android:exported="false"
             android:label="藥袋圖片二質化"
-            android:parentActivityName=".QuadEditActivity" />
+            android:parentActivityName=".TakePhotoActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true"
