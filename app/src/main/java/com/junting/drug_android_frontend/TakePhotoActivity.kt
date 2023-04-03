@@ -123,7 +123,7 @@ class TakePhotoActivity: AppCompatActivity() {
     }
 
     companion object {
-        private const val TAG = "Drug"
+        private const val TAG = "TakePhotoActivity"
         private const val REQUEST_CODE_PERMISSIONS = 10
         private val REQUIRED_PERMISSIONS =
             mutableListOf (

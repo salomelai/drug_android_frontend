@@ -11,7 +11,6 @@ dependencyResolutionManagement {
         google()
         mavenCentral()
         maven { url "https://download2.dynamsoft.com/maven/aar" }
-        maven { url 'https://jitpack.io' }
     }
 }
 rootProject.name = "drug_android_frontend"
