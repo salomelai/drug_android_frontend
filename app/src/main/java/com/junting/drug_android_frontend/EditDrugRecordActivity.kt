@@ -4,19 +4,18 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
-import android.widget.ExpandableListAdapter
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.junting.drug_android_frontend.databinding.ActivityEditDrugRecordBinding
+import com.junting.drug_android_frontend.ui.libs.ExpandableListUtils
 
 class EditDrugRecordActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityEditDrugRecordBinding
 
-    internal var adapter: ExpandableListAdapter? = null
+    internal var adapter: EditRrugExpandableListAdapter? = null
     internal var titleList: List<String>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -108,6 +107,7 @@ class EditDrugRecordActivity : AppCompatActivity() {
         titleList = ArrayList(listData.keys)
         adapter = EditRrugExpandableListAdapter(this, titleList as ArrayList<String>, listData)
         binding.expandableListInteraction!!.setAdapter(adapter)
+        ExpandableListUtils.setupExpandHeight(binding.expandableListInteraction!!, adapter!!)
     }
 
     val data: HashMap<String, List<String>>
