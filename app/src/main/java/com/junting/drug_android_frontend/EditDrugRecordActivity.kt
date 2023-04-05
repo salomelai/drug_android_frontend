@@ -1,13 +1,15 @@
 package com.junting.drug_android_frontend
 
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.View
-import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.TimeFormat
 import com.junting.drug_android_frontend.databinding.ActivityEditDrugRecordBinding
 import com.junting.drug_android_frontend.ui.libs.ExpandableListUtils
 
@@ -18,12 +20,66 @@ class EditDrugRecordActivity : AppCompatActivity() {
     internal var adapter: EditRrugExpandableListAdapter? = null
     internal var titleList: List<String>? = null
 
+    private lateinit var viewModel: EditDrugRecordViewModel
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityEditDrugRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+        var times = mutableListOf("10:00", "12:00", "14:00") // 假設這是您的時間點列表
+
+        for (timeSlot in times) {
+            val tvTimeSlot = AppCompatTextView(this)
+            tvTimeSlot.layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+//            textView.background = ContextCompat.getDrawable(this, android.R.attr.selectableItemBackground)
+            val iconDrawable = ContextCompat.getDrawable(this, R.drawable.ic_outline_delete_24)
+            tvTimeSlot.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, iconDrawable, null)
+            tvTimeSlot.setPadding(10, 10, 10, 10)
+            tvTimeSlot.text = timeSlot
+            tvTimeSlot.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+            binding.llTimeSlot.addView(tvTimeSlot)
+            tvTimeSlot.setOnClickListener {
+                times.remove(timeSlot)
+                binding.llTimeSlot.removeView(tvTimeSlot)
+            }
+        }
+
+
+        initDrugNameTextView()
+        initExpandableListInteraction()
+//        initTimeSection()
+        initOndemandCheckbox()
+        initTimingsCheckbox()
+        initDrugRecordViewModel()
+
+    }
+
+    private fun initDrugRecordViewModel(){
+        binding.progressBar.visibility = View.VISIBLE
+        viewModel = EditDrugRecordViewModel()
+        viewModel.fetchRecord(20)
+        viewModel.record.observe(this, Observer {
+            binding.tvDrugName.text = it.drug.name
+            binding.tvHospital.text = it.hospitalName
+            binding.tvDepartment.text = it.hospitalDepartment
+            binding.tvIndication.text = it.drug.indications
+            binding.tvSideEffect.text = it.drug.sideEffect
+            binding.tvAppearance.text = it.drug.appearance
+            binding.cbOnDemand.isChecked = it.onDemand
+
+            binding.progressBar.visibility = View.GONE
+
+        })
+    }
+
+    private fun initDrugNameTextView(){
         binding.llDrugName.setOnClickListener {
             val builder = MaterialAlertDialogBuilder(this)
             builder.setTitle("修改藥物名稱")
@@ -44,12 +100,6 @@ class EditDrugRecordActivity : AppCompatActivity() {
             // 顯示對話框
             builder.show()
         }
-
-        initExpandableListInteraction()
-        initTimeSection()
-        initOndemandCheckbox()
-        initTimingsCheckbox()
-
     }
 
     private fun initTimingsCheckbox() {
@@ -84,24 +134,24 @@ class EditDrugRecordActivity : AppCompatActivity() {
         }
     }
 
-    private fun initTimeSection() {
-        binding.tvTimeSlot.setOnClickListener {
-            val parent = it.parent as ViewGroup
-            parent.removeView(it)
-        }
-        binding.tvTimeSlotAdd.setOnClickListener {
-            val timePicker = MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_24H)
-                .setHour(12)
-                .setMinute(10)
-                .setTitleText("Select time")
-                .build()
-            timePicker.show(supportFragmentManager, "time_picker")
-            timePicker.addOnPositiveButtonClickListener {
-                val time = "${timePicker.hour}:${timePicker.minute}"
-            }
-        }
-    }
+//    private fun initTimeSection() {
+//        binding.tvTimeSlot.setOnClickListener {
+//            val parent = it.parent as ViewGroup
+//            parent.removeView(it)
+//        }
+//        binding.tvTimeSlotAdd.setOnClickListener {
+//            val timePicker = MaterialTimePicker.Builder()
+//                .setTimeFormat(TimeFormat.CLOCK_24H)
+//                .setHour(12)
+//                .setMinute(10)
+//                .setTitleText("Select time")
+//                .build()
+//            timePicker.show(supportFragmentManager, "time_picker")
+//            timePicker.addOnPositiveButtonClickListener {
+//                val time = "${timePicker.hour}:${timePicker.minute}"
+//            }
+//        }
+//    }
     private fun initExpandableListInteraction() {
         val listData = data
         titleList = ArrayList(listData.keys)

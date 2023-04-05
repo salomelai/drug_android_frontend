@@ -12,6 +12,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+
         <LinearLayout
             android:id="@+id/ll_drug_name"
             android:layout_width="match_parent"
@@ -35,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:text="Acertil"
+                android:text="...正在載入藥物名稱"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -62,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:text="台大兒童綜合醫院"
+                android:text="...正在載入醫院"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -89,7 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:text="復健科"
+                android:text="...正在載入科別"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -123,7 +129,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:text="血管收縮素轉換酶抑制劑，用來治療高血壓、心臟衰竭。"
+                android:text="...正在載入適應症"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -150,7 +156,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:text="咳嗽、頭痛、頭暈、想睡、噁心、嘔吐、消化不良或輕微的腹瀉"
+                android:text="...正在載入副作用"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -177,7 +183,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:text="淡綠色桿狀膜衣錠，一面刻有兩個三角形及一個圓圈，雙邊緣有刻痕。"
+                android:text="...正在載入外觀"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -218,36 +224,37 @@
             android:focusable="true"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:drawableLeft="@drawable/ic_outline_access_time_24"
-                android:drawablePadding="15dp"
-                android:text="時間: "
-                android:textSize="20sp"
-                android:textStyle="bold" />
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/tv_time_slot_title"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginBottom="15dp"-->
+<!--                android:drawableLeft="@drawable/ic_outline_access_time_24"-->
+<!--                android:drawablePadding="15dp"-->
+<!--                android:text="時間: "-->
+<!--                android:textSize="20sp"-->
+<!--                android:textStyle="bold" />-->
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_time_slot"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:drawableRight="@drawable/ic_outline_delete_24"
-                android:padding="10dp"
-                android:text="14:00"
-                android:textSize="16sp" />
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/tv_time_slot"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="?android:attr/selectableItemBackground"-->
+<!--                android:drawableRight="@drawable/ic_outline_delete_24"-->
+<!--                android:padding="10dp"-->
+<!--                android:text="14:00"-->
+<!--                android:textSize="16sp" />-->
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tv_time_slot_add"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:attr/selectableItemBackground"
-                android:drawableRight="@drawable/ic_baseline_add_24"
-                android:padding="10dp"
-                android:text="新增服藥時間"
-                android:textSize="16sp"
-                android:layout_marginBottom="15dp"/>
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/tv_time_slot_add"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="?android:attr/selectableItemBackground"-->
+<!--                android:drawableRight="@drawable/ic_baseline_add_24"-->
+<!--                android:padding="10dp"-->
+<!--                android:text="新增服藥時間"-->
+<!--                android:textSize="16sp"-->
+<!--                android:layout_marginBottom="15dp"/>-->
 
         </LinearLayout>
 
@@ -321,7 +328,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:text="1"
+                android:text="...正在載入劑量"
                 android:textSize="16sp" />
 
         </LinearLayout>
@@ -348,7 +355,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:text="20"
+                android:text="...正在載入庫存"
                 android:textSize="16sp" />
 
         </LinearLayout>
