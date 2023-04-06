@@ -216,6 +216,17 @@
 
         </LinearLayout>
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_time_slot_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:drawableLeft="@drawable/ic_outline_access_time_24"
+            android:drawablePadding="15dp"
+            android:text="時間: "
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
         <LinearLayout
             android:id="@+id/ll_time_slot"
             android:layout_width="match_parent"
@@ -224,39 +235,19 @@
             android:focusable="true"
             android:orientation="vertical">
 
-<!--            <androidx.appcompat.widget.AppCompatTextView-->
-<!--                android:id="@+id/tv_time_slot_title"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginBottom="15dp"-->
-<!--                android:drawableLeft="@drawable/ic_outline_access_time_24"-->
-<!--                android:drawablePadding="15dp"-->
-<!--                android:text="時間: "-->
-<!--                android:textSize="20sp"-->
-<!--                android:textStyle="bold" />-->
-
-<!--            <androidx.appcompat.widget.AppCompatTextView-->
-<!--                android:id="@+id/tv_time_slot"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:background="?android:attr/selectableItemBackground"-->
-<!--                android:drawableRight="@drawable/ic_outline_delete_24"-->
-<!--                android:padding="10dp"-->
-<!--                android:text="14:00"-->
-<!--                android:textSize="16sp" />-->
-
-<!--            <androidx.appcompat.widget.AppCompatTextView-->
-<!--                android:id="@+id/tv_time_slot_add"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:background="?android:attr/selectableItemBackground"-->
-<!--                android:drawableRight="@drawable/ic_baseline_add_24"-->
-<!--                android:padding="10dp"-->
-<!--                android:text="新增服藥時間"-->
-<!--                android:textSize="16sp"-->
-<!--                android:layout_marginBottom="15dp"/>-->
 
         </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_time_slot_add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:drawableRight="@drawable/ic_baseline_add_24"
+            android:padding="10dp"
+            android:text="新增服藥時間"
+            android:textSize="16sp" />
 
         <LinearLayout
             android:id="@+id/ll_timings"

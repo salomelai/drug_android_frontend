@@ -10,8 +10,11 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.timepicker.MaterialTimePicker
+import com.google.android.material.timepicker.TimeFormat
 import com.junting.drug_android_frontend.databinding.ActivityEditDrugRecordBinding
 import com.junting.drug_android_frontend.ui.libs.ExpandableListUtils
+import java.util.*
 
 class EditDrugRecordActivity : AppCompatActivity() {
 
@@ -38,7 +41,7 @@ class EditDrugRecordActivity : AppCompatActivity() {
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
-//            textView.background = ContextCompat.getDrawable(this, android.R.attr.selectableItemBackground)
+//            tvTimeSlot.background = ContextCompat.getDrawable(this, android.R.attr.selectableItemBackground)
             val iconDrawable = ContextCompat.getDrawable(this, R.drawable.ic_outline_delete_24)
             tvTimeSlot.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, iconDrawable, null)
             tvTimeSlot.setPadding(10, 10, 10, 10)
@@ -49,6 +52,59 @@ class EditDrugRecordActivity : AppCompatActivity() {
                 times.remove(timeSlot)
                 binding.llTimeSlot.removeView(tvTimeSlot)
             }
+        }
+        binding.tvTimeSlotAdd.setOnClickListener {
+            val picker = MaterialTimePicker.Builder()
+                .setTimeFormat(TimeFormat.CLOCK_24H)
+                .setHour(12)
+                .setMinute(0)
+                .build()
+
+            picker.addOnPositiveButtonClickListener {
+                val hour = picker.hour.toString().padStart(2, '0')
+                val minute = picker.minute.toString().padStart(2, '0')
+                val time = "$hour:$minute"
+
+                // check if the time already exists
+                if (times.contains(time)) {
+                    MaterialAlertDialogBuilder(this)
+                        .setTitle("Warning")
+                        .setMessage("The selected time already exists.")
+                        .setPositiveButton("OK", null)
+                        .show()
+                    return@addOnPositiveButtonClickListener
+                }
+
+                // add the new time to the list
+                times.add(time)
+
+                // sort the time list
+                Collections.sort(times)
+
+                // remove all the views in the LinearLayout
+                binding.llTimeSlot.removeAllViews()
+
+                // add all the time slots again to the LinearLayout
+                for (timeSlot in times) {
+                    val tvTimeSlot = AppCompatTextView(this)
+                    tvTimeSlot.layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    val iconDrawable = ContextCompat.getDrawable(this, R.drawable.ic_outline_delete_24)
+                    tvTimeSlot.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, iconDrawable, null)
+                    tvTimeSlot.setPadding(10, 10, 10, 10)
+                    tvTimeSlot.text = timeSlot
+                    tvTimeSlot.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+                    binding.llTimeSlot.addView(tvTimeSlot)
+                    tvTimeSlot.setOnClickListener {
+                        times.remove(timeSlot)
+                        binding.llTimeSlot.removeView(tvTimeSlot)
+                    }
+                }
+            }
+
+            picker.show(supportFragmentManager, "time_picker")
         }
 
 
