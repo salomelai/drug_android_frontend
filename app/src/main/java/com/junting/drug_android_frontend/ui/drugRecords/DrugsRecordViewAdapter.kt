@@ -6,9 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.junting.drug_android_frontend.AutoRecognizeDrugbagInfoActivity
 import com.junting.drug_android_frontend.EditDrugRecordActivity
 import com.junting.drug_android_frontend.R
 import com.junting.drug_android_frontend.databinding.DrugItemViewBinding
@@ -35,11 +33,11 @@ class DrugsRecordViewAdapter(private val context: Context, private val viewModel
         holder.drugItemViewBinding.tvDrugName.text = drugRecord.drug.name
         holder.drugItemViewBinding.tvIndication.text = drugRecord.drug.indications
         holder.drugItemViewBinding.tvFrequencyDosage.text = drugRecord.frequency.toString() + " times a day, " + drugRecord.dosage.toString() + " pills each time"
-        if (drugRecord.timeSlot.isEmpty()){
+        if (drugRecord.timeSlots.isEmpty()){
             holder.drugItemViewBinding.tvTimeSlot.visibility = View.GONE
         }else{
             var timeSlotLine = ""
-            for(timeSlot in drugRecord.timeSlot) {
+            for(timeSlot in drugRecord.timeSlots) {
                 timeSlotLine += timeSlot + " "
             }
             holder.drugItemViewBinding.tvTimeSlot.text = timeSlotLine

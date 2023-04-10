@@ -3,6 +3,7 @@ package com.junting.drug_android_frontend
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +26,10 @@ class EditDrugRecordActivity : AppCompatActivity() {
 
     private lateinit var viewModel: EditDrugRecordViewModel
 
+    private var timeSlots = mutableListOf<String>()
+
+    private var checkBoxes: Array<CheckBox> = arrayOf()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,10 +37,51 @@ class EditDrugRecordActivity : AppCompatActivity() {
         binding = ActivityEditDrugRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        checkBoxes = arrayOf<CheckBox>(
+            binding.cbAfterMeal,
+            binding.cbAfterMeal,
+            binding.cbWithFood,
+            binding.cbBeforeSleep
+        )
 
-        var times = mutableListOf("10:00", "12:00", "14:00") // 假設這是您的時間點列表
+        initDrugRecordViewModel()
 
-        for (timeSlot in times) {
+        initDrugNameTextView()
+        initExpandableListInteraction()
+        initOndemandCheckbox()
+        initTimingsCheckbox()
+        initButton()
+
+    }
+
+    private fun initDrugRecordViewModel() {
+        binding.progressBar.visibility = View.VISIBLE
+        viewModel = EditDrugRecordViewModel()
+        viewModel.fetchRecord(20)
+        viewModel.record.observe(this, Observer {
+            binding.tvDrugName.text = it.drug.name
+            binding.tvHospital.text = it.hospitalName
+            binding.tvDepartment.text = it.hospitalDepartment
+            binding.tvIndication.text = it.drug.indications
+            binding.tvSideEffect.text = it.drug.sideEffect
+            binding.tvAppearance.text = it.drug.appearance
+            binding.cbOnDemand.isChecked = it.onDemand
+            timeSlots = it.timeSlots.toMutableList()
+            initTimeSection()
+            for (i in it.timings) {
+                checkBoxes[i].isChecked = true
+            }
+            binding.tvDosage.text = it.dosage.toString()
+            binding.tvStock.text = it.stock.toString()
+
+            binding.progressBar.visibility = View.GONE
+
+        })
+    }
+
+    private fun initTimeSection() {
+
+        for (timeSlot in timeSlots) {
             val tvTimeSlot = AppCompatTextView(this)
             tvTimeSlot.layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
@@ -43,13 +89,18 @@ class EditDrugRecordActivity : AppCompatActivity() {
             )
 //            tvTimeSlot.background = ContextCompat.getDrawable(this, android.R.attr.selectableItemBackground)
             val iconDrawable = ContextCompat.getDrawable(this, R.drawable.ic_outline_delete_24)
-            tvTimeSlot.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, iconDrawable, null)
+            tvTimeSlot.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                null,
+                null,
+                iconDrawable,
+                null
+            )
             tvTimeSlot.setPadding(10, 10, 10, 10)
             tvTimeSlot.text = timeSlot
             tvTimeSlot.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
             binding.llTimeSlot.addView(tvTimeSlot)
             tvTimeSlot.setOnClickListener {
-                times.remove(timeSlot)
+                timeSlots.remove(timeSlot)
                 binding.llTimeSlot.removeView(tvTimeSlot)
             }
         }
@@ -66,7 +117,7 @@ class EditDrugRecordActivity : AppCompatActivity() {
                 val time = "$hour:$minute"
 
                 // check if the time already exists
-                if (times.contains(time)) {
+                if (timeSlots.contains(time)) {
                     MaterialAlertDialogBuilder(this)
                         .setTitle("Warning")
                         .setMessage("The selected time already exists.")
@@ -76,29 +127,35 @@ class EditDrugRecordActivity : AppCompatActivity() {
                 }
 
                 // add the new time to the list
-                times.add(time)
+                timeSlots.add(time)
 
                 // sort the time list
-                Collections.sort(times)
+                Collections.sort(timeSlots)
 
                 // remove all the views in the LinearLayout
                 binding.llTimeSlot.removeAllViews()
 
                 // add all the time slots again to the LinearLayout
-                for (timeSlot in times) {
+                for (timeSlot in timeSlots) {
                     val tvTimeSlot = AppCompatTextView(this)
                     tvTimeSlot.layoutParams = LinearLayout.LayoutParams(
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     )
-                    val iconDrawable = ContextCompat.getDrawable(this, R.drawable.ic_outline_delete_24)
-                    tvTimeSlot.setCompoundDrawablesRelativeWithIntrinsicBounds(null, null, iconDrawable, null)
+                    val iconDrawable =
+                        ContextCompat.getDrawable(this, R.drawable.ic_outline_delete_24)
+                    tvTimeSlot.setCompoundDrawablesRelativeWithIntrinsicBounds(
+                        null,
+                        null,
+                        iconDrawable,
+                        null
+                    )
                     tvTimeSlot.setPadding(10, 10, 10, 10)
                     tvTimeSlot.text = timeSlot
                     tvTimeSlot.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
                     binding.llTimeSlot.addView(tvTimeSlot)
                     tvTimeSlot.setOnClickListener {
-                        times.remove(timeSlot)
+                        timeSlots.remove(timeSlot)
                         binding.llTimeSlot.removeView(tvTimeSlot)
                     }
                 }
@@ -106,36 +163,9 @@ class EditDrugRecordActivity : AppCompatActivity() {
 
             picker.show(supportFragmentManager, "time_picker")
         }
-
-
-        initDrugNameTextView()
-        initExpandableListInteraction()
-//        initTimeSection()
-        initOndemandCheckbox()
-        initTimingsCheckbox()
-        initDrugRecordViewModel()
-
     }
 
-    private fun initDrugRecordViewModel(){
-        binding.progressBar.visibility = View.VISIBLE
-        viewModel = EditDrugRecordViewModel()
-        viewModel.fetchRecord(20)
-        viewModel.record.observe(this, Observer {
-            binding.tvDrugName.text = it.drug.name
-            binding.tvHospital.text = it.hospitalName
-            binding.tvDepartment.text = it.hospitalDepartment
-            binding.tvIndication.text = it.drug.indications
-            binding.tvSideEffect.text = it.drug.sideEffect
-            binding.tvAppearance.text = it.drug.appearance
-            binding.cbOnDemand.isChecked = it.onDemand
-
-            binding.progressBar.visibility = View.GONE
-
-        })
-    }
-
-    private fun initDrugNameTextView(){
+    private fun initDrugNameTextView() {
         binding.llDrugName.setOnClickListener {
             val builder = MaterialAlertDialogBuilder(this)
             builder.setTitle("修改藥物名稱")
@@ -181,39 +211,30 @@ class EditDrugRecordActivity : AppCompatActivity() {
         }
         binding.cbOnDemand.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                binding.llTimeSlot.visibility = View.GONE
+                binding.llOuterborderTimeSlot.visibility = View.GONE
                 binding.llTimings.visibility = View.GONE
             } else {
-                binding.llTimeSlot.visibility = View.VISIBLE
+                binding.llOuterborderTimeSlot.visibility = View.VISIBLE
                 binding.llTimings.visibility = View.VISIBLE
             }
         }
     }
 
-//    private fun initTimeSection() {
-//        binding.tvTimeSlot.setOnClickListener {
-//            val parent = it.parent as ViewGroup
-//            parent.removeView(it)
-//        }
-//        binding.tvTimeSlotAdd.setOnClickListener {
-//            val timePicker = MaterialTimePicker.Builder()
-//                .setTimeFormat(TimeFormat.CLOCK_24H)
-//                .setHour(12)
-//                .setMinute(10)
-//                .setTitleText("Select time")
-//                .build()
-//            timePicker.show(supportFragmentManager, "time_picker")
-//            timePicker.addOnPositiveButtonClickListener {
-//                val time = "${timePicker.hour}:${timePicker.minute}"
-//            }
-//        }
-//    }
     private fun initExpandableListInteraction() {
         val listData = data
         titleList = ArrayList(listData.keys)
         adapter = EditRrugExpandableListAdapter(this, titleList as ArrayList<String>, listData)
         binding.expandableListInteraction!!.setAdapter(adapter)
         ExpandableListUtils.setupExpandHeight(binding.expandableListInteraction!!, adapter!!)
+    }
+
+    private fun initButton() {
+        binding.btnCancel.setOnClickListener {
+            super.onBackPressed()
+        }
+        binding.btnConfirm.setOnClickListener {
+            super.onBackPressed()
+        }
     }
 
     val data: HashMap<String, List<String>>
@@ -230,6 +251,4 @@ class EditDrugRecordActivity : AppCompatActivity() {
 
             return listData
         }
-
-
 }

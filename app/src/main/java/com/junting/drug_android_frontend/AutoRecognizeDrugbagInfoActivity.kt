@@ -1,5 +1,6 @@
 package com.junting.drug_android_frontend
 
+import android.R
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -75,7 +76,7 @@ class AutoRecognizeDrugbagInfoActivity : AppCompatActivity() {
 
     private fun initDosageDropdown() {
         val dosageOption = arrayOf(1, 2, 3, 4, 5)
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, dosageOption)
+        val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, dosageOption)
         binding.actvDosage.setAdapter(adapter)
 
 
@@ -112,7 +113,7 @@ class AutoRecognizeDrugbagInfoActivity : AppCompatActivity() {
 
     private fun initFrequencyDropdown() {
         val frequencyOption = arrayOf(1, 2, 3, 4, 5)
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, frequencyOption)
+        val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, frequencyOption)
         binding.actvFrequency.setAdapter(adapter)
 
 

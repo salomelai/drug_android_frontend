@@ -32,6 +32,12 @@ class EditRrugExpandableListAdapter internal constructor(
             val layoutInflater = this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             convertView = layoutInflater.inflate(R.layout.drug_interaction_view, null)
         }
+//        var viewModel: EditDrugRecordViewModel
+//        viewModel = EditDrugRecordViewModel()
+//        viewModel.fetchRecord(20)
+//        viewModel.record.observe(this, Observer {
+//
+//        })
 
         val tvDrugName = convertView!!.findViewById<TextView>(R.id.tv_drug_name)
         tvDrugName.text = expandedListText

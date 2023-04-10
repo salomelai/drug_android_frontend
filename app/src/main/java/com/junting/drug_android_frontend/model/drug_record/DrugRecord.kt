@@ -13,6 +13,6 @@ data class DrugRecord(
     val position: Int,
     val returnSetting: ReturnSetting,
     val stock: Int,
-    val timeSlot: List<String>,
+    val timeSlots: List<String>,
     val timings: List<Int>
 )
