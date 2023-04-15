@@ -3,6 +3,7 @@ package com.junting.drug_android_frontend
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.View
+import android.view.View.GONE
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -14,6 +15,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.junting.drug_android_frontend.databinding.ActivityEditDrugRecordBinding
+import com.junting.drug_android_frontend.model.drug_record.InteractingDrug
 import com.junting.drug_android_frontend.ui.libs.ExpandableListUtils
 import java.util.*
 
@@ -22,13 +24,14 @@ class EditDrugRecordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityEditDrugRecordBinding
 
     internal var adapter: EditRrugExpandableListAdapter? = null
-    internal var titleList: List<String>? = null
 
     private lateinit var viewModel: EditDrugRecordViewModel
 
     private var timeSlots = mutableListOf<String>()
 
     private var checkBoxes: Array<CheckBox> = arrayOf()
+
+    private var drugId: Int? = null
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,20 +47,18 @@ class EditDrugRecordActivity : AppCompatActivity() {
             binding.cbBeforeSleep
         )
 
+        drugId = intent.getIntExtra("drugId", 0)
         initDrugRecordViewModel()
-
         initDrugNameTextView()
-        initExpandableListInteraction()
         initOndemandCheckbox()
         initTimingsCheckbox()
         initButton()
-
     }
 
     private fun initDrugRecordViewModel() {
         binding.progressBar.visibility = View.VISIBLE
         viewModel = EditDrugRecordViewModel()
-        viewModel.fetchRecord(20)
+        viewModel.fetchRecord(drugId!!)
         viewModel.record.observe(this, Observer {
             binding.tvDrugName.text = it.drug.name
             binding.tvHospital.text = it.hospitalName
@@ -68,6 +69,7 @@ class EditDrugRecordActivity : AppCompatActivity() {
             binding.cbOnDemand.isChecked = it.onDemand
             timeSlots = it.timeSlots.toMutableList()
             initTimeSection()
+            initExpandableListInteraction(it.interactingDrugs!!)
             for (i in it.timings) {
                 checkBoxes[i].isChecked = true
             }
@@ -220,10 +222,11 @@ class EditDrugRecordActivity : AppCompatActivity() {
         }
     }
 
-    private fun initExpandableListInteraction() {
-        val listData = data
-        titleList = ArrayList(listData.keys)
-        adapter = EditRrugExpandableListAdapter(this, titleList as ArrayList<String>, listData)
+    private fun initExpandableListInteraction(interactingDrugs: List<InteractingDrug>) {
+        adapter = EditRrugExpandableListAdapter(this, interactingDrugs)
+        if (interactingDrugs.isEmpty()) {
+            binding.expandableListInteraction!!.visibility = GONE
+        }
         binding.expandableListInteraction!!.setAdapter(adapter)
         ExpandableListUtils.setupExpandHeight(binding.expandableListInteraction!!, adapter!!)
     }
@@ -236,19 +239,4 @@ class EditDrugRecordActivity : AppCompatActivity() {
             super.onBackPressed()
         }
     }
-
-    val data: HashMap<String, List<String>>
-        get() {
-            val listData = HashMap<String, List<String>>()
-
-            val interactionGroup = ArrayList<String>()
-            interactionGroup.add("Acertil")
-            interactionGroup.add("Rifampin")
-
-
-            // set multiple list to header title position
-            listData["交互作用"] = interactionGroup
-
-            return listData
-        }
 }

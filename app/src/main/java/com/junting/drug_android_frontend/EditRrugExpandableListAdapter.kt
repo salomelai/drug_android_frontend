@@ -1,6 +1,5 @@
 package com.junting.drug_android_frontend
 
-import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Typeface
 import android.view.LayoutInflater
@@ -9,15 +8,16 @@ import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.junting.drug_android_frontend.model.drug_record.InteractingDrug
 
 
 class EditRrugExpandableListAdapter internal constructor(
     private val context: Context,
-    private val titleList: List<String>,
-    private val dataList: HashMap<String, List<String>>) : BaseExpandableListAdapter() {
+    private val interactingDrugs: List<InteractingDrug>
+) : BaseExpandableListAdapter() {
 
     override fun getChild(listPosition: Int, expandedListPosition: Int): Any {
-        return this.dataList[this.titleList[listPosition]]!![expandedListPosition]
+        return interactingDrugs.get(expandedListPosition).id.toString()
     }
 
     override fun getChildId(listPosition: Int, expandedListPosition: Int): Long {
@@ -32,29 +32,29 @@ class EditRrugExpandableListAdapter internal constructor(
             val layoutInflater = this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
             convertView = layoutInflater.inflate(R.layout.drug_interaction_view, null)
         }
-//        var viewModel: EditDrugRecordViewModel
-//        viewModel = EditDrugRecordViewModel()
-//        viewModel.fetchRecord(20)
-//        viewModel.record.observe(this, Observer {
-//
-//        })
 
         val tvDrugName = convertView!!.findViewById<TextView>(R.id.tv_drug_name)
         tvDrugName.text = expandedListText
+
+        val tvDegree = convertView!!.findViewById<TextView>(R.id.tv_degree)
+        tvDegree.text = interactingDrugs.get(expandedListPosition).level
+
+        val tvCause = convertView!!.findViewById<TextView>(R.id.tv_cause)
+        tvCause.text = interactingDrugs.get(expandedListPosition).cause
 
         return convertView
     }
 
     override fun getChildrenCount(listPosition: Int): Int {
-        return this.dataList[this.titleList[listPosition]]!!.size
+        return interactingDrugs.size
     }
 
     override fun getGroup(listPosition: Int): Any {
-        return this.titleList[listPosition]
+        return "交互作用"
     }
 
     override fun getGroupCount(): Int {
-        return this.titleList.size
+        return 1
     }
 
     override fun getGroupId(listPosition: Int): Long {
