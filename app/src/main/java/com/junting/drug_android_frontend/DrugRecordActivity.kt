@@ -1,6 +1,8 @@
 package com.junting.drug_android_frontend
 
+import android.content.Intent
 import android.os.Bundle
+import android.text.InputType
 import android.util.TypedValue
 import android.view.MenuItem
 import android.view.View
@@ -8,6 +10,7 @@ import android.view.View.GONE
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
@@ -24,7 +27,7 @@ class DrugRecordActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDrugRecordBinding
 
-    internal var adapter: EditRrugExpandableListAdapter? = null
+    internal var adapter: RrugRecordExpandableListAdapter? = null
 
     private lateinit var viewModel: DrugRecordViewModel
 
@@ -50,12 +53,26 @@ class DrugRecordActivity : AppCompatActivity() {
             binding.cbBeforeSleep
         )
 
-        drugId = intent.getIntExtra("drugId", 0)
-        initDrugRecordViewModel()
-        initDrugNameTextView()
+
+        initTextViewEditDialog(binding.llDrugName, binding.tvDrugName,"修改藥物名稱",false)
+        initTextViewEditDialog(binding.llHospital, binding.tvHospital, "修改醫院名稱",false)
+        initTextViewEditDialog(binding.llDepartment, binding.tvDepartment, "修改科別名稱",false)
+        initTextViewEditDialog(binding.llIndication, binding.tvIndication, "修改適應症",false)
+        initTextViewEditDialog(binding.llSideEffect, binding.tvSideEffect, "修改副作用",false)
+        initTextViewEditDialog(binding.llAppearance, binding.tvAppearance, "修改外觀",false)
+        initTextViewEditDialog(binding.llDosage, binding.tvDosage, "修改劑量",true)
+        initTextViewEditDialog(binding.llStock, binding.tvStock, "修改庫存",true)
         initOndemandCheckbox()
         initTimingsCheckbox()
         initButton()
+
+        //代表前一個動作一點選卡片
+        drugId = intent.getIntExtra("drugId", 0)
+        if(drugId==0){
+            //
+        }else{
+            initDrugRecordViewModel()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -180,19 +197,22 @@ class DrugRecordActivity : AppCompatActivity() {
         }
     }
 
-    private fun initDrugNameTextView() {
-        binding.llDrugName.setOnClickListener {
+    private fun initTextViewEditDialog(onclickLayout:View,tv: TextView, title: String,onlyDigitInput: Boolean) {
+        onclickLayout.setOnClickListener {
             val builder = MaterialAlertDialogBuilder(this)
-            builder.setTitle("修改藥物名稱")
+            builder.setTitle(title)
 
             // 建立一個 EditText 供使用者輸入新的藥物名稱
             val input = EditText(this)
-            input.setText(binding.tvDrugName.text)
+            input.setText(tv.text)
+            if (onlyDigitInput) {
+                input.inputType = InputType.TYPE_CLASS_NUMBER
+            }
             builder.setView(input)
 
             // 設定確認和取消按鈕
             builder.setPositiveButton("確定") { dialog, which ->
-                binding.tvDrugName.text = input.text.toString()
+                tv.text = input.text.toString()
             }
             builder.setNegativeButton("取消") { dialog, which ->
                 dialog.cancel()
@@ -236,7 +256,7 @@ class DrugRecordActivity : AppCompatActivity() {
     }
 
     private fun initExpandableListInteraction(interactingDrugs: List<InteractingDrug>) {
-        adapter = EditRrugExpandableListAdapter(this, interactingDrugs)
+        adapter = RrugRecordExpandableListAdapter(this, interactingDrugs)
         if (interactingDrugs.isEmpty()) {
             binding.expandableListInteraction!!.visibility = GONE
         }
@@ -246,10 +266,14 @@ class DrugRecordActivity : AppCompatActivity() {
 
     private fun initButton() {
         binding.btnCancel.setOnClickListener {
-            super.onBackPressed()
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("fragmentName", "DrugRecordsFragment")
+            startActivity(intent)
         }
         binding.btnConfirm.setOnClickListener {
-            super.onBackPressed()
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("fragmentName", "DrugRecordsFragment")
+            startActivity(intent)
         }
     }
 }

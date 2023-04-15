@@ -47,6 +47,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_hospital"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
@@ -74,6 +75,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_department"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
@@ -108,6 +110,7 @@
             android:groupIndicator="@drawable/ic_outline_shuffle_24" />
 
         <LinearLayout
+            android:id="@+id/ll_indication"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
@@ -135,6 +138,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_side_effect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
@@ -162,6 +166,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_appearance"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
@@ -303,6 +308,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_dosage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
@@ -330,6 +336,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_stock"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"

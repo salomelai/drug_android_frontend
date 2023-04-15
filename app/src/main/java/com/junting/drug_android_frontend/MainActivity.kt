@@ -66,6 +66,11 @@ class MainActivity : AppCompatActivity() {
                 true
             }
         }
+
+        val fragmentName = intent.getStringExtra("fragmentName")
+        if (fragmentName == "DrugRecordsFragment") {
+            navController.navigate(R.id.navigation_drugRecords)
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

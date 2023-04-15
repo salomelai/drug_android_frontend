@@ -11,7 +11,7 @@ import android.widget.TextView
 import com.junting.drug_android_frontend.model.drug_record.InteractingDrug
 
 
-class EditRrugExpandableListAdapter internal constructor(
+class RrugRecordExpandableListAdapter internal constructor(
     private val context: Context,
     private val interactingDrugs: List<InteractingDrug>
 ) : BaseExpandableListAdapter() {

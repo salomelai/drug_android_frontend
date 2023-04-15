@@ -1,5 +1,7 @@
 package com.junting.drug_android_frontend.model.drugbag_info
 
+import java.io.Serializable
+
 data class DrugbagInformation(
     val dosage: Int,
     val drug: Drug,
@@ -10,4 +12,4 @@ data class DrugbagInformation(
     val onDemand: Boolean,
     val stock: Int,
     val timings: List<Int>
-)
+): Serializable

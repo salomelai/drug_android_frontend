@@ -83,10 +83,15 @@ class DrugbagInfoActivity : AppCompatActivity() {
 
     private fun initButton() {
         binding.btnCancel.setOnClickListener {
-            super.onBackPressed()
+            val intent = Intent(this, MainActivity::class.java)
+            intent.putExtra("fragmentName", "DrugRecordsFragment")
+            startActivity(intent)
         }
         binding.btnConfirm.setOnClickListener{
             val intent = Intent(this, DrugInteractionActivity::class.java)
+            viewModel.drugbagInfo.value?.let {
+                intent.putExtra("drugbagInfo", it)
+            }
             startActivity(intent)
         }
     }
