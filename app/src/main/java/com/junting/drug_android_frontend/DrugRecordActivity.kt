@@ -2,6 +2,7 @@ package com.junting.drug_android_frontend
 
 import android.os.Bundle
 import android.util.TypedValue
+import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.widget.CheckBox
@@ -14,18 +15,18 @@ import androidx.lifecycle.Observer
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
-import com.junting.drug_android_frontend.databinding.ActivityEditDrugRecordBinding
+import com.junting.drug_android_frontend.databinding.ActivityDrugRecordBinding
 import com.junting.drug_android_frontend.model.drug_record.InteractingDrug
 import com.junting.drug_android_frontend.ui.libs.ExpandableListUtils
 import java.util.*
 
-class EditDrugRecordActivity : AppCompatActivity() {
+class DrugRecordActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityEditDrugRecordBinding
+    private lateinit var binding: ActivityDrugRecordBinding
 
     internal var adapter: EditRrugExpandableListAdapter? = null
 
-    private lateinit var viewModel: EditDrugRecordViewModel
+    private lateinit var viewModel: DrugRecordViewModel
 
     private var timeSlots = mutableListOf<String>()
 
@@ -37,8 +38,10 @@ class EditDrugRecordActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityEditDrugRecordBinding.inflate(layoutInflater)
+        binding = ActivityDrugRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         checkBoxes = arrayOf<CheckBox>(
             binding.cbAfterMeal,
@@ -55,9 +58,19 @@ class EditDrugRecordActivity : AppCompatActivity() {
         initButton()
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun initDrugRecordViewModel() {
         binding.progressBar.visibility = View.VISIBLE
-        viewModel = EditDrugRecordViewModel()
+        viewModel = DrugRecordViewModel()
         viewModel.fetchRecord(drugId!!)
         viewModel.record.observe(this, Observer {
             binding.tvDrugName.text = it.drug.name

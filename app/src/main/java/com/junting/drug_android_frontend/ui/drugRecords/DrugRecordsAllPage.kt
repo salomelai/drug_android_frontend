@@ -13,10 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.junting.drug_android_frontend.AutoRecognizeDrugbagInfoActivity
-import com.junting.drug_android_frontend.InputManuallyDrugbagInfoActivity
+import com.junting.drug_android_frontend.DrugbagInfoActivity
 import com.junting.drug_android_frontend.R
-import com.junting.drug_android_frontend.TakePhotoActivity
+import com.junting.drug_android_frontend.PhotoTakeActivity
 
 
 class DrugRecordsAllPage(context: Context, container: ViewGroup) {
@@ -73,11 +72,11 @@ class DrugRecordsAllPage(context: Context, container: ViewGroup) {
                 .setTitle("詢問")
                 .setMessage("請問您要使用何種方式輸入藥品?")
                 .setPositiveButton("手動") { dialogInterface, i ->
-                    startActivity(context, Intent(context, InputManuallyDrugbagInfoActivity::class.java), null)
+                    startActivity(context, Intent(context, DrugbagInfoActivity::class.java), null)
                     dialogInterface.dismiss()
                 }
                 .setNegativeButton("拍攝") { dialogInterface, i ->
-                    startActivity(context, Intent(context, TakePhotoActivity::class.java), null)
+                    startActivity(context, Intent(context, PhotoTakeActivity::class.java), null)
                 }
             builder.create()
             builder.show()

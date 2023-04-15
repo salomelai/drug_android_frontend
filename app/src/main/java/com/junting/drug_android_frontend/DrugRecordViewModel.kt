@@ -8,7 +8,7 @@ import com.junting.drug_android_frontend.model.drug_record.DrugRecord
 import com.junting.drug_android_frontend.services.IDrugRecordService
 import kotlinx.coroutines.launch
 
-class EditDrugRecordViewModel: ViewModel() {
+class DrugRecordViewModel: ViewModel() {
     var record = MutableLiveData<DrugRecord>()
 
     fun fetchRecord(id: Int) {

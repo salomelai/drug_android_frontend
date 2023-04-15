@@ -1,34 +1,36 @@
 package com.junting.drug_android_frontend;
 
-import android.content.pm.PackageManager;
-import android.os.Build;
-import android.os.Bundle;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import android.Manifest;
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
+import android.os.Bundle
+import android.util.Base64
 import android.util.Base64.encodeToString
 import android.util.Log
+import android.view.MenuItem
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.camera.core.*
 import androidx.camera.lifecycle.ProcessCameraProvider
-import androidx.camera.lifecycle.ProcessCameraProvider.*
-import com.junting.drug_android_frontend.databinding.ActivityTakePhotoBinding
+import androidx.camera.lifecycle.ProcessCameraProvider.getInstance
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.junting.drug_android_frontend.databinding.ActivityPhotoTakeBinding
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import android.util.Base64
-import androidx.camera.core.*
 
-class TakePhotoActivity: AppCompatActivity() {
-    private lateinit var viewBinding: ActivityTakePhotoBinding
+class PhotoTakeActivity: AppCompatActivity() {
+    private lateinit var viewBinding: ActivityPhotoTakeBinding
     private lateinit var cameraExecutor: ExecutorService
     private var imageCapture: ImageCapture? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewBinding = ActivityTakePhotoBinding.inflate(layoutInflater)
+        viewBinding = ActivityPhotoTakeBinding.inflate(layoutInflater)
         setContentView(viewBinding.root)
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         // Request camera permissions
         if (allPermissionsGranted()) {
@@ -42,6 +44,15 @@ class TakePhotoActivity: AppCompatActivity() {
         viewBinding.imageCaptureButton.setOnClickListener { takePhoto() }
 
         cameraExecutor = Executors.newSingleThreadExecutor()
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     private fun takePhoto() {
@@ -64,7 +75,7 @@ class TakePhotoActivity: AppCompatActivity() {
             buffer.get(byteArray)
             photoResultBase64 = encodeToString(byteArray, Base64.DEFAULT)
             image.close();
-            val intent = Intent(baseContext, ResultActivity::class.java)
+            val intent = Intent(baseContext, PhotoResultActivity::class.java)
             startActivity(intent)
         }
 
