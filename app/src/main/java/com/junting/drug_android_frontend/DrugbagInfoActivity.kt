@@ -16,13 +16,16 @@ import com.junting.drug_android_frontend.databinding.ActivityDrugbagInfoBinding
 class DrugbagInfoActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDrugbagInfoBinding
-    private lateinit var viewModel: DrugbagInfoViewModel
+    private var viewModel: DrugbagInfoViewModel = DrugbagInfoViewModel()
     private var checkBoxes: Array<CheckBox> = arrayOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDrugbagInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
         checkBoxes = arrayOf<CheckBox>(
             binding.cbAfterMeal,
@@ -58,17 +61,17 @@ class DrugbagInfoActivity : AppCompatActivity() {
 
     private fun initDrugbagInfoViewModel() {
         binding.progressBar.visibility = View.VISIBLE
-        viewModel = DrugbagInfoViewModel()
         viewModel.fetchDrugbagInfo()
         viewModel.drugbagInfo.observe(this, Observer {
-            binding.tilDrugName.editText?.setText(it.drug.name)
+//            binding.tilDrugName.editText?.setText(it.drug.name)
             binding.tilHospitalName.editText?.setText(it.hospitalName)
             binding.tilDepartment.editText?.setText(it.hospitalDepartment)
             binding.tilIndication.editText?.setText(it.drug.indications)
             binding.tilSideEffect.editText?.setText(it.drug.sideEffect)
             binding.tilAppearance.editText?.setText(it.drug.appearance)
             binding.cbOnDemand.isChecked = it.onDemand
-//            binding.actvFrequency.setSelection(3)  //索引值+1
+            binding.actvFrequency.setText(it.frequency.toString())
+//            binding.actvFrequency.setSelection(it.frequency-1) //頻率值-1=索引值
             for(i in it.timings){
                 checkBoxes[i].isChecked = true
             }
