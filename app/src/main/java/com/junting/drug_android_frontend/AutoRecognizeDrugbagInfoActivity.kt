@@ -51,7 +51,7 @@ class AutoRecognizeDrugbagInfoActivity : AppCompatActivity() {
             binding.tilSideEffect.editText?.setText(it.drug.sideEffect)
             binding.tilAppearance.editText?.setText(it.drug.appearance)
             binding.cbOnDemand.isChecked = it.onDemand
-            binding.actvFrequency.setText(it.frequency.toString())
+            binding.actvFrequency.setSelection(3)  //索引值+1
             for(i in it.timings){
                 checkBoxes[i].isChecked = true
             }
@@ -115,7 +115,6 @@ class AutoRecognizeDrugbagInfoActivity : AppCompatActivity() {
         val frequencyOption = arrayOf(1, 2, 3, 4, 5)
         val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, frequencyOption)
         binding.actvFrequency.setAdapter(adapter)
-
 
         binding.actvFrequency.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val selectedItem = parent.getItemAtPosition(position).toString()

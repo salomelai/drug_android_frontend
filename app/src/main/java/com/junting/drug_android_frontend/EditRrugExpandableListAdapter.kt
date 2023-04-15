@@ -26,7 +26,6 @@ class EditRrugExpandableListAdapter internal constructor(
 
     override fun getChildView(listPosition: Int, expandedListPosition: Int, isLastChild: Boolean, convertView: View?, parent: ViewGroup): View {
         var convertView = convertView
-        val expandedListText = getChild(listPosition, expandedListPosition) as String
         if (convertView == null)
         {
             val layoutInflater = this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -34,13 +33,20 @@ class EditRrugExpandableListAdapter internal constructor(
         }
 
         val tvDrugName = convertView!!.findViewById<TextView>(R.id.tv_drug_name)
-        tvDrugName.text = expandedListText
-
-        val tvDegree = convertView!!.findViewById<TextView>(R.id.tv_degree)
-        tvDegree.text = interactingDrugs.get(expandedListPosition).level
+        tvDrugName.text = interactingDrugs.get(expandedListPosition).name
 
         val tvCause = convertView!!.findViewById<TextView>(R.id.tv_cause)
         tvCause.text = interactingDrugs.get(expandedListPosition).cause
+
+        val tvDegree = convertView!!.findViewById<TextView>(R.id.tv_degree)
+        tvDegree.text = interactingDrugs.get(expandedListPosition).degree
+        if (tvDegree.text == "Major") {
+            tvDegree.setTextColor(context.getColor(com.google.android.material.R.color.design_default_color_error))
+        } else if (tvDegree.text == "Moderate") {
+            tvDegree.setTextColor(context.getColor(com.google.android.material.R.color.design_default_color_primary))
+        }else if (tvDegree.text == "Minor") {
+            tvDegree.setTextColor(context.getColor(com.google.android.material.R.color.design_default_color_secondary))
+        }
 
         return convertView
     }
