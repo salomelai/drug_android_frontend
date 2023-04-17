@@ -1,14 +1,26 @@
 package com.junting.drug_android_frontend.ui.todayReminder
 
-import androidx.lifecycle.LiveData
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.junting.drug_android_frontend.model.today_reminder.TodayReminder
+import com.junting.drug_android_frontend.services.ITodayReminderService
+import kotlinx.coroutines.launch
 
 class TodayReminderViewModel : ViewModel() {
 
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is " +
-                "today Reminder Fragment"
+    var records = MutableLiveData<List<TodayReminder>>()
+
+    fun fetchRecords() {
+        viewModelScope.launch {
+            val todayReminderService = ITodayReminderService.getInstance()
+            try {
+                records.value = todayReminderService.getTodayReminders()
+            } catch (e: Exception) {
+                Log.d("TodayReminderViewModel", "fetch records failed")
+                Log.e("TodayReminderViewModel", e.toString())
+            }
+        }
     }
-    val text: LiveData<String> = _text
 }

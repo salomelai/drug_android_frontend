@@ -4,14 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.junting.drug_android_frontend.databinding.FragmentTodayReminderBinding
 
 class TodayReminderFragment : Fragment() {
 
     private var _binding: FragmentTodayReminderBinding? = null
+    private lateinit var viewAdapter: TodayReminderViewAdapter
+    private lateinit var viewManager: RecyclerView.LayoutManager
+    private lateinit var viewModel: TodayReminderViewModel
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,21 +27,36 @@ class TodayReminderFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        val todayReminderViewModel =
-            ViewModelProvider(this).get(TodayReminderViewModel::class.java)
 
         _binding = FragmentTodayReminderBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        val textView: TextView = binding.textTodayReminder
-        todayReminderViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
-        }
+//        initRecyclerView()
+//        initRecyclerViewModel()
+
         return root
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun initRecyclerViewModel() {
+        viewModel = TodayReminderViewModel()
+        viewModel.fetchRecords()
+        viewModel.records.observe(context as AppCompatActivity, Observer {
+            viewAdapter!!.notifyDataSetChanged()
+//            progressBar.visibility = View.GONE
+        })
+    }
+
+    private fun initRecyclerView() {
+        viewManager = LinearLayoutManager(requireContext())
+        viewAdapter = TodayReminderViewAdapter(requireContext(), viewModel)
+        binding.recyclerView.apply {
+            layoutManager = viewManager
+            adapter = viewAdapter
+        }
     }
 }
