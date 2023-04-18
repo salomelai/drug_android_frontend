@@ -6,6 +6,6 @@ data class Drug(
     val appearance: String,
     val id: Int,
     val indications: String,
-    val name: String,
+    var name: String,
     val sideEffect: String
 ): Serializable

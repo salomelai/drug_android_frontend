@@ -43,7 +43,6 @@ class DrugbagInfoActivity : AppCompatActivity() {
         }
 
         initOndemandCheckbox()
-        initFrequencyDropdown()
         initTimingsCheckbox()
         initDosageDropdown()
         initButton()
@@ -70,8 +69,7 @@ class DrugbagInfoActivity : AppCompatActivity() {
             binding.tilSideEffect.editText?.setText(it.drug.sideEffect)
             binding.tilAppearance.editText?.setText(it.drug.appearance)
             binding.cbOnDemand.isChecked = it.onDemand
-            binding.actvFrequency.setText(it.frequency.toString())
-//            binding.actvFrequency.setSelection(it.frequency-1) //頻率值-1=索引值
+            initFrequencyDropdown(it.frequency)
             for(i in it.timings){
                 checkBoxes[i].isChecked = true
             }
@@ -136,7 +134,8 @@ class DrugbagInfoActivity : AppCompatActivity() {
         }
     }
 
-    private fun initFrequencyDropdown() {
+    private fun initFrequencyDropdown(defaultValue: Int) {
+        binding.actvFrequency.setText(defaultValue.toString())
         val frequencyOption = arrayOf(1, 2, 3, 4, 5)
         val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, frequencyOption)
         binding.actvFrequency.setAdapter(adapter)
