@@ -29,8 +29,10 @@ class DrugInteractionActivity : AppCompatActivity() {
         initRecyclerView()
         initButton()
 
-        val drugbagInfo = intent.getSerializableExtra("drugbagInfo") as DrugbagInformation
-        Log.d("drugbagInfo name", drugbagInfo.drug.name)
+        if(intent.getSerializableExtra("drugbagInfo")!=null){
+            val drugbagInfo = intent.getSerializableExtra("drugbagInfo") as DrugbagInformation
+            Log.d("drugbagInfo name", drugbagInfo.drug.name)
+        }
     }
 
     private fun initButton() {

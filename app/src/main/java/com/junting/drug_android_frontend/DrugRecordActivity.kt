@@ -151,9 +151,9 @@ class DrugRecordActivity : AppCompatActivity() {
                 // check if the time already exists
                 if (timeSlots.contains(time)) {
                     MaterialAlertDialogBuilder(this)
-                        .setTitle("Warning")
-                        .setMessage("The selected time already exists.")
-                        .setPositiveButton("OK", null)
+                        .setTitle("警告")
+                        .setMessage("所選時間已存在。")
+                        .setPositiveButton("確定", null)
                         .show()
                     return@addOnPositiveButtonClickListener
                 }

@@ -41,7 +41,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:text="藥物適應症"
-                android:textSize="10sp" />
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/tv_frequency_dosage"
