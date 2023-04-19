@@ -39,13 +39,9 @@ class DrugsRecordViewAdapter(private val context: Context, private val viewModel
         }
 
         if (drugRecord.timeSlots.isEmpty()){
-            holder.drugItemViewBinding.tvTimeSlot.visibility = View.GONE
+            holder.drugItemViewBinding.tvTimeSlots.visibility = View.GONE
         }else{
-            var timeSlotLine = ""
-            for(timeSlot in drugRecord.timeSlots) {
-                timeSlotLine += timeSlot + " "
-            }
-            holder.drugItemViewBinding.tvTimeSlot.text = timeSlotLine
+            holder.drugItemViewBinding.tvTimeSlots.text = drugRecord.timeSlots.joinToString()
         }
         holder.drugItemViewBinding.chipStock.text = "庫存: "+drugRecord.stock.toString()
         holder.drugItemViewBinding.tvHospitalDepartment.text = drugRecord.hospitalName.toString() + ", " + drugRecord.hospitalDepartment.toString()

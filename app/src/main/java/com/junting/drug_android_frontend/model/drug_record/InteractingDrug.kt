@@ -4,5 +4,6 @@ data class InteractingDrug(
     val cause: String,
     val id: Int,
     val degree: String,
-    val name : String
+    val name : String,
+    val timeSlots: List<String>
 )

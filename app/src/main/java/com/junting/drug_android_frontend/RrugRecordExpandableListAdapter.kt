@@ -48,6 +48,13 @@ class RrugRecordExpandableListAdapter internal constructor(
             tvDegree.setTextColor(context.getColor(com.google.android.material.R.color.design_default_color_secondary))
         }
 
+        val tvTimeSlots = convertView!!.findViewById<TextView>(R.id.tv_time_slots)
+        if(interactingDrugs.get(expandedListPosition).timeSlots.isEmpty()) {
+            tvTimeSlots.text = "按需服用"
+        } else{
+            tvTimeSlots.text = interactingDrugs.get(expandedListPosition).timeSlots.joinToString()
+        }
+
         return convertView
     }
 

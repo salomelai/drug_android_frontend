@@ -40,7 +40,11 @@ class DrugInteractionViewAdapter(
         }
 
         holder.drugInteractionViewBinding.tvCause.text = interactingDrug.cause
-
+        if(interactingDrug.timeSlots.isEmpty()) {
+            holder.drugInteractionViewBinding.tvTimeSlots.text = "按需服用"
+        } else{
+            holder.drugInteractionViewBinding.tvTimeSlots.text = interactingDrug.timeSlots.joinToString()
+        }
 
     }
 }
