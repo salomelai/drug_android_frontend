@@ -10,6 +10,39 @@ import kotlinx.coroutines.launch
 
 class DrugbagInfoViewModel : ViewModel() {
     val drugbagInfo = MutableLiveData<DrugbagInformation>()
+
+    fun setDrugName(name: String) {
+        val info: DrugbagInformation = drugbagInfo.value!!
+        info.drug.name = name
+    }
+    fun setHospitalName(name: String) {
+        val info: DrugbagInformation = drugbagInfo.value!!
+        info.hospitalName = name
+    }
+    fun setDepartmentName(name: String) {
+        val info: DrugbagInformation = drugbagInfo.value!!
+        info.hospitalDepartment = name
+    }
+    fun setIndication(indication: String) {
+        val info: DrugbagInformation = drugbagInfo.value!!
+        info.drug.indication = indication
+    }
+    fun setSideEffect(sideEffect: String) {
+        val info: DrugbagInformation = drugbagInfo.value!!
+        info.drug.sideEffect = sideEffect
+    }
+    fun setAppearance(appearance: String) {
+        val info: DrugbagInformation = drugbagInfo.value!!
+        info.drug.appearance = appearance
+    }
+    fun setStock(stockStr: String) {
+        val info: DrugbagInformation = drugbagInfo.value!!
+        val stock: Int? = stockStr.toIntOrNull()
+        if (stock != null) {
+            info.stock = stock
+        }
+    }
+
     fun fetchDrugbagInfo() {
         viewModelScope.launch {
             val service = IDrugbagService.getInstance()

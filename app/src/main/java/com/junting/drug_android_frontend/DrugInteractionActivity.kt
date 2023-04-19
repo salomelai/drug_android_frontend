@@ -31,7 +31,7 @@ class DrugInteractionActivity : AppCompatActivity() {
 
         if(intent.getSerializableExtra("drugbagInfo")!=null){
             val drugbagInfo = intent.getSerializableExtra("drugbagInfo") as DrugbagInformation
-            Log.d("drugbagInfo name", drugbagInfo.drug.name)
+            Log.d("DrugbagInfo obj", drugbagInfo.toString())
         }
     }
 

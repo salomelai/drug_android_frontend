@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.junting.drug_android_frontend.DrugbagInfoViewModel" />
@@ -41,7 +42,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:maxLines="1"
-                    android:text="@{viewModel.drugbagInfo.drug.name}"/>
+                    android:onTextChanged="@{(text, start, before, count) -> viewModel.setDrugName(text.toString) }"
+                    android:text="@{viewModel.drugbagInfo.drug.name}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -58,11 +60,13 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:onTextChanged="@{(text, start, before, count) -> viewModel.setHospitalName(text.toString) }"
+                    android:text="@{viewModel.drugbagInfo.hospitalName}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/til_department"
+                android:id="@+id/til_department_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
@@ -75,7 +79,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:onTextChanged="@{(text, start, before, count) -> viewModel.setDepartmentName(text.toString) }"
+                    android:text="@{viewModel.drugbagInfo.hospitalDepartment}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -90,7 +96,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:lines="3" />
+                    android:lines="3"
+                    android:onTextChanged="@{(text, start, before, count) -> viewModel.setIndication(text.toString) }"
+                    android:text="@{viewModel.drugbagInfo.drug.indication}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -105,7 +113,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:lines="3" />
+                    android:lines="3"
+                    android:onTextChanged="@{(text, start, before, count) -> viewModel.setSideEffect(text.toString) }"
+                    android:text="@{viewModel.drugbagInfo.drug.sideEffect}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -120,7 +130,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:lines="3" />
+                    android:lines="3"
+                    android:onTextChanged="@{(text, start, before, count) -> viewModel.setAppearance(text.toString) }"
+                    android:text="@{viewModel.drugbagInfo.drug.appearance}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
@@ -143,7 +155,8 @@
                 <CheckBox
                     android:id="@+id/cb_on_demand"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:checked="@={viewModel.drugbagInfo.onDemand}" />
 
             </LinearLayout>
 
@@ -163,9 +176,7 @@
                     android:id="@+id/actv_frequency"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none">
-
-                </AutoCompleteTextView>
+                    android:inputType="none"></AutoCompleteTextView>
             </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -253,7 +264,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:inputType="number"
-                    android:maxLines="1" />
+                    android:maxLines="1"
+                    android:onTextChanged="@{(text, start, before, count) -> viewModel.setStock(text.toString())}"
+                    android:text="@{String.valueOf(viewModel.drugbagInfo.stock)}"
+                    />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout

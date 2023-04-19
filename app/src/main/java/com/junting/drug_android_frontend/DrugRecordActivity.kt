@@ -93,7 +93,7 @@ class DrugRecordActivity : AppCompatActivity() {
             binding.tvDrugName.text = it.drug.name
             binding.tvHospital.text = it.hospitalName
             binding.tvDepartment.text = it.hospitalDepartment
-            binding.tvIndication.text = it.drug.indications
+            binding.tvIndication.text = it.drug.indication
             binding.tvSideEffect.text = it.drug.sideEffect
             binding.tvAppearance.text = it.drug.appearance
             binding.cbOnDemand.isChecked = it.onDemand
