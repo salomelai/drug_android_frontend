@@ -1,5 +1,7 @@
 package com.junting.drug_android_frontend.model.drug_record
 
+import java.io.Serializable
+
 data class DrugRecord(
     val dosage: Int,
     val drug: Drug,
@@ -15,4 +17,4 @@ data class DrugRecord(
     val stock: Int,
     val timeSlots: List<String>,
     val timings: List<Int>
-)
+): Serializable

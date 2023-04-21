@@ -18,6 +18,8 @@ class DrugInteractionActivity : AppCompatActivity() {
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var viewModel: DrugInteractionViewModel
 
+    private lateinit var drugbagInfo: DrugbagInformation
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDrugInteractionBinding.inflate(layoutInflater)
@@ -29,8 +31,8 @@ class DrugInteractionActivity : AppCompatActivity() {
         initRecyclerView()
         initButton()
 
-        if(intent.getSerializableExtra("drugbagInfo")!=null){
-            val drugbagInfo = intent.getSerializableExtra("drugbagInfo") as DrugbagInformation
+        if (intent.getSerializableExtra("drugbagInfo") != null) {
+            drugbagInfo = intent.getSerializableExtra("drugbagInfo") as DrugbagInformation
             Log.d("DrugbagInfo obj", drugbagInfo.toString())
         }
     }
@@ -41,8 +43,12 @@ class DrugInteractionActivity : AppCompatActivity() {
             intent.putExtra("fragmentName", "DrugRecordsFragment")
             startActivity(intent)
         }
-        binding.btnConfirm.setOnClickListener{
+        binding.btnConfirm.setOnClickListener {
             val intent = Intent(this, DrugRecordActivity::class.java)
+            viewModel.drugInteractions.value?.let {
+                intent.putExtra("drugInteractions", ArrayList(it))
+            }
+            intent.putExtra("drugbagInfo", drugbagInfo)
             startActivity(intent)
         }
     }

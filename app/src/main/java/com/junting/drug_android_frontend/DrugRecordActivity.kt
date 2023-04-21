@@ -3,6 +3,7 @@ package com.junting.drug_android_frontend
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.util.TypedValue
 import android.view.MenuItem
 import android.view.View
@@ -20,6 +21,7 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.junting.drug_android_frontend.databinding.ActivityDrugRecordBinding
 import com.junting.drug_android_frontend.model.drug_record.InteractingDrug
+import com.junting.drug_android_frontend.model.drugbag_info.DrugbagInformation
 import com.junting.drug_android_frontend.ui.libs.ExpandableListUtils
 import java.util.*
 
@@ -72,6 +74,16 @@ class DrugRecordActivity : AppCompatActivity() {
             //
         }else{
             initDrugRecordViewModel()
+        }
+
+        if(intent.getSerializableExtra("drugInteractions")!=null){
+            val drugInteractions = intent.getSerializableExtra("drugInteractions") as List<InteractingDrug>
+//            initExpandableListInteraction(drugInteractions)
+            Log.d("InteractingDrugs", "drugInteractions: ${drugInteractions}")
+        }
+        if(intent.getSerializableExtra("drugbagInfo")!=null){
+            val drugbagInfo = intent.getSerializableExtra("drugbagInfo") as DrugbagInformation
+            Log.d("DrugbagInformation", "drugbagInfo: ${drugbagInfo}")
         }
     }
 
