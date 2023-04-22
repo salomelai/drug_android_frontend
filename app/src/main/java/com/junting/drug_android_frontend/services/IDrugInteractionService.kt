@@ -1,6 +1,6 @@
 package com.junting.drug_android_frontend.services
 
-import com.junting.drug_android_frontend.model.drug_interaction.InteractingDrug
+import com.junting.drug_android_frontend.model.drug_record.InteractingDrug
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET

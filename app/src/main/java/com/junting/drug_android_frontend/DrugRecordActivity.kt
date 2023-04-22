@@ -24,6 +24,7 @@ import com.junting.drug_android_frontend.model.drug_record.InteractingDrug
 import com.junting.drug_android_frontend.model.drugbag_info.DrugbagInformation
 import com.junting.drug_android_frontend.ui.libs.ExpandableListUtils
 import java.util.*
+import com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsViewModel
 
 class DrugRecordActivity : AppCompatActivity() {
 
@@ -31,9 +32,7 @@ class DrugRecordActivity : AppCompatActivity() {
 
     internal var adapter: RrugRecordExpandableListAdapter? = null
 
-    private lateinit var viewModel: DrugRecordViewModel
-
-    private var timeSlots = mutableListOf<String>()
+    private lateinit var viewModel: DrugRecordsViewModel
 
     private var checkBoxes: Array<CheckBox> = arrayOf()
 
@@ -80,10 +79,33 @@ class DrugRecordActivity : AppCompatActivity() {
             val drugInteractions = intent.getSerializableExtra("drugInteractions") as List<InteractingDrug>
 //            initExpandableListInteraction(drugInteractions)
             Log.d("InteractingDrugs", "drugInteractions: ${drugInteractions}")
+            initExpandableListInteraction(drugInteractions)
         }
         if(intent.getSerializableExtra("drugbagInfo")!=null){
             val drugbagInfo = intent.getSerializableExtra("drugbagInfo") as DrugbagInformation
             Log.d("DrugbagInformation", "drugbagInfo: ${drugbagInfo}")
+            binding.tvDrugName.text = drugbagInfo.drug.name
+            binding.tvHospital.text = drugbagInfo.hospitalName
+            binding.tvDepartment.text = drugbagInfo.hospitalDepartment
+            binding.tvIndication.text = drugbagInfo.drug.indication
+            binding.tvSideEffect.text = drugbagInfo.drug.sideEffect
+            binding.tvAppearance.text = drugbagInfo.drug.appearance
+            binding.cbOnDemand.isChecked = drugbagInfo.onDemand
+            when(drugbagInfo.frequency){
+                1 -> initTimeSection(mutableListOf("8:00"))
+                2 -> initTimeSection(mutableListOf("8:00", "12:00"))
+                3 -> initTimeSection(mutableListOf("8:00", "12:00", "18:00"))
+                4 -> initTimeSection(mutableListOf("8:00", "12:00", "18:00", "22:00"))
+                5 -> initTimeSection(mutableListOf("8:00", "12:00", "18:00", "22:00", "24:00"))
+            }
+            for (i in drugbagInfo.timings) {
+                checkBoxes[i].isChecked = true
+            }
+            binding.tvDosage.text = drugbagInfo.dosage.toString()
+            binding.tvStock.text = drugbagInfo.stock.toString()
+
+
+
         }
     }
 
@@ -99,7 +121,7 @@ class DrugRecordActivity : AppCompatActivity() {
 
     private fun initDrugRecordViewModel() {
         binding.progressBar.visibility = View.VISIBLE
-        viewModel = DrugRecordViewModel()
+        viewModel = DrugRecordsViewModel()
         viewModel.fetchRecord(drugId!!)
         viewModel.record.observe(this, Observer {
             binding.tvDrugName.text = it.drug.name
@@ -109,8 +131,8 @@ class DrugRecordActivity : AppCompatActivity() {
             binding.tvSideEffect.text = it.drug.sideEffect
             binding.tvAppearance.text = it.drug.appearance
             binding.cbOnDemand.isChecked = it.onDemand
-            timeSlots = it.timeSlots.toMutableList()
-            initTimeSection()
+            var timeSlots = it.timeSlots.toMutableList()
+            initTimeSection(timeSlots)
             initExpandableListInteraction(it.interactingDrugs!!)
             for (i in it.timings) {
                 checkBoxes[i].isChecked = true
@@ -118,12 +140,12 @@ class DrugRecordActivity : AppCompatActivity() {
             binding.tvDosage.text = it.dosage.toString()
             binding.tvStock.text = it.stock.toString()
 
-            binding.progressBar.visibility = View.GONE
+            binding.progressBar.visibility = GONE
 
         })
     }
 
-    private fun initTimeSection() {
+    private fun initTimeSection(timeSlots : MutableList<String>) {
 
         for (timeSlot in timeSlots) {
             val tvTimeSlot = AppCompatTextView(this)
@@ -258,8 +280,8 @@ class DrugRecordActivity : AppCompatActivity() {
         }
         binding.cbOnDemand.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                binding.llOuterborderTimeSlot.visibility = View.GONE
-                binding.llTimings.visibility = View.GONE
+                binding.llOuterborderTimeSlot.visibility = GONE
+                binding.llTimings.visibility = GONE
             } else {
                 binding.llOuterborderTimeSlot.visibility = View.VISIBLE
                 binding.llTimings.visibility = View.VISIBLE
