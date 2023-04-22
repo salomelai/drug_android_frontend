@@ -15,6 +15,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -37,6 +38,8 @@ class DrugRecordActivity : AppCompatActivity() {
     private var checkBoxes: Array<CheckBox> = arrayOf()
 
     private var drugId: Int? = null
+
+    private var notificationSettingFragment = NotificationSettingFragment()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,6 +69,9 @@ class DrugRecordActivity : AppCompatActivity() {
         initOndemandCheckbox()
         initTimingsCheckbox()
         initButton()
+        binding.llNotificationSetting.setOnClickListener {
+            fragmentIn(notificationSettingFragment)
+        }
 
         //代表前一個動作一點選卡片
         drugId = intent.getIntExtra("drugId", 0)
@@ -124,7 +130,7 @@ class DrugRecordActivity : AppCompatActivity() {
         viewModel = DrugRecordsViewModel()
         viewModel.fetchRecord(drugId!!)
         viewModel.record.observe(this, Observer {
-            binding.tvDrugName.text = it.drug.name
+//            binding.tvDrugName.text = it.drug.name
             binding.tvHospital.text = it.hospitalName
             binding.tvDepartment.text = it.hospitalDepartment
             binding.tvIndication.text = it.drug.indication
@@ -139,6 +145,7 @@ class DrugRecordActivity : AppCompatActivity() {
             }
             binding.tvDosage.text = it.dosage.toString()
             binding.tvStock.text = it.stock.toString()
+
 
             binding.progressBar.visibility = GONE
 
@@ -309,5 +316,20 @@ class DrugRecordActivity : AppCompatActivity() {
             intent.putExtra("fragmentName", "DrugRecordsFragment")
             startActivity(intent)
         }
+    }
+    fun fragmentIn(newFragment: Fragment) {
+        // 使用 FragmentManager 開始一個新的 Fragment 交易
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+//        // 設定進入和退出動畫
+//        fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+
+        // 建立並添加新的 Fragment
+        fragmentTransaction.replace(R.id.container, newFragment)
+        fragmentTransaction.addToBackStack(null)
+
+        // 提交 Fragment 交易
+        fragmentTransaction.commit()
     }
 }
