@@ -31,8 +31,13 @@ class TodayReminderFragment : Fragment() {
         _binding = FragmentTodayReminderBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        initRecyclerView()
-        initRecyclerViewModel()
+//        initRecyclerView()
+//        initRecyclerViewModel()
+        val dataSet = listOf("Item 1", "Item 2", "Item 3")
+        val mAdapter = TodayReminderViewAdapter2(dataSet)
+        val mList = binding.list
+        mList.layoutManager = LinearLayoutManager(requireContext())
+        mList.adapter = mAdapter
 
         return root
     }
@@ -50,12 +55,12 @@ class TodayReminderFragment : Fragment() {
         })
     }
 
-    private fun initRecyclerView() {
-        viewManager = LinearLayoutManager(requireContext())
-        viewAdapter = TodayReminderViewAdapter(requireContext(), viewModel)
-        binding.recyclerView.apply {
-            layoutManager = viewManager
-            adapter = viewAdapter
-        }
-    }
+//    private fun initRecyclerView() {
+//        viewManager = LinearLayoutManager(requireContext())
+//        viewAdapter = TodayReminderViewAdapter(requireContext(), viewModel)
+//        binding.recyclerView.apply {
+//            layoutManager = viewManager
+//            adapter = viewAdapter
+//        }
+//    }
 }

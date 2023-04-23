@@ -6,9 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".ui.todayReminder.TodayReminderFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+    <!--        android:id="@+id/recycler_view"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent" />-->
+
+    <com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeRecyclerView
+        android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:divider="@drawable/list_divider"
+        app:item_layout="@layout/fragment_notification_setting" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
