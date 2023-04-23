@@ -37,6 +37,8 @@
                     android:id="@+id/tv_time"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_weight="0.3"
                     android:gravity="center"
                     android:text="15:00AM" />
@@ -71,13 +73,16 @@
                         android:id="@+id/tv_drug_name"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginTop="10dp"
                         android:layout_weight="0.5"
-                        android:text="藥物名" />
+                        android:text="藥物名"
+                        android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/tv_dosage"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
+                        android:layout_marginBottom="10dp"
                         android:layout_weight="0.5"
                         android:text="數量" />
 
@@ -98,11 +103,10 @@
                 android:id="@+id/drag_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_outline_drag_indicator_24"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:src="@drawable/ic_outline_drag_indicator_24" />
 
         </LinearLayout>
-
 
 
     </LinearLayout>
