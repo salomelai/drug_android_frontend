@@ -57,7 +57,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
                         android:text="@{viewModel.record.drug.name}"
-                        android:onTextChanged="@{(text, start, before, count) -> viewModel.setDrugName(text.toString()) }"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -115,6 +114,12 @@
                         android:layout_marginBottom="15dp"
                         android:text="...正在載入科別"
                         android:textSize="16sp" />
+
+                    <CheckBox
+                        android:id="@+id/cb_before_meal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="飯前" />
 
                 </LinearLayout>
 
@@ -295,12 +300,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="10dp"
                         android:orientation="vertical">
-
-                        <CheckBox
-                            android:id="@+id/cb_before_meal"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="飯前" />
 
                         <CheckBox
                             android:id="@+id/cb_after_meal"

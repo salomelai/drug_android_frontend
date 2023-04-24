@@ -10,7 +10,7 @@ import com.junting.drug_android_frontend.databinding.RemindItemViewBinding
 import com.junting.drug_android_frontend.model.today_reminder.TodayReminder
 import java.util.Collections
 
-class TodayReminderViewAdapter2(val viewModel: TodayReminderViewModel)
+class TodayReminderViewAdapter2()
     :DragDropSwipeAdapter<TodayReminder, TodayReminderViewAdapter2.ViewHolder>(Collections.emptyList()) {
 
     class ViewHolder(private val binding: RemindItemViewBinding) : DragDropSwipeAdapter.ViewHolder(binding.root) {
@@ -35,10 +35,6 @@ class TodayReminderViewAdapter2(val viewModel: TodayReminderViewModel)
 
     override fun getViewHolder(itemLayout: View): ViewHolder {
         TODO("Not yet implemented")
-    }
-
-    override fun getItemCount(): Int {
-        return viewModel.records.value?.size ?: 0
     }
 
     override fun getViewToTouchToStartDraggingItem(item: TodayReminder, viewHolder: TodayReminderViewAdapter2.ViewHolder, position: Int): View? {

@@ -51,7 +51,7 @@ class TodayReminderFragment : Fragment() {
 
     private fun initRecyclerView() {
         viewManager = LinearLayoutManager(requireContext())
-        viewAdapter = TodayReminderViewAdapter2(viewModel)
+        viewAdapter = TodayReminderViewAdapter2()
         binding.list.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = viewAdapter
