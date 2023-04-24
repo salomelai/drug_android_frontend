@@ -3,13 +3,13 @@ package com.junting.drug_android_frontend.model.drugbag_info
 import java.io.Serializable
 
 data class DrugbagInformation(
-    val dosage: Int,
-    val drug: Drug,
-    val frequency: Int,
-    val hospitalDepartment: String,
-    val hospitalName: String,
-    val id: Int,
-    val onDemand: Boolean,
-    val stock: Int,
-    val timings: List<Int>
+    var dosage: Int,
+    var drug: Drug,
+    var frequency: Int,
+    var hospitalDepartment: String,
+    var hospitalName: String,
+    var id: Int,
+    var onDemand: Boolean,
+    var stock: Int,
+    var timings: List<Int>
 ): Serializable

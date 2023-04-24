@@ -3,6 +3,7 @@ package com.junting.drug_android_frontend
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
 import android.util.TypedValue
 import android.view.MenuItem
 import android.view.View
@@ -14,14 +15,17 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.junting.drug_android_frontend.databinding.ActivityDrugRecordBinding
 import com.junting.drug_android_frontend.model.drug_record.InteractingDrug
+import com.junting.drug_android_frontend.model.drugbag_info.DrugbagInformation
 import com.junting.drug_android_frontend.ui.libs.ExpandableListUtils
 import java.util.*
+import com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsViewModel
 
 class DrugRecordActivity : AppCompatActivity() {
 
@@ -29,13 +33,13 @@ class DrugRecordActivity : AppCompatActivity() {
 
     internal var adapter: RrugRecordExpandableListAdapter? = null
 
-    private lateinit var viewModel: DrugRecordViewModel
-
-    private var timeSlots = mutableListOf<String>()
+    private lateinit var viewModel: DrugRecordsViewModel
 
     private var checkBoxes: Array<CheckBox> = arrayOf()
 
     private var drugId: Int? = null
+
+    private var notificationSettingFragment = NotificationSettingFragment()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,6 +69,9 @@ class DrugRecordActivity : AppCompatActivity() {
         initOndemandCheckbox()
         initTimingsCheckbox()
         initButton()
+        binding.llNotificationSetting.setOnClickListener {
+            fragmentIn(notificationSettingFragment)
+        }
 
         //代表前一個動作一點選卡片
         drugId = intent.getIntExtra("drugId", 0)
@@ -72,6 +79,39 @@ class DrugRecordActivity : AppCompatActivity() {
             //
         }else{
             initDrugRecordViewModel()
+        }
+
+        if(intent.getSerializableExtra("drugInteractions")!=null){
+            val drugInteractions = intent.getSerializableExtra("drugInteractions") as List<InteractingDrug>
+//            initExpandableListInteraction(drugInteractions)
+            Log.d("InteractingDrugs", "drugInteractions: ${drugInteractions}")
+            initExpandableListInteraction(drugInteractions)
+        }
+        if(intent.getSerializableExtra("drugbagInfo")!=null){
+            val drugbagInfo = intent.getSerializableExtra("drugbagInfo") as DrugbagInformation
+            Log.d("DrugbagInformation", "drugbagInfo: ${drugbagInfo}")
+            binding.tvDrugName.text = drugbagInfo.drug.name
+            binding.tvHospital.text = drugbagInfo.hospitalName
+            binding.tvDepartment.text = drugbagInfo.hospitalDepartment
+            binding.tvIndication.text = drugbagInfo.drug.indication
+            binding.tvSideEffect.text = drugbagInfo.drug.sideEffect
+            binding.tvAppearance.text = drugbagInfo.drug.appearance
+            binding.cbOnDemand.isChecked = drugbagInfo.onDemand
+            when(drugbagInfo.frequency){
+                1 -> initTimeSection(mutableListOf("8:00"))
+                2 -> initTimeSection(mutableListOf("8:00", "12:00"))
+                3 -> initTimeSection(mutableListOf("8:00", "12:00", "18:00"))
+                4 -> initTimeSection(mutableListOf("8:00", "12:00", "18:00", "22:00"))
+                5 -> initTimeSection(mutableListOf("8:00", "12:00", "18:00", "22:00", "24:00"))
+            }
+            for (i in drugbagInfo.timings) {
+                checkBoxes[i].isChecked = true
+            }
+            binding.tvDosage.text = drugbagInfo.dosage.toString()
+            binding.tvStock.text = drugbagInfo.stock.toString()
+
+
+
         }
     }
 
@@ -87,18 +127,18 @@ class DrugRecordActivity : AppCompatActivity() {
 
     private fun initDrugRecordViewModel() {
         binding.progressBar.visibility = View.VISIBLE
-        viewModel = DrugRecordViewModel()
+        viewModel = DrugRecordsViewModel()
         viewModel.fetchRecord(drugId!!)
         viewModel.record.observe(this, Observer {
-            binding.tvDrugName.text = it.drug.name
+//            binding.tvDrugName.text = it.drug.name
             binding.tvHospital.text = it.hospitalName
             binding.tvDepartment.text = it.hospitalDepartment
-            binding.tvIndication.text = it.drug.indications
+            binding.tvIndication.text = it.drug.indication
             binding.tvSideEffect.text = it.drug.sideEffect
             binding.tvAppearance.text = it.drug.appearance
             binding.cbOnDemand.isChecked = it.onDemand
-            timeSlots = it.timeSlots.toMutableList()
-            initTimeSection()
+            var timeSlots = it.timeSlots.toMutableList()
+            initTimeSection(timeSlots)
             initExpandableListInteraction(it.interactingDrugs!!)
             for (i in it.timings) {
                 checkBoxes[i].isChecked = true
@@ -106,12 +146,13 @@ class DrugRecordActivity : AppCompatActivity() {
             binding.tvDosage.text = it.dosage.toString()
             binding.tvStock.text = it.stock.toString()
 
-            binding.progressBar.visibility = View.GONE
+
+            binding.progressBar.visibility = GONE
 
         })
     }
 
-    private fun initTimeSection() {
+    private fun initTimeSection(timeSlots : MutableList<String>) {
 
         for (timeSlot in timeSlots) {
             val tvTimeSlot = AppCompatTextView(this)
@@ -151,9 +192,9 @@ class DrugRecordActivity : AppCompatActivity() {
                 // check if the time already exists
                 if (timeSlots.contains(time)) {
                     MaterialAlertDialogBuilder(this)
-                        .setTitle("Warning")
-                        .setMessage("The selected time already exists.")
-                        .setPositiveButton("OK", null)
+                        .setTitle("警告")
+                        .setMessage("所選時間已存在。")
+                        .setPositiveButton("確定", null)
                         .show()
                     return@addOnPositiveButtonClickListener
                 }
@@ -246,8 +287,8 @@ class DrugRecordActivity : AppCompatActivity() {
         }
         binding.cbOnDemand.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                binding.llOuterborderTimeSlot.visibility = View.GONE
-                binding.llTimings.visibility = View.GONE
+                binding.llOuterborderTimeSlot.visibility = GONE
+                binding.llTimings.visibility = GONE
             } else {
                 binding.llOuterborderTimeSlot.visibility = View.VISIBLE
                 binding.llTimings.visibility = View.VISIBLE
@@ -275,5 +316,20 @@ class DrugRecordActivity : AppCompatActivity() {
             intent.putExtra("fragmentName", "DrugRecordsFragment")
             startActivity(intent)
         }
+    }
+    fun fragmentIn(newFragment: Fragment) {
+        // 使用 FragmentManager 開始一個新的 Fragment 交易
+        val fragmentManager = supportFragmentManager
+        val fragmentTransaction = fragmentManager.beginTransaction()
+
+//        // 設定進入和退出動畫
+//        fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
+
+        // 建立並添加新的 Fragment
+        fragmentTransaction.replace(R.id.container, newFragment)
+        fragmentTransaction.addToBackStack(null)
+
+        // 提交 Fragment 交易
+        fragmentTransaction.commit()
     }
 }

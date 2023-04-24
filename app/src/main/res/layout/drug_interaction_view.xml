@@ -62,7 +62,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="16sp"
-            android:text="互相影響療效或增加副作用的嚴重度"/>
+            android:text="互相影響療效或增加副作用的嚴重度"
+            android:layout_marginBottom="15dp"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="服藥時間: "
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:drawableLeft="@drawable/ic_outline_access_time_24"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv_time_slots"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="08:30 14:00" />
+
+
 
 
     </androidx.appcompat.widget.LinearLayoutCompat>

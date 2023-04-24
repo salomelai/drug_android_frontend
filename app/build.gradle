@@ -64,5 +64,7 @@ dependencies {
     //dynamsoftdocumentnormalizer
     implementation 'com.dynamsoft:dynamsoftdocumentnormalizer:1.0.21'
     implementation 'com.dynamsoft:dynamsoftcameraenhancer:3.0.3'
+    //DragDropSwipeRecyclerview
+    implementation 'com.ernestoyaquello.dragdropswiperecyclerview:drag-drop-swipe-recyclerview:1.1.1'
 
 }

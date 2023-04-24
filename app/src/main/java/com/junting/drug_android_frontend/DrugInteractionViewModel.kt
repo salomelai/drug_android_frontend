@@ -4,7 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.junting.drug_android_frontend.model.drug_interaction.InteractingDrug
+import com.junting.drug_android_frontend.model.drug_record.InteractingDrug
 import com.junting.drug_android_frontend.services.IDrugInteractionService
 import kotlinx.coroutines.launch
 

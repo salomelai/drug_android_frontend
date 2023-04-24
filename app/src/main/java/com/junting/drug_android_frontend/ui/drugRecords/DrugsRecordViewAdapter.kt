@@ -31,16 +31,17 @@ class DrugsRecordViewAdapter(private val context: Context, private val viewModel
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val drugRecord: DrugRecord = viewModel.records.value!!.get(position)
         holder.drugItemViewBinding.tvDrugName.text = drugRecord.drug.name
-        holder.drugItemViewBinding.tvIndication.text = drugRecord.drug.indications
-        holder.drugItemViewBinding.tvFrequencyDosage.text = drugRecord.frequency.toString() + " times a day, " + drugRecord.dosage.toString() + " pills each time"
-        if (drugRecord.timeSlots.isEmpty()){
-            holder.drugItemViewBinding.tvTimeSlot.visibility = View.GONE
+        holder.drugItemViewBinding.tvIndication.text = drugRecord.drug.indication
+        if(drugRecord.frequency==0){
+            holder.drugItemViewBinding.tvFrequencyDosage.text = "按需服用," + drugRecord.dosage.toString() + " 單位/次"
         }else{
-            var timeSlotLine = ""
-            for(timeSlot in drugRecord.timeSlots) {
-                timeSlotLine += timeSlot + " "
-            }
-            holder.drugItemViewBinding.tvTimeSlot.text = timeSlotLine
+            holder.drugItemViewBinding.tvFrequencyDosage.text = drugRecord.frequency.toString() + " 次/天, " + drugRecord.dosage.toString() + " 單位/次"
+        }
+
+        if (drugRecord.timeSlots.isEmpty()){
+            holder.drugItemViewBinding.tvTimeSlots.visibility = View.GONE
+        }else{
+            holder.drugItemViewBinding.tvTimeSlots.text = drugRecord.timeSlots.joinToString()
         }
         holder.drugItemViewBinding.chipStock.text = "庫存: "+drugRecord.stock.toString()
         holder.drugItemViewBinding.tvHospitalDepartment.text = drugRecord.hospitalName.toString() + ", " + drugRecord.hospitalDepartment.toString()

@@ -26,6 +26,8 @@ class TodayReminderViewAdapter(private val context: Context ,private val viewMod
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val todayReminder: TodayReminder = viewModel.records.value!!.get(position)
         holder.ViewBinding.tvDrugName.text = todayReminder.drug.name
+        holder.ViewBinding.tvTime.text = todayReminder.timeSlot
+        holder.ViewBinding.tvDosage.text = todayReminder.dosage.toString()+"單位"
     }
 
 }

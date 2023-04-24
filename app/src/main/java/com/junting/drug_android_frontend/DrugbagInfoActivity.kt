@@ -3,6 +3,7 @@ package com.junting.drug_android_frontend
 import android.R
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
@@ -44,13 +45,12 @@ class DrugbagInfoActivity : AppCompatActivity() {
 
         initOndemandCheckbox()
         initTimingsCheckbox()
-        initDosageDropdown()
         initButton()
 
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            android.R.id.home -> {
+            R.id.home -> {
                 onBackPressed()
                 true
             }
@@ -62,19 +62,13 @@ class DrugbagInfoActivity : AppCompatActivity() {
         binding.progressBar.visibility = View.VISIBLE
         viewModel.fetchDrugbagInfo()
         viewModel.drugbagInfo.observe(this, Observer {
-//            binding.tilDrugName.editText?.setText(it.drug.name)
-            binding.tilHospitalName.editText?.setText(it.hospitalName)
-            binding.tilDepartment.editText?.setText(it.hospitalDepartment)
-            binding.tilIndication.editText?.setText(it.drug.indications)
-            binding.tilSideEffect.editText?.setText(it.drug.sideEffect)
-            binding.tilAppearance.editText?.setText(it.drug.appearance)
-            binding.cbOnDemand.isChecked = it.onDemand
+
             initFrequencyDropdown(it.frequency)
             for(i in it.timings){
                 checkBoxes[i].isChecked = true
             }
-            binding.actvDosage.setText(it.dosage.toString())
-            binding.tilStock.editText?.setText(it.stock.toString())
+            initDosageDropdown(it.dosage)
+//            binding.tilStock.editText?.setText(it.stock.toString())
 
             binding.progressBar.visibility = View.GONE
         })
@@ -97,7 +91,8 @@ class DrugbagInfoActivity : AppCompatActivity() {
         }
     }
 
-    private fun initDosageDropdown() {
+    private fun initDosageDropdown(defaultValue: Int) {
+        binding.actvDosage.setText(defaultValue.toString())
         val dosageOption = arrayOf(1, 2, 3, 4, 5)
         val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, dosageOption)
         binding.actvDosage.setAdapter(adapter)
@@ -106,6 +101,9 @@ class DrugbagInfoActivity : AppCompatActivity() {
         binding.actvDosage.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val selectedItem = parent.getItemAtPosition(position).toString()
             Toast.makeText(this, "您選擇了：$selectedItem", Toast.LENGTH_SHORT).show()
+            viewModel.drugbagInfo.value?.let {
+                it.dosage = selectedItem.toInt()
+            }
         }
     }
 
@@ -119,20 +117,73 @@ class DrugbagInfoActivity : AppCompatActivity() {
 
     private fun initTimingsCheckbox() {
         binding.cbBeforeMeal.setOnCheckedChangeListener { buttonView, isChecked ->
-            binding.cbAfterMeal.isEnabled = !isChecked
-            binding.cbWithFood.isEnabled = !isChecked
+            viewModel.drugbagInfo.value?.let {
+                if (isChecked) {
+                    if (!it.timings.contains(0)) {
+                        // 新增 0 到 timings 列表
+                        it.timings = it.timings.toMutableList().apply { add(0) }
+                    }
+                } else {
+                    if (it.timings.contains(0)) {
+                        // 移除 timings 列表中的 0
+                        it.timings = it.timings.toMutableList().apply { remove(0) }
+                    }
+                }
+            }
         }
 
         binding.cbAfterMeal.setOnCheckedChangeListener { buttonView, isChecked ->
+            viewModel.drugbagInfo.value?.let {
+                if (isChecked) {
+                    if (!it.timings.contains(1)) {
+                        // 新增 1 到 timings 列表
+                        it.timings = it.timings.toMutableList().apply { add(1) }
+                    }
+                } else {
+                    if (it.timings.contains(1)) {
+                        // 移除 timings 列表中的 1
+                        it.timings = it.timings.toMutableList().apply { remove(1) }
+                    }
+                }
+            }
             binding.cbBeforeMeal.isEnabled = !isChecked
             binding.cbWithFood.isEnabled = !isChecked
         }
 
         binding.cbWithFood.setOnCheckedChangeListener { buttonView, isChecked ->
+            viewModel.drugbagInfo.value?.let {
+                if (isChecked) {
+                    if (!it.timings.contains(2)) {
+                        // 新增 2 到 timings 列表
+                        it.timings = it.timings.toMutableList().apply { add(2) }
+                    }
+                } else {
+                    if (it.timings.contains(2)) {
+                        // 移除 timings 列表中的 2
+                        it.timings = it.timings.toMutableList().apply { remove(2) }
+                    }
+                }
+            }
             binding.cbBeforeMeal.isEnabled = !isChecked
             binding.cbAfterMeal.isEnabled = !isChecked
         }
+        binding.cbBeforeSleep.setOnCheckedChangeListener { buttonView, isChecked ->
+            viewModel.drugbagInfo.value?.let {
+                if (isChecked) {
+                    if (!it.timings.contains(3)) {
+                        // 新增 3 到 timings 列表
+                        it.timings = it.timings.toMutableList().apply { add(3) }
+                    }
+                } else {
+                    if (it.timings.contains(3)) {
+                        // 移除 timings 列表中的 3
+                        it.timings = it.timings.toMutableList().apply { remove(3) }
+                    }
+                }
+            }
+        }
     }
+
 
     private fun initFrequencyDropdown(defaultValue: Int) {
         binding.actvFrequency.setText(defaultValue.toString())
@@ -143,6 +194,9 @@ class DrugbagInfoActivity : AppCompatActivity() {
         binding.actvFrequency.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             val selectedItem = parent.getItemAtPosition(position).toString()
             Toast.makeText(this, "您選擇了：$selectedItem", Toast.LENGTH_SHORT).show()
+            viewModel.drugbagInfo.value?.let {
+                it.frequency = selectedItem.toInt()
+            }
         }
     }
 
