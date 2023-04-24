@@ -33,7 +33,7 @@ class DrugRecordActivity : AppCompatActivity() {
 
     internal var adapter: RrugRecordExpandableListAdapter? = null
 
-    private lateinit var viewModel: DrugRecordsViewModel
+    private var viewModel: DrugRecordsViewModel = DrugRecordsViewModel()
 
     private var checkBoxes: Array<CheckBox> = arrayOf()
 
@@ -75,19 +75,19 @@ class DrugRecordActivity : AppCompatActivity() {
 
         //代表前一個動作一點選卡片
         drugId = intent.getIntExtra("drugId", 0)
-        if(drugId==0){
+        if (drugId == 0) {
             //
-        }else{
+        } else {
             initDrugRecordViewModel()
         }
 
-        if(intent.getSerializableExtra("drugInteractions")!=null){
+        if (intent.getSerializableExtra("drugInteractions") != null) {
             val drugInteractions = intent.getSerializableExtra("drugInteractions") as List<InteractingDrug>
 //            initExpandableListInteraction(drugInteractions)
             Log.d("InteractingDrugs", "drugInteractions: ${drugInteractions}")
             initExpandableListInteraction(drugInteractions)
         }
-        if(intent.getSerializableExtra("drugbagInfo")!=null){
+        if (intent.getSerializableExtra("drugbagInfo") != null) {
             val drugbagInfo = intent.getSerializableExtra("drugbagInfo") as DrugbagInformation
             Log.d("DrugbagInformation", "drugbagInfo: ${drugbagInfo}")
             binding.tvDrugName.text = drugbagInfo.drug.name
@@ -109,9 +109,6 @@ class DrugRecordActivity : AppCompatActivity() {
             }
             binding.tvDosage.text = drugbagInfo.dosage.toString()
             binding.tvStock.text = drugbagInfo.stock.toString()
-
-
-
         }
     }
 
@@ -127,7 +124,8 @@ class DrugRecordActivity : AppCompatActivity() {
 
     private fun initDrugRecordViewModel() {
         binding.progressBar.visibility = View.VISIBLE
-        viewModel = DrugRecordsViewModel()
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
         viewModel.fetchRecord(drugId!!)
         viewModel.record.observe(this, Observer {
 //            binding.tvDrugName.text = it.drug.name
@@ -145,10 +143,7 @@ class DrugRecordActivity : AppCompatActivity() {
             }
             binding.tvDosage.text = it.dosage.toString()
             binding.tvStock.text = it.stock.toString()
-
-
             binding.progressBar.visibility = GONE
-
         })
     }
 
@@ -326,6 +321,7 @@ class DrugRecordActivity : AppCompatActivity() {
 //        fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
 
         // 建立並添加新的 Fragment
+        // this resource id should be a fragment
         fragmentTransaction.replace(R.id.container, newFragment)
         fragmentTransaction.addToBackStack(null)
 
