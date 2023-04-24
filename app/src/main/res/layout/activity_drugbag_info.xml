@@ -42,8 +42,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:maxLines="1"
-                    android:onTextChanged="@{(text, start, before, count) -> viewModel.setDrugName(text.toString) }"
-                    android:text="@{viewModel.drugbagInfo.drug.name}" />
+                    android:text="@{viewModel.drugbagInfo.drug.name}"
+                    android:onTextChanged="@{(text, start, before, count) -> viewModel.setDrugName(text.toString()) }"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout

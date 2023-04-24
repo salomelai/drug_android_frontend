@@ -17,7 +17,9 @@ class TodayReminderFragment : Fragment() {
     private var _binding: FragmentTodayReminderBinding? = null
     private lateinit var viewAdapter: TodayReminderViewAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
-    private  var viewModel: TodayReminderViewModel = TodayReminderViewModel()
+
+    private var viewModel: TodayReminderViewModel = TodayReminderViewModel()
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -31,6 +33,7 @@ class TodayReminderFragment : Fragment() {
 
         _binding = FragmentTodayReminderBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
 
 //        initRecyclerView()
 //        initRecyclerViewModel()
