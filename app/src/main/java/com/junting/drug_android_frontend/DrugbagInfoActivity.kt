@@ -62,6 +62,7 @@ class DrugbagInfoActivity : AppCompatActivity() {
         binding.progressBar.visibility = View.VISIBLE
         viewModel.fetchDrugbagInfo()
         viewModel.drugbagInfo.observe(this, Observer {
+
             initFrequencyDropdown(it.frequency)
             for(i in it.timings){
                 checkBoxes[i].isChecked = true
@@ -183,7 +184,8 @@ class DrugbagInfoActivity : AppCompatActivity() {
         }
     }
 
-    private fun initFrequencyDropdown(defaultValue : Int) {
+
+    private fun initFrequencyDropdown(defaultValue: Int) {
         binding.actvFrequency.setText(defaultValue.toString())
         val frequencyOption = arrayOf(1, 2, 3, 4, 5)
         val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, frequencyOption)

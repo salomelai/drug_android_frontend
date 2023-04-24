@@ -9,12 +9,14 @@ import com.junting.drug_android_frontend.services.IDrugbagService
 import kotlinx.coroutines.launch
 
 class DrugbagInfoViewModel : ViewModel() {
+
     val drugbagInfo = MutableLiveData<DrugbagInformation>()
 
     fun setDrugName(name: String) {
         val info: DrugbagInformation = drugbagInfo.value!!
         info.drug.name = name
     }
+
     fun setHospitalName(name: String) {
         val info: DrugbagInformation = drugbagInfo.value!!
         info.hospitalName = name
@@ -43,7 +45,9 @@ class DrugbagInfoViewModel : ViewModel() {
         }
     }
 
+
     fun fetchDrugbagInfo() {
+
         viewModelScope.launch {
             val service = IDrugbagService.getInstance()
             try {
