@@ -61,7 +61,7 @@ class DrugsRecordViewAdapter(private val context: Context, private val viewModel
 
         holder.drugItemViewBinding.cardView.setOnClickListener {
             val intent = Intent(context, DrugRecordActivity::class.java)
-            intent.putExtra("drugId", drugRecord.id)
+            intent.putExtra("drugRecordId", drugRecord.id)
             context.startActivity(intent)
             Toast.makeText(context, String.format("You clicked %s", drugRecord.drug.name), Toast.LENGTH_SHORT).show()
         }

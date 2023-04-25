@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_rowWeight="1"
@@ -10,7 +11,9 @@
         app:cardCornerRadius="18dp"
         app:cardUseCompatPadding="true"
         app:cardPreventCornerOverlap="false"
-        app:cardElevation="5dp">
+        app:cardElevation="5dp"
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,11 +22,13 @@
             android:gravity="center">
 
             <ImageView
+                android:id="@+id/iv_drug_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_outline_pill_24px" />
 
             <TextView
+                android:id="@+id/tv_drug_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="藥物名"
@@ -34,7 +39,8 @@
                 android:id="@+id/chip_stock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="庫存" />
+                android:text="庫存"
+                android:clickable="false" />
 
         </LinearLayout>
 

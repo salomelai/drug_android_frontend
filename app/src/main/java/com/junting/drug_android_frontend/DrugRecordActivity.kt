@@ -37,7 +37,7 @@ class DrugRecordActivity : AppCompatActivity() {
 
     private var checkBoxes: Array<CheckBox> = arrayOf()
 
-    private var drugId: Int? = null
+    private var drugRecordId: Int? = null
 
     private var notificationSettingFragment = NotificationSettingFragment()
 
@@ -74,8 +74,8 @@ class DrugRecordActivity : AppCompatActivity() {
         }
 
         //代表前一個動作一點選卡片
-        drugId = intent.getIntExtra("drugId", 0)
-        if (drugId == 0) {
+        drugRecordId = intent.getIntExtra("drugRecordId", 0)
+        if (drugRecordId == 0) {
             //
         } else {
             initDrugRecordViewModel()
@@ -126,7 +126,7 @@ class DrugRecordActivity : AppCompatActivity() {
         binding.progressBar.visibility = View.VISIBLE
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
-        viewModel.fetchRecord(drugId!!)
+        viewModel.fetchRecord(drugRecordId!!)
         viewModel.record.observe(this, Observer {
 //            binding.tvDrugName.text = it.drug.name
             binding.tvHospital.text = it.hospitalName
