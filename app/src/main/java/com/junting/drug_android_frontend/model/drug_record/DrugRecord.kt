@@ -3,18 +3,18 @@ package com.junting.drug_android_frontend.model.drug_record
 import java.io.Serializable
 
 data class DrugRecord(
-    var dosage: Int,
-    var drug: Drug,
-    var frequency: Int,
-    var hospitalDepartment: String,
-    var hospitalName: String,
-    var id: Int,
-    var interactingDrugs: List<InteractingDrug>?,
-    var notificationSetting: NotificationSetting,
-    var onDemand: Boolean,
-    var position: Int,
-    var returnSetting: ReturnSetting,
-    var stock: Int,
-    var timeSlots: List<String>,
-    var timings: List<Int>
+    var dosage: Int = 0,
+    var drug: Drug = Drug(),
+    var frequency: Int = 0,
+    var hospitalDepartment: String = "",
+    var hospitalName: String = "",
+    var id: Int = 0,
+    var interactingDrugs: List<InteractingDrug>? = emptyList(),
+    var notificationSetting: NotificationSetting = NotificationSetting(),
+    var onDemand: Boolean = false,
+    var position: Int = 0,
+    var returnSetting: ReturnSetting = ReturnSetting(),
+    var stock: Int = 0,
+    var timeSlots: List<String> = emptyList(),
+    var timings: List<Int> = emptyList()
 ): Serializable

@@ -84,7 +84,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
-                        android:text="...正在載入醫院"
+                        android:text="@{viewModel.record.hospitalName}"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -112,7 +112,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
-                        android:text="...正在載入科別"
+                        android:text="@{viewModel.record.hospitalDepartment}"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -147,7 +147,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
-                        android:text="...正在載入適應症"
+                        android:text="@{viewModel.record.drug.indication}"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -175,7 +175,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
-                        android:text="...正在載入副作用"
+                        android:text="@{viewModel.record.drug.sideEffect}"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -203,7 +203,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
-                        android:text="...正在載入外觀"
+                        android:text="@{viewModel.record.drug.appearance}"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -232,7 +232,8 @@
                     <CheckBox
                         android:id="@+id/cb_on_demand"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:checked="@{viewModel.record.onDemand}"/>
 
                 </LinearLayout>
 
@@ -345,7 +346,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
-                        android:text="...正在載入劑量"
+                        android:text="@{String.valueOf(viewModel.record.dosage)}"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -373,7 +374,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
-                        android:text="...正在載入庫存"
+                        android:text="@{String.valueOf(viewModel.record.stock)}"
                         android:textSize="16sp" />
 
                 </LinearLayout>

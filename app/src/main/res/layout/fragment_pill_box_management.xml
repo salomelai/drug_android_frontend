@@ -130,6 +130,7 @@
         android:layout_weight="40">
         <!-- TextView 用於顯示使用說明 -->
         <TextView
+            android:id="@+id/tv_instruction"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="使用說明：..." />

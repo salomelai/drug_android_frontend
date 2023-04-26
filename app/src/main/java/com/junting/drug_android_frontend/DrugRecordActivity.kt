@@ -23,6 +23,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import com.junting.drug_android_frontend.databinding.ActivityDrugRecordBinding
+import com.junting.drug_android_frontend.model.drug_record.DrugRecord
 import com.junting.drug_android_frontend.model.drug_record.InteractingDrug
 import com.junting.drug_android_frontend.model.drugbag_info.DrugbagInformation
 import com.junting.drug_android_frontend.ui.libs.ExpandableListUtils
@@ -41,7 +42,6 @@ class DrugRecordActivity : AppCompatActivity() {
 
     private var drugRecordId: Int? = null
 
-    private var notificationSettingFragment = NotificationSettingFragment()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +49,8 @@ class DrugRecordActivity : AppCompatActivity() {
 
         binding = ActivityDrugRecordBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -73,44 +75,15 @@ class DrugRecordActivity : AppCompatActivity() {
         initButtonSheet(binding.llNotificationSetting, NotificationSettingButtonSheet(), "notificationSetting")
         initButtonSheet(binding.llDrugPosition, DrugPositionButtonSheet(), "drugPosition")
         initButton()
-
         //代表前一個動作一點選卡片
         drugRecordId = intent.getIntExtra("drugRecordId", 0)
         if (drugRecordId == 0) {
-            //
+            getObjFromPreviousActivity()
         } else {
             initDrugRecordViewModel()
         }
 
-        if (intent.getSerializableExtra("drugInteractions") != null) {
-            val drugInteractions = intent.getSerializableExtra("drugInteractions") as List<InteractingDrug>
-//            initExpandableListInteraction(drugInteractions)
-            Log.d("InteractingDrugs", "drugInteractions: ${drugInteractions}")
-            initExpandableListInteraction(drugInteractions)
-        }
-        if (intent.getSerializableExtra("drugbagInfo") != null) {
-            val drugbagInfo = intent.getSerializableExtra("drugbagInfo") as DrugbagInformation
-            Log.d("DrugbagInformation", "drugbagInfo: ${drugbagInfo}")
-            binding.tvDrugName.text = drugbagInfo.drug.name
-            binding.tvHospital.text = drugbagInfo.hospitalName
-            binding.tvDepartment.text = drugbagInfo.hospitalDepartment
-            binding.tvIndication.text = drugbagInfo.drug.indication
-            binding.tvSideEffect.text = drugbagInfo.drug.sideEffect
-            binding.tvAppearance.text = drugbagInfo.drug.appearance
-            binding.cbOnDemand.isChecked = drugbagInfo.onDemand
-            when(drugbagInfo.frequency){
-                1 -> initTimeSection(mutableListOf("8:00"))
-                2 -> initTimeSection(mutableListOf("8:00", "12:00"))
-                3 -> initTimeSection(mutableListOf("8:00", "12:00", "18:00"))
-                4 -> initTimeSection(mutableListOf("8:00", "12:00", "18:00", "22:00"))
-                5 -> initTimeSection(mutableListOf("8:00", "12:00", "18:00", "22:00", "24:00"))
-            }
-            for (i in drugbagInfo.timings) {
-                checkBoxes[i].isChecked = true
-            }
-            binding.tvDosage.text = drugbagInfo.dosage.toString()
-            binding.tvStock.text = drugbagInfo.stock.toString()
-        }
+
     }
 
     private fun initButtonSheet(layout: ViewGroup, buttonSheet: BottomSheetDialogFragment, tag: String) {
@@ -128,28 +101,66 @@ class DrugRecordActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+    private fun getObjFromPreviousActivity(){
+        viewModel.record.value = DrugRecord()
+
+        if (intent.getSerializableExtra("drugInteractions") != null) {
+            val drugInteractions = intent.getSerializableExtra("drugInteractions") as List<InteractingDrug>
+//            initExpandableListInteraction(drugInteractions)
+            Log.d("InteractingDrugs", "drugInteractions: ${drugInteractions}")
+
+            viewModel.setInteractingDrugs(drugInteractions)
+            initExpandableListInteraction(drugInteractions)
+        }
+        if (intent.getSerializableExtra("drugbagInfo") != null) {
+            val drugbagInfo = intent.getSerializableExtra("drugbagInfo") as DrugbagInformation
+            Log.d("DrugbagInformation", "drugbagInfo: ${drugbagInfo}")
+
+            viewModel.setDrugName(drugbagInfo.drug.name)
+            viewModel.setHospitalName(drugbagInfo.hospitalName)
+            viewModel.setHospitalDepartment(drugbagInfo.hospitalDepartment)
+            viewModel.setIndication(drugbagInfo.drug.indication)
+            viewModel.setSideEffect(drugbagInfo.drug.sideEffect)
+            viewModel.setAppearance(drugbagInfo.drug.appearance)
+            viewModel.setOnDemand(drugbagInfo.onDemand)
+            var timeSlots = mutableListOf<String>()
+            when(drugbagInfo.frequency){
+                1 -> timeSlots = mutableListOf("8:00")
+                2 -> timeSlots = mutableListOf("8:00", "12:00")
+                3 -> timeSlots = mutableListOf("8:00", "12:00", "18:00")
+                4 -> timeSlots = mutableListOf("8:00", "12:00", "18:00", "22:00")
+                5 -> timeSlots = mutableListOf("8:00", "12:00", "18:00", "22:00", "24:00")
+            }
+            viewModel.setTimeSlots(timeSlots)
+            initTimeSection(timeSlots)
+
+            viewModel.setTimings(drugbagInfo.timings)
+            for (i in drugbagInfo.timings) {
+                checkBoxes[i].isChecked = true
+            }
+            viewModel.setDosage(drugbagInfo.dosage)
+            viewModel.setStock(drugbagInfo.stock)
+        }
+    }
 
     private fun initDrugRecordViewModel() {
         binding.progressBar.visibility = View.VISIBLE
-        binding.viewModel = viewModel
-        binding.lifecycleOwner = this
         viewModel.fetchRecord(drugRecordId!!)
         viewModel.record.observe(this, Observer {
-//            binding.tvDrugName.text = it.drug.name
-            binding.tvHospital.text = it.hospitalName
-            binding.tvDepartment.text = it.hospitalDepartment
-            binding.tvIndication.text = it.drug.indication
-            binding.tvSideEffect.text = it.drug.sideEffect
-            binding.tvAppearance.text = it.drug.appearance
-            binding.cbOnDemand.isChecked = it.onDemand
+            Log.d("Observe DrugRecord", "record: ${it.toString()}")
+
             var timeSlots = it.timeSlots.toMutableList()
+            viewModel.setTimeSlots(timeSlots)
             initTimeSection(timeSlots)
+
             initExpandableListInteraction(it.interactingDrugs!!)
+            viewModel.setInteractingDrugs(it.interactingDrugs!!)
+
             for (i in it.timings) {
                 checkBoxes[i].isChecked = true
             }
-            binding.tvDosage.text = it.dosage.toString()
-            binding.tvStock.text = it.stock.toString()
+            viewModel.setTimings(it.timings)
+
             binding.progressBar.visibility = GONE
         })
     }
@@ -177,6 +188,7 @@ class DrugRecordActivity : AppCompatActivity() {
             tvTimeSlot.setOnClickListener {
                 timeSlots.remove(timeSlot)
                 binding.llTimeSlot.removeView(tvTimeSlot)
+                viewModel.setTimeSlots(timeSlots)
             }
         }
         binding.tvTimeSlotAdd.setOnClickListener {
@@ -206,6 +218,9 @@ class DrugRecordActivity : AppCompatActivity() {
 
                 // sort the time list
                 Collections.sort(timeSlots)
+
+                // update the time slots in the view model
+                viewModel.setTimeSlots(timeSlots)
 
                 // remove all the views in the LinearLayout
                 binding.llTimeSlot.removeAllViews()
@@ -314,6 +329,7 @@ class DrugRecordActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.btnConfirm.setOnClickListener {
+            Log.d("DrugRecord",viewModel.record.value.toString())
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("fragmentName", "DrugRecordsFragment")
             startActivity(intent)
