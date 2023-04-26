@@ -8,6 +8,7 @@ import android.util.TypedValue
 import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
+import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -17,6 +18,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
@@ -68,10 +70,9 @@ class DrugRecordActivity : AppCompatActivity() {
         initTextViewEditDialog(binding.llStock, binding.tvStock, "修改庫存",true)
         initOndemandCheckbox()
         initTimingsCheckbox()
+        initButtonSheet(binding.llNotificationSetting, NotificationSettingButtonSheet(), "notificationSetting")
+        initButtonSheet(binding.llDrugPosition, DrugPositionButtonSheet(), "drugPosition")
         initButton()
-        binding.llNotificationSetting.setOnClickListener {
-            fragmentIn(notificationSettingFragment)
-        }
 
         //代表前一個動作一點選卡片
         drugRecordId = intent.getIntExtra("drugRecordId", 0)
@@ -109,6 +110,12 @@ class DrugRecordActivity : AppCompatActivity() {
             }
             binding.tvDosage.text = drugbagInfo.dosage.toString()
             binding.tvStock.text = drugbagInfo.stock.toString()
+        }
+    }
+
+    private fun initButtonSheet(layout: ViewGroup, buttonSheet: BottomSheetDialogFragment, tag: String) {
+        layout.setOnClickListener{
+            buttonSheet.show(supportFragmentManager, tag)
         }
     }
 
@@ -311,21 +318,5 @@ class DrugRecordActivity : AppCompatActivity() {
             intent.putExtra("fragmentName", "DrugRecordsFragment")
             startActivity(intent)
         }
-    }
-    fun fragmentIn(newFragment: Fragment) {
-        // 使用 FragmentManager 開始一個新的 Fragment 交易
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-
-//        // 設定進入和退出動畫
-//        fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
-
-        // 建立並添加新的 Fragment
-        // this resource id should be a fragment
-        fragmentTransaction.replace(R.id.container, newFragment)
-        fragmentTransaction.addToBackStack(null)
-
-        // 提交 Fragment 交易
-        fragmentTransaction.commit()
     }
 }

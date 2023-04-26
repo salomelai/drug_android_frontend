@@ -115,12 +115,6 @@
                         android:text="...正在載入科別"
                         android:textSize="16sp" />
 
-                    <CheckBox
-                        android:id="@+id/cb_before_meal"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="飯前" />
-
                 </LinearLayout>
 
                 <ExpandableListView
@@ -302,6 +296,12 @@
                         android:orientation="vertical">
 
                         <CheckBox
+                            android:id="@+id/cb_before_meal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="飯前" />
+
+                        <CheckBox
                             android:id="@+id/cb_after_meal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -423,6 +423,28 @@
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_drug_position"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical"
+                    android:paddingTop="15dp"
+                    android:paddingBottom="15dp">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_outline_inbox_24"
+                        android:drawablePadding="15dp"
+                        android:text="藥盒放置位置"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
                 </LinearLayout>
 

@@ -62,7 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
-                    android:text="...正在載入開始服藥日期"
+                    android:text="請點擊選擇"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -89,7 +89,7 @@
                     android:id="@+id/tv_repeat"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="...正在載入重複提醒次數"
+                    android:text="請點擊選擇"
                     android:textSize="16sp" />
 
 
