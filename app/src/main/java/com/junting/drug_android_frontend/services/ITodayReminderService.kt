@@ -1,5 +1,6 @@
 package com.junting.drug_android_frontend.services
 
+import com.junting.drug_android_frontend.constants.DataApiConstants
 import com.junting.drug_android_frontend.model.today_reminder.TodayReminder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -15,7 +16,7 @@ interface ITodayReminderService {
         fun getInstance(): ITodayReminderService {
             if (todayReminderService == null) {
                 todayReminderService = Retrofit.Builder()
-                    .baseUrl("https://my-json-server.typicode.com/JunTingLin/drug-json-api-server/")
+                    .baseUrl(DataApiConstants.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build().create(ITodayReminderService::class.java)
             }

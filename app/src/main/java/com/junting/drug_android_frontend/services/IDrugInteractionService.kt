@@ -1,5 +1,6 @@
 package com.junting.drug_android_frontend.services
 
+import com.junting.drug_android_frontend.constants.DataApiConstants
 import com.junting.drug_android_frontend.model.drug_record.InteractingDrug
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -15,7 +16,7 @@ interface IDrugInteractionService {
         fun getInstance(): IDrugInteractionService {
             if (drugInteractionService == null) {
                 drugInteractionService = Retrofit.Builder()
-                    .baseUrl("https://my-json-server.typicode.com/JunTingLin/drug-json-api-server/")
+                    .baseUrl(DataApiConstants.BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build().create(IDrugInteractionService::class.java)
             }
