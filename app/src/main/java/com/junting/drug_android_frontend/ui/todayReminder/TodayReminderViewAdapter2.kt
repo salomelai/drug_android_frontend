@@ -14,8 +14,11 @@ class TodayReminderViewAdapter2()
     :DragDropSwipeAdapter<TodayReminder, TodayReminderViewAdapter2.ViewHolder>(Collections.emptyList()) {
 
     class ViewHolder(private val binding: RemindItemViewBinding) : DragDropSwipeAdapter.ViewHolder(binding.root) {
-        val itemText: TextView = binding.tvDrugName
+        val tvDrugName: TextView = binding.tvDrugName
+        val tvTime : TextView = binding.tvTime
+        val tvDosage : TextView = binding.tvDosage
         val dragIcon: ImageView = binding.dragIcon
+
     }
 
     fun update(todayReminder: List<TodayReminder>) {
@@ -30,7 +33,9 @@ class TodayReminderViewAdapter2()
 
     override fun onBindViewHolder(item: TodayReminder, viewHolder: TodayReminderViewAdapter2.ViewHolder, position: Int) {
         // Here we update the contents of the view holder's views to reflect the item's data
-        viewHolder.itemText.text = item.drug.name
+        viewHolder.tvDrugName.text = item.drug.name
+        viewHolder.tvTime.text = item.timeSlot
+        viewHolder.tvDosage.text = "劑量: "+item.dosage.toString()
     }
 
     override fun getViewHolder(itemLayout: View): ViewHolder {

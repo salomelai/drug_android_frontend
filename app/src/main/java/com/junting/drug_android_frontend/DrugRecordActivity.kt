@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.text.InputType
 import android.util.Log
 import android.util.TypedValue
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.View.GONE
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
@@ -86,19 +84,34 @@ class DrugRecordActivity : AppCompatActivity() {
 
     }
 
-    private fun initButtonSheet(layout: ViewGroup, buttonSheet: BottomSheetDialogFragment, tag: String) {
-        layout.setOnClickListener{
-            buttonSheet.show(supportFragmentManager, tag)
-        }
-    }
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
                 true
             }
+            R.id.action_delete -> {
+                // 处理点击删除按钮的逻辑
+                Toast.makeText(this, "你點了刪除", Toast.LENGTH_SHORT).show()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_drug_record, menu)
+
+        // 根據條件控制菜單項目的顯示與隱藏
+        val drugRecordId = intent.getIntExtra("drugRecordId", 0)
+        val deleteMenuItem = menu?.findItem(R.id.action_delete)
+        deleteMenuItem?.isVisible = drugRecordId != 0
+
+        return true
+    }
+
+    private fun initButtonSheet(layout: ViewGroup, buttonSheet: BottomSheetDialogFragment, tag: String) {
+        layout.setOnClickListener{
+            buttonSheet.show(supportFragmentManager, tag)
         }
     }
     private fun getObjFromPreviousActivity(){

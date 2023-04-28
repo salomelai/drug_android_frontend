@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -65,6 +66,9 @@ class PillBoxManagementFragment : Fragment() {
                     9 -> showCell(9, record)
                 }
             }
+            for (i in 1..9) {
+                closeProgressBar(i)
+            }
         })
 
         return root
@@ -99,6 +103,15 @@ class PillBoxManagementFragment : Fragment() {
             context?.startActivity(intent)
         }
     }
+    fun closeProgressBar(drugPositionId: Int) {
+        val drugPositionId = resources.getIdentifier(
+            "ll_drug_position_$drugPositionId",
+            "id",
+            requireContext().packageName
+        )
+        val drugPositionView = binding.root.findViewById<View>(drugPositionId)
+        drugPositionView?.findViewById<ProgressBar>(R.id.progressBar)?.visibility = View.GONE
+    }
 
     fun initCell(drugPositionId: Int) {
         val drugPositionId = resources.getIdentifier(
@@ -107,6 +120,7 @@ class PillBoxManagementFragment : Fragment() {
             requireContext().packageName
         )
         val drugPositionView = binding.root.findViewById<View>(drugPositionId)
+        drugPositionView?.findViewById<ProgressBar>(R.id.progressBar)?.visibility = View.VISIBLE
         drugPositionView?.findViewById<ImageView>(R.id.iv_drug_icon)?.visibility = View.GONE
         drugPositionView?.findViewById<TextView>(R.id.tv_drug_name)?.visibility = View.GONE
         drugPositionView?.findViewById<TextView>(R.id.chip_stock)?.visibility = View.GONE

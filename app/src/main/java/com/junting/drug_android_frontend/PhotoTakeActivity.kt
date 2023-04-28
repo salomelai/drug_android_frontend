@@ -1,6 +1,7 @@
 package com.junting.drug_android_frontend;
 
 import android.Manifest
+import android.R
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -47,7 +48,7 @@ class PhotoTakeActivity: AppCompatActivity() {
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            android.R.id.home -> {
+            R.id.home -> {
                 onBackPressed()
                 true
             }

@@ -43,9 +43,11 @@ class TodayReminderFragment : Fragment() {
     }
 
     private fun initRecyclerViewModel() {
+        binding.progressBar.visibility = View.VISIBLE
         viewModel.fetchRecords()
         viewModel.records.observe(context as AppCompatActivity, Observer {
             viewAdapter!!.update(it)
+            binding.progressBar.visibility = View.GONE
         })
     }
 
@@ -55,10 +57,10 @@ class TodayReminderFragment : Fragment() {
         binding.list.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = viewAdapter
-            behindSwipedItemBackgroundColor = ContextCompat.getColor(requireContext(), R.color.md_theme_dark_primary)
-            behindSwipedItemBackgroundSecondaryColor = ContextCompat.getColor(requireContext(), R.color.md_theme_light_outline)
-            behindSwipedItemIconDrawableId = R.drawable.ic_outline_notifications_24
-            behindSwipedItemIconSecondaryDrawableId  = R.drawable.ic_outline_notifications_off_24
+            behindSwipedItemBackgroundColor = ContextCompat.getColor(requireContext(), R.color.md_theme_light_outline)
+            behindSwipedItemBackgroundSecondaryColor = ContextCompat.getColor(requireContext(), R.color.md_theme_dark_primary)
+            behindSwipedItemIconDrawableId = R.drawable.ic_baseline_cancel_24
+            behindSwipedItemIconSecondaryDrawableId  = R.drawable.ic_baseline_check_circle_24
         }
     }
 }
