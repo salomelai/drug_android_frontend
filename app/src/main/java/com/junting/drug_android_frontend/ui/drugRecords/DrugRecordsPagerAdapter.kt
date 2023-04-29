@@ -29,10 +29,9 @@ class DrugRecordsPagerAdapter(context: Context): PagerAdapter() {
             container.addView(page.view)
             return page.view
         } else if (position == 1) {
-            val view: View =
-                LayoutInflater.from(context).inflate(R.layout.drug_records_hospital_tab, container, false)
-            container.addView(view)
-            return view
+            val page = DrugRecordsHospitalPage(context, container)
+            container.addView(page.view)
+            return page.view
         } else {
             val view: View =
                 LayoutInflater.from(context).inflate(R.layout.drug_records_department_tab, container, false)
