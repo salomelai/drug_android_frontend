@@ -49,7 +49,7 @@ class DrugRecordsAllPage(context: Context, container: ViewGroup) {
     }
 
     private fun initAdapter() {
-        this.viewModel.fetchRecords()
+        this.viewModel.fetchRecordsByAll()
         this.viewModel.records.observe(context as AppCompatActivity, Observer {
             recyclerAdapter!!.notifyDataSetChanged()
             progressBar.visibility = View.GONE

@@ -20,13 +20,13 @@ class DrugRecordsHospitalPage(context: Context, container: ViewGroup) {
 
     private val progressBar: ProgressBar
 
-    private val recyclerView: RecyclerView
+    private val drugRecordsByHospitalrecyclerView: RecyclerView
     private val hospitalListRecyclerView: RecyclerView
 
-    private var recyclerAdapter: DrugsRecordViewAdapter
+    private var drugRecordsByHospitalrecyclerAdapter: DrugsRecordViewAdapter
     private var hostpitalListRecyclerAdapter: HospitalListViewAdapter
 
-    private val viewModel: DrugRecordsViewModel
+    private val drugRecordsByHospitalviewModel: DrugRecordsViewModel
     private val hospitalListViewModel : HospitalListViewModel
 
 
@@ -37,25 +37,25 @@ class DrugRecordsHospitalPage(context: Context, container: ViewGroup) {
         this.view = LayoutInflater.from(context).inflate(R.layout.drug_records_hospital_tab, container, false)
         this.progressBar = view.findViewById(R.id.progressBar)
 
-        this.recyclerView = view.findViewById(R.id.recycler_view)
+        this.drugRecordsByHospitalrecyclerView = view.findViewById(R.id.recycler_view)
         this.hospitalListRecyclerView = view.findViewById(R.id.hospital_list_recycler_view)
 
-        this.viewModel = DrugRecordsViewModel()
+        this.drugRecordsByHospitalviewModel = DrugRecordsViewModel()
         this.hospitalListViewModel = HospitalListViewModel()
 
-        this.recyclerAdapter = DrugsRecordViewAdapter(context, viewModel)
-        this.hostpitalListRecyclerAdapter = HospitalListViewAdapter(context, hospitalListViewModel)
+        this.drugRecordsByHospitalrecyclerAdapter = DrugsRecordViewAdapter(context, drugRecordsByHospitalviewModel)
+        this.hostpitalListRecyclerAdapter = HospitalListViewAdapter(context, hospitalListViewModel,this)
 
-        this.initAdapter()
+//        this.initAdapter()
         this.initHospitalListAdapter()
 
-        this.initRecyclerView()
+//        this.initRecyclerView()
         this.initHospitalListRecyclerView()
 
         this.initProgressBar()
     }
 
-    private fun initHospitalListAdapter() {
+    fun initHospitalListAdapter() {
         this.hospitalListViewModel.fetchRecords()
         this.hospitalListViewModel.hospitals.observe(context as AppCompatActivity, Observer {
             hostpitalListRecyclerAdapter!!.notifyDataSetChanged()
@@ -63,10 +63,10 @@ class DrugRecordsHospitalPage(context: Context, container: ViewGroup) {
         })
     }
 
-    private fun initAdapter() {
-        this.viewModel.fetchRecords()
-        this.viewModel.records.observe(context as AppCompatActivity, Observer {
-            recyclerAdapter!!.notifyDataSetChanged()
+    fun initDrugRecordsByHospitalAdapter() {
+        this.drugRecordsByHospitalviewModel.fetchRecordsByHospital()
+        this.drugRecordsByHospitalviewModel.records.observe(context as AppCompatActivity, Observer {
+            drugRecordsByHospitalrecyclerAdapter!!.notifyDataSetChanged()
             progressBar.visibility = View.GONE
         })
     }
@@ -75,16 +75,20 @@ class DrugRecordsHospitalPage(context: Context, container: ViewGroup) {
         progressBar.visibility = View.VISIBLE
     }
 
-    private fun initHospitalListRecyclerView() {
+    fun initHospitalListRecyclerView() {
+        drugRecordsByHospitalrecyclerView.visibility = View.GONE
+        hospitalListRecyclerView.visibility = View.VISIBLE
         hospitalListRecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = hostpitalListRecyclerAdapter
         }
     }
-    private fun initRecyclerView() {
-        recyclerView.apply {
+    fun initDrugRecordsByHospitalRecyclerView() {
+        drugRecordsByHospitalrecyclerView.visibility = View.VISIBLE
+        hospitalListRecyclerView.visibility = View.GONE
+        drugRecordsByHospitalrecyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = recyclerAdapter
+            adapter = drugRecordsByHospitalrecyclerAdapter
         }
     }
 }

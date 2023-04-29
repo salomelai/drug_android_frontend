@@ -47,7 +47,7 @@ class PillBoxManagementFragment : Fragment() {
             initCell(i)
         }
 
-        ViewModel.fetchRecords()
+        ViewModel.fetchRecordsByAll()
         ViewModel.records.observe(viewLifecycleOwner, Observer {
 
 
