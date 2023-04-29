@@ -65,7 +65,8 @@
                 android:id="@+id/chip_stock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="庫存" />
+                android:text="庫存"
+                android:clickable="false"/>
 
             <TextView
                 android:id="@+id/tv_hospital_department"

@@ -1,5 +1,6 @@
 package com.junting.drug_android_frontend
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.TextView
@@ -69,6 +70,7 @@ class MainActivity : AppCompatActivity() {
 
         val fragmentName = intent.getStringExtra("fragmentName")
         if (fragmentName == "DrugRecordsFragment") {
+            navController.popBackStack()
             navController.navigate(R.id.navigation_drugRecords)
         }
     }
