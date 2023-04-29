@@ -163,19 +163,12 @@ class DrugRecordActivity : AppCompatActivity() {
         viewModel.fetchRecord(drugRecordId!!)
         viewModel.record.observe(this, Observer {
             Log.d("Observe DrugRecord", "record: ${it.toString()}")
-
             var timeSlots = it.timeSlots.toMutableList()
-            viewModel.setTimeSlots(timeSlots)
             initTimeSection(timeSlots)
-
             initExpandableListInteraction(it.interactingDrugs!!)
-            viewModel.setInteractingDrugs(it.interactingDrugs!!)
-
             for (i in it.timings) {
                 checkBoxes[i].isChecked = true
             }
-            viewModel.setTimings(it.timings)
-
             binding.progressBar.visibility = GONE
         })
     }
