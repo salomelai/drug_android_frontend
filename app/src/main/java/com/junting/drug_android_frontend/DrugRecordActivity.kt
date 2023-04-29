@@ -14,7 +14,6 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -27,6 +26,7 @@ import com.junting.drug_android_frontend.model.drugbag_info.DrugbagInformation
 import com.junting.drug_android_frontend.ui.libs.ExpandableListUtils
 import java.util.*
 import com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsViewModel
+import com.junting.drug_android_frontend.ui.libs.listeners.OnEditListener
 
 class DrugRecordActivity : AppCompatActivity() {
 
@@ -60,7 +60,9 @@ class DrugRecordActivity : AppCompatActivity() {
         )
 
 
-        initTextViewEditDialog(binding.llDrugName, binding.tvDrugName,"修改藥物名稱",false)
+        initTextViewEditDialog(binding.llDrugName, binding.tvDrugName,"修改藥物名稱",false) { text ->
+            viewModel.setDrugName(text)
+        }
         initTextViewEditDialog(binding.llHospital, binding.tvHospital, "修改醫院名稱",false)
         initTextViewEditDialog(binding.llDepartment, binding.tvDepartment, "修改科別名稱",false)
         initTextViewEditDialog(binding.llIndication, binding.tvIndication, "修改適應症",false)
@@ -265,6 +267,33 @@ class DrugRecordActivity : AppCompatActivity() {
             }
 
             picker.show(supportFragmentManager, "time_picker")
+        }
+    }
+
+    private fun initTextViewEditDialog(onclickLayout:View, tv: TextView, title: String, onlyDigitInput: Boolean, listener: OnEditListener) {
+        onclickLayout.setOnClickListener {
+            val builder = MaterialAlertDialogBuilder(this)
+            builder.setTitle(title)
+
+            // 建立一個 EditText 供使用者輸入新的藥物名稱
+            val input = EditText(this)
+            input.setText(tv.text)
+
+            if (onlyDigitInput) {
+                input.inputType = InputType.TYPE_CLASS_NUMBER
+            }
+            builder.setView(input)
+
+            // 設定確認和取消按鈕
+            builder.setPositiveButton("確定") { dialog, which ->
+                listener.onEdit(input.text.toString())
+            }
+            builder.setNegativeButton("取消") { dialog, which ->
+                dialog.cancel()
+            }
+
+            // 顯示對話框
+            builder.show()
         }
     }
 

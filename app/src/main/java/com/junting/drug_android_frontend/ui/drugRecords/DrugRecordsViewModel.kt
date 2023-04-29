@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.junting.drug_android_frontend.model.drug_record.DrugRecord
 import com.junting.drug_android_frontend.model.drug_record.InteractingDrug
-import com.junting.drug_android_frontend.model.drugbag_info.DrugbagInformation
 import com.junting.drug_android_frontend.services.IDrugRecordService
 import kotlinx.coroutines.launch
 
@@ -18,50 +17,66 @@ class DrugRecordsViewModel : ViewModel() {
     fun setDrugName(name: String) {
         val info: DrugRecord = record.value!!
         info.drug.name = name
+        triggerUpdate(info)
     }
     fun setHospitalName(name: String) {
         val info: DrugRecord = record.value!!
         info.hospitalName = name
+        triggerUpdate(info)
     }
     fun setHospitalDepartment(name: String) {
         val info: DrugRecord = record.value!!
         info.hospitalDepartment = name
+        triggerUpdate(info)
     }
     fun setInteractingDrugs(interactingDrugs:  List<InteractingDrug>) {
         val info: DrugRecord = record.value!!
         info.interactingDrugs = interactingDrugs
+        triggerUpdate(info)
     }
     fun setIndication(indication: String) {
         val info: DrugRecord = record.value!!
         info.drug.indication = indication
+        triggerUpdate(info)
     }
     fun setSideEffect(sideEffect: String) {
         val info: DrugRecord = record.value!!
         info.drug.sideEffect = sideEffect
+        triggerUpdate(info)
     }
     fun setAppearance(appearance: String) {
         val info: DrugRecord = record.value!!
         info.drug.appearance = appearance
+        triggerUpdate(info)
     }
     fun setOnDemand(onDemand: Boolean) {
         val info: DrugRecord = record.value!!
         info.onDemand = onDemand
+        triggerUpdate(info)
     }
     fun setTimeSlots(timeSlots: List<String>) {
         val info: DrugRecord = record.value!!
         info.timeSlots = timeSlots
+        triggerUpdate(info)
     }
     fun setTimings(timings: List<Int>) {
         val info: DrugRecord = record.value!!
         info.timings = timings
+        triggerUpdate(info)
     }
     fun setDosage(dosage: Int) {
         val info: DrugRecord = record.value!!
         info.dosage = dosage
+        triggerUpdate(info)
     }
     fun setStock(stock: Int) {
         val info: DrugRecord = record.value!!
         info.stock = stock
+        triggerUpdate(info)
+    }
+
+    private fun triggerUpdate(newRecord: DrugRecord) {
+        record.value = newRecord
     }
 
     fun fetchRecords() {
