@@ -39,7 +39,7 @@ class HospitalListViewAdapter(
         holder.button.text = viewModel.hospitals.value?.get(position)?.name
         holder.button.setOnClickListener {
             // Button click listener logic
-            drugRecordsHospitalPage.initDrugRecordsByHospitalAdapter()
+            drugRecordsHospitalPage.initDrugRecordsByHospitalAdapter(viewModel.hospitals.value?.get(position)?.name.toString())
             drugRecordsHospitalPage.initDrugRecordsByHospitalRecyclerView()
         }
     }

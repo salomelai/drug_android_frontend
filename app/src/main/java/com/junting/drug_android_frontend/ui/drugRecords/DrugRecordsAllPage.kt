@@ -72,9 +72,7 @@ class DrugRecordsAllPage(context: Context, container: ViewGroup) {
                 .setTitle("詢問")
                 .setMessage("請問您要使用何種方式輸入藥品?")
                 .setPositiveButton("手動") { dialogInterface, i ->
-                    val intent = Intent(context, DrugbagInfoActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    startActivity(context, intent, null)
+                    startActivity(context, Intent(context, DrugbagInfoActivity::class.java), null)
                     dialogInterface.dismiss()
                 }
                 .setNegativeButton("拍攝") { dialogInterface, i ->

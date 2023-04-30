@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.junting.drug_android_frontend.R
+import com.junting.drug_android_frontend.model.Hospital
 
 
 class DrugRecordsHospitalPage(context: Context, container: ViewGroup) {
@@ -56,6 +57,7 @@ class DrugRecordsHospitalPage(context: Context, container: ViewGroup) {
     }
 
     fun initHospitalListAdapter() {
+        progressBar.visibility = View.VISIBLE
         this.hospitalListViewModel.fetchRecords()
         this.hospitalListViewModel.hospitals.observe(context as AppCompatActivity, Observer {
             hostpitalListRecyclerAdapter!!.notifyDataSetChanged()
@@ -63,8 +65,9 @@ class DrugRecordsHospitalPage(context: Context, container: ViewGroup) {
         })
     }
 
-    fun initDrugRecordsByHospitalAdapter() {
-        this.drugRecordsByHospitalviewModel.fetchRecordsByHospital()
+    fun initDrugRecordsByHospitalAdapter(hospitalName: String) {
+        progressBar.visibility = View.VISIBLE
+        this.drugRecordsByHospitalviewModel.fetchRecordsByHospital(hospitalName)
         this.drugRecordsByHospitalviewModel.records.observe(context as AppCompatActivity, Observer {
             drugRecordsByHospitalrecyclerAdapter!!.notifyDataSetChanged()
             progressBar.visibility = View.GONE
@@ -72,7 +75,7 @@ class DrugRecordsHospitalPage(context: Context, container: ViewGroup) {
     }
 
     private fun initProgressBar() {
-        progressBar.visibility = View.VISIBLE
+
     }
 
     fun initHospitalListRecyclerView() {

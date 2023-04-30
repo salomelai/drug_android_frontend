@@ -90,7 +90,7 @@ class DrugRecordsViewModel : ViewModel() {
             }
         }
     }
-    fun fetchRecordsByHospital() {
+    fun fetchRecordsByHospital(hospitalName: String) {
         viewModelScope.launch {
             val drugRecordService = IDrugRecordService.getInstance()
             try {
