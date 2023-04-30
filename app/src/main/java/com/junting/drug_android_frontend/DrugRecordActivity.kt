@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -63,13 +64,27 @@ class DrugRecordActivity : AppCompatActivity() {
         initTextViewEditDialog(binding.llDrugName, binding.tvDrugName,"修改藥物名稱",false) { text ->
             viewModel.setDrugName(text)
         }
-        initTextViewEditDialog(binding.llHospital, binding.tvHospital, "修改醫院名稱",false)
-        initTextViewEditDialog(binding.llDepartment, binding.tvDepartment, "修改科別名稱",false)
-        initTextViewEditDialog(binding.llIndication, binding.tvIndication, "修改適應症",false)
-        initTextViewEditDialog(binding.llSideEffect, binding.tvSideEffect, "修改副作用",false)
-        initTextViewEditDialog(binding.llAppearance, binding.tvAppearance, "修改外觀",false)
-        initTextViewEditDialog(binding.llDosage, binding.tvDosage, "修改劑量",true)
-        initTextViewEditDialog(binding.llStock, binding.tvStock, "修改庫存",true)
+        initTextViewEditDialog(binding.llHospital, binding.tvHospital, "修改醫院名稱",false){
+            text -> viewModel.setHospitalName(text)
+        }
+        initTextViewEditDialog(binding.llDepartment, binding.tvDepartment, "修改科別名稱",false){
+            text -> viewModel.setHospitalDepartment(text)
+        }
+        initTextViewEditDialog(binding.llIndication, binding.tvIndication, "修改適應症",false){
+            text -> viewModel.setIndication(text)
+        }
+        initTextViewEditDialog(binding.llSideEffect, binding.tvSideEffect, "修改副作用",false){
+            text -> viewModel.setSideEffect(text)
+        }
+        initTextViewEditDialog(binding.llAppearance, binding.tvAppearance, "修改外觀",false){
+            text -> viewModel.setAppearance(text)
+        }
+        initTextViewEditDialog(binding.llDosage, binding.tvDosage, "修改劑量",true){
+            text -> viewModel.setDosage(text.toInt())
+        }
+        initTextViewEditDialog(binding.llStock, binding.tvStock, "修改庫存",true){
+            text -> viewModel.setStock(text.toInt())
+        }
         initOndemandCheckbox()
         initTimingsCheckbox()
         initButtonSheet(binding.llNotificationSetting, NotificationSettingButtonSheet(), "notificationSetting")
@@ -140,11 +155,11 @@ class DrugRecordActivity : AppCompatActivity() {
             viewModel.setOnDemand(drugbagInfo.onDemand)
             var timeSlots = mutableListOf<String>()
             when(drugbagInfo.frequency){
-                1 -> timeSlots = mutableListOf("8:00")
-                2 -> timeSlots = mutableListOf("8:00", "12:00")
-                3 -> timeSlots = mutableListOf("8:00", "12:00", "18:00")
-                4 -> timeSlots = mutableListOf("8:00", "12:00", "18:00", "22:00")
-                5 -> timeSlots = mutableListOf("8:00", "12:00", "18:00", "22:00", "24:00")
+                1 -> timeSlots = mutableListOf("08:00")
+                2 -> timeSlots = mutableListOf("08:00", "12:00")
+                3 -> timeSlots = mutableListOf("08:00", "12:00", "18:00")
+                4 -> timeSlots = mutableListOf("08:00", "12:00", "18:00", "22:00")
+                5 -> timeSlots = mutableListOf("08:00", "12:00", "18:00", "22:00", "24:00")
             }
             viewModel.setTimeSlots(timeSlots)
             initTimeSection(timeSlots)
@@ -175,13 +190,17 @@ class DrugRecordActivity : AppCompatActivity() {
 
     private fun initTimeSection(timeSlots : MutableList<String>) {
 
-        for (timeSlot in timeSlots) {
-            val tvTimeSlot = AppCompatTextView(this)
+        binding.llTimeSlot.removeAllViews() // Remove all existing views before adding new ones
+
+        for (i in timeSlots.indices) {
+            val tvTimeSlot = binding.llTimeSlot.getChildAt(i) as? AppCompatTextView
+                ?: AppCompatTextView(this)
+
             tvTimeSlot.layoutParams = LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT
             )
-//            tvTimeSlot.background = ContextCompat.getDrawable(this, android.R.attr.selectableItemBackground)
+//            tvTimeSlot.background = ContextCompat.getDrawable(this, R.attr.selectableItemBackground)
             val iconDrawable = ContextCompat.getDrawable(this, R.drawable.ic_outline_delete_24)
             tvTimeSlot.setCompoundDrawablesRelativeWithIntrinsicBounds(
                 null,
@@ -190,13 +209,17 @@ class DrugRecordActivity : AppCompatActivity() {
                 null
             )
             tvTimeSlot.setPadding(10, 10, 10, 10)
-            tvTimeSlot.text = timeSlot
+            tvTimeSlot.text = timeSlots[i]
             tvTimeSlot.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
-            binding.llTimeSlot.addView(tvTimeSlot)
+
             tvTimeSlot.setOnClickListener {
-                timeSlots.remove(timeSlot)
+                timeSlots.removeAt(i)
                 binding.llTimeSlot.removeView(tvTimeSlot)
                 viewModel.setTimeSlots(timeSlots)
+            }
+
+            if (tvTimeSlot.parent == null) {
+                binding.llTimeSlot.addView(tvTimeSlot)
             }
         }
         binding.tvTimeSlotAdd.setOnClickListener {
@@ -290,31 +313,6 @@ class DrugRecordActivity : AppCompatActivity() {
         }
     }
 
-    private fun initTextViewEditDialog(onclickLayout:View,tv: TextView, title: String,onlyDigitInput: Boolean) {
-        onclickLayout.setOnClickListener {
-            val builder = MaterialAlertDialogBuilder(this)
-            builder.setTitle(title)
-
-            // 建立一個 EditText 供使用者輸入新的藥物名稱
-            val input = EditText(this)
-            input.setText(tv.text)
-            if (onlyDigitInput) {
-                input.inputType = InputType.TYPE_CLASS_NUMBER
-            }
-            builder.setView(input)
-
-            // 設定確認和取消按鈕
-            builder.setPositiveButton("確定") { dialog, which ->
-                tv.text = input.text.toString()
-            }
-            builder.setNegativeButton("取消") { dialog, which ->
-                dialog.cancel()
-            }
-
-            // 顯示對話框
-            builder.show()
-        }
-    }
 
     private fun initTimingsCheckbox() {
         binding.cbBeforeMeal.setOnCheckedChangeListener { buttonView, isChecked ->
@@ -361,11 +359,13 @@ class DrugRecordActivity : AppCompatActivity() {
         binding.btnCancel.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("fragmentName", "DrugRecordsFragment")
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
         }
         binding.btnConfirm.setOnClickListener {
             Log.d("DrugRecord",viewModel.record.value.toString())
             val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             intent.putExtra("fragmentName", "DrugRecordsFragment")
             startActivity(intent)
         }
