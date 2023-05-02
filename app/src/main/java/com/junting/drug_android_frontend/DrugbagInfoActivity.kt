@@ -36,10 +36,10 @@ class DrugbagInfoActivity : AppCompatActivity() {
         )
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        if(intent.getStringExtra("UglyText")?.isNotEmpty() == true){
+        if (intent.getStringExtra("UglyText")?.isNotEmpty() == true) {
             supportActionBar?.setTitle("修改藥袋資訊")
             initDrugbagInfoViewModel()
-        }else{
+        } else {
             supportActionBar?.setTitle("新增藥袋資訊")
         }
 
@@ -48,6 +48,7 @@ class DrugbagInfoActivity : AppCompatActivity() {
         initButton()
 
     }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.home -> {
@@ -64,7 +65,7 @@ class DrugbagInfoActivity : AppCompatActivity() {
         viewModel.drugbagInfo.observe(this, Observer {
 
             initFrequencyDropdown(it.frequency)
-            for(i in it.timings){
+            for (i in it.timings) {
                 checkBoxes[i].isChecked = true
             }
             initDosageDropdown(it.dosage)
@@ -82,7 +83,7 @@ class DrugbagInfoActivity : AppCompatActivity() {
             intent.putExtra("fragmentName", "DrugRecordsFragment")
             startActivity(intent)
         }
-        binding.btnConfirm.setOnClickListener{
+        binding.btnConfirm.setOnClickListener {
             val intent = Intent(this, DrugInteractionActivity::class.java)
             viewModel.drugbagInfo.value?.let {
                 intent.putExtra("drugbagInfo", it)
@@ -98,13 +99,14 @@ class DrugbagInfoActivity : AppCompatActivity() {
         binding.actvDosage.setAdapter(adapter)
 
 
-        binding.actvDosage.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            val selectedItem = parent.getItemAtPosition(position).toString()
-            Toast.makeText(this, "您選擇了：$selectedItem", Toast.LENGTH_SHORT).show()
-            viewModel.drugbagInfo.value?.let {
-                it.dosage = selectedItem.toInt()
+        binding.actvDosage.onItemClickListener =
+            AdapterView.OnItemClickListener { parent, view, position, id ->
+                val selectedItem = parent.getItemAtPosition(position).toString()
+                Toast.makeText(this, "您選擇了：$selectedItem", Toast.LENGTH_SHORT).show()
+                viewModel.drugbagInfo.value?.let {
+                    it.dosage = selectedItem.toInt()
+                }
             }
-        }
     }
 
     private fun initOndemandCheckbox() {
@@ -119,31 +121,25 @@ class DrugbagInfoActivity : AppCompatActivity() {
         binding.cbBeforeMeal.setOnCheckedChangeListener { buttonView, isChecked ->
             viewModel.drugbagInfo.value?.let {
                 if (isChecked) {
-                    if (!it.timings.contains(0)) {
-                        // 新增 0 到 timings 列表
-                        it.timings = it.timings.toMutableList().apply { add(0) }
-                    }
+                    // 新增 0 到 timings 列表
+                    it.timings = it.timings.toMutableSet().apply { add(0) }
                 } else {
-                    if (it.timings.contains(0)) {
-                        // 移除 timings 列表中的 0
-                        it.timings = it.timings.toMutableList().apply { remove(0) }
-                    }
+                    // 移除 timings 列表中的 0
+                    it.timings = it.timings.toMutableSet().apply { remove(0) }
                 }
             }
+            binding.cbAfterMeal.isEnabled = !isChecked
+            binding.cbWithFood.isEnabled = !isChecked
         }
 
         binding.cbAfterMeal.setOnCheckedChangeListener { buttonView, isChecked ->
             viewModel.drugbagInfo.value?.let {
                 if (isChecked) {
-                    if (!it.timings.contains(1)) {
-                        // 新增 1 到 timings 列表
-                        it.timings = it.timings.toMutableList().apply { add(1) }
-                    }
+                    // 新增 1 到 timings 列表
+                    it.timings = it.timings.toMutableSet().apply { add(1) }
                 } else {
-                    if (it.timings.contains(1)) {
-                        // 移除 timings 列表中的 1
-                        it.timings = it.timings.toMutableList().apply { remove(1) }
-                    }
+                    // 移除 timings 列表中的 1
+                    it.timings = it.timings.toMutableSet().apply { remove(1) }
                 }
             }
             binding.cbBeforeMeal.isEnabled = !isChecked
@@ -153,15 +149,11 @@ class DrugbagInfoActivity : AppCompatActivity() {
         binding.cbWithFood.setOnCheckedChangeListener { buttonView, isChecked ->
             viewModel.drugbagInfo.value?.let {
                 if (isChecked) {
-                    if (!it.timings.contains(2)) {
-                        // 新增 2 到 timings 列表
-                        it.timings = it.timings.toMutableList().apply { add(2) }
-                    }
+                    // 新增 2 到 timings 列表
+                    it.timings = it.timings.toMutableSet().apply { add(2) }
                 } else {
-                    if (it.timings.contains(2)) {
-                        // 移除 timings 列表中的 2
-                        it.timings = it.timings.toMutableList().apply { remove(2) }
-                    }
+                    // 移除 timings 列表中的 2
+                    it.timings = it.timings.toMutableSet().apply { remove(2) }
                 }
             }
             binding.cbBeforeMeal.isEnabled = !isChecked
@@ -170,15 +162,11 @@ class DrugbagInfoActivity : AppCompatActivity() {
         binding.cbBeforeSleep.setOnCheckedChangeListener { buttonView, isChecked ->
             viewModel.drugbagInfo.value?.let {
                 if (isChecked) {
-                    if (!it.timings.contains(3)) {
-                        // 新增 3 到 timings 列表
-                        it.timings = it.timings.toMutableList().apply { add(3) }
-                    }
+                    // 新增 3 到 timings 列表
+                    it.timings = it.timings.toMutableSet().apply { add(3) }
                 } else {
-                    if (it.timings.contains(3)) {
-                        // 移除 timings 列表中的 3
-                        it.timings = it.timings.toMutableList().apply { remove(3) }
-                    }
+                    // 移除 timings 列表中的 3
+                    it.timings = it.timings.toMutableSet().apply { remove(3) }
                 }
             }
         }
@@ -191,13 +179,14 @@ class DrugbagInfoActivity : AppCompatActivity() {
         val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, frequencyOption)
         binding.actvFrequency.setAdapter(adapter)
 
-        binding.actvFrequency.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-            val selectedItem = parent.getItemAtPosition(position).toString()
-            Toast.makeText(this, "您選擇了：$selectedItem", Toast.LENGTH_SHORT).show()
-            viewModel.drugbagInfo.value?.let {
-                it.frequency = selectedItem.toInt()
+        binding.actvFrequency.onItemClickListener =
+            AdapterView.OnItemClickListener { parent, view, position, id ->
+                val selectedItem = parent.getItemAtPosition(position).toString()
+                Toast.makeText(this, "您選擇了：$selectedItem", Toast.LENGTH_SHORT).show()
+                viewModel.drugbagInfo.value?.let {
+                    it.frequency = selectedItem.toInt()
+                }
             }
-        }
     }
 
 }

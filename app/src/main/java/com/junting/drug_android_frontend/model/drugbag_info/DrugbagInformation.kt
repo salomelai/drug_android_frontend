@@ -11,5 +11,5 @@ data class DrugbagInformation(
     var id: Int,
     var onDemand: Boolean,
     var stock: Int,
-    var timings: List<Int>
+    var timings: Set<Int>
 ): Serializable

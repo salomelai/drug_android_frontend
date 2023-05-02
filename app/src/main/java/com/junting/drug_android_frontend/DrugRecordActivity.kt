@@ -164,7 +164,7 @@ class DrugRecordActivity : AppCompatActivity() {
             viewModel.setTimeSlots(timeSlots)
             initTimeSection(timeSlots)
 
-            viewModel.setTimings(drugbagInfo.timings)
+//            viewModel.setTimings(drugbagInfo.timings)
             for (i in drugbagInfo.timings) {
                 checkBoxes[i].isChecked = true
             }
@@ -223,16 +223,15 @@ class DrugRecordActivity : AppCompatActivity() {
             }
         }
         binding.tvTimeSlotAdd.setOnClickListener {
-            val picker = MaterialTimePicker.Builder()
-                .setTimeFormat(TimeFormat.CLOCK_24H)
-                .setHour(12)
-                .setMinute(0)
-                .build()
+            val timeList = mutableListOf<String>()
+            for (i in 0..23) {
+                timeList.add("${i.toString().padStart(2, '0')}:00")
+            }
 
-            picker.addOnPositiveButtonClickListener {
-                val hour = picker.hour.toString().padStart(2, '0')
-                val minute = picker.minute.toString().padStart(2, '0')
-                val time = "$hour:$minute"
+            val builder = MaterialAlertDialogBuilder(this)
+            builder.setTitle("請選擇時間")
+            builder.setItems(timeList.toTypedArray()) { dialog, which ->
+                val time = timeList[which]
 
                 // check if the time already exists
                 if (timeSlots.contains(time)) {
@@ -241,7 +240,7 @@ class DrugRecordActivity : AppCompatActivity() {
                         .setMessage("所選時間已存在。")
                         .setPositiveButton("確定", null)
                         .show()
-                    return@addOnPositiveButtonClickListener
+                    return@setItems
                 }
 
                 // add the new time to the list
@@ -281,8 +280,8 @@ class DrugRecordActivity : AppCompatActivity() {
                     }
                 }
             }
+            builder.show()
 
-            picker.show(supportFragmentManager, "time_picker")
         }
     }
 
@@ -316,18 +315,72 @@ class DrugRecordActivity : AppCompatActivity() {
 
     private fun initTimingsCheckbox() {
         binding.cbBeforeMeal.setOnCheckedChangeListener { buttonView, isChecked ->
+            viewModel.record.value?.let {
+                if (isChecked) {
+                    if (!it.timings.contains(0)) {
+                        // 新增 0 到 timings 列表
+                        viewModel.addTimes(0)
+                    }
+                } else {
+                    if (it.timings.contains(0)) {
+                        // 移除 timings 列表中的 0
+                        viewModel.removeTimes(0)
+                    }
+                }
+            }
             binding.cbAfterMeal.isEnabled = !isChecked
             binding.cbWithFood.isEnabled = !isChecked
         }
 
         binding.cbAfterMeal.setOnCheckedChangeListener { buttonView, isChecked ->
+            viewModel.record.value?.let {
+                if (isChecked) {
+                    if (!it.timings.contains(1)) {
+                        // 新增 1 到 timings 列表
+                        viewModel.addTimes(1)
+                    }
+                } else {
+                    if (it.timings.contains(1)) {
+                        // 移除 timings 列表中的 1
+                        viewModel.removeTimes(1)
+                    }
+                }
+            }
             binding.cbBeforeMeal.isEnabled = !isChecked
             binding.cbWithFood.isEnabled = !isChecked
         }
 
         binding.cbWithFood.setOnCheckedChangeListener { buttonView, isChecked ->
+            viewModel.record.value?.let {
+                if (isChecked) {
+                    if (!it.timings.contains(2)) {
+                        // 新增 2 到 timings 列表
+                        viewModel.addTimes(2)
+                    }
+                } else {
+                    if (it.timings.contains(2)) {
+                        // 移除 timings 列表中的 2
+                        viewModel.removeTimes(2)
+                    }
+                }
+            }
             binding.cbBeforeMeal.isEnabled = !isChecked
             binding.cbAfterMeal.isEnabled = !isChecked
+        }
+        binding.cbBeforeSleep.setOnCheckedChangeListener { buttonView, isChecked ->
+            viewModel.record.value?.let {
+                if (isChecked) {
+                    if (!it.timings.contains(3)) {
+                        // 新增 3 到 timings 列表
+                        viewModel.addTimes(3)
+                    }
+                } else {
+                    if (it.timings.contains(3)) {
+                        // 移除 timings 列表中的 3
+                        viewModel.removeTimes(3)
+                    }
+                }
+            }
         }
     }
 
@@ -339,9 +392,11 @@ class DrugRecordActivity : AppCompatActivity() {
             if (isChecked) {
                 binding.llOuterborderTimeSlot.visibility = GONE
                 binding.llTimings.visibility = GONE
+                viewModel.setOnDemand(true)
             } else {
                 binding.llOuterborderTimeSlot.visibility = View.VISIBLE
                 binding.llTimings.visibility = View.VISIBLE
+                viewModel.setOnDemand(false)
             }
         }
     }
