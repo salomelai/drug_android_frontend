@@ -8,6 +8,7 @@ import com.junting.drug_android_frontend.model.drug_record.DrugRecord
 import com.junting.drug_android_frontend.model.drug_record.InteractingDrug
 import com.junting.drug_android_frontend.services.IDrugRecordService
 import kotlinx.coroutines.launch
+import java.text.FieldPosition
 
 class DrugRecordsViewModel : ViewModel() {
 
@@ -68,7 +69,7 @@ class DrugRecordsViewModel : ViewModel() {
         triggerUpdate(info)
     }
 
-    fun setTimings(timings: List<Int>) {
+    fun setTimings(timings: Set<Int>) {
         val info: DrugRecord = record.value!!
         info.timings = timings
         triggerUpdate(info)

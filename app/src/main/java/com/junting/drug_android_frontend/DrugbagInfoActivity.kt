@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.junting.drug_android_frontend.databinding.ActivityDrugbagInfoBinding
+import com.junting.drug_android_frontend.model.drugbag_info.DrugbagInformation
 
 class DrugbagInfoActivity : AppCompatActivity() {
 
@@ -41,6 +42,7 @@ class DrugbagInfoActivity : AppCompatActivity() {
             initDrugbagInfoViewModel()
         } else {
             supportActionBar?.setTitle("新增藥袋資訊")
+            unserInputDrugbagInfo()
         }
 
         initOndemandCheckbox()
@@ -58,18 +60,22 @@ class DrugbagInfoActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+    private fun unserInputDrugbagInfo(){
+        viewModel.drugbagInfo.value = DrugbagInformation()
+        initFrequencyDropdown(false)
+        initDosageDropdown(false)
+    }
 
     private fun initDrugbagInfoViewModel() {
         binding.progressBar.visibility = View.VISIBLE
         viewModel.fetchDrugbagInfo()
         viewModel.drugbagInfo.observe(this, Observer {
 
-            initFrequencyDropdown(it.frequency)
+            initFrequencyDropdown(true,it.frequency)
             for (i in it.timings) {
                 checkBoxes[i].isChecked = true
             }
-            initDosageDropdown(it.dosage)
-//            binding.tilStock.editText?.setText(it.stock.toString())
+            initDosageDropdown(true,it.dosage)
 
             binding.progressBar.visibility = View.GONE
         })
@@ -92,8 +98,10 @@ class DrugbagInfoActivity : AppCompatActivity() {
         }
     }
 
-    private fun initDosageDropdown(defaultValue: Int) {
-        binding.actvDosage.setText(defaultValue.toString())
+    private fun initDosageDropdown(hasDefault: Boolean, defaultValue: Int=0) {
+        if (hasDefault) {
+            binding.actvDosage.setText(defaultValue.toString())
+        }
         val dosageOption = arrayOf(1, 2, 3, 4, 5)
         val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, dosageOption)
         binding.actvDosage.setAdapter(adapter)
@@ -173,8 +181,10 @@ class DrugbagInfoActivity : AppCompatActivity() {
     }
 
 
-    private fun initFrequencyDropdown(defaultValue: Int) {
-        binding.actvFrequency.setText(defaultValue.toString())
+    private fun initFrequencyDropdown(hasDefault:Boolean,defaultValue: Int=1) {
+        if(hasDefault){
+            binding.actvFrequency.setText(defaultValue.toString())
+        }
         val frequencyOption = arrayOf(1, 2, 3, 4, 5)
         val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, frequencyOption)
         binding.actvFrequency.setAdapter(adapter)

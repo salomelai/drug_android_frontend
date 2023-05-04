@@ -16,5 +16,5 @@ data class DrugRecord(
     var returnSetting: ReturnSetting = ReturnSetting(),
     var stock: Int = 0,
     var timeSlots: List<String> = emptyList(),
-    var timings: List<Int> = emptyList()
+    var timings: Set<Int> = emptySet()
 ): Serializable

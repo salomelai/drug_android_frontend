@@ -30,6 +30,8 @@ class DrugRecordsPagerAdapter(context: Context): PagerAdapter() {
             return page.view
         } else if (position == 1) {
             val page = DrugRecordsHospitalPage(context, container)
+            page.initHospitalListAdapter()
+            page.initHospitalListRecyclerView()
             container.addView(page.view)
             return page.view
         } else {

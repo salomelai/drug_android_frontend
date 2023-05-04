@@ -88,7 +88,7 @@ class DrugRecordActivity : AppCompatActivity() {
         initOndemandCheckbox()
         initTimingsCheckbox()
         initButtonSheet(binding.llNotificationSetting, NotificationSettingButtonSheet(), "notificationSetting")
-        initButtonSheet(binding.llDrugPosition, DrugPositionButtonSheet(), "drugPosition")
+        initButtonSheet(binding.llDrugPosition, DrugPositionButtonSheet(viewModel), "drugPosition")
         initButton()
         //代表前一個動作一點選卡片
         drugRecordId = intent.getIntExtra("drugRecordId", 0)
@@ -164,7 +164,7 @@ class DrugRecordActivity : AppCompatActivity() {
             viewModel.setTimeSlots(timeSlots)
             initTimeSection(timeSlots)
 
-//            viewModel.setTimings(drugbagInfo.timings)
+            viewModel.setTimings(drugbagInfo.timings)
             for (i in drugbagInfo.timings) {
                 checkBoxes[i].isChecked = true
             }
@@ -317,15 +317,11 @@ class DrugRecordActivity : AppCompatActivity() {
         binding.cbBeforeMeal.setOnCheckedChangeListener { buttonView, isChecked ->
             viewModel.record.value?.let {
                 if (isChecked) {
-                    if (!it.timings.contains(0)) {
-                        // 新增 0 到 timings 列表
-                        viewModel.addTimes(0)
-                    }
+                    // 新增 0 到 timings 列表
+                    it.timings = it.timings.toMutableSet().apply { add(0) }
                 } else {
-                    if (it.timings.contains(0)) {
-                        // 移除 timings 列表中的 0
-                        viewModel.removeTimes(0)
-                    }
+                    // 移除 timings 列表中的 0
+                    it.timings = it.timings.toMutableSet().apply { remove(0) }
                 }
             }
             binding.cbAfterMeal.isEnabled = !isChecked
@@ -335,15 +331,11 @@ class DrugRecordActivity : AppCompatActivity() {
         binding.cbAfterMeal.setOnCheckedChangeListener { buttonView, isChecked ->
             viewModel.record.value?.let {
                 if (isChecked) {
-                    if (!it.timings.contains(1)) {
-                        // 新增 1 到 timings 列表
-                        viewModel.addTimes(1)
-                    }
+                    // 新增 1 到 timings 列表
+                    it.timings = it.timings.toMutableSet().apply { add(1) }
                 } else {
-                    if (it.timings.contains(1)) {
-                        // 移除 timings 列表中的 1
-                        viewModel.removeTimes(1)
-                    }
+                    // 移除 timings 列表中的 1
+                    it.timings = it.timings.toMutableSet().apply { remove(1) }
                 }
             }
             binding.cbBeforeMeal.isEnabled = !isChecked
@@ -353,15 +345,11 @@ class DrugRecordActivity : AppCompatActivity() {
         binding.cbWithFood.setOnCheckedChangeListener { buttonView, isChecked ->
             viewModel.record.value?.let {
                 if (isChecked) {
-                    if (!it.timings.contains(2)) {
-                        // 新增 2 到 timings 列表
-                        viewModel.addTimes(2)
-                    }
+                    // 新增 2 到 timings 列表
+                    it.timings = it.timings.toMutableSet().apply { add(2) }
                 } else {
-                    if (it.timings.contains(2)) {
-                        // 移除 timings 列表中的 2
-                        viewModel.removeTimes(2)
-                    }
+                    // 移除 timings 列表中的 2
+                    it.timings = it.timings.toMutableSet().apply { remove(2) }
                 }
             }
             binding.cbBeforeMeal.isEnabled = !isChecked
@@ -370,15 +358,11 @@ class DrugRecordActivity : AppCompatActivity() {
         binding.cbBeforeSleep.setOnCheckedChangeListener { buttonView, isChecked ->
             viewModel.record.value?.let {
                 if (isChecked) {
-                    if (!it.timings.contains(3)) {
-                        // 新增 3 到 timings 列表
-                        viewModel.addTimes(3)
-                    }
+                    // 新增 3 到 timings 列表
+                    it.timings = it.timings.toMutableSet().apply { add(3) }
                 } else {
-                    if (it.timings.contains(3)) {
-                        // 移除 timings 列表中的 3
-                        viewModel.removeTimes(3)
-                    }
+                    // 移除 timings 列表中的 3
+                    it.timings = it.timings.toMutableSet().apply { remove(3) }
                 }
             }
         }
