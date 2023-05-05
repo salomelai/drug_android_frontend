@@ -10,8 +10,8 @@ import com.junting.drug_android_frontend.R
 class DrugRecordsPagerAdapter(context: Context): PagerAdapter() {
 
     private val context: Context
-    private lateinit var allPage: DrugRecordsAllPage
-    private lateinit var hospitalPage: DrugRecordsHospitalPage
+    private var allPage: DrugRecordsAllPage? = null
+    private var hospitalPage: DrugRecordsHospitalPage? = null
 
     init {
         this.context = context
@@ -28,14 +28,14 @@ class DrugRecordsPagerAdapter(context: Context): PagerAdapter() {
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
         if (position == 0) {
             allPage = DrugRecordsAllPage(context, container)
-            container.addView(allPage.view)
-            return allPage.view
+            container.addView(allPage!!.view)
+            return allPage!!.view
         } else if (position == 1) {
             hospitalPage = DrugRecordsHospitalPage(context, container)
-            hospitalPage.initHospitalListAdapter()
-            hospitalPage.initHospitalListRecyclerView()
-            container.addView(hospitalPage.view)
-            return hospitalPage.view
+            hospitalPage!!.initHospitalListAdapter()
+            hospitalPage!!.initHospitalListRecyclerView()
+            container.addView(hospitalPage!!.view)
+            return hospitalPage!!.view
         } else {
             val view: View =
                 LayoutInflater.from(context).inflate(R.layout.drug_records_department_tab, container, false)
@@ -45,8 +45,8 @@ class DrugRecordsPagerAdapter(context: Context): PagerAdapter() {
     }
 
     fun refreshHospitalPage() {
-        hospitalPage.initHospitalListAdapter()
-        hospitalPage.initHospitalListRecyclerView()
+        hospitalPage?.initHospitalListAdapter()
+        hospitalPage?.initHospitalListRecyclerView()
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
