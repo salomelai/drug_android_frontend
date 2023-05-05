@@ -98,6 +98,16 @@ class DrugRecordsViewModel : ViewModel() {
         triggerUpdate(info)
     }
 
+    fun setPosition(position: Int) {
+        val info: DrugRecord = record.value!!
+        info.position = position
+        triggerUpdate(info)
+    }
+
+    fun setRecords(newRecords: List<DrugRecord>) {
+        records.value = newRecords
+    }
+
     private fun triggerUpdate(newRecord: DrugRecord) {
         record.value = newRecord
     }
