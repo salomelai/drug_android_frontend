@@ -31,32 +31,24 @@ class DrugPositionButtonSheet(viewModel: DrugRecordsViewModel) : BottomSheetDial
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        // 使用 ViewBinding 綁定佈局檔案
         _binding = FragmentPillBoxManagementBinding.inflate(inflater, container, false)
 
-        // 隱藏所有藥物位置
-        for (i in positions) {
-            initCell(i)
-        }
-
-        viewModel?.record?.observe(viewLifecycleOwner) {
+        positions.forEach { i -> initCell(i) }
+        viewModel.record.observe(viewLifecycleOwner) {
             showCell(it.position, it)
             setCellColor(it.position)
             closeProgressBar(it.position)
         }
-
-        viewModel.fetchRecordsByAll()
+        if (viewModel.records.value == null) {
+            viewModel.fetchRecordsByAll()
+        }
         viewModel.records.observe(viewLifecycleOwner) {
             it.toMutableList()
-            // 遍历记录并更新 UI
-            for (record in it) {
-                if (record.position == viewModel.record.value?.position) continue //略過我現在正在編輯的這筆
-                Log.d("DrugPositionButtonSheet", "record: $record")
-                showCell(record.position, record)
-            }
-            for (i in positions) {
-                closeProgressBar(i)
-            }
+            it.stream()
+                // skip current editing record
+                .filter { record -> record.position != viewModel.record.value?.position }
+                .forEach { record -> showCell(record.position, record) }
+            positions.forEach { i -> closeProgressBar(i) }
         }
 
         return binding.root
@@ -68,26 +60,29 @@ class DrugPositionButtonSheet(viewModel: DrugRecordsViewModel) : BottomSheetDial
         drugPositionView?.findViewById<ProgressBar>(R.id.progressBar)?.visibility = View.GONE
     }
 
-    private fun showCell(drugPositionId: Int, record: DrugRecord) {
-        val cellResourceId = getResourceIdByPosition(drugPositionId)
+    private fun showCell(position: Int, record: DrugRecord) {
+        val cellResourceId = getResourceIdByPosition(position)
         val cellView = binding.root.findViewById<View>(cellResourceId)
-        cellView?.findViewById<ImageView>(R.id.iv_drug_icon)?.visibility = View.VISIBLE
-        cellView?.findViewById<TextView>(R.id.tv_drug_name)?.visibility = View.VISIBLE
-        cellView?.findViewById<TextView>(R.id.chip_stock)?.visibility = View.VISIBLE
-        cellView?.findViewById<TextView>(R.id.tv_drug_name)?.text = record.drug.name
-        cellView?.findViewById<Chip>(R.id.chip_stock)?.text =
-            "庫存: " + record.stock.toString()
+        val drugIcon = cellView?.findViewById<ImageView>(R.id.iv_drug_icon)!!
+        val chipStock = cellView.findViewById<Chip>(R.id.chip_stock)!!
+        val drugName = cellView.findViewById<TextView>(R.id.tv_drug_name)!!
+        drugIcon.visibility = View.VISIBLE
+        drugName.visibility = View.VISIBLE
+        chipStock.visibility = View.VISIBLE
+        drugName.text = record.drug.name
+        chipStock.text = "庫存: " + record.stock.toString()
         if (record.stock > 0) {
-            cellView?.findViewById<Chip>(R.id.chip_stock)
-                ?.setChipBackgroundColorResource(R.color.md_theme_light_secondaryContainer)
+            chipStock.setChipBackgroundColorResource(R.color.md_theme_light_secondaryContainer)
         } else {
-            cellView?.findViewById<Chip>(R.id.chip_stock)
-                ?.setChipBackgroundColorResource(R.color.md_theme_dark_error)
+            chipStock.setChipBackgroundColorResource(R.color.md_theme_dark_error)
         }
-        //設為不可被點選
-        cellView?.findViewById<View>(R.id.card_view)?.apply {
-            isClickable = false
-        }
+    }
+
+    private fun hideCell(cellView: View) {
+        cellView.findViewById<ProgressBar>(R.id.progressBar)?.visibility = View.VISIBLE
+        cellView.findViewById<ImageView>(R.id.iv_drug_icon)?.visibility = View.GONE
+        cellView.findViewById<TextView>(R.id.tv_drug_name)?.visibility = View.GONE
+        cellView.findViewById<TextView>(R.id.chip_stock)?.visibility = View.GONE
     }
 
     private fun resetCellsColor() {
@@ -99,18 +94,21 @@ class DrugPositionButtonSheet(viewModel: DrugRecordsViewModel) : BottomSheetDial
         }
     }
 
-    private fun setCellColor(drugPositionId: Int) {
-        val cellResourceId = getResourceIdByPosition(drugPositionId)
+    private fun setCellColor(position: Int) {
+        val cellResourceId = getResourceIdByPosition(position)
         val cellView = binding.root.findViewById<View>(cellResourceId)
         cellView?.findViewById<CardView>(R.id.card_view)
             ?.setCardBackgroundColor(resources.getColor(R.color.md_theme_light_secondaryContainer))
     }
 
-    private fun initCell(drugPosition: Int) {
-        val drugPositionId = getResourceIdByPosition(drugPosition)
+    private fun initCell(position: Int) {
+        val drugPositionId = getResourceIdByPosition(position)
         val cellView = binding.root.findViewById<View>(drugPositionId)
         hideCell(cellView)
         cellView?.findViewById<CardView>(R.id.card_view)?.setOnClickListener {
+            if (!isPositionEmpty(position)) {
+                return@setOnClickListener
+            }
             val selectedDrugPositionIdNumber =
                 resources.getResourceEntryName(cellView.id).substringAfterLast("_")
             Log.d("CellClicked", "Cell ID: $selectedDrugPositionIdNumber")
@@ -119,16 +117,9 @@ class DrugPositionButtonSheet(viewModel: DrugRecordsViewModel) : BottomSheetDial
             val oldPosition = viewModel.record.value!!.position
             val oldCell = binding.root.findViewById<View>(getResourceIdByPosition(oldPosition))
             hideCell(oldCell)
-            updateDrugRecordsPosition(oldPosition, drugPosition)
-            viewModel.setPosition(drugPosition)
+            updateDrugRecordsPosition(oldPosition, position)
+            viewModel.setPosition(position)
         }
-    }
-
-    private fun hideCell(cellView: View) {
-        cellView?.findViewById<ProgressBar>(R.id.progressBar)?.visibility = View.VISIBLE
-        cellView?.findViewById<ImageView>(R.id.iv_drug_icon)?.visibility = View.GONE
-        cellView?.findViewById<TextView>(R.id.tv_drug_name)?.visibility = View.GONE
-        cellView?.findViewById<TextView>(R.id.chip_stock)?.visibility = View.GONE
     }
 
     private fun updateDrugRecordsPosition(oldPosition: Int, newPosition: Int) {
@@ -138,6 +129,10 @@ class DrugPositionButtonSheet(viewModel: DrugRecordsViewModel) : BottomSheetDial
             .findFirst()
             .map { it.position = newPosition }
         viewModel.setRecords(records)
+    }
+
+    private fun isPositionEmpty(position: Int): Boolean {
+        return viewModel.records.value!!.stream().noneMatch { it.position == position }
     }
 
     private fun getResourceIdByPosition(position: Int): Int {
