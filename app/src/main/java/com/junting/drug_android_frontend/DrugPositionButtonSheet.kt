@@ -35,9 +35,11 @@ class DrugPositionButtonSheet(viewModel: DrugRecordsViewModel) : BottomSheetDial
 
         positions.forEach { i -> initCell(i) }
         viewModel.record.observe(viewLifecycleOwner) {
-            showCell(it.position, it)
-            setCellColor(it.position)
-            closeProgressBar(it.position)
+            if (positions.contains(it.position)) {
+                showCell(it.position, it)
+                setCellColor(it.position)
+                closeProgressBar(it.position)
+            }
         }
         if (viewModel.records.value == null) {
             viewModel.fetchRecordsByAll()
@@ -47,10 +49,10 @@ class DrugPositionButtonSheet(viewModel: DrugRecordsViewModel) : BottomSheetDial
             it.stream()
                 // skip current editing record
                 .filter { record -> record.position != viewModel.record.value?.position }
+                .filter { record -> positions.contains(record.position) }
                 .forEach { record -> showCell(record.position, record) }
             positions.forEach { i -> closeProgressBar(i) }
         }
-
         return binding.root
     }
 
@@ -78,11 +80,15 @@ class DrugPositionButtonSheet(viewModel: DrugRecordsViewModel) : BottomSheetDial
         }
     }
 
-    private fun hideCell(cellView: View) {
-        cellView.findViewById<ProgressBar>(R.id.progressBar)?.visibility = View.VISIBLE
-        cellView.findViewById<ImageView>(R.id.iv_drug_icon)?.visibility = View.GONE
-        cellView.findViewById<TextView>(R.id.tv_drug_name)?.visibility = View.GONE
-        cellView.findViewById<TextView>(R.id.chip_stock)?.visibility = View.GONE
+    private fun hideCell(position: Int) {
+        if (positions.contains(position)) {
+            val drugPositionId = getResourceIdByPosition(position)
+            val cellView = binding.root.findViewById<View>(drugPositionId)
+            cellView.findViewById<ProgressBar>(R.id.progressBar)?.visibility = View.VISIBLE
+            cellView.findViewById<ImageView>(R.id.iv_drug_icon)?.visibility = View.GONE
+            cellView.findViewById<TextView>(R.id.tv_drug_name)?.visibility = View.GONE
+            cellView.findViewById<TextView>(R.id.chip_stock)?.visibility = View.GONE
+        }
     }
 
     private fun resetCellsColor() {
@@ -104,7 +110,7 @@ class DrugPositionButtonSheet(viewModel: DrugRecordsViewModel) : BottomSheetDial
     private fun initCell(position: Int) {
         val drugPositionId = getResourceIdByPosition(position)
         val cellView = binding.root.findViewById<View>(drugPositionId)
-        hideCell(cellView)
+        hideCell(position)
         cellView?.findViewById<CardView>(R.id.card_view)?.setOnClickListener {
             if (!isPositionEmpty(position)) {
                 return@setOnClickListener
@@ -115,8 +121,7 @@ class DrugPositionButtonSheet(viewModel: DrugRecordsViewModel) : BottomSheetDial
             resetCellsColor()
             setCellColor(selectedDrugPositionIdNumber.toInt())
             val oldPosition = viewModel.record.value!!.position
-            val oldCell = binding.root.findViewById<View>(getResourceIdByPosition(oldPosition))
-            hideCell(oldCell)
+            hideCell(oldPosition)
             updateDrugRecordsPosition(oldPosition, position)
             viewModel.setPosition(position)
         }

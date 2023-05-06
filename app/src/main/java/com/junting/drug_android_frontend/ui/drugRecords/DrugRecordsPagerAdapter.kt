@@ -32,8 +32,6 @@ class DrugRecordsPagerAdapter(context: Context): PagerAdapter() {
             return allPage!!.view
         } else if (position == 1) {
             hospitalPage = DrugRecordsHospitalPage(context, container)
-            hospitalPage!!.initHospitalListAdapter()
-            hospitalPage!!.initHospitalListRecyclerView()
             container.addView(hospitalPage!!.view)
             return hospitalPage!!.view
         } else {
