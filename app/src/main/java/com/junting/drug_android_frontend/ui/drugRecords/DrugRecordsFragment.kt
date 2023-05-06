@@ -5,10 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayout.TabLayoutOnPageChangeListener
@@ -38,12 +34,15 @@ class DrugRecordsFragment : Fragment() {
         binding.drugRecordsViewPager.adapter = drugRecordsPagerAdapter
         binding.drugRecordsViewPager.addOnPageChangeListener(TabLayoutOnPageChangeListener(binding.drugRecordsTabLayout))
         binding.drugRecordsTabLayout.addOnTabSelectedListener(object : OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                val position = tab.position
-                binding.drugRecordsViewPager.currentItem = position
-            }
+            override fun onTabSelected(tab: TabLayout.Tab) { updatePosition(tab) }
             override fun onTabUnselected(tab: TabLayout.Tab) {}
-            override fun onTabReselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) { updatePosition(tab) }
+            fun updatePosition(tab: TabLayout.Tab) {
+                binding.drugRecordsViewPager.currentItem = tab.position
+                if (tab.position == 1) {
+                    drugRecordsPagerAdapter!!.refreshHospitalPage()
+                }
+            }
         })
     }
 
