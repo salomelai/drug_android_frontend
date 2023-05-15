@@ -42,8 +42,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:maxLines="1"
-                    android:text="@{viewModel.drugbagInfo.drug.name}"
-                    android:onTextChanged="@{(text, start, before, count) -> viewModel.setDrugName(text.toString()) }"/>
+                    android:onTextChanged="@{(text, start, before, count) -> viewModel.setDrugName(text.toString()) }"
+                    android:text="@{viewModel.drugbagInfo.drug.name}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -82,6 +82,25 @@
                     android:maxLines="1"
                     android:onTextChanged="@{(text, start, before, count) -> viewModel.setDepartmentName(text.toString) }"
                     android:text="@{viewModel.drugbagInfo.hospital.department}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/til_hospital_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:hint="電話"
+                app:endIconMode="clear_text"
+                app:helperTextTextColor="@color/design_default_color_error"
+                app:startIconDrawable="@drawable/ic_outline_local_phone_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:onTextChanged="@{(text, start, before, count) -> viewModel.setHospitalPhone(text.toString) }"
+                    android:text="@{viewModel.drugbagInfo.hospital.phone}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -266,8 +285,7 @@
                     android:inputType="number"
                     android:maxLines="1"
                     android:onTextChanged="@{(text, start, before, count) -> viewModel.setStock(text.toString())}"
-                    android:text="@{String.valueOf(viewModel.drugbagInfo.stock)}"
-                    />
+                    android:text="@{String.valueOf(viewModel.drugbagInfo.stock)}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout

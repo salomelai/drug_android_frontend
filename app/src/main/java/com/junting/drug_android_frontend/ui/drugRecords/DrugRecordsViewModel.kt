@@ -33,6 +33,12 @@ class DrugRecordsViewModel : ViewModel() {
         triggerUpdate(info)
     }
 
+    fun setHospitalPhone(phone: String) {
+        val info: DrugRecord = record.value!!
+        info.hospital.phone = phone
+        triggerUpdate(info)
+    }
+
     fun setInteractingDrugs(interactingDrugs: List<InteractingDrug>) {
         val info: DrugRecord = record.value!!
         info.interactingDrugs = interactingDrugs

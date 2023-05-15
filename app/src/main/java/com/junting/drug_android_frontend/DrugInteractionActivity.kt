@@ -1,6 +1,7 @@
 package com.junting.drug_android_frontend
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -38,6 +39,11 @@ class DrugInteractionActivity : AppCompatActivity() {
     }
 
     private fun initButton() {
+        binding.btnCall.setOnClickListener {
+            val phone = drugbagInfo.hospital.phone
+            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phone"))
+            startActivity(intent)
+        }
         binding.btnCancel.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("fragmentName", "DrugRecordsFragment")
@@ -78,15 +84,15 @@ class DrugInteractionActivity : AppCompatActivity() {
         viewModel.fetchDrugInteraction()
         viewModel.drugInteractions.observe(this, Observer {
             viewAdapter.notifyDataSetChanged()
-            for (drugInteraction in it) {
-                if (drugInteraction.degree == "Major") {
-                    binding.tvMessage.text = "${drugbagInfo.drug.name} 會與以下 ${it.size} 種藥物產生嚴重交互作用，為了您的用藥安全，我們強烈建議您咨詢醫院專業人士。"
-                    binding.btnConfirm.visibility = View.GONE
-                    break
-                }else{
-                    binding.tvMessage.text = "${drugbagInfo.drug.name} 會與以下 ${it.size} 種藥物產生交互作用，請確認是否繼續。"
-                    break
-                }
+            val hasMajorInteraction = it.any { drugInteraction ->
+                drugInteraction.degree == "Major"
+            }
+
+            if (hasMajorInteraction) {
+                binding.tvMessage.text = "${drugbagInfo.drug.name} 會與以下 ${it.size} 種藥物產生嚴重交互作用，為了您的用藥安全，我們強烈建議您咨詢醫院專業人士。"
+                binding.btnConfirm.visibility = View.GONE
+            } else {
+                binding.tvMessage.text = "${drugbagInfo.drug.name} 會與以下 ${it.size} 種藥物產生交互作用，請確認是否繼續。"
             }
 
             binding.progressBar.visibility = View.GONE

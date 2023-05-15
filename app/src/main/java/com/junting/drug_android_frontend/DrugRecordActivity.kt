@@ -1,6 +1,7 @@
 package com.junting.drug_android_frontend
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
@@ -70,6 +71,9 @@ class DrugRecordActivity : AppCompatActivity() {
         initTextViewEditDialog(binding.llDepartment, binding.tvDepartment, "修改科別名稱",false){
             text -> viewModel.setHospitalDepartment(text)
         }
+        initTextViewEditDialog(binding.llPhone, binding.tvPhone, "修改電話",true){
+                text -> viewModel.setHospitalPhone(text)
+        }
         initTextViewEditDialog(binding.llIndication, binding.tvIndication, "修改適應症",false){
             text -> viewModel.setIndication(text)
         }
@@ -90,6 +94,7 @@ class DrugRecordActivity : AppCompatActivity() {
         initButtonSheet(binding.llNotificationSetting, NotificationSettingButtonSheet(), "notificationSetting")
         initButtonSheet(binding.llDrugPosition, DrugPositionButtonSheet(viewModel), "drugPosition")
         initButton()
+        initPhoneLongClickCall()
         //代表前一個動作一點選卡片
         drugRecordId = intent.getIntExtra("drugRecordId", 0)
         if (drugRecordId == 0) {
@@ -125,6 +130,14 @@ class DrugRecordActivity : AppCompatActivity() {
 
         return true
     }
+    private fun initPhoneLongClickCall() {
+        binding.llPhone.setOnLongClickListener {
+            val phone = viewModel.record.value?.hospital?.phone
+            val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phone"))
+            startActivity(intent)
+            true
+        }
+    }
 
     private fun initButtonSheet(layout: ViewGroup, buttonSheet: BottomSheetDialogFragment, tag: String) {
         layout.setOnClickListener{
@@ -149,6 +162,7 @@ class DrugRecordActivity : AppCompatActivity() {
             viewModel.setDrugName(drugbagInfo.drug.name)
             viewModel.setHospitalName(drugbagInfo.hospital.name)
             viewModel.setHospitalDepartment(drugbagInfo.hospital.department)
+            viewModel.setHospitalPhone(drugbagInfo.hospital.phone)
             viewModel.setIndication(drugbagInfo.drug.indication)
             viewModel.setSideEffect(drugbagInfo.drug.sideEffect)
             viewModel.setAppearance(drugbagInfo.drug.appearance)
