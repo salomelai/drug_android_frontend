@@ -6,9 +6,9 @@
 
     <data>
 
-            <variable
-                name="viewModel"
-                type="com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsViewModel" />
+        <variable
+            name="viewModel"
+            type="com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsViewModel" />
     </data>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -240,14 +240,13 @@
                         android:drawableStart="@drawable/ic_touch_app_24px"
                         android:drawablePadding="15dp"
                         android:text="按需要服用"
-                        android:textStyle="bold"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
+                        android:textStyle="bold" />
 
                     <CheckBox
                         android:id="@+id/cb_on_demand"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:checked="@{viewModel.record.onDemand}"/>
+                        android:checked="@{viewModel.record.onDemand}" />
 
                 </LinearLayout>
 

@@ -13,7 +13,6 @@
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="28" />
 
-    <!-- 下面追加android:usesCleartextTraffic，告訴 Android 系統允許你的應用程序使用非加密流量(http) -->
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -24,6 +23,9 @@
         android:theme="@style/Theme.Drug_android_frontend"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+        <activity
+            android:name=".DrugReminderActivity"
+            android:exported="false" />
         <activity
             android:name=".DrugRecordActivity"
             android:exported="false"
