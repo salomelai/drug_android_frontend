@@ -224,7 +224,7 @@ class DrugRecordActivity : AppCompatActivity() {
             )
             tvTimeSlot.setPadding(10, 10, 10, 10)
             tvTimeSlot.text = timeSlots[i]
-            tvTimeSlot.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+//            tvTimeSlot.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
 
             tvTimeSlot.setOnClickListener {
                 timeSlots.removeAt(i)
@@ -286,7 +286,7 @@ class DrugRecordActivity : AppCompatActivity() {
                     )
                     tvTimeSlot.setPadding(10, 10, 10, 10)
                     tvTimeSlot.text = timeSlot
-                    tvTimeSlot.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
+//                    tvTimeSlot.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16f)
                     binding.llTimeSlot.addView(tvTimeSlot)
                     tvTimeSlot.setOnClickListener {
                         timeSlots.remove(timeSlot)

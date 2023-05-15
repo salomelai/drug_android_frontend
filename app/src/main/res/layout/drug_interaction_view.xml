@@ -22,14 +22,12 @@
             android:layout_height="wrap_content"
             android:text="藥物名稱: "
             android:textStyle="bold"
-            android:textSize="20sp"
             android:drawableLeft="@drawable/ic_outline_pill_24px"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_drug_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
             android:text="Acertil"
             android:layout_marginBottom="15dp"/>
 
@@ -38,14 +36,12 @@
             android:layout_height="wrap_content"
             android:text="交互作用等級: "
             android:textStyle="bold"
-            android:textSize="20sp"
             android:drawableLeft="@drawable/ic_outline_bar_chart_24"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_degree"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
             android:text="Major"
             android:layout_marginBottom="15dp"/>
 
@@ -54,14 +50,12 @@
             android:layout_height="wrap_content"
             android:text="原因: "
             android:textStyle="bold"
-            android:textSize="20sp"
             android:drawableLeft="@drawable/ic_outline_lightbulb_24"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_cause"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
             android:text="互相影響療效或增加副作用的嚴重度"
             android:layout_marginBottom="15dp"/>
 
@@ -70,14 +64,12 @@
             android:layout_height="wrap_content"
             android:text="服藥時間: "
             android:textStyle="bold"
-            android:textSize="20sp"
             android:drawableLeft="@drawable/ic_outline_access_time_24"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tv_time_slots"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
             android:text="08:30 14:00" />
 
 

@@ -48,7 +48,6 @@
                         android:drawableLeft="@drawable/ic_outline_pill_24px"
                         android:drawablePadding="15dp"
                         android:text="藥物名稱: "
-                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -56,8 +55,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
-                        android:text="@{viewModel.record.drug.name}"
-                        android:textSize="16sp" />
+                        android:text="@{viewModel.record.drug.name}" />
 
                 </LinearLayout>
 
@@ -76,7 +74,6 @@
                         android:drawableLeft="@drawable/ic_outline_local_hospital_24"
                         android:drawablePadding="15dp"
                         android:text="醫院: "
-                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -84,8 +81,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
-                        android:text="@{viewModel.record.hospital.name}"
-                        android:textSize="16sp" />
+                        android:text="@{viewModel.record.hospital.name}" />
 
                 </LinearLayout>
 
@@ -104,7 +100,6 @@
                         android:drawableLeft="@drawable/ic_stethoscope_24px"
                         android:drawablePadding="15dp"
                         android:text="科別: "
-                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -112,8 +107,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
-                        android:text="@{viewModel.record.hospital.department}"
-                        android:textSize="16sp" />
+                        android:text="@{viewModel.record.hospital.department}" />
 
                 </LinearLayout>
 
@@ -132,7 +126,6 @@
                         android:drawableLeft="@drawable/ic_outline_local_phone_24"
                         android:drawablePadding="15dp"
                         android:text="電話: (長按撥打)"
-                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -140,8 +133,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
-                        android:text="@{viewModel.record.hospital.phone}"
-                        android:textSize="16sp" />
+                        android:text="@{viewModel.record.hospital.phone}" />
 
                 </LinearLayout>
 
@@ -167,7 +159,6 @@
                         android:drawableLeft="@drawable/ic_baseline_check_circle_outline_24"
                         android:drawablePadding="15dp"
                         android:text="適應症: "
-                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -175,8 +166,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
-                        android:text="@{viewModel.record.drug.indication}"
-                        android:textSize="16sp" />
+                        android:text="@{viewModel.record.drug.indication}" />
 
                 </LinearLayout>
 
@@ -195,7 +185,6 @@
                         android:drawableLeft="@drawable/ic_baseline_remove_circle_outline_24"
                         android:drawablePadding="15dp"
                         android:text="副作用: "
-                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -203,8 +192,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
-                        android:text="@{viewModel.record.drug.sideEffect}"
-                        android:textSize="16sp" />
+                        android:text="@{viewModel.record.drug.sideEffect}" />
 
                 </LinearLayout>
 
@@ -223,7 +211,6 @@
                         android:drawableLeft="@drawable/ic_outline_remove_red_eye_24"
                         android:drawablePadding="15dp"
                         android:text="外觀: "
-                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -231,8 +218,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
-                        android:text="@{viewModel.record.drug.appearance}"
-                        android:textSize="16sp" />
+                        android:text="@{viewModel.record.drug.appearance}" />
 
                 </LinearLayout>
 
@@ -254,8 +240,8 @@
                         android:drawableStart="@drawable/ic_touch_app_24px"
                         android:drawablePadding="15dp"
                         android:text="按需要服用"
-                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
-                        android:textSize="20sp" />
+                        android:textStyle="bold"
+                        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
 
                     <CheckBox
                         android:id="@+id/cb_on_demand"
@@ -279,7 +265,6 @@
                         android:drawableLeft="@drawable/ic_outline_access_time_24"
                         android:drawablePadding="15dp"
                         android:text="時間: "
-                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -298,8 +283,7 @@
                         android:background="?android:attr/selectableItemBackground"
                         android:drawableRight="@drawable/ic_baseline_add_24"
                         android:padding="10dp"
-                        android:text="新增服藥時間"
-                        android:textSize="16sp" />
+                        android:text="新增服藥時間" />
                 </LinearLayout>
 
 
@@ -315,7 +299,6 @@
                         android:drawableStart="@drawable/ic_outline_restaurant_menu_24"
                         android:drawablePadding="15dp"
                         android:text="服藥時機"
-                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -366,7 +349,6 @@
                         android:drawableLeft="@drawable/ic_outline_water_drop_24"
                         android:drawablePadding="15dp"
                         android:text="劑量: "
-                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -374,8 +356,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
-                        android:text="@{String.valueOf(viewModel.record.dosage)}"
-                        android:textSize="16sp" />
+                        android:text="@{String.valueOf(viewModel.record.dosage)}" />
 
                 </LinearLayout>
 
@@ -394,7 +375,6 @@
                         android:drawableLeft="@drawable/ic_outline_inventory_2_24"
                         android:drawablePadding="15dp"
                         android:text="庫存: "
-                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -402,8 +382,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
-                        android:text="@{String.valueOf(viewModel.record.stock)}"
-                        android:textSize="16sp" />
+                        android:text="@{String.valueOf(viewModel.record.stock)}" />
 
                 </LinearLayout>
 
@@ -425,7 +404,6 @@
                         android:drawableLeft="@drawable/ic_outline_notifications_24"
                         android:drawablePadding="15dp"
                         android:text="報警/提醒設定"
-                        android:textSize="20sp"
                         android:textStyle="bold" />
 
 
@@ -449,7 +427,6 @@
                         android:drawableLeft="@drawable/ic_outline_notifications_24"
                         android:drawablePadding="15dp"
                         android:text="回診/領藥提醒"
-                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -472,7 +449,6 @@
                         android:drawableLeft="@drawable/ic_outline_inbox_24"
                         android:drawablePadding="15dp"
                         android:text="藥盒放置位置"
-                        android:textSize="20sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>

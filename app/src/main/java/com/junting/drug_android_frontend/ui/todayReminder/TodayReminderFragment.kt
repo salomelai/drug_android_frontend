@@ -1,7 +1,6 @@
 package com.junting.drug_android_frontend.ui.todayReminder
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +16,7 @@ import com.junting.drug_android_frontend.databinding.FragmentTodayReminderBindin
 class TodayReminderFragment : Fragment() {
 
     private var _binding: FragmentTodayReminderBinding? = null
-    private lateinit var viewAdapter: TodayReminderViewAdapter2
+    private lateinit var viewAdapter: TodayReminderViewAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
     private var viewModel: TodayReminderViewModel = TodayReminderViewModel()
 
@@ -54,7 +53,7 @@ class TodayReminderFragment : Fragment() {
 
     private fun initRecyclerView() {
         viewManager = LinearLayoutManager(requireContext())
-        viewAdapter = TodayReminderViewAdapter2()
+        viewAdapter = TodayReminderViewAdapter()
         binding.list.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = viewAdapter

@@ -4,13 +4,13 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginLeft="10dp"
     android:layout_margin="10dp"
-    app:contentPadding="20dp"
+    android:layout_marginLeft="10dp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackgroundBorderless"
     app:cardCornerRadius="18dp"
     app:cardElevation="20dp"
-    android:foreground="?android:attr/selectableItemBackgroundBorderless"
-    android:clickable="true">
+    app:contentPadding="20dp">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,8 +21,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/tv_drug_name"
@@ -31,7 +31,6 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:text="藥物英文學名"
-                android:textSize="25sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -40,8 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:text="藥物適應症"
-                android:textSize="15sp" />
+                android:text="藥物適應症" />
 
             <TextView
                 android:id="@+id/tv_frequency_dosage"
@@ -49,8 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:text="吃藥頻率  每次劑量"
-                android:textSize="20sp" />
+                android:text="吃藥頻率  每次劑量" />
 
             <TextView
                 android:id="@+id/tv_time_slots"
@@ -58,15 +55,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:text="吃藥時間點"
-                android:textSize="20sp" />
+                android:text="吃藥時間點" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_stock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="庫存"
-                android:clickable="false"/>
+                android:clickable="false"
+                android:text="庫存" />
 
             <TextView
                 android:id="@+id/tv_hospital_department"
@@ -74,24 +70,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:text="醫院名  科別名"
-                android:textSize="20sp" />
+                android:text="醫院名  科別名" />
 
         </LinearLayout>
-
 
 
         <ImageView
             android:id="@+id/iv_notification"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="10dp"
             android:layout_marginRight="10dp"
-            android:src="@drawable/ic_outline_notifications_24" />
-
-
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/ic_outline_notifications_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

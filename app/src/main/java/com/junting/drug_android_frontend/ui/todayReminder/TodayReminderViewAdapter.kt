@@ -1,33 +1,62 @@
 package com.junting.drug_android_frontend.ui.todayReminder
 
-import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
+import android.widget.ImageView
+import android.widget.TextView
+import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeAdapter
 import com.junting.drug_android_frontend.databinding.RemindItemViewBinding
 import com.junting.drug_android_frontend.model.today_reminder.TodayReminder
+import java.text.SimpleDateFormat
+import java.util.*
 
-class TodayReminderViewAdapter(private val context: Context ,private val viewModel: TodayReminderViewModel) :
-    RecyclerView.Adapter<TodayReminderViewAdapter.MyViewHolder>() {
+class TodayReminderViewAdapter()
+    :DragDropSwipeAdapter<TodayReminder, TodayReminderViewAdapter.ViewHolder>(Collections.emptyList()) {
 
-    class MyViewHolder(val ViewBinding: RemindItemViewBinding) :
-        RecyclerView.ViewHolder(ViewBinding.root)
+    class ViewHolder(private val binding: RemindItemViewBinding) : DragDropSwipeAdapter.ViewHolder(binding.root) {
+        val viewColor = binding.viewColor
+        val tvDrugName: TextView = binding.tvDrugName
+        val tvTime : TextView = binding.tvTime
+        val tvDosage : TextView = binding.tvDosage
+        val dragIcon: ImageView = binding.dragIcon
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val ViewBinding =
-            RemindItemViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return MyViewHolder(ViewBinding)
     }
 
-    override fun getItemCount(): Int {
-        return viewModel.records.value?.size ?: 0
+    fun update(todayReminder: List<TodayReminder>) {
+        dataSet = todayReminder
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        val todayReminder: TodayReminder = viewModel.records.value!!.get(position)
-        holder.ViewBinding.tvDrugName.text = todayReminder.drug.name
-        holder.ViewBinding.tvTime.text = todayReminder.timeSlot
-        holder.ViewBinding.tvDosage.text = todayReminder.dosage.toString()+"單位"
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodayReminderViewAdapter.ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val binding = RemindItemViewBinding.inflate(inflater, parent, false)
+        return ViewHolder(binding)
     }
 
+    override fun onBindViewHolder(item: TodayReminder, viewHolder: TodayReminderViewAdapter.ViewHolder, position: Int) {
+        // Here we update the contents of the view holder's views to reflect the item's data
+        viewHolder.tvDrugName.text = item.drug.name
+        viewHolder.tvTime.text = item.timeSlot
+        viewHolder.tvDosage.text = "劑量: "+item.dosage.toString()
+
+        val currentTime = Calendar.getInstance()
+        val currentTimeString = SimpleDateFormat("HH:mm", Locale.getDefault()).format(currentTime.time)
+
+        val timeSlot = item.timeSlot
+
+        if (currentTimeString >= timeSlot) {
+            viewHolder.viewColor.setBackgroundResource(com.google.android.material.R.color.design_default_color_error)
+        } else {
+            viewHolder.viewColor.visibility = View.INVISIBLE
+        }
+    }
+
+    override fun getViewHolder(itemLayout: View): ViewHolder {
+        TODO("Not yet implemented")
+    }
+
+    override fun getViewToTouchToStartDraggingItem(item: TodayReminder, viewHolder: TodayReminderViewAdapter.ViewHolder, position: Int): View? {
+        // We return the view holder's view on which the user has to touch to drag the item
+        return viewHolder.dragIcon
+    }
 }
