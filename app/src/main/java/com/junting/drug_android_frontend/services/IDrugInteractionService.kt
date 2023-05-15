@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
 interface IDrugInteractionService {
-    @GET("interactingDrugs/")
+    @GET("interactingDrugs2/")
     suspend fun getInteractingDrugs(): List<InteractingDrug>
 
 

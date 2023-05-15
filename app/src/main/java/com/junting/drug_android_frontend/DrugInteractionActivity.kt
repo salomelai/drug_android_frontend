@@ -78,6 +78,17 @@ class DrugInteractionActivity : AppCompatActivity() {
         viewModel.fetchDrugInteraction()
         viewModel.drugInteractions.observe(this, Observer {
             viewAdapter.notifyDataSetChanged()
+            for (drugInteraction in it) {
+                if (drugInteraction.degree == "Major") {
+                    binding.tvMessage.text = "${drugbagInfo.drug.name} 會與以下 ${it.size} 種藥物產生嚴重交互作用，為了您的用藥安全，我們強烈建議您咨詢醫院專業人士。"
+                    binding.btnConfirm.visibility = View.GONE
+                    break
+                }else{
+                    binding.tvMessage.text = "${drugbagInfo.drug.name} 會與以下 ${it.size} 種藥物產生交互作用，請確認是否繼續。"
+                    break
+                }
+            }
+
             binding.progressBar.visibility = View.GONE
         })
     }
