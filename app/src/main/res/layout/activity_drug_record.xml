@@ -84,7 +84,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
-                        android:text="@{viewModel.record.hospitalName}"
+                        android:text="@{viewModel.record.hospital.name}"
                         android:textSize="16sp" />
 
                 </LinearLayout>
@@ -112,7 +112,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
-                        android:text="@{viewModel.record.hospitalDepartment}"
+                        android:text="@{viewModel.record.hospital.department}"
                         android:textSize="16sp" />
 
                 </LinearLayout>

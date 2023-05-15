@@ -23,13 +23,13 @@ class DrugRecordsViewModel : ViewModel() {
 
     fun setHospitalName(name: String) {
         val info: DrugRecord = record.value!!
-        info.hospitalName = name
+        info.hospital.name = name
         triggerUpdate(info)
     }
 
     fun setHospitalDepartment(name: String) {
         val info: DrugRecord = record.value!!
-        info.hospitalDepartment = name
+        info.hospital.department = name
         triggerUpdate(info)
     }
 

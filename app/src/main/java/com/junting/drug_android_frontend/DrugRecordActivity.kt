@@ -147,8 +147,8 @@ class DrugRecordActivity : AppCompatActivity() {
             Log.d("DrugbagInformation", "drugbagInfo: ${drugbagInfo}")
 
             viewModel.setDrugName(drugbagInfo.drug.name)
-            viewModel.setHospitalName(drugbagInfo.hospitalName)
-            viewModel.setHospitalDepartment(drugbagInfo.hospitalDepartment)
+            viewModel.setHospitalName(drugbagInfo.hospital.name)
+            viewModel.setHospitalDepartment(drugbagInfo.hospital.department)
             viewModel.setIndication(drugbagInfo.drug.indication)
             viewModel.setSideEffect(drugbagInfo.drug.sideEffect)
             viewModel.setAppearance(drugbagInfo.drug.appearance)

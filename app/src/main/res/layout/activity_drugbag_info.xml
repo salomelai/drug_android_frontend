@@ -62,7 +62,7 @@
                     android:layout_height="match_parent"
                     android:maxLines="1"
                     android:onTextChanged="@{(text, start, before, count) -> viewModel.setHospitalName(text.toString) }"
-                    android:text="@{viewModel.drugbagInfo.hospitalName}" />
+                    android:text="@{viewModel.drugbagInfo.hospital.name}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -81,7 +81,7 @@
                     android:layout_height="match_parent"
                     android:maxLines="1"
                     android:onTextChanged="@{(text, start, before, count) -> viewModel.setDepartmentName(text.toString) }"
-                    android:text="@{viewModel.drugbagInfo.hospitalDepartment}" />
+                    android:text="@{viewModel.drugbagInfo.hospital.department}" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout

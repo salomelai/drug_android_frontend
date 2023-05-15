@@ -44,7 +44,7 @@ class DrugsRecordViewAdapter(private val context: Context, private val viewModel
             holder.drugItemViewBinding.tvTimeSlots.text = drugRecord.timeSlots.joinToString()
         }
         holder.drugItemViewBinding.chipStock.text = "庫存: "+drugRecord.stock.toString()
-        holder.drugItemViewBinding.tvHospitalDepartment.text = drugRecord.hospitalName.toString() + ", " + drugRecord.hospitalDepartment.toString()
+        holder.drugItemViewBinding.tvHospitalDepartment.text = drugRecord.hospital.name.toString() + ", " + drugRecord.hospital.department.toString()
 
         if (drugRecord.stock > 0) {
             holder.drugItemViewBinding.chipStock.setChipBackgroundColorResource(R.color.md_theme_light_secondaryContainer)

@@ -21,12 +21,12 @@ class DrugbagInfoViewModel : ViewModel() {
 
     fun setHospitalName(name: String) {
         val info: DrugbagInformation = drugbagInfo.value!!
-        info.hospitalName = name
+        info.hospital.name = name
         triggerUpdate(info)
     }
     fun setDepartmentName(name: String) {
         val info: DrugbagInformation = drugbagInfo.value!!
-        info.hospitalDepartment = name
+        info.hospital.department = name
         triggerUpdate(info)
     }
     fun setIndication(indication: String) {
