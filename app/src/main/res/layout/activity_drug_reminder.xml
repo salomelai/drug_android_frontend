@@ -71,14 +71,15 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="取消" />
+                    android:drawableRight="@drawable/ic_baseline_expand_more_24"
+                    android:text="延後提醒" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_confirm"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="確定" />
+                    android:text="開啟藥盒" />
 
             </LinearLayout>
         </LinearLayout>

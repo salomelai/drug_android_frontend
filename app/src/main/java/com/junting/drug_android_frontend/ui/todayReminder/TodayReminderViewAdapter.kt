@@ -1,11 +1,18 @@
 package com.junting.drug_android_frontend.ui.todayReminder
 
+import android.content.Intent
+import android.text.Layout
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat.startActivity
 import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeAdapter
+import com.junting.drug_android_frontend.DrugRecordActivity
+import com.junting.drug_android_frontend.DrugReminderActivity
 import com.junting.drug_android_frontend.databinding.RemindItemViewBinding
 import com.junting.drug_android_frontend.model.today_reminder.TodayReminder
 import java.text.SimpleDateFormat
@@ -20,6 +27,7 @@ class TodayReminderViewAdapter()
         val tvTime : TextView = binding.tvTime
         val tvDosage : TextView = binding.tvDosage
         val dragIcon: ImageView = binding.dragIcon
+        val llRemindItem : LinearLayout = binding.llRemindItem
 
     }
 
@@ -48,6 +56,11 @@ class TodayReminderViewAdapter()
             viewHolder.viewColor.setBackgroundResource(com.google.android.material.R.color.design_default_color_error)
         } else {
             viewHolder.viewColor.visibility = View.INVISIBLE
+        }
+        viewHolder.llRemindItem.setOnClickListener {
+            val intent = Intent(viewHolder.itemView.context, DrugReminderActivity::class.java)
+            intent.putExtra("todayReminder", item)
+            startActivity(viewHolder.itemView.context, intent, null)
         }
     }
 
