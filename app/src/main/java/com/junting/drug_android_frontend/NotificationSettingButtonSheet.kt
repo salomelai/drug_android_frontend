@@ -7,18 +7,18 @@ import android.view.ViewGroup
 import android.widget.Button
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.junting.drug_android_frontend.databinding.FragmentNotificationSettingBinding
+import com.junting.drug_android_frontend.databinding.BottomSheetNotificationSettingBinding
 import java.text.SimpleDateFormat
 import java.util.*
 
 class NotificationSettingButtonSheet : BottomSheetDialogFragment() {
 
-    private var _binding: FragmentNotificationSettingBinding? = null
+    private var _binding: BottomSheetNotificationSettingBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // 使用 ViewBinding 綁定佈局檔案
-        _binding = FragmentNotificationSettingBinding.inflate(inflater, container, false)
+        _binding = BottomSheetNotificationSettingBinding.inflate(inflater, container, false)
         return binding.root
     }
 

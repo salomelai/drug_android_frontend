@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="15dp">
+
+
+    <TextView
+        android:id="@+id/tvDelay10Minutes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="晚10分鐘"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_marginBottom="15dp"/>
+
+    <TextView
+        android:id="@+id/tvDelay30Minutes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="晚30分鐘"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_marginBottom="15dp"/>
+
+    <TextView
+        android:id="@+id/tvDelay45Minutes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="晚45分鐘"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_marginBottom="7.5dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/list_divider"
+        android:layout_marginBottom="7.5dp" />
+
+    <TextView
+        android:id="@+id/tvSkip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="略過"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_marginBottom="15dp"/>
+
+
+</LinearLayout>
