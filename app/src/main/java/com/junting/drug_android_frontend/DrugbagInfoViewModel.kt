@@ -34,6 +34,11 @@ class DrugbagInfoViewModel : ViewModel() {
         info.hospital.phone = phone
         triggerUpdate(info)
     }
+    fun setExtension(Extension: String) {
+        val info: DrugbagInformation = drugbagInfo.value!!
+        info.hospital.extension = Extension
+        triggerUpdate(info)
+    }
     fun setIndication(indication: String) {
         val info: DrugbagInformation = drugbagInfo.value!!
         info.drug.indication = indication

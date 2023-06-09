@@ -38,6 +38,11 @@ class DrugRecordsViewModel : ViewModel() {
         info.hospital.phone = phone
         triggerUpdate(info)
     }
+    fun setExtension(extension: String) {
+        val info: DrugRecord = record.value!!
+        info.hospital.extension = extension
+        triggerUpdate(info)
+    }
 
     fun setInteractingDrugs(interactingDrugs: List<InteractingDrug>) {
         val info: DrugRecord = record.value!!

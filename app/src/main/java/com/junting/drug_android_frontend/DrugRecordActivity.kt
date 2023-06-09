@@ -71,8 +71,10 @@ class DrugRecordActivity : AppCompatActivity() {
         initTextViewEditDialog(binding.llDepartment, binding.tvDepartment, "修改科別名稱",false){
             text -> viewModel.setHospitalDepartment(text)
         }
-        initTextViewEditDialog(binding.llPhone, binding.tvPhone, "修改電話",true){
-                text -> viewModel.setHospitalPhone(text)
+        initTextViewEditDialog(binding.llPhoneExtension, binding.tvPhoneExtension, "修改電話與分機",true){
+            text -> val parts = text.split("-")
+            viewModel.setHospitalPhone(parts[0])
+            viewModel.setExtension(parts[1])
         }
         initTextViewEditDialog(binding.llIndication, binding.tvIndication, "修改適應症",false){
             text -> viewModel.setIndication(text)
@@ -131,7 +133,7 @@ class DrugRecordActivity : AppCompatActivity() {
         return true
     }
     private fun initPhoneLongClickCall() {
-        binding.llPhone.setOnLongClickListener {
+        binding.llPhoneExtension.setOnLongClickListener {
             val phone = viewModel.record.value?.hospital?.phone
             val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phone"))
             startActivity(intent)

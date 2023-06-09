@@ -112,7 +112,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/ll_phone"
+                    android:id="@+id/ll_phone_extension"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?android:attr/selectableItemBackground"
@@ -129,11 +129,11 @@
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_phone"
+                        android:id="@+id/tv_phone_extension"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="15dp"
-                        android:text="@{viewModel.record.hospital.phone}" />
+                        android:text="@{viewModel.record.hospital.phone + '-' + viewModel.record.hospital.extension}" />
 
                 </LinearLayout>
 
