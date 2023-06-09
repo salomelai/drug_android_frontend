@@ -28,7 +28,7 @@ import com.junting.drug_android_frontend.model.drugbag_info.DrugbagInformation
 import com.junting.drug_android_frontend.ui.libs.ExpandableListUtils
 import java.util.*
 import com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsViewModel
-import com.junting.drug_android_frontend.ui.libs.listeners.OnEditListener
+import com.junting.drug_android_frontend.libs.listeners.OnEditListener
 
 class DrugRecordActivity : AppCompatActivity() {
 
@@ -62,33 +62,33 @@ class DrugRecordActivity : AppCompatActivity() {
         )
 
 
-        initTextViewEditDialog(binding.llDrugName, binding.tvDrugName,"修改藥物名稱",false) { text ->
+        DialogUtils.initTextViewEditDialog(this,binding.llDrugName, binding.tvDrugName,"修改藥物名稱",false) { text ->
             viewModel.setDrugName(text)
         }
-        initTextViewEditDialog(binding.llHospital, binding.tvHospital, "修改醫院名稱",false){
+        DialogUtils.initTextViewEditDialog(this,binding.llHospital, binding.tvHospital, "修改醫院名稱",false){
             text -> viewModel.setHospitalName(text)
         }
-        initTextViewEditDialog(binding.llDepartment, binding.tvDepartment, "修改科別名稱",false){
+        DialogUtils.initTextViewEditDialog(this,binding.llDepartment, binding.tvDepartment, "修改科別名稱",false){
             text -> viewModel.setHospitalDepartment(text)
         }
-        initTextViewEditDialog(binding.llPhoneExtension, binding.tvPhoneExtension, "修改電話與分機",true){
+        DialogUtils.initTextViewEditDialog(this,binding.llPhoneExtension, binding.tvPhoneExtension, "修改電話與分機",true){
             text -> val parts = text.split("-")
             viewModel.setHospitalPhone(parts[0])
             viewModel.setExtension(parts[1])
         }
-        initTextViewEditDialog(binding.llIndication, binding.tvIndication, "修改適應症",false){
+        DialogUtils.initTextViewEditDialog(this,binding.llIndication, binding.tvIndication, "修改適應症",false){
             text -> viewModel.setIndication(text)
         }
-        initTextViewEditDialog(binding.llSideEffect, binding.tvSideEffect, "修改副作用",false){
+        DialogUtils.initTextViewEditDialog(this,binding.llSideEffect, binding.tvSideEffect, "修改副作用",false){
             text -> viewModel.setSideEffect(text)
         }
-        initTextViewEditDialog(binding.llAppearance, binding.tvAppearance, "修改外觀",false){
+        DialogUtils.initTextViewEditDialog(this,binding.llAppearance, binding.tvAppearance, "修改外觀",false){
             text -> viewModel.setAppearance(text)
         }
-        initTextViewEditDialog(binding.llDosage, binding.tvDosage, "修改劑量",true){
+        DialogUtils.initTextViewEditDialog(this,binding.llDosage, binding.tvDosage, "修改劑量",true){
             text -> viewModel.setDosage(text.toInt())
         }
-        initTextViewEditDialog(binding.llStock, binding.tvStock, "修改庫存",true){
+        DialogUtils.initTextViewEditDialog(this,binding.llStock, binding.tvStock, "修改庫存",true){
             text -> viewModel.setStock(text.toInt())
         }
         initOndemandCheckbox()
@@ -301,32 +301,6 @@ class DrugRecordActivity : AppCompatActivity() {
         }
     }
 
-    private fun initTextViewEditDialog(onclickLayout:View, tv: TextView, title: String, onlyDigitInput: Boolean, listener: OnEditListener) {
-        onclickLayout.setOnClickListener {
-            val builder = MaterialAlertDialogBuilder(this)
-            builder.setTitle(title)
-
-            // 建立一個 EditText 供使用者輸入新的藥物名稱
-            val input = EditText(this)
-            input.setText(tv.text)
-
-            if (onlyDigitInput) {
-                input.inputType = InputType.TYPE_CLASS_NUMBER
-            }
-            builder.setView(input)
-
-            // 設定確認和取消按鈕
-            builder.setPositiveButton("確定") { dialog, which ->
-                listener.onEdit(input.text.toString())
-            }
-            builder.setNegativeButton("取消") { dialog, which ->
-                dialog.cancel()
-            }
-
-            // 顯示對話框
-            builder.show()
-        }
-    }
 
 
     private fun initTimingsCheckbox() {
