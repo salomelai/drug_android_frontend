@@ -40,7 +40,11 @@ class NotificationSettingButtonSheet : BottomSheetDialogFragment() {
     private fun showDatePickerDialog() {
         // 使用 MaterialDatePicker 顯示日期選擇對話框
         val builder = MaterialDatePicker.Builder.datePicker()
-        val picker = builder.build()
+        val picker = builder
+            .setTitleText("選擇開始服藥日期")
+            .setPositiveButtonText("確定")
+            .setNegativeButtonText("取消")
+            .build()
 
         // 設置選擇日期後的回調
         picker.addOnPositiveButtonClickListener { selection ->

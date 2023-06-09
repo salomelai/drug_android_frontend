@@ -2,6 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.junting.drug_android_frontend.DrugReminderViewModel" />
@@ -18,6 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
+            android:background="?android:attr/selectableItemBackground"
             android:orientation="horizontal">
 
             <TextView
@@ -31,7 +33,7 @@
                 android:id="@+id/tvDosage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(viewModel.todayReminder.dosage)+'顆'}" />
+                android:text="@{String.valueOf(viewModel.todayReminder.dosage)}" />
 
         </LinearLayout>
 
@@ -41,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="15dp"
+            android:background="?android:attr/selectableItemBackground"
             android:orientation="horizontal">
 
             <TextView

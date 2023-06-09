@@ -86,17 +86,6 @@ class DrugRecordsViewModel : ViewModel() {
         triggerUpdate(info)
     }
 
-    fun addTimes(times: Int) {
-        val info: DrugRecord = record.value!!
-        info.timings = info.timings.plus(times)
-        triggerUpdate(info)
-    }
-    fun removeTimes(times: Int) {
-        val info: DrugRecord = record.value!!
-        info.timings = info.timings.minus(times)
-        triggerUpdate(info)
-    }
-
     fun setDosage(dosage: Int) {
         val info: DrugRecord = record.value!!
         info.dosage = dosage

@@ -1,5 +1,6 @@
 package com.junting.drug_android_frontend
 
+import DialogUtils
 import android.R
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -8,6 +9,7 @@ import android.view.MenuItem
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.timepicker.MaterialTimePicker
 import com.junting.drug_android_frontend.databinding.ActivityDrugRecordBinding
 import com.junting.drug_android_frontend.databinding.ActivityDrugReminderBinding
 import com.junting.drug_android_frontend.databinding.BottomSheetLaterBinding
@@ -21,7 +23,7 @@ import java.util.Locale
 
 class DrugReminderActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDrugReminderBinding
-    var todayReminder : TodayReminder? = null
+    var todayReminder: TodayReminder? = null
     private var viewModel: DrugReminderViewModel = DrugReminderViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,16 +42,58 @@ class DrugReminderActivity : AppCompatActivity() {
         }
         initActualTime()
         initButton()
-        initSelectedTime()
+        initClickableTextView()
     }
 
-    private fun initSelectedTime() {
-        binding
+    private fun initClickableTextView() {
+        DialogUtils.initTextViewEditDialog(
+            this,
+            binding.llDosage,
+            binding.tvDosage,
+            "劑量",
+            true
+        ) { text ->
+            viewModel.setDosage(text.toInt())
+        }
+        binding.llTimeSlot.setOnClickListener {
+            val currentTime = Calendar.getInstance()
+            val hour = currentTime.get(Calendar.HOUR_OF_DAY)
+            val minute = currentTime.get(Calendar.MINUTE)
+
+            val timePicker = MaterialTimePicker.Builder()
+                .setHour(hour)
+                .setMinute(minute)
+                .setTitleText("選擇服藥時間")
+                .setPositiveButtonText("確定")
+                .setNegativeButtonText("取消")
+                .build()
+
+
+            timePicker.addOnPositiveButtonClickListener {
+                val selectedHour = timePicker.hour
+                val selectedMinute = timePicker.minute
+
+                viewModel.setActualTakeingTime(
+                    String.format(
+                        "%02d:%02d",
+                        selectedHour,
+                        selectedMinute
+                    )
+                )
+            }
+
+            timePicker.show(supportFragmentManager, "timePicker")
+        }
     }
+
 
     private fun initActualTime() {
         val currentTime = Calendar.getInstance()
-        viewModel.actualTakeingTime.set(SimpleDateFormat("HH:mm", Locale.getDefault()).format(currentTime.time))
+        viewModel.actualTakeingTime.set(
+            SimpleDateFormat("HH:mm", Locale.getDefault()).format(
+                currentTime.time
+            )
+        )
     }
 
     private fun initButton() {
@@ -57,6 +101,7 @@ class DrugReminderActivity : AppCompatActivity() {
             showDelayBottomSheet()
         }
     }
+
     fun showDelayBottomSheet() {
         val bottomSheetDialog = BottomSheetDialog(this)
         val binding = BottomSheetLaterBinding.inflate(layoutInflater)
@@ -88,6 +133,7 @@ class DrugReminderActivity : AppCompatActivity() {
 
         bottomSheetDialog.show()
     }
+
     private fun addMinutesToActualTime(minutes: Int) {
 
         val format = SimpleDateFormat("HH:mm", Locale.getDefault())
@@ -99,13 +145,13 @@ class DrugReminderActivity : AppCompatActivity() {
     }
 
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
                 onBackPressed()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
