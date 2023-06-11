@@ -6,5 +6,6 @@ data class TodayReminder(
     var dosage: Int,
     var drug: Drug,
     var id: Int,
-    var timeSlot: String
+    var timeSlot: String,
+    var position: Int
 ): Serializable

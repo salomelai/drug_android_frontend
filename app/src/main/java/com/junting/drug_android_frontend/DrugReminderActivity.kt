@@ -2,17 +2,24 @@ package com.junting.drug_android_frontend
 
 import DialogUtils
 import android.R
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.MenuItem
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.core.content.ContentProviderCompat.requireContext
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.junting.drug_android_frontend.databinding.ActivityDrugRecordBinding
 import com.junting.drug_android_frontend.databinding.ActivityDrugReminderBinding
 import com.junting.drug_android_frontend.databinding.BottomSheetLaterBinding
+import com.junting.drug_android_frontend.databinding.FragmentPillBoxManagementBinding
 import com.junting.drug_android_frontend.model.today_reminder.TodayReminder
 import com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsViewModel
 import java.text.SimpleDateFormat
@@ -23,12 +30,14 @@ import java.util.Locale
 
 class DrugReminderActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDrugReminderBinding
+    private lateinit var bindingPillBox: FragmentPillBoxManagementBinding
     var todayReminder: TodayReminder? = null
     private var viewModel: DrugReminderViewModel = DrugReminderViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityDrugReminderBinding.inflate(layoutInflater)
+        bindingPillBox = FragmentPillBoxManagementBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         setContentView(binding.root)
@@ -100,7 +109,11 @@ class DrugReminderActivity : AppCompatActivity() {
         binding.btnLater.setOnClickListener {
             showDelayBottomSheet()
         }
+        binding.btnConfirm.setOnClickListener{
+            showConfirmDialog(viewModel.todayReminder.value?.position ?:0)
+        }
     }
+
 
     fun showDelayBottomSheet() {
         val bottomSheetDialog = BottomSheetDialog(this)
@@ -132,6 +145,39 @@ class DrugReminderActivity : AppCompatActivity() {
         }
 
         bottomSheetDialog.show()
+    }
+    private fun showConfirmDialog(position : Int) {
+        resetCellsAndSetCellColor(position)
+
+        val dialog = MaterialAlertDialogBuilder(this)
+            .setTitle("已服用藥物")
+            .setView(bindingPillBox.root)
+            .setPositiveButton("確定") { dialog, which ->
+                finish()
+            }
+            .create()
+
+        dialog.show()
+    }
+    private fun getResourceIdByPosition(position: Int): Int {
+        return resources.getIdentifier(
+            "ll_drug_position_$position",
+            "id",
+            this.packageName
+        )
+    }
+    private fun resetCellsAndSetCellColor(position: Int) {
+        val positions = (1..9).toList()
+        for (i in positions) {
+            val cellResourceId = getResourceIdByPosition(i)
+            val drugPositionView = bindingPillBox.root.findViewById<View>(cellResourceId)
+            drugPositionView?.findViewById<CardView>(com.junting.drug_android_frontend.R.id.card_view)
+                ?.removeAllViews()
+            if(i==position){
+                drugPositionView?.findViewById<CardView>(com.junting.drug_android_frontend.R.id.card_view)
+                    ?.setCardBackgroundColor(resources.getColor(com.junting.drug_android_frontend.R.color.md_theme_light_secondaryContainer))
+            }
+        }
     }
 
     private fun addMinutesToActualTime(minutes: Int) {
