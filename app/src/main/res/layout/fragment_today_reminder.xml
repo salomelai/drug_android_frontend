@@ -12,12 +12,33 @@
         android:layout_height="match_parent"
         android:visibility="visible" />
 
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:endIconMode="custom"
+        app:endIconDrawable="@drawable/ic_baseline_check_circle_24">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/inputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="選擇時段"
+            android:focusable="false"
+            android:clickable="true" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
     <com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeRecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:divider="@drawable/list_divider"
-        app:item_layout="@layout/remind_item_view" />
+        app:item_layout="@layout/remind_item_view"
+        app:layout_constraintTop_toBottomOf="@id/inputLayout" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab"
