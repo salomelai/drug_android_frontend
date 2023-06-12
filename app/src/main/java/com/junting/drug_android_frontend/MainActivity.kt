@@ -15,6 +15,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.junting.drug_android_frontend.databinding.ActivityMainBinding
+import com.junting.drug_android_frontend.ui.todayReminder.TodayReminderViewModel
 
 
 class MainActivity : AppCompatActivity() {
@@ -32,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = binding.navView
         // 設定顯示小紅點圖標
         navView.getOrCreateBadge(R.id.navigation_todayReminder).apply {
-            number = 1
+            number = 0
             isVisible = true
         }
 
@@ -83,5 +84,11 @@ class MainActivity : AppCompatActivity() {
             }
             else -> return super.onOptionsItemSelected(item)
         }
+    }
+    fun setTodayReminderBadge(number: Int) {
+        val navView: BottomNavigationView = binding.navView
+        val badge = navView.getOrCreateBadge(R.id.navigation_todayReminder)
+        badge.number = number
+        badge.isVisible = true
     }
 }
