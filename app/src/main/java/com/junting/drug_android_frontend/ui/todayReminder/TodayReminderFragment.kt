@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -105,6 +106,7 @@ class TodayReminderFragment : Fragment() {
                 ContextCompat.getColor(requireContext(), R.color.md_theme_dark_primary)
             behindSwipedItemIconDrawableId = R.drawable.ic_baseline_cancel_24
             behindSwipedItemIconSecondaryDrawableId = R.drawable.ic_baseline_check_circle_24
+            behindSwipedItemIconMargin = 60.0f
         }
     }
 
