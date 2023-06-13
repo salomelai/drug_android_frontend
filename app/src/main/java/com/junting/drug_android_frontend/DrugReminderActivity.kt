@@ -1,31 +1,20 @@
 package com.junting.drug_android_frontend
 
 import DialogUtils
-import android.R
-import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
-import android.widget.LinearLayout
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import androidx.core.content.ContentProviderCompat.requireContext
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
-import com.junting.drug_android_frontend.databinding.ActivityDrugRecordBinding
 import com.junting.drug_android_frontend.databinding.ActivityDrugReminderBinding
 import com.junting.drug_android_frontend.databinding.BottomSheetLaterBinding
 import com.junting.drug_android_frontend.databinding.FragmentPillBoxManagementBinding
 import com.junting.drug_android_frontend.model.TakingRecord.TakingRecord
-import com.junting.drug_android_frontend.model.today_reminder.TodayReminder
-import com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsViewModel
 import java.text.SimpleDateFormat
-import java.time.LocalTime
-import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
 

@@ -2,7 +2,6 @@ package com.junting.drug_android_frontend.services
 
 import com.junting.drug_android_frontend.constants.DataApiConstants
 import com.junting.drug_android_frontend.model.TakingRecord.TakingRecord
-import com.junting.drug_android_frontend.model.today_reminder.TodayReminder
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET

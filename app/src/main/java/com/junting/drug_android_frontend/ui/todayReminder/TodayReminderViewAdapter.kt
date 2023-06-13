@@ -1,8 +1,6 @@
 package com.junting.drug_android_frontend.ui.todayReminder
 
 import android.content.Intent
-import android.text.Layout
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,13 +9,13 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeAdapter
-import com.junting.drug_android_frontend.DrugRecordActivity
 import com.junting.drug_android_frontend.DrugReminderActivity
 import com.junting.drug_android_frontend.databinding.RemindItemViewBinding
 import com.junting.drug_android_frontend.model.TakingRecord.TakingRecord
-import com.junting.drug_android_frontend.model.today_reminder.TodayReminder
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Collections
+import java.util.Locale
 
 class TodayReminderViewAdapter()
     :DragDropSwipeAdapter<TakingRecord, TodayReminderViewAdapter.ViewHolder>(Collections.emptyList()) {
