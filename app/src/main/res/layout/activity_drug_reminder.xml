@@ -33,7 +33,7 @@
                 android:id="@+id/tvDosage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(viewModel.todayReminder.dosage)}" />
+                android:text="@{String.valueOf(viewModel.takingRecord.dosage)}" />
 
         </LinearLayout>
 
@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:drawableEnd="@drawable/ic_baseline_expand_more_24"
-                android:text="@{viewModel.actualTakeingTime}" />
+                android:text="@{viewModel.actualTakingTime}" />
 
         </LinearLayout>
 

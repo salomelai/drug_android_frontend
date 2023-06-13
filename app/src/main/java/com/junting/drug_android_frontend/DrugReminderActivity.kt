@@ -20,6 +20,7 @@ import com.junting.drug_android_frontend.databinding.ActivityDrugRecordBinding
 import com.junting.drug_android_frontend.databinding.ActivityDrugReminderBinding
 import com.junting.drug_android_frontend.databinding.BottomSheetLaterBinding
 import com.junting.drug_android_frontend.databinding.FragmentPillBoxManagementBinding
+import com.junting.drug_android_frontend.model.TakingRecord.TakingRecord
 import com.junting.drug_android_frontend.model.today_reminder.TodayReminder
 import com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsViewModel
 import java.text.SimpleDateFormat
@@ -31,7 +32,7 @@ import java.util.Locale
 class DrugReminderActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDrugReminderBinding
     private lateinit var bindingPillBox: FragmentPillBoxManagementBinding
-    var todayReminder: TodayReminder? = null
+    var takingRecord: TakingRecord? = null
     private var viewModel: DrugReminderViewModel = DrugReminderViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,11 +44,11 @@ class DrugReminderActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        todayReminder = intent.getSerializableExtra("todayReminder") as? TodayReminder
-        if (todayReminder != null) {
-            viewModel.todayReminder.value = todayReminder
-            supportActionBar?.setTitle(todayReminder!!.drug.name)
-            Log.d("todayReminder", viewModel.todayReminder.value.toString())
+        takingRecord = intent.getSerializableExtra("takingRecord") as? TakingRecord
+        if (takingRecord != null) {
+            viewModel.takingRecord.value = takingRecord
+            supportActionBar?.setTitle(takingRecord!!.drug.name)
+            Log.d("takingRecord", viewModel.takingRecord.value.toString())
         }
         initActualTime()
         initButton()
@@ -82,7 +83,7 @@ class DrugReminderActivity : AppCompatActivity() {
                 val selectedHour = timePicker.hour
                 val selectedMinute = timePicker.minute
 
-                viewModel.setActualTakeingTime(
+                viewModel.setActualTakingTime(
                     String.format(
                         "%02d:%02d",
                         selectedHour,
@@ -98,7 +99,7 @@ class DrugReminderActivity : AppCompatActivity() {
 
     private fun initActualTime() {
         val currentTime = Calendar.getInstance()
-        viewModel.actualTakeingTime.set(
+        viewModel.actualTakingTime.set(
             SimpleDateFormat("HH:mm", Locale.getDefault()).format(
                 currentTime.time
             )
@@ -110,7 +111,7 @@ class DrugReminderActivity : AppCompatActivity() {
             showDelayBottomSheet()
         }
         binding.btnConfirm.setOnClickListener{
-            showConfirmDialog(viewModel.todayReminder.value?.position ?:0)
+            showConfirmDialog(viewModel.takingRecord.value?.position ?:0)
         }
     }
 
@@ -183,7 +184,7 @@ class DrugReminderActivity : AppCompatActivity() {
     private fun addMinutesToActualTime(minutes: Int) {
 
         val format = SimpleDateFormat("HH:mm", Locale.getDefault())
-        val date = format.parse(viewModel.actualTakeingTime.get()!!)!!
+        val date = format.parse(viewModel.actualTakingTime.get()!!)!!
         val calendar = Calendar.getInstance()
         calendar.time = date
         calendar.add(Calendar.MINUTE, minutes)
