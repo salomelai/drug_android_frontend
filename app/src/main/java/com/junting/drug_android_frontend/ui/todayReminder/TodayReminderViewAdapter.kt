@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeAdapter
+import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemSwipeListener
 import com.junting.drug_android_frontend.DrugReminderActivity
 import com.junting.drug_android_frontend.databinding.RemindItemViewBinding
 import com.junting.drug_android_frontend.model.TakingRecord.TakingRecord
@@ -70,5 +71,13 @@ class TodayReminderViewAdapter()
     override fun getViewToTouchToStartDraggingItem(item: TakingRecord, viewHolder: TodayReminderViewAdapter.ViewHolder, position: Int): View? {
         // We return the view holder's view on which the user has to touch to drag the item
         return viewHolder.dragIcon
+    }
+    private val onItemSwipeListener = object : OnItemSwipeListener<String> {
+        override fun onItemSwiped(position: Int, direction: OnItemSwipeListener.SwipeDirection, item: String): Boolean {
+            // Handle action of item swiped
+            // Return false to indicate that the swiped item should be removed from the adapter's data set (default behaviour)
+            // Return true to stop the swiped item from being automatically removed from the adapter's data set (in this case, it will be your responsibility to manually update the data set as necessary)
+            return false
+        }
     }
 }

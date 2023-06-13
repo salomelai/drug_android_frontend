@@ -12,10 +12,12 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemSwipeListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.junting.drug_android_frontend.MainActivity
 import com.junting.drug_android_frontend.R
 import com.junting.drug_android_frontend.databinding.FragmentTodayReminderBinding
+import com.junting.drug_android_frontend.model.TakingRecord.TakingRecord
 
 class TodayReminderFragment : Fragment() {
 
@@ -23,8 +25,22 @@ class TodayReminderFragment : Fragment() {
     private lateinit var viewAdapter: TodayReminderViewAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
     private var viewModel: TodayReminderViewModel = TodayReminderViewModel()
-
+    private val onItemSwipeListener = object : OnItemSwipeListener<TakingRecord> {
+        override fun onItemSwiped(position: Int, direction: OnItemSwipeListener.SwipeDirection, item: TakingRecord): Boolean {
+            if (direction == OnItemSwipeListener.SwipeDirection.RIGHT_TO_LEFT) {
+                Log.d("onItemSwiped", "向左滑: $position, $item")
+            } else if (direction == OnItemSwipeListener.SwipeDirection.LEFT_TO_RIGHT) {
+                Log.d("onItemSwiped", "向右滑: $position, $item")
+            }
+            updateTodayReminderBadge(viewAdapter.itemCount)
+            // 處理項目被滑動的動作
+            // 返回 false 表示滑動的項目應該從適配器的資料集中移除（預設行為）
+            // 返回 true 表示停止滑動的項目自動從適配器的資料集中移除（在這種情況下，你需要自行手動更新資料集）
+            return false
+        }
+    }
     private val timeRanges = generateTimeRanges()
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -41,6 +57,8 @@ class TodayReminderFragment : Fragment() {
         initRecyclerView()
         initRecyclerViewModel()
         initChooseTime()
+        // 設定 onItemSwipeListener
+        binding.list.swipeListener = onItemSwipeListener
 
         return root
     }
@@ -89,7 +107,6 @@ class TodayReminderFragment : Fragment() {
         viewModel.fetchRecords()
         viewModel.records.observe(context as AppCompatActivity, Observer {
             viewAdapter!!.update(it)
-            updateTodayReminderBadge(it.size)
             binding.progressBar.visibility = View.GONE
         })
     }
@@ -97,7 +114,7 @@ class TodayReminderFragment : Fragment() {
     private fun initRecyclerView() {
         viewManager = LinearLayoutManager(requireContext())
         viewAdapter = TodayReminderViewAdapter()
-        binding.list.apply {
+        val apply = binding.list.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = viewAdapter
             behindSwipedItemBackgroundColor =
@@ -108,6 +125,7 @@ class TodayReminderFragment : Fragment() {
             behindSwipedItemIconSecondaryDrawableId = R.drawable.ic_baseline_check_circle_24
             behindSwipedItemIconMargin = 60.0f
         }
+
     }
 
     fun updateTodayReminderBadge(number: Int) {
