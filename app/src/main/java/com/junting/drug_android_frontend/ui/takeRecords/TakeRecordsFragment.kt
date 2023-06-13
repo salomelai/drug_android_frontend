@@ -5,11 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.google.android.material.tabs.TabLayout
 import com.junting.drug_android_frontend.databinding.FragmentTakeRecordsBinding
+import com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsPagerAdapter
 
 class TakeRecordsFragment: Fragment() {
     private var _binding: FragmentTakeRecordsBinding? = null
     private val binding get() = _binding!!
+    private var takeRecordsPagerAdapter: TakeRecordsPagerAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -17,9 +20,20 @@ class TakeRecordsFragment: Fragment() {
         savedInstanceState: Bundle?,
     ): View {
         _binding = FragmentTakeRecordsBinding.inflate(inflater, container, false)
+        setViewPager()
         return binding.root
     }
 
+    private fun setViewPager() {
+        takeRecordsPagerAdapter = TakeRecordsPagerAdapter(this.requireContext())
+        binding.takeRecordsViewPager.adapter = takeRecordsPagerAdapter
+        binding.takeRecordsViewPager.addOnPageChangeListener(
+            TabLayout.TabLayoutOnPageChangeListener(
+                binding.takeRecordsTabLayout
+            )
+        )
+
+    }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
