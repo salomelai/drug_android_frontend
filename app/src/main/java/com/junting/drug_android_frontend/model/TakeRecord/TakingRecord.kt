@@ -1,8 +1,8 @@
-package com.junting.drug_android_frontend.model.TakingRecord
+package com.junting.drug_android_frontend.model.TakeRecord
 
 import java.io.Serializable
 
-data class TakingRecord(
+data class TakeRecord(
     var date: String,
     var dosage: Int,
     var drug: Drug,

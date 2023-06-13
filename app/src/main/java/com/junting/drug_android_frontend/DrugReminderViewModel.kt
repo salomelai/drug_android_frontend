@@ -3,19 +3,19 @@ package com.junting.drug_android_frontend
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.junting.drug_android_frontend.model.TakingRecord.TakingRecord
+import com.junting.drug_android_frontend.model.TakeRecord.TakeRecord
 
 class DrugReminderViewModel : ViewModel() {
-    val takingRecord = MutableLiveData<TakingRecord>()
+    val takeRecord = MutableLiveData<TakeRecord>()
     val actualTakingTime  = ObservableField<String>()
 
     fun setDosage(dosage: Int) {
-        val info: TakingRecord = takingRecord.value!!
+        val info: TakeRecord = takeRecord.value!!
         info.dosage = dosage
         triggerUpdate(info)
     }
     fun setTimeSlot(timeSlot: String) {
-        val info: TakingRecord = takingRecord.value!!
+        val info: TakeRecord = takeRecord.value!!
         info.timeSlot = timeSlot
         triggerUpdate(info)
     }
@@ -23,8 +23,8 @@ class DrugReminderViewModel : ViewModel() {
         this.actualTakingTime.set(actualTakingTime)
     }
 
-    private fun triggerUpdate(newTakingRecord: TakingRecord) {
-        takingRecord.value = newTakingRecord
+    private fun triggerUpdate(newTakeRecord: TakeRecord) {
+        takeRecord.value = newTakeRecord
     }
 
 }

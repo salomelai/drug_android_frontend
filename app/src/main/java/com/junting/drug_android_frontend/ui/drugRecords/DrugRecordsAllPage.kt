@@ -26,7 +26,7 @@ class DrugRecordsAllPage(context: Context, container: ViewGroup) {
 
     private val progressBar: ProgressBar
     private val recyclerView: RecyclerView
-    private var recyclerAdapter: DrugsRecordViewAdapter
+    private var recyclerAdapter: DrugRecordsViewAdapter
     private var fab: ExtendedFloatingActionButton
 
     private val viewModel: DrugRecordsViewModel
@@ -41,7 +41,7 @@ class DrugRecordsAllPage(context: Context, container: ViewGroup) {
         this.recyclerView = view.findViewById(R.id.recycler_view)
         this.fab=view.findViewById(R.id.fab)
         this.viewModel = DrugRecordsViewModel()
-        this.recyclerAdapter = DrugsRecordViewAdapter(context, viewModel)
+        this.recyclerAdapter = DrugRecordsViewAdapter(context, viewModel)
         this.initAdapter()
         this.initProgressBar()
         this.initFab()

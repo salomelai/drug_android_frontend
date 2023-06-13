@@ -12,8 +12,8 @@ import com.junting.drug_android_frontend.R
 import com.junting.drug_android_frontend.databinding.DrugItemViewBinding
 import com.junting.drug_android_frontend.model.drug_record.DrugRecord
 
-class DrugsRecordViewAdapter(private val context: Context, private val viewModel: DrugRecordsViewModel) :
-    RecyclerView.Adapter<DrugsRecordViewAdapter.MyViewHolder>() {
+class DrugRecordsViewAdapter(private val context: Context, private val viewModel: DrugRecordsViewModel) :
+    RecyclerView.Adapter<DrugRecordsViewAdapter.MyViewHolder>() {
 
     class MyViewHolder(val drugItemViewBinding: DrugItemViewBinding) :
         RecyclerView.ViewHolder(drugItemViewBinding.root)

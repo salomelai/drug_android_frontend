@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.junting.drug_android_frontend.R
-import com.junting.drug_android_frontend.model.Hospital
 
 
 class DrugRecordsHospitalPage(context: Context, container: ViewGroup) {
@@ -24,7 +23,7 @@ class DrugRecordsHospitalPage(context: Context, container: ViewGroup) {
     private val drugRecordsByHospitalrecyclerView: RecyclerView
     private val hospitalListRecyclerView: RecyclerView
 
-    private var drugRecordsByHospitalrecyclerAdapter: DrugsRecordViewAdapter
+    private var drugRecordsByHospitalrecyclerAdapter: DrugRecordsViewAdapter
     private var hostpitalListRecyclerAdapter: HospitalListViewAdapter
 
     private val drugRecordsByHospitalviewModel: DrugRecordsViewModel
@@ -44,7 +43,7 @@ class DrugRecordsHospitalPage(context: Context, container: ViewGroup) {
         this.drugRecordsByHospitalviewModel = DrugRecordsViewModel()
         this.hospitalListViewModel = HospitalListViewModel()
 
-        this.drugRecordsByHospitalrecyclerAdapter = DrugsRecordViewAdapter(context, drugRecordsByHospitalviewModel)
+        this.drugRecordsByHospitalrecyclerAdapter = DrugRecordsViewAdapter(context, drugRecordsByHospitalviewModel)
         this.hostpitalListRecyclerAdapter = HospitalListViewAdapter(context, hospitalListViewModel,this)
 
 //        this.initAdapter()

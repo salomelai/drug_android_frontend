@@ -33,7 +33,7 @@
                 android:id="@+id/tvDosage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{String.valueOf(viewModel.takingRecord.dosage)}" />
+                android:text="@{String.valueOf(viewModel.takeRecord.dosage)}" />
 
         </LinearLayout>
 

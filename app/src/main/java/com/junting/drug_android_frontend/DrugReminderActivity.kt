@@ -13,7 +13,7 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.junting.drug_android_frontend.databinding.ActivityDrugReminderBinding
 import com.junting.drug_android_frontend.databinding.BottomSheetLaterBinding
 import com.junting.drug_android_frontend.databinding.FragmentPillBoxManagementBinding
-import com.junting.drug_android_frontend.model.TakingRecord.TakingRecord
+import com.junting.drug_android_frontend.model.TakeRecord.TakeRecord
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -21,7 +21,7 @@ import java.util.Locale
 class DrugReminderActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDrugReminderBinding
     private lateinit var bindingPillBox: FragmentPillBoxManagementBinding
-    var takingRecord: TakingRecord? = null
+    var takeRecord: TakeRecord? = null
     private var viewModel: DrugReminderViewModel = DrugReminderViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,11 +33,11 @@ class DrugReminderActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        takingRecord = intent.getSerializableExtra("takingRecord") as? TakingRecord
-        if (takingRecord != null) {
-            viewModel.takingRecord.value = takingRecord
-            supportActionBar?.setTitle(takingRecord!!.drug.name)
-            Log.d("takingRecord", viewModel.takingRecord.value.toString())
+        takeRecord = intent.getSerializableExtra("takeRecord") as? TakeRecord
+        if (takeRecord != null) {
+            viewModel.takeRecord.value = takeRecord
+            supportActionBar?.setTitle(takeRecord!!.drug.name)
+            Log.d("takeRecord", viewModel.takeRecord.value.toString())
         }
         initActualTime()
         initButton()
@@ -100,7 +100,7 @@ class DrugReminderActivity : AppCompatActivity() {
             showDelayBottomSheet()
         }
         binding.btnConfirm.setOnClickListener{
-            showConfirmDialog(viewModel.takingRecord.value?.position ?:0)
+            showConfirmDialog(viewModel.takeRecord.value?.position ?:0)
         }
     }
 
