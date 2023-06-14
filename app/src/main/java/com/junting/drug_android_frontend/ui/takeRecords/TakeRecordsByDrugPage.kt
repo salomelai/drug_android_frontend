@@ -1,21 +1,25 @@
 package com.junting.drug_android_frontend.ui.takeRecords
 
 import android.content.Context
-import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ExpandableListView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.junting.drug_android_frontend.DrugbagInfoActivity
 import com.junting.drug_android_frontend.R
-import com.junting.drug_android_frontend.PhotoTakeActivity
+import com.junting.drug_android_frontend.RrugRecordExpandableListAdapter
+import com.junting.drug_android_frontend.TakeRecordsByDrugExpandableListAdapter
+import com.junting.drug_android_frontend.model.TakeRecord.Drug
+import com.junting.drug_android_frontend.model.TakeRecord.Medication
+import com.junting.drug_android_frontend.model.TakeRecord.TakeRecord
+import com.junting.drug_android_frontend.model.drug_record.InteractingDrug
+import com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsViewAdapter
+import com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsViewModel
+import com.junting.drug_android_frontend.ui.libs.ExpandableListUtils
 
 
 class TakeRecordsByDrugPage(context: Context, container: ViewGroup) {
@@ -23,10 +27,12 @@ class TakeRecordsByDrugPage(context: Context, container: ViewGroup) {
     val view: View
     private val context: Context
     private val container: ViewGroup
+    private val progressBar: ProgressBar
 
+    private val expandableListView: ExpandableListView
+    private var expandableListAdapter: TakeRecordsByDrugExpandableListAdapter
 
-//    private val viewModel:
-
+    private val viewModel: TakeRecordsViewModel
 
 
     init {
@@ -34,8 +40,31 @@ class TakeRecordsByDrugPage(context: Context, container: ViewGroup) {
         this.container = container
         this.view =
             LayoutInflater.from(context).inflate(R.layout.take_records_drug_tab, container, false)
+        this.progressBar = view.findViewById(R.id.progressBar)
+
+        this.expandableListView = view.findViewById(R.id.expandable_list_view)
+        this.expandableListAdapter = TakeRecordsByDrugExpandableListAdapter(context, listOf())
+
+        this.viewModel = TakeRecordsViewModel()
+
+        initViewModel()
     }
 
+    private fun initViewModel() {
+        this.viewModel.fetchRecords()
+        this.viewModel.medications.observe(context as AppCompatActivity, Observer {
+                medications ->
+            initExpandableList(medications)
+            progressBar.visibility = View.GONE
+        })
+
+    }
+
+    private fun initExpandableList(medications: List<Medication>) {
+        expandableListAdapter = TakeRecordsByDrugExpandableListAdapter(context, medications)
+        expandableListView.setAdapter(expandableListAdapter)
+
+    }
 
 
 }
