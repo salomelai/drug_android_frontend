@@ -26,7 +26,7 @@ class DrugRecordsAllPage(context: Context, container: ViewGroup) {
 
     private val progressBar: ProgressBar
     private val recyclerView: RecyclerView
-    private var recyclerAdapter: DrugRecordsViewAdapter
+    private var recyclerViewAdapter: DrugRecordsViewAdapter
     private var fab: ExtendedFloatingActionButton
 
     private val viewModel: DrugRecordsViewModel
@@ -41,7 +41,7 @@ class DrugRecordsAllPage(context: Context, container: ViewGroup) {
         this.recyclerView = view.findViewById(R.id.recycler_view)
         this.fab=view.findViewById(R.id.fab)
         this.viewModel = DrugRecordsViewModel()
-        this.recyclerAdapter = DrugRecordsViewAdapter(context, viewModel)
+        this.recyclerViewAdapter = DrugRecordsViewAdapter(context, viewModel)
         this.initAdapter()
         this.initProgressBar()
         this.initFab()
@@ -51,7 +51,7 @@ class DrugRecordsAllPage(context: Context, container: ViewGroup) {
     private fun initAdapter() {
         this.viewModel.fetchRecordsByAll()
         this.viewModel.records.observe(context as AppCompatActivity, Observer {
-            recyclerAdapter!!.notifyDataSetChanged()
+            recyclerViewAdapter!!.notifyDataSetChanged()
             progressBar.visibility = View.GONE
         })
     }
@@ -63,7 +63,7 @@ class DrugRecordsAllPage(context: Context, container: ViewGroup) {
     private fun initRecyclerView() {
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = recyclerAdapter
+            adapter = recyclerViewAdapter
         }
     }
     private fun initFab(){

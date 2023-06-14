@@ -118,7 +118,7 @@ class DrugRecordsViewModel : ViewModel() {
             try {
                 records.value = drugRecordService.getDrugs()
             } catch (e: Exception) {
-                Log.d("DrugsViewModel", "fetch records failed")
+                Log.d("DrugsViewModel", "fetch takeRecords failed")
                 Log.e("DrugsViewModel", e.toString())
             }
         }
@@ -130,7 +130,7 @@ class DrugRecordsViewModel : ViewModel() {
             try {
                 records.value = drugRecordService.getDrugs()
             } catch (e: Exception) {
-                Log.d("DrugsViewModel", "fetch records failed")
+                Log.d("DrugsViewModel", "fetch takeRecords failed")
                 Log.e("DrugsViewModel", e.toString())
             }
         }
