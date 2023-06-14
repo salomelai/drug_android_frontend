@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
+import androidx.core.view.marginStart
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.junting.drug_android_frontend.model.TakeRecord.DateRecord
@@ -63,7 +64,7 @@ class TakeRecordsByDrugExpandableListAdapter(
             false
         )
         val textView = view.findViewById<TextView>(android.R.id.text1)
-        textView.text = medication.name
+        textView.text = "     "+medication.name  //空白字符填充
         return view
     }
 

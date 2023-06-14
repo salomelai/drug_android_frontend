@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.junting.drug_android_frontend.R
 import com.junting.drug_android_frontend.model.TakeRecord.DateRecord
 import com.junting.drug_android_frontend.model.TakeRecord.TakeRecord
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class TakeRecordsByDrugRecyclerViewAdapter(
     private val context: Context,
@@ -65,7 +68,27 @@ class TakeRecordsByDrugRecyclerViewAdapter(
         private val dateTextView: TextView = itemView.findViewById(android.R.id.text1)
 
         fun bind(date: String) {
-            dateTextView.text = date
+            val inputFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+
+            val parsedDate = inputFormat.parse(date)
+
+            val dayOfWeek = Calendar.getInstance().apply {
+                time = parsedDate
+            }.get(Calendar.DAY_OF_WEEK)
+
+            val dayOfWeekString = when (dayOfWeek) {
+                Calendar.MONDAY -> itemView.context.getString(R.string.monday)
+                Calendar.TUESDAY -> itemView.context.getString(R.string.tuesday)
+                Calendar.WEDNESDAY -> itemView.context.getString(R.string.wednesday)
+                Calendar.THURSDAY -> itemView.context.getString(R.string.thursday)
+                Calendar.FRIDAY -> itemView.context.getString(R.string.friday)
+                Calendar.SATURDAY -> itemView.context.getString(R.string.saturday)
+                Calendar.SUNDAY -> itemView.context.getString(R.string.sunday)
+                else -> ""
+            }
+
+            val finalText = "$dayOfWeekString $date"
+            dateTextView.text = "        "+finalText   //空白字符填充
         }
     }
 
@@ -81,12 +104,13 @@ class TakeRecordsByDrugRecyclerViewAdapter(
             if (takeRecord.status == 0) {
                 statusImageView.setImageResource(R.drawable.ic_baseline_question_mark_24)
             } else if (takeRecord.status == 1) {
-                timeSlotTextView.setTextColor(ContextCompat.getColor(context, R.color.md_theme_light_secondaryContainer))
+                timeSlotTextView.setTextColor(ContextCompat.getColor(context, R.color.md_theme_light_primary))
                 statusImageView.setImageResource(R.drawable.ic_baseline_check_circle_24)
             }else{
-                timeSlotTextView.setTextColor(ContextCompat.getColor(context, R.color.md_theme_dark_error))
+                timeSlotTextView.setTextColor(ContextCompat.getColor(context, R.color.md_theme_light_error))
                 statusImageView.setImageResource(R.drawable.ic_baseline_cancel_24)
             }
+
         }
     }
 }
