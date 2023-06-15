@@ -12,7 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.junting.drug_android_frontend.databinding.ActionBarTakeRecordTodayReminderBinding
-import com.junting.drug_android_frontend.databinding.ActivityDrugReminderBinding
+import com.junting.drug_android_frontend.databinding.ActivityTodayReminderBinding
 import com.junting.drug_android_frontend.databinding.BottomSheetLaterBinding
 import com.junting.drug_android_frontend.databinding.FragmentPillBoxManagementBinding
 import com.junting.drug_android_frontend.ui.todayReminder.TodayReminderViewModel
@@ -20,8 +20,8 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class DrugReminderActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityDrugReminderBinding
+class TodayReminderActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityTodayReminderBinding
     private lateinit var bindingPillBox: FragmentPillBoxManagementBinding
     private lateinit var bindingActionBarTakeRecordTodayReminder: ActionBarTakeRecordTodayReminderBinding
     var todayReminderId: Int? = null
@@ -29,7 +29,7 @@ class DrugReminderActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityDrugReminderBinding.inflate(layoutInflater)
+        binding = ActivityTodayReminderBinding.inflate(layoutInflater)
         bindingPillBox = FragmentPillBoxManagementBinding.inflate(layoutInflater)
         bindingActionBarTakeRecordTodayReminder = ActionBarTakeRecordTodayReminderBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this

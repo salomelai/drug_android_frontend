@@ -10,9 +10,8 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeAdapter
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemSwipeListener
-import com.junting.drug_android_frontend.DrugReminderActivity
+import com.junting.drug_android_frontend.TodayReminderActivity
 import com.junting.drug_android_frontend.databinding.RemindItemViewBinding
-import com.junting.drug_android_frontend.model.take_record.TakeRecord
 import com.junting.drug_android_frontend.model.today_reminder.TodayReminder
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -59,7 +58,7 @@ class TodayReminderViewAdapter()
             viewHolder.viewColor.visibility = View.INVISIBLE
         }
         viewHolder.llRemindItem.setOnClickListener {
-            val intent = Intent(viewHolder.itemView.context, DrugReminderActivity::class.java)
+            val intent = Intent(viewHolder.itemView.context, TodayReminderActivity::class.java)
             intent.putExtra("todayReminderId", item.id)
             startActivity(viewHolder.itemView.context, intent, null)
         }
