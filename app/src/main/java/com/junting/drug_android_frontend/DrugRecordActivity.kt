@@ -3,9 +3,7 @@ package com.junting.drug_android_frontend
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.InputType
 import android.util.Log
-import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -14,13 +12,10 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.timepicker.MaterialTimePicker
-import com.google.android.material.timepicker.TimeFormat
 import com.junting.drug_android_frontend.databinding.ActivityDrugRecordBinding
 import com.junting.drug_android_frontend.model.drug_record.DrugRecord
 import com.junting.drug_android_frontend.model.drug_record.InteractingDrug
@@ -28,7 +23,6 @@ import com.junting.drug_android_frontend.model.drugbag_info.DrugbagInformation
 import com.junting.drug_android_frontend.ui.libs.ExpandableListUtils
 import java.util.*
 import com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsViewModel
-import com.junting.drug_android_frontend.libs.listeners.OnEditListener
 
 class DrugRecordActivity : AppCompatActivity() {
 
@@ -191,7 +185,7 @@ class DrugRecordActivity : AppCompatActivity() {
 
     private fun initDrugRecordViewModel() {
         binding.progressBar.visibility = View.VISIBLE
-        viewModel.fetchRecord(drugRecordId!!)
+        viewModel.fetchRecordById(drugRecordId!!)
         viewModel.record.observe(this, Observer {
             Log.d("Observe DrugRecord", "record: ${it.toString()}")
             var timeSlots = it.timeSlots.toMutableList()

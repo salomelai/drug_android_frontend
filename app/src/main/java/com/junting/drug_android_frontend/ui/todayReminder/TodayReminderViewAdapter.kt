@@ -13,13 +13,14 @@ import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemSwipeListene
 import com.junting.drug_android_frontend.DrugReminderActivity
 import com.junting.drug_android_frontend.databinding.RemindItemViewBinding
 import com.junting.drug_android_frontend.model.take_record.TakeRecord
+import com.junting.drug_android_frontend.model.today_reminder.TodayReminder
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Collections
 import java.util.Locale
 
 class TodayReminderViewAdapter()
-    :DragDropSwipeAdapter<TakeRecord, TodayReminderViewAdapter.ViewHolder>(Collections.emptyList()) {
+    :DragDropSwipeAdapter<TodayReminder, TodayReminderViewAdapter.ViewHolder>(Collections.emptyList()) {
 
     class ViewHolder(private val binding: RemindItemViewBinding) : DragDropSwipeAdapter.ViewHolder(binding.root) {
         val viewColor = binding.viewColor
@@ -31,8 +32,8 @@ class TodayReminderViewAdapter()
 
     }
 
-    fun update(takeRecord: List<TakeRecord>) {
-        dataSet = takeRecord
+    fun update(todayReminder: List<TodayReminder>) {
+        dataSet = todayReminder
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodayReminderViewAdapter.ViewHolder {
@@ -41,7 +42,7 @@ class TodayReminderViewAdapter()
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(item: TakeRecord, viewHolder: TodayReminderViewAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(item: TodayReminder, viewHolder: TodayReminderViewAdapter.ViewHolder, position: Int) {
         // Here we update the contents of the view holder's views to reflect the item's data
         viewHolder.tvDrugName.text = item.drug.name
         viewHolder.tvTime.text = item.timeSlot
@@ -59,7 +60,7 @@ class TodayReminderViewAdapter()
         }
         viewHolder.llRemindItem.setOnClickListener {
             val intent = Intent(viewHolder.itemView.context, DrugReminderActivity::class.java)
-            intent.putExtra("takeRecord", item)
+            intent.putExtra("todayReminderId", item.id)
             startActivity(viewHolder.itemView.context, intent, null)
         }
     }
@@ -68,7 +69,7 @@ class TodayReminderViewAdapter()
         TODO("Not yet implemented")
     }
 
-    override fun getViewToTouchToStartDraggingItem(item: TakeRecord, viewHolder: TodayReminderViewAdapter.ViewHolder, position: Int): View? {
+    override fun getViewToTouchToStartDraggingItem(item: TodayReminder, viewHolder: TodayReminderViewAdapter.ViewHolder, position: Int): View? {
         // We return the view holder's view on which the user has to touch to drag the item
         return viewHolder.dragIcon
     }

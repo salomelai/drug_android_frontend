@@ -9,9 +9,10 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface IDrugRecordService {
-    // 獲取全部 DrugRecord
+    // 獲取全部 DrugRecords
     @GET("drugRecords/")
     suspend fun getDrugs(): List<DrugRecord>
 
@@ -22,6 +23,10 @@ interface IDrugRecordService {
     // 更新指定 ID 的 DrugRecord
     @PUT("drugRecords/{id}")
     suspend fun updateDrugById(@Path("id") id: Int, @Body drugRecord: DrugRecord): Response<DrugRecord>
+
+    // 獲取指定名稱的 DrugRecords
+    @GET("drugRecords/")
+    suspend fun getDrugByName(@Query("drug.name") name: String): List<DrugRecord>
 
     companion object {
         var drugRecordService: IDrugRecordService? = null

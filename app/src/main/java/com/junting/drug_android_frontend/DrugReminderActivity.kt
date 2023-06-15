@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
+import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -14,7 +15,7 @@ import com.junting.drug_android_frontend.databinding.ActionBarTakeRecordTodayRem
 import com.junting.drug_android_frontend.databinding.ActivityDrugReminderBinding
 import com.junting.drug_android_frontend.databinding.BottomSheetLaterBinding
 import com.junting.drug_android_frontend.databinding.FragmentPillBoxManagementBinding
-import com.junting.drug_android_frontend.model.take_record.TakeRecord
+import com.junting.drug_android_frontend.ui.todayReminder.TodayReminderViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -23,8 +24,8 @@ class DrugReminderActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDrugReminderBinding
     private lateinit var bindingPillBox: FragmentPillBoxManagementBinding
     private lateinit var bindingActionBarTakeRecordTodayReminder: ActionBarTakeRecordTodayReminderBinding
-    var takeRecord: TakeRecord? = null
-    private var viewModel: DrugReminderViewModel = DrugReminderViewModel()
+    var todayReminderId: Int? = null
+    private var viewModel: TodayReminderViewModel = TodayReminderViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,18 +40,28 @@ class DrugReminderActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowCustomEnabled(true)
 //        supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM)  //完全自定義
+        supportActionBar?.setTitle("")
         supportActionBar?.setCustomView(bindingActionBarTakeRecordTodayReminder.root)
-        takeRecord = intent.getSerializableExtra("takeRecord") as? TakeRecord
-        if (takeRecord != null) {
-            viewModel.takeRecord.value = takeRecord
-            supportActionBar?.setTitle("")
-            bindingActionBarTakeRecordTodayReminder.tvDrugName.text = takeRecord!!.drug.name
 
-            Log.d("takeRecord", viewModel.takeRecord.value.toString())
+        todayReminderId = intent.getSerializableExtra("todayReminderId") as Int?
+        if (todayReminderId != null) {
+            this.todayReminderId = todayReminderId
+            initViewModel()
         }
         initActualTime()
         initButton()
         initClickableTextView()
+    }
+    private fun initViewModel() {
+        binding.progressBar.visibility = View.VISIBLE
+        viewModel.fetchTodayReminderById(todayReminderId!!)
+        viewModel.todayReminder.observe(this, Observer {
+            Log.d("Observe todayReminder", "record: ${it.toString()}")
+            bindingActionBarTakeRecordTodayReminder.tvDrugName.text = it.drug.name
+            bindingActionBarTakeRecordTodayReminder.tvStock.text = it.stock.toString()+" 顆"
+
+            binding.progressBar.visibility = View.GONE
+        })
     }
 
     private fun initClickableTextView() {
@@ -109,7 +120,7 @@ class DrugReminderActivity : AppCompatActivity() {
             showDelayBottomSheet()
         }
         binding.btnConfirm.setOnClickListener{
-            showConfirmDialog(viewModel.takeRecord.value?.position ?:0)
+            showConfirmDialog(viewModel.todayReminder.value?.position ?:0)
         }
     }
 

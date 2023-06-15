@@ -103,8 +103,8 @@ class TodayReminderFragment : Fragment() {
 
     private fun initRecyclerViewModel() {
         binding.progressBar.visibility = View.VISIBLE
-        viewModel.fetchRecords()
-        viewModel.records.observe(context as AppCompatActivity, Observer {
+        viewModel.fetchTodayReminders()
+        viewModel.todayReminders.observe(context as AppCompatActivity, Observer {
             viewAdapter!!.update(it)
             binding.progressBar.visibility = View.GONE
         })

@@ -8,7 +8,6 @@ import com.junting.drug_android_frontend.model.drug_record.DrugRecord
 import com.junting.drug_android_frontend.model.drug_record.InteractingDrug
 import com.junting.drug_android_frontend.services.IDrugRecordService
 import kotlinx.coroutines.launch
-import java.text.FieldPosition
 
 class DrugRecordsViewModel : ViewModel() {
 
@@ -136,7 +135,7 @@ class DrugRecordsViewModel : ViewModel() {
         }
     }
 
-    fun fetchRecord(id: Int) {
+    fun fetchRecordById(id: Int) {
         viewModelScope.launch {
             val drugRecordService = IDrugRecordService.getInstance()
             try {
