@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.junting.drug_android_frontend.R
-import com.junting.drug_android_frontend.model.TakeRecord.TakeRecord
+import com.junting.drug_android_frontend.model.take_record.TakeRecord
 
 class TakeRecordsByTimeRecyclerViewAdapter(
     private val context: Context,

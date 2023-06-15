@@ -8,8 +8,8 @@ import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.junting.drug_android_frontend.model.TakeRecord.DateTakeRecordsRecord
-import com.junting.drug_android_frontend.model.TakeRecord.Medication
+import com.junting.drug_android_frontend.model.take_record.DateTakeRecordsRecord
+import com.junting.drug_android_frontend.model.take_record.Medication
 import com.junting.drug_android_frontend.ui.takeRecords.TakeRecordsByDrugRecyclerViewAdapter
 
 

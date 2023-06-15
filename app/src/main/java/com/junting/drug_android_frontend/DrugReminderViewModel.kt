@@ -3,7 +3,7 @@ package com.junting.drug_android_frontend
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.junting.drug_android_frontend.model.TakeRecord.TakeRecord
+import com.junting.drug_android_frontend.model.take_record.TakeRecord
 
 class DrugReminderViewModel : ViewModel() {
     val takeRecord = MutableLiveData<TakeRecord>()

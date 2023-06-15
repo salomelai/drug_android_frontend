@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemSwipeListener
@@ -17,7 +16,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.junting.drug_android_frontend.MainActivity
 import com.junting.drug_android_frontend.R
 import com.junting.drug_android_frontend.databinding.FragmentTodayReminderBinding
-import com.junting.drug_android_frontend.model.TakeRecord.TakeRecord
+import com.junting.drug_android_frontend.model.take_record.TakeRecord
 
 class TodayReminderFragment : Fragment() {
 

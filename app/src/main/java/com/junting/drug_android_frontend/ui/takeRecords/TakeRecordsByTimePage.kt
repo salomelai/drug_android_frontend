@@ -10,9 +10,8 @@ import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.junting.drug_android_frontend.R
-import com.junting.drug_android_frontend.TakeRecordsByDrugExpandableListAdapter
 import com.junting.drug_android_frontend.TakeRecordsByTimeExpandableListAdapter
-import com.junting.drug_android_frontend.model.TakeRecord.DateTimeSlotRecord
+import com.junting.drug_android_frontend.model.take_record.DateTimeSlotRecord
 
 
 class TakeRecordsByTimePage(context: Context, container: ViewGroup) {

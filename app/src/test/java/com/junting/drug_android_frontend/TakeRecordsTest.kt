@@ -1,6 +1,6 @@
 package com.junting.drug_android_frontend
 
-import com.junting.drug_android_frontend.model.TakeRecord.TakeRecord
+import com.junting.drug_android_frontend.model.take_record.TakeRecord
 import com.junting.drug_android_frontend.services.ITakeRecordService
 import junit.framework.TestCase.assertNotNull
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -1,4 +1,4 @@
-package com.junting.drug_android_frontend.model.TakeRecord
+package com.junting.drug_android_frontend.model.take_record
 
 import java.io.Serializable
 

@@ -5,11 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.junting.drug_android_frontend.model.TakeRecord.DateTakeRecordsRecord
-import com.junting.drug_android_frontend.model.TakeRecord.DateTimeSlotRecord
-import com.junting.drug_android_frontend.model.TakeRecord.Medication
-import com.junting.drug_android_frontend.model.TakeRecord.TakeRecord
-import com.junting.drug_android_frontend.model.TakeRecord.TimeSlotRecord
+import com.junting.drug_android_frontend.model.take_record.DateTakeRecordsRecord
+import com.junting.drug_android_frontend.model.take_record.DateTimeSlotRecord
+import com.junting.drug_android_frontend.model.take_record.Medication
+import com.junting.drug_android_frontend.model.take_record.TakeRecord
+import com.junting.drug_android_frontend.model.take_record.TimeSlotRecord
 import com.junting.drug_android_frontend.services.ITakeRecordService
 import kotlinx.coroutines.launch
 

@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.junting.drug_android_frontend.R
 import com.junting.drug_android_frontend.TakeRecordsByDrugExpandableListAdapter
-import com.junting.drug_android_frontend.model.TakeRecord.Medication
+import com.junting.drug_android_frontend.model.take_record.Medication
 
 
 class TakeRecordsByDrugPage(context: Context, container: ViewGroup) {

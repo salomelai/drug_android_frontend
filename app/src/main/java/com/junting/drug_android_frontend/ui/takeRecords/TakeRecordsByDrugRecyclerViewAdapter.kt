@@ -9,8 +9,8 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.junting.drug_android_frontend.R
-import com.junting.drug_android_frontend.model.TakeRecord.DateTakeRecordsRecord
-import com.junting.drug_android_frontend.model.TakeRecord.TakeRecord
+import com.junting.drug_android_frontend.model.take_record.DateTakeRecordsRecord
+import com.junting.drug_android_frontend.model.take_record.TakeRecord
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale

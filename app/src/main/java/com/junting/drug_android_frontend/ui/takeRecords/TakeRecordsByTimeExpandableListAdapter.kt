@@ -8,8 +8,8 @@ import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.junting.drug_android_frontend.model.TakeRecord.DateTimeSlotRecord
-import com.junting.drug_android_frontend.model.TakeRecord.TimeSlotRecord
+import com.junting.drug_android_frontend.model.take_record.DateTimeSlotRecord
+import com.junting.drug_android_frontend.model.take_record.TimeSlotRecord
 import com.junting.drug_android_frontend.ui.takeRecords.TakeRecordsByTimeRecyclerViewAdapter
 import java.text.SimpleDateFormat
 import java.util.Calendar
