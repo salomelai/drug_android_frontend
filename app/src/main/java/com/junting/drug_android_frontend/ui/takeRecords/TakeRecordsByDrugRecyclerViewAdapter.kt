@@ -9,7 +9,7 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.junting.drug_android_frontend.R
-import com.junting.drug_android_frontend.model.TakeRecord.DateRecord
+import com.junting.drug_android_frontend.model.TakeRecord.DateTakeRecordsRecord
 import com.junting.drug_android_frontend.model.TakeRecord.TakeRecord
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -17,7 +17,7 @@ import java.util.Locale
 
 class TakeRecordsByDrugRecyclerViewAdapter(
     private val context: Context,
-    private val dateRecord: DateRecord) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    private val dateTakeRecordsRecord: DateTakeRecordsRecord) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val VIEW_TYPE_DATE = 0
@@ -49,10 +49,10 @@ class TakeRecordsByDrugRecyclerViewAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is DateViewHolder -> {
-                holder.bind(dateRecord.date)
+                holder.bind(dateTakeRecordsRecord.date)
             }
             is TakeRecordViewHolder -> {
-                val takeRecord = dateRecord.takeRecords[position - 1]
+                val takeRecord = dateTakeRecordsRecord.takeRecords[position - 1]
                 holder.bind(takeRecord)
             }
             else -> throw IllegalArgumentException("Invalid view holder type")
@@ -61,7 +61,7 @@ class TakeRecordsByDrugRecyclerViewAdapter(
 
     override fun getItemCount(): Int {
         // Add 1 for the date item
-        return dateRecord.takeRecords.size + 1
+        return dateTakeRecordsRecord.takeRecords.size + 1
     }
 
     inner class DateViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

@@ -1,21 +1,14 @@
 package com.junting.drug_android_frontend.ui.takeRecords
 
 import android.content.Context
-import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-import com.junting.drug_android_frontend.DrugbagInfoActivity
 import com.junting.drug_android_frontend.R
-import com.junting.drug_android_frontend.PhotoTakeActivity
 
 
 class TakeRecordsByTimePage(context: Context, container: ViewGroup) {
@@ -23,10 +16,10 @@ class TakeRecordsByTimePage(context: Context, container: ViewGroup) {
     val view: View
     private val context: Context
     private val container: ViewGroup
+    private val progressBar: ProgressBar
 
 
-//    private val viewModel:
-
+    private val viewModel: TakeRecordsViewModel
 
 
     init {
@@ -34,7 +27,26 @@ class TakeRecordsByTimePage(context: Context, container: ViewGroup) {
         this.container = container
         this.view =
             LayoutInflater.from(context).inflate(R.layout.take_records_time_tab, container, false)
+        this.progressBar = view.findViewById(R.id.progressBar)
+
+        this.viewModel = TakeRecordsViewModel()
+        initViewModel()
     }
+    private fun initViewModel() {
+        this.viewModel.fetchRecords()
+        this.viewModel.dateTimeSlotRecords.observe(context as AppCompatActivity, Observer {
+                dateTimeSlotRecords ->
+            Log.d("TakeRecordsByTimePage", "dateTimeSlotRecords: $dateTimeSlotRecords")
+//            initExpandableList(medications)
+            progressBar.visibility = View.GONE
+        })
+
+    }
+//    private fun initExpandableList(medications: List<Medication>) {
+//        expandableListAdapter = TakeRecordsByDrugExpandableListAdapter(context, medications)
+//        expandableListView.setAdapter(expandableListAdapter)
+//
+//    }
 
 
 

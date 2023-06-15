@@ -18,7 +18,7 @@ class TodayReminderViewModel : ViewModel() {
             try {
                 records.value = takeRecordService.getTakeRecordsByDate("2023/01/02",0)
             } catch (e: Exception) {
-                Log.d("TodayReminderViewModel", "fetch dateRecords failed")
+                Log.d("TodayReminderViewModel", "fetch dateTakeRecordsRecords failed")
                 Log.e("TodayReminderViewModel", e.toString())
             }
         }

@@ -6,13 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
 import android.widget.TextView
-import androidx.core.view.marginStart
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.junting.drug_android_frontend.model.TakeRecord.DateRecord
-import com.junting.drug_android_frontend.model.TakeRecord.Drug
+import com.junting.drug_android_frontend.model.TakeRecord.DateTakeRecordsRecord
 import com.junting.drug_android_frontend.model.TakeRecord.Medication
-import com.junting.drug_android_frontend.model.TakeRecord.TakeRecord
 import com.junting.drug_android_frontend.ui.takeRecords.TakeRecordsByDrugRecyclerViewAdapter
 
 
@@ -26,7 +23,7 @@ class TakeRecordsByDrugExpandableListAdapter(
     }
 
     override fun getChildrenCount(groupPosition: Int): Int {
-        return medications[groupPosition].dateRecords.size
+        return medications[groupPosition].dateTakeRecordsRecords.size
     }
 
     override fun getGroup(groupPosition: Int): Any {
@@ -34,7 +31,7 @@ class TakeRecordsByDrugExpandableListAdapter(
     }
 
     override fun getChild(groupPosition: Int, childPosition: Int): Any {
-        return medications[groupPosition].dateRecords[childPosition]
+        return medications[groupPosition].dateTakeRecordsRecords[childPosition]
     }
 
     override fun getGroupId(groupPosition: Int): Long {
@@ -75,7 +72,7 @@ class TakeRecordsByDrugExpandableListAdapter(
         convertView: View?,
         parent: ViewGroup
     ): View {
-        val dateRecord = getChild(groupPosition, childPosition) as DateRecord
+        val dateTakeRecordsRecord = getChild(groupPosition, childPosition) as DateTakeRecordsRecord
         // 根據需要自定義內層項目的佈局和內容
         // 返回內層項目的 View
         val view = convertView ?: LayoutInflater.from(context).inflate(
@@ -88,7 +85,7 @@ class TakeRecordsByDrugExpandableListAdapter(
         recyclerView.layoutManager = LinearLayoutManager(context)
 
         // Create and set the adapter for the RecyclerView
-        val adapter = TakeRecordsByDrugRecyclerViewAdapter(context,dateRecord)
+        val adapter = TakeRecordsByDrugRecyclerViewAdapter(context,dateTakeRecordsRecord)
         recyclerView.adapter = adapter
 
         return view
