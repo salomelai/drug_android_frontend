@@ -10,6 +10,7 @@ import androidx.cardview.widget.CardView
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
+import com.junting.drug_android_frontend.databinding.ActionBarTakeRecordTodayReminderBinding
 import com.junting.drug_android_frontend.databinding.ActivityDrugReminderBinding
 import com.junting.drug_android_frontend.databinding.BottomSheetLaterBinding
 import com.junting.drug_android_frontend.databinding.FragmentPillBoxManagementBinding
@@ -21,6 +22,7 @@ import java.util.Locale
 class DrugReminderActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDrugReminderBinding
     private lateinit var bindingPillBox: FragmentPillBoxManagementBinding
+    private lateinit var bindingActionBarTakeRecordTodayReminder: ActionBarTakeRecordTodayReminderBinding
     var takeRecord: TakeRecord? = null
     private var viewModel: DrugReminderViewModel = DrugReminderViewModel()
 
@@ -28,15 +30,22 @@ class DrugReminderActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDrugReminderBinding.inflate(layoutInflater)
         bindingPillBox = FragmentPillBoxManagementBinding.inflate(layoutInflater)
+        bindingActionBarTakeRecordTodayReminder = ActionBarTakeRecordTodayReminderBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         setContentView(binding.root)
 
+
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowCustomEnabled(true)
+//        supportActionBar?.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM)  //完全自定義
+        supportActionBar?.setCustomView(bindingActionBarTakeRecordTodayReminder.root)
         takeRecord = intent.getSerializableExtra("takeRecord") as? TakeRecord
         if (takeRecord != null) {
             viewModel.takeRecord.value = takeRecord
-            supportActionBar?.setTitle(takeRecord!!.drug.name)
+            supportActionBar?.setTitle("")
+            bindingActionBarTakeRecordTodayReminder.tvDrugName.text = takeRecord!!.drug.name
+
             Log.d("takeRecord", viewModel.takeRecord.value.toString())
         }
         initActualTime()
