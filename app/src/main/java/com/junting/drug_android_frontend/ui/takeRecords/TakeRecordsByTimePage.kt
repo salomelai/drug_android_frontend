@@ -5,10 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ExpandableListView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.junting.drug_android_frontend.R
+import com.junting.drug_android_frontend.TakeRecordsByDrugExpandableListAdapter
+import com.junting.drug_android_frontend.TakeRecordsByTimeExpandableListAdapter
+import com.junting.drug_android_frontend.model.TakeRecord.DateTimeSlotRecord
 
 
 class TakeRecordsByTimePage(context: Context, container: ViewGroup) {
@@ -18,6 +22,8 @@ class TakeRecordsByTimePage(context: Context, container: ViewGroup) {
     private val container: ViewGroup
     private val progressBar: ProgressBar
 
+    private val expandableListView: ExpandableListView
+    private var expandableListAdapter: TakeRecordsByTimeExpandableListAdapter
 
     private val viewModel: TakeRecordsViewModel
 
@@ -26,8 +32,11 @@ class TakeRecordsByTimePage(context: Context, container: ViewGroup) {
         this.context = context
         this.container = container
         this.view =
-            LayoutInflater.from(context).inflate(R.layout.take_records_time_tab, container, false)
+            LayoutInflater.from(context).inflate(R.layout.take_records_drug_and_time_tab, container, false)
         this.progressBar = view.findViewById(R.id.progressBar)
+
+        this.expandableListView = view.findViewById(R.id.expandable_list_view)
+        this.expandableListAdapter = TakeRecordsByTimeExpandableListAdapter(context, listOf())
 
         this.viewModel = TakeRecordsViewModel()
         initViewModel()
@@ -37,16 +46,16 @@ class TakeRecordsByTimePage(context: Context, container: ViewGroup) {
         this.viewModel.dateTimeSlotRecords.observe(context as AppCompatActivity, Observer {
                 dateTimeSlotRecords ->
             Log.d("TakeRecordsByTimePage", "dateTimeSlotRecords: $dateTimeSlotRecords")
-//            initExpandableList(medications)
+            initExpandableList(dateTimeSlotRecords)
             progressBar.visibility = View.GONE
         })
 
     }
-//    private fun initExpandableList(medications: List<Medication>) {
-//        expandableListAdapter = TakeRecordsByDrugExpandableListAdapter(context, medications)
-//        expandableListView.setAdapter(expandableListAdapter)
-//
-//    }
+    private fun initExpandableList(dateTimeSlotRecords: List<DateTimeSlotRecord>) {
+        expandableListAdapter = TakeRecordsByTimeExpandableListAdapter(context, dateTimeSlotRecords)
+        expandableListView.setAdapter(expandableListAdapter)
+
+    }
 
 
 

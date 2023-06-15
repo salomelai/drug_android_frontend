@@ -1,7 +1,6 @@
 package com.junting.drug_android_frontend.ui.takeRecords
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,17 +8,9 @@ import android.widget.ExpandableListView
 import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.RecyclerView
 import com.junting.drug_android_frontend.R
-import com.junting.drug_android_frontend.RrugRecordExpandableListAdapter
 import com.junting.drug_android_frontend.TakeRecordsByDrugExpandableListAdapter
-import com.junting.drug_android_frontend.model.TakeRecord.Drug
 import com.junting.drug_android_frontend.model.TakeRecord.Medication
-import com.junting.drug_android_frontend.model.TakeRecord.TakeRecord
-import com.junting.drug_android_frontend.model.drug_record.InteractingDrug
-import com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsViewAdapter
-import com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsViewModel
-import com.junting.drug_android_frontend.ui.libs.ExpandableListUtils
 
 
 class TakeRecordsByDrugPage(context: Context, container: ViewGroup) {
@@ -39,14 +30,13 @@ class TakeRecordsByDrugPage(context: Context, container: ViewGroup) {
         this.context = context
         this.container = container
         this.view =
-            LayoutInflater.from(context).inflate(R.layout.take_records_drug_tab, container, false)
+            LayoutInflater.from(context).inflate(R.layout.take_records_drug_and_time_tab, container, false)
         this.progressBar = view.findViewById(R.id.progressBar)
 
         this.expandableListView = view.findViewById(R.id.expandable_list_view)
         this.expandableListAdapter = TakeRecordsByDrugExpandableListAdapter(context, listOf())
 
         this.viewModel = TakeRecordsViewModel()
-
         initViewModel()
     }
 
