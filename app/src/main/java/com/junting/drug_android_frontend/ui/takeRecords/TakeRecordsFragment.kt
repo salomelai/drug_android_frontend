@@ -32,6 +32,16 @@ class TakeRecordsFragment: Fragment() {
                 binding.takeRecordsTabLayout
             )
         )
+        binding.takeRecordsTabLayout.addOnTabSelectedListener(object :
+            TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab) { updatePosition(tab) }
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
+            override fun onTabReselected(tab: TabLayout.Tab) { updatePosition(tab) }
+            fun updatePosition(tab: TabLayout.Tab) {
+                binding.takeRecordsViewPager.currentItem = tab.position
+
+            }
+        })
 
     }
     override fun onDestroyView() {
