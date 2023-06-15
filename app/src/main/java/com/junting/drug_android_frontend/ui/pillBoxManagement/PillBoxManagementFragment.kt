@@ -18,6 +18,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.junting.drug_android_frontend.DrugRecordActivity
 import com.junting.drug_android_frontend.DrugbagInfoActivity
 import com.junting.drug_android_frontend.PhotoTakeActivity
+import com.junting.drug_android_frontend.PillBoxViewManager
 import com.junting.drug_android_frontend.R
 import com.junting.drug_android_frontend.databinding.FragmentPillBoxManagementBinding
 import com.junting.drug_android_frontend.model.drug_record.DrugRecord
@@ -30,22 +31,22 @@ class PillBoxManagementFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+    private lateinit var viewManager: PillBoxViewManager
+    private val positions = (1..9).toList()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        val ViewModel =
-            ViewModelProvider(this).get(DrugRecordsViewModel::class.java)
+        val ViewModel =DrugRecordsViewModel()
 
         _binding = FragmentPillBoxManagementBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        viewManager = PillBoxViewManager(binding,requireContext()) // Initialize the view manager
 
         // 隱藏所有藥物位置
-        for (i in 1..9) {
-            initCell(i)
-        }
+        positions.forEach { i -> initCell(i) }
 
         ViewModel.fetchRecordsByAll()
         ViewModel.records.observe(viewLifecycleOwner, Observer {
@@ -55,76 +56,36 @@ class PillBoxManagementFragment : Fragment() {
             for (record in it) {
                 Log.d("PillBoxManagementFragment", "record: $record")
                 when (record.position) {
-                    1 -> showCell(1, record)
-                    2 -> showCell(2, record)
-                    3 -> showCell(3, record)
-                    4 -> showCell(4, record)
-                    5 -> showCell(5, record)
-                    6 -> showCell(6, record)
-                    7 -> showCell(7, record)
-                    8 -> showCell(8, record)
-                    9 -> showCell(9, record)
+                    1 -> viewManager.showCell(1, record, true)
+                    2 -> viewManager.showCell(2, record, true)
+                    3 -> viewManager.showCell(3, record, true)
+                    4 -> viewManager.showCell(4, record,true)
+                    5 -> viewManager.showCell(5, record,true)
+                    6 -> viewManager.showCell(6, record,true)
+                    7 -> viewManager.showCell(7, record,true)
+                    8 -> viewManager.showCell(8, record,true)
+                    9 -> viewManager.showCell(9, record,true)
                 }
             }
-            for (i in 1..9) {
-                closeProgressBar(i)
-            }
+            positions.forEach { i -> viewManager.closeProgressBar(i) }
         })
 
         return root
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    fun showCell(drugPositionId: Int, record: DrugRecord) {
-        val drugPositionId = resources.getIdentifier(
-            "ll_drug_position_$drugPositionId",
-            "id",
-            requireContext().packageName
-        )
-        val drugPositionView = binding.root.findViewById<View>(drugPositionId)
-        drugPositionView?.findViewById<ImageView>(R.id.iv_drug_icon)?.visibility = View.VISIBLE
-        drugPositionView?.findViewById<TextView>(R.id.tv_drug_name)?.visibility = View.VISIBLE
-        drugPositionView?.findViewById<TextView>(R.id.chip_stock)?.visibility = View.VISIBLE
-        drugPositionView?.findViewById<TextView>(R.id.tv_drug_name)?.text = record.drug.name
-        drugPositionView?.findViewById<Chip>(R.id.chip_stock)?.text =
-            "庫存: " + record.stock.toString()
-        if (record.stock > 0) {
-            drugPositionView?.findViewById<Chip>(R.id.chip_stock)?.setChipBackgroundColorResource(R.color.md_theme_light_secondaryContainer)
-        } else {
-            drugPositionView?.findViewById<Chip>(R.id.chip_stock)?.setChipBackgroundColorResource(R.color.md_theme_dark_error)
-        }
-        drugPositionView?.findViewById<View>(R.id.card_view)?.setOnClickListener {
-            val intent = Intent(context, DrugRecordActivity::class.java)
-            intent.putExtra("drugRecordId", record.id)
-            context?.startActivity(intent)
-        }
-    }
-    fun closeProgressBar(drugPositionId: Int) {
-        val drugPositionId = resources.getIdentifier(
-            "ll_drug_position_$drugPositionId",
-            "id",
-            requireContext().packageName
-        )
-        val drugPositionView = binding.root.findViewById<View>(drugPositionId)
-        drugPositionView?.findViewById<ProgressBar>(R.id.progressBar)?.visibility = View.GONE
-    }
-
     fun initCell(drugPositionId: Int) {
-        val drugPositionId = resources.getIdentifier(
-            "ll_drug_position_$drugPositionId",
-            "id",
-            requireContext().packageName
-        )
-        val drugPositionView = binding.root.findViewById<View>(drugPositionId)
-        drugPositionView?.findViewById<ProgressBar>(R.id.progressBar)?.visibility = View.VISIBLE
-        drugPositionView?.findViewById<ImageView>(R.id.iv_drug_icon)?.visibility = View.GONE
-        drugPositionView?.findViewById<TextView>(R.id.tv_drug_name)?.visibility = View.GONE
-        drugPositionView?.findViewById<TextView>(R.id.chip_stock)?.visibility = View.GONE
-        drugPositionView?.findViewById<View>(R.id.card_view)?.setOnClickListener {
+        val cellResourceId = viewManager.getResourceIdByPosition(drugPositionId)
+        val cellView = binding.root.findViewById<View>(cellResourceId)
+        val drugIcon = cellView?.findViewById<ImageView>(R.id.iv_drug_icon)!!
+        val chipStock = cellView.findViewById<Chip>(R.id.chip_stock)!!
+        val drugName = cellView.findViewById<TextView>(R.id.tv_drug_name)!!
+        val progressBar = cellView.findViewById<ProgressBar>(R.id.progressBar)!!
+        progressBar.visibility = View.VISIBLE
+        drugIcon.visibility = View.GONE
+        drugName.visibility = View.GONE
+        chipStock.visibility = View.GONE
+
+        val cardView = cellView.findViewById<View>(R.id.card_view)
+        cardView?.setOnClickListener {
             val builder = MaterialAlertDialogBuilder(requireContext())
                 .setTitle("詢問")
                 .setMessage("請問您要使用何種方式輸入藥品?")
@@ -146,30 +107,21 @@ class PillBoxManagementFragment : Fragment() {
             builder.create()
             builder.show()
         }
-        drugPositionView?.findViewById<View>(R.id.card_view)?.setOnLongClickListener { view ->
-            // 建立 MaterialAlertDialogBuilder 物件
+        cardView?.setOnLongClickListener { view ->
             val builder = MaterialAlertDialogBuilder(requireContext())
-
-            // 設定對話框標題
             builder.setTitle("提示")
-
-            // 設定對話框訊息
             builder.setMessage("該格藥盒已開啟")
-
-            // 設定PositiveButton按鈕，即確定按鈕
             builder.setPositiveButton("確定") { _, _ ->
-                // 在這裡處理確定按鈕點擊事件
-                // 可以執行對應的操作
+                // Handle positive button click
             }
-
-
-            // 建立並顯示 MaterialAlertDialogBuilder 物件
             val alertDialog = builder.create()
             alertDialog.show()
-
-            // 返回 true 表示長按事件已被消費，不再傳遞給其他監聽器
             true
         }
+    }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
