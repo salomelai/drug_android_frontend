@@ -5,7 +5,9 @@ import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.junting.drug_android_frontend.model.drug_record.DrugRecord
 import com.junting.drug_android_frontend.model.today_reminder.TodayReminder
+import com.junting.drug_android_frontend.services.IDrugRecordService
 import com.junting.drug_android_frontend.services.ITodayReminderService
 import kotlinx.coroutines.launch
 
@@ -13,6 +15,7 @@ class TodayReminderViewModel : ViewModel() {
 
     var todayReminders = MutableLiveData<List<TodayReminder>>()
     var todayReminder = MutableLiveData<TodayReminder>()
+    var drugRecors = MutableLiveData<List<DrugRecord>>()
     val actualTakingTime  = ObservableField<String>()
 
     fun setDosage(dosage: Int) {
@@ -51,6 +54,17 @@ class TodayReminderViewModel : ViewModel() {
                 todayReminder.value = todayReminderService.getTodayReminderById(id)
             } catch (e: Exception) {
                 Log.d("TodayReminderViewModel", "fetch todayReminder id=${id} failed")
+                Log.e("TodayReminderViewModel", e.toString())
+            }
+        }
+    }
+    fun fetchDrugRecords() {
+        viewModelScope.launch {
+            val drugRecordService = IDrugRecordService.getInstance()
+            try {
+                drugRecors.value = drugRecordService.getDrugs()
+            } catch (e: Exception) {
+                Log.d("TodayReminderViewModel", "fetch drugRecords failed")
                 Log.e("TodayReminderViewModel", e.toString())
             }
         }
