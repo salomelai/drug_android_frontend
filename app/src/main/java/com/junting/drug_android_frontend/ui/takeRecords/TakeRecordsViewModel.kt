@@ -37,6 +37,16 @@ class TakeRecordsViewModel : ViewModel(){
         info.timeSlot = timeSlot
         triggerUpdate(info)
     }
+    fun setDate(date: String) {
+        val info: TakeRecord = _takeRecord.value!!
+        info.date = date
+        triggerUpdate(info)
+    }
+    fun setStatus(status: Int) {
+        val info: TakeRecord = _takeRecord.value!!
+        info.status = status
+        triggerUpdate(info)
+    }
 
     private fun triggerUpdate(newTakeRecord: TakeRecord) {
         _takeRecord.value = newTakeRecord

@@ -70,9 +70,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         val fragmentName = intent.getStringExtra("fragmentName")
-        if (fragmentName == "DrugRecordsFragment") {
+        if(fragmentName=="TodayReminderFragment") {
+            navController.popBackStack()
+            navController.navigate(R.id.navigation_todayReminder)
+        }
+        else if (fragmentName == "DrugRecordsFragment") {
             navController.popBackStack()
             navController.navigate(R.id.navigation_drugRecords)
+        }
+        else if(fragmentName == "TakeRecordsFragment") {
+            navController.popBackStack()
+            navController.navigate(R.id.navigation_takeRecords)
+        }
+        else if(fragmentName == "PillBoxManagementFragment") {
+            navController.popBackStack()
+            navController.navigate(R.id.navigation_pillBoxManagement)
         }
     }
 

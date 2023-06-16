@@ -110,19 +110,35 @@ class DrugRecordActivity : AppCompatActivity() {
             }
             R.id.action_delete -> {
                 // 处理点击删除按钮的逻辑
-                Toast.makeText(this, "你點了刪除", Toast.LENGTH_SHORT).show()
+                val alertDialog = MaterialAlertDialogBuilder(this)
+                    .setTitle("詢問")
+                    .setMessage("確認要刪除?")
+                    .setPositiveButton("確認") { dialog, _ ->
+                        // 在這裡執行刪除操作
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        intent.putExtra("fragmentName", "DrugRecordsFragment")
+                        startActivity(intent)
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton("取消") { dialog, _ ->
+                        dialog.dismiss()
+
+                    }
+                    .create()
+                alertDialog.show()
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_drug_record, menu)
+        menuInflater.inflate(R.menu.menu_pause_delete, menu)
 
         // 根據條件控制菜單項目的顯示與隱藏
-        val drugRecordId = intent.getIntExtra("drugRecordId", 0)
-        val deleteMenuItem = menu?.findItem(R.id.action_delete)
-        deleteMenuItem?.isVisible = drugRecordId != 0
+//        val drugRecordId = intent.getIntExtra("drugRecordId", 0)
+//        val deleteMenuItem = menu?.findItem(R.id.action_delete)
+//        deleteMenuItem?.isVisible = drugRecordId != 0
 
         return true
     }
