@@ -24,6 +24,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".TakeRecordActivity"
+            android:exported="false"/>
+        <activity
             android:name=".TodayReminderActivity"
             android:exported="false" />
         <activity

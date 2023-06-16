@@ -44,7 +44,7 @@ class TodayReminderActivity : AppCompatActivity() {
         supportActionBar?.setTitle("")
         supportActionBar?.setCustomView(bindingActionBarTakeRecordTodayReminder.root)
 
-        todayReminderId = intent.getSerializableExtra("todayReminderId") as Int?
+        todayReminderId = intent.getSerializableExtra("takeRecordId") as Int?
         if (todayReminderId != null) {
             this.todayReminderId = todayReminderId
             initViewModel()

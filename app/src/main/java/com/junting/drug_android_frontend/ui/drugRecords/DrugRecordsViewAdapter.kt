@@ -63,7 +63,6 @@ class DrugRecordsViewAdapter(private val context: Context, private val viewModel
             val intent = Intent(context, DrugRecordActivity::class.java)
             intent.putExtra("drugRecordId", drugRecord.id)
             context.startActivity(intent)
-            Toast.makeText(context, String.format("You clicked %s", drugRecord.drug.name), Toast.LENGTH_SHORT).show()
         }
     }
 
