@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsViewModel" />
+    </data>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -17,13 +24,14 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:layout_marginBottom="15dp">
+                android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:drawableLeft="@drawable/ic_outline_notifications_24"
                     android:drawablePadding="15dp"
                     android:text="通知報警: "
@@ -33,8 +41,7 @@
                     android:id="@+id/switch_status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="180dp"
-                    android:checked="true" />
+                    android:checked="@{viewModel.record.notificationSetting.status}" />
 
             </LinearLayout>
 
@@ -42,14 +49,17 @@
                 android:id="@+id/ll_start_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
-                android:orientation="vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:drawableLeft="@drawable/ic_outline_not_started_24"
                     android:drawablePadding="15dp"
                     android:text="開始服藥日期: "
@@ -57,10 +67,9 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_start_date"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="15dp"
-                    android:text="請點擊選擇" />
+                    android:text="@{viewModel.record.notificationSetting.startDate}" />
 
             </LinearLayout>
 
@@ -68,14 +77,16 @@
                 android:id="@+id/ll_repeat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
-                android:orientation="vertical">
+                android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:drawableLeft="@drawable/ic_baseline_repeat_24"
                     android:drawablePadding="15dp"
                     android:text="重複提醒次數: "
@@ -83,13 +94,12 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tv_repeat"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="請點擊選擇" />
+                    android:text="@{String.valueOf(viewModel.record.notificationSetting.repeat)}" />
 
 
             </LinearLayout>
-
 
 
         </androidx.appcompat.widget.LinearLayoutCompat>

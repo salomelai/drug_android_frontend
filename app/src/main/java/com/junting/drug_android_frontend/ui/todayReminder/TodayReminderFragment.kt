@@ -17,6 +17,7 @@ import com.junting.drug_android_frontend.MainActivity
 import com.junting.drug_android_frontend.R
 import com.junting.drug_android_frontend.databinding.FragmentTodayReminderBinding
 import com.junting.drug_android_frontend.model.take_record.TakeRecord
+import com.junting.drug_android_frontend.model.today_reminder.TodayReminder
 
 class TodayReminderFragment : Fragment() {
 
@@ -24,8 +25,8 @@ class TodayReminderFragment : Fragment() {
     private lateinit var viewAdapter: TodayReminderViewAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
     private var viewModel: TodayReminderViewModel = TodayReminderViewModel()
-    private val onItemSwipeListener = object : OnItemSwipeListener<TakeRecord> {
-        override fun onItemSwiped(position: Int, direction: OnItemSwipeListener.SwipeDirection, item: TakeRecord): Boolean {
+    private val onItemSwipeListener = object : OnItemSwipeListener<TodayReminder> {
+        override fun onItemSwiped(position: Int, direction: OnItemSwipeListener.SwipeDirection, item: TodayReminder): Boolean {
             if (direction == OnItemSwipeListener.SwipeDirection.RIGHT_TO_LEFT) {
                 Log.d("onItemSwiped", "向左滑: $position, $item")
             } else if (direction == OnItemSwipeListener.SwipeDirection.LEFT_TO_RIGHT) {

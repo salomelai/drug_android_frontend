@@ -4,21 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.junting.drug_android_frontend.databinding.BottomSheetNotificationSettingBinding
+import com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsViewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
-class NotificationSettingButtonSheet : BottomSheetDialogFragment() {
+class NotificationSettingButtonSheet(viewModel: DrugRecordsViewModel) : BottomSheetDialogFragment() {
 
     private var _binding: BottomSheetNotificationSettingBinding? = null
     private val binding get() = _binding!!
 
+    private var viewModel: DrugRecordsViewModel = viewModel
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // 使用 ViewBinding 綁定佈局檔案
         _binding = BottomSheetNotificationSettingBinding.inflate(inflater, container, false)
+        binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+
         return binding.root
     }
 
