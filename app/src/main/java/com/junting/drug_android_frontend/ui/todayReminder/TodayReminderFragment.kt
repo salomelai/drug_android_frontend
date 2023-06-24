@@ -1,5 +1,6 @@
 package com.junting.drug_android_frontend.ui.todayReminder
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemSwipeListener
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.junting.drug_android_frontend.MainActivity
+import com.junting.drug_android_frontend.OnDemandListActivity
 import com.junting.drug_android_frontend.R
 import com.junting.drug_android_frontend.databinding.FragmentTodayReminderBinding
 import com.junting.drug_android_frontend.model.take_record.TakeRecord
@@ -57,6 +59,7 @@ class TodayReminderFragment : Fragment() {
         initRecyclerView()
         initRecyclerViewModel()
         initChooseTime()
+        initFab()
         // 設定 onItemSwipeListener
         binding.list.swipeListener = onItemSwipeListener
 
@@ -131,5 +134,11 @@ class TodayReminderFragment : Fragment() {
     fun updateTodayReminderBadge(number: Int) {
         val mainActivity: MainActivity = activity as MainActivity
         mainActivity.setTodayReminderBadge(number) // 設定小紅點圖標數字
+    }
+    private fun initFab() {
+        binding.fab.setOnClickListener {
+            val intent = Intent(context, OnDemandListActivity::class.java)
+            context?.startActivity(intent)
+        }
     }
 }
