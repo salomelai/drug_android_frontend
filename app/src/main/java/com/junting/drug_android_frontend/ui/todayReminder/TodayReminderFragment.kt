@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -60,6 +61,7 @@ class TodayReminderFragment : Fragment() {
         initRecyclerViewModel()
         initChooseTime()
         initFab()
+        initCheckIcon()
         // 設定 onItemSwipeListener
         binding.list.swipeListener = onItemSwipeListener
 
@@ -98,6 +100,23 @@ class TodayReminderFragment : Fragment() {
             binding.inputLayout.isEndIconVisible = true
         }
         builder.create().show()
+    }
+    private fun initCheckIcon(){
+        val inputLayout = binding.inputLayout
+
+        val endIconView = inputLayout.findViewById<ImageView>(com.google.android.material.R.id.text_input_end_icon)
+        endIconView?.setOnClickListener {
+            val builder = MaterialAlertDialogBuilder(requireContext())
+            builder.setTitle("提示")
+            builder.setMessage("XXXXXXXX")
+            builder.setPositiveButton("確定") { _, _ ->
+                // Handle positive button click
+                binding.inputLayout.isEndIconVisible = false
+            }
+            val alertDialog = builder.create()
+            alertDialog.show()
+            true
+        }
     }
 
     override fun onDestroyView() {

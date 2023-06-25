@@ -88,6 +88,7 @@ class DrugRecordActivity : AppCompatActivity() {
         initOndemandCheckbox()
         initTimingsCheckbox()
         initButtonSheet(binding.llNotificationSetting, NotificationSettingButtonSheet(viewModel), "notificationSetting")
+        initButtonSheet(binding.llReturnSetting, ReturnSettingButtonSheet(viewModel), "returnSetting")
         initButtonSheet(binding.llDrugPosition, DrugPositionButtonSheet(viewModel), "drugPosition")
         initButton()
         initPhoneLongClickCall()

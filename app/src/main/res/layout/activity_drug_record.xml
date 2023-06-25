@@ -402,7 +402,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_outline_notifications_24"
                         android:drawablePadding="15dp"
-                        android:text="報警/提醒設定"
+                        android:text="吃藥警報設定"
                         android:textStyle="bold" />
 
 
@@ -425,7 +425,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_outline_notifications_24"
                         android:drawablePadding="15dp"
-                        android:text="回診/領藥提醒"
+                        android:text="回診警報設定"
                         android:textStyle="bold" />
 
                 </LinearLayout>

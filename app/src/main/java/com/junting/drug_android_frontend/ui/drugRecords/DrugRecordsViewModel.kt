@@ -102,6 +102,36 @@ class DrugRecordsViewModel : ViewModel() {
         info.position = position
         triggerUpdate(info)
     }
+    fun setNotificationSettingStatus(status: Boolean) {
+        val info: DrugRecord = record.value!!
+        info.notificationSetting.status = status
+        triggerUpdate(info)
+    }
+    fun setNotificationSettingStartDate(startDate: String) {
+        val info: DrugRecord = record.value!!
+        info.notificationSetting.startDate = startDate
+        triggerUpdate(info)
+    }
+    fun setNotificationSettingRepeat(repeat: Int) {
+        val info: DrugRecord = record.value!!
+        info.notificationSetting.repeat = repeat
+        triggerUpdate(info)
+    }
+    fun setReturnSettingStatus(status: Boolean) {
+        val info: DrugRecord = record.value!!
+        info.returnSetting.status = status
+        triggerUpdate(info)
+    }
+    fun setReturnSettingDate(date: String) {
+        val info: DrugRecord = record.value!!
+        info.returnSetting.date = date
+        triggerUpdate(info)
+    }
+    fun setReturnSettingLeft(left: Int) {
+        val info: DrugRecord = record.value!!
+        info.returnSetting.left = left
+        triggerUpdate(info)
+    }
 
     fun setRecords(newRecords: List<DrugRecord>) {
         records.value = newRecords
