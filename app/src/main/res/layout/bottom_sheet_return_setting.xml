@@ -102,6 +102,28 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/ll_instruction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_instruction"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="15dp"
+                    android:text=""
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
