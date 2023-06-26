@@ -4,17 +4,16 @@ import DialogUtils
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.junting.drug_android_frontend.databinding.ActionBarTakeRecordTodayReminderBinding
 import com.junting.drug_android_frontend.databinding.ActivityOnDemandBinding
-import com.junting.drug_android_frontend.databinding.BottomSheetLaterBinding
 import com.junting.drug_android_frontend.databinding.FragmentPillBoxManagementBinding
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -85,6 +84,10 @@ class OnDemandActivity : AppCompatActivity() {
             }
             positions.forEach { i -> viewManager.closeProgressBar(i) }
         })
+
+        val inflater = LayoutInflater.from(this)
+        val instructionLayout = inflater.inflate(R.layout.instruction_background, bindingPillBox.llInstruction, false)
+        bindingPillBox.llInstruction.addView(instructionLayout)
     }
 
     private fun initClickableTextView() {

@@ -3,6 +3,7 @@ package com.junting.drug_android_frontend
 import DialogUtils
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -55,6 +56,10 @@ class TodayReminderActivity : AppCompatActivity() {
         initActualTime()
         initButton()
         initClickableTextView()
+
+        val inflater = LayoutInflater.from(this)
+        val instructionLayout = inflater.inflate(R.layout.instruction_background, bindingPillBox.llInstruction, false)
+        bindingPillBox.llInstruction.addView(instructionLayout)
     }
     private fun initViewModel() {
         binding.progressBar.visibility = View.VISIBLE
