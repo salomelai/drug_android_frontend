@@ -171,6 +171,32 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_indication_tag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@drawable/ic_baseline_check_circle_outline_24"
+                        android:drawablePadding="15dp"
+                        android:text="適應症-標籤: "
+                        android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_indication_tag"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:text="@{viewModel.record.indicationTag}" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/ll_side_effect"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
