@@ -35,11 +35,6 @@ class ViewPagerAdapter(var context: Context) : PagerAdapter() {
         R.string.description_two,
         R.string.description_three
     )
-//    var btnText = intArrayOf(
-//        R.string.btn_one,
-//        R.string.btn_one,
-//        R.string.btn_two
-//    )
 
     override fun getCount(): Int {
 //      want to know how many layout to present
@@ -61,21 +56,6 @@ class ViewPagerAdapter(var context: Context) : PagerAdapter() {
         slidetitleimage.setImageResource(images[position])
         slideHeading.setText(headings[position])
         slideDescription.setText(description[position])
-//        slideBtn.setText(btnText[position])
-//        if (position == 0) {
-//            slideBtn.visibility = View.INVISIBLE
-//        }
-//
-////      google one tap page
-//        else if (position == 1) {
-//            slideBtn.visibility = View.VISIBLE
-//
-//        }
-//
-////      drug box pairing page
-//        else {
-//            slideBtn.visibility = View.VISIBLE
-//        }
         container.addView(view)
         return view
     }

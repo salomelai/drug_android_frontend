@@ -32,8 +32,8 @@
             android:id="@+id/wel_slideViewPager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="100dp"
-            android:layout_marginBottom="400dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginBottom="200dp"
             android:contentDescription="viewPager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">

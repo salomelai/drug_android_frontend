@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.HtmlCompat
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
@@ -28,8 +29,13 @@ class WelcomePageActivity : AppCompatActivity() {
     private lateinit var nextbtn:Button
     private lateinit var skipbtn:Button
     private lateinit var changebtn:Button
-    lateinit var dots: Array<TextView>
+    private lateinit var dots: Array<TextView>
     private lateinit var viewPagerAdapter: ViewPagerAdapter
+    var btnText = intArrayOf(
+        R.string.btn_one,
+        R.string.btn_one,
+        R.string.btn_two
+    )
 
 //  google one tap
     private lateinit var oneTapClient: SignInClient
@@ -44,11 +50,16 @@ class WelcomePageActivity : AppCompatActivity() {
         skipbtn = findViewById<Button>(R.id.wel_skipBtn)
         changebtn = findViewById<Button>(R.id.wel_changeBtn)
 
-        var btnText = intArrayOf(
-            R.string.btn_one,
-            R.string.btn_one,
-            R.string.btn_two
-        )
+        mSlideViewPager = findViewById<ViewPager>(R.id.wel_slideViewPager)
+        mDotLayout = findViewById<LinearLayout>(R.id.wel_indicator_layout)
+
+        viewPagerAdapter = ViewPagerAdapter(this)
+
+        mSlideViewPager.adapter = viewPagerAdapter
+
+        setUpindicator(0)
+        mSlideViewPager.addOnPageChangeListener(viewListener)
+
 
         backbtn.setOnClickListener {
             if (getitem(0) > 0) {
@@ -89,9 +100,9 @@ class WelcomePageActivity : AppCompatActivity() {
                     val credential = oneTapClient.getSignInCredentialFromIntent(result.data)
                     val idToken = credential.googleIdToken
                     if (idToken != null) {
-                        val intent = Intent(this, MainActivity::class.java)
-                        intent.putExtra("googleToken", idToken)
-                        startActivity(intent)
+                        val receiveIntent = Intent(this, MainActivity::class.java)
+                        receiveIntent.putExtra("googleToken", idToken)
+                        startActivity(receiveIntent)
                     }
                 } catch (e: ApiException) {
                     e.printStackTrace()
@@ -101,8 +112,7 @@ class WelcomePageActivity : AppCompatActivity() {
 //      google one tap end
 
         changebtn.setOnClickListener {
-            if (getitem(0) ==2) {
-                changebtn.setText(btnText[getitem(0)])
+            if (getitem(0) ==1) {
                 oneTapClient.beginSignIn(signUpRequest)
                     .addOnSuccessListener(
                         this
@@ -117,40 +127,29 @@ class WelcomePageActivity : AppCompatActivity() {
                         Log.d("TAG", e.localizedMessage)
                     }
             }
-            else if (getitem(0) ==3){
-                changebtn.setText(btnText[getitem(0)])
+            else if (getitem(0) ==2){
+
             }
         }
-        mSlideViewPager = findViewById<View>(R.id.wel_slideViewPager) as ViewPager
-        mDotLayout = findViewById<View>(R.id.wel_indicator_layout) as LinearLayout
 
-        viewPagerAdapter = ViewPagerAdapter(this)
 
-        mSlideViewPager.adapter = viewPagerAdapter
-
-        setUpindicator(0)
-        mSlideViewPager.addOnPageChangeListener(viewListener)
     }
 
     fun setUpindicator(position: Int) {
-        dots = Array<TextView>(3)
+        dots = Array<TextView>(3) { TextView(this) }
         mDotLayout.removeAllViews()
+
         for (i in dots.indices) {
             dots[i] = TextView(this)
-            dots[i].text = Html.fromHtml("&#8226")
+            dots[i].text = HtmlCompat.fromHtml("&#8226;", HtmlCompat.FROM_HTML_MODE_LEGACY)
             dots[i].textSize = 35f
-            dots[i].setTextColor(resources.getColor(R.color.inactive, application.theme))
+            dots[i].setTextColor(getColor(R.color.inactive))
             mDotLayout.addView(dots[i])
         }
-        dots[position].setTextColor(resources.getColor(R.color.active, application.theme))
+
+        dots[position].setTextColor(getColor(R.color.active))
     }
 
-    private fun <T> Array(size: Int): Array<TextView> {
-        for (i in dots.indices) {
-            dots[i] = TextView(this)
-        }
-        return Array<TextView>(3)
-    }
 
 
     var viewListener: OnPageChangeListener = object : OnPageChangeListener {
@@ -163,13 +162,22 @@ class WelcomePageActivity : AppCompatActivity() {
 
         override fun onPageSelected(position: Int) {
             setUpindicator(position)
-            if (position > 0) {
-                backbtn.visibility = View.VISIBLE
-                changebtn.visibility = View.VISIBLE
-
-            } else {
+            if (position == 0) {
                 backbtn.visibility = View.INVISIBLE
                 changebtn.visibility = View.INVISIBLE
+
+            }
+            else if(position == 1){
+                backbtn.visibility = View.VISIBLE
+                changebtn.visibility = View.VISIBLE
+                changebtn.setText(btnText[position])
+
+            }
+            else if(position == 2){
+                backbtn.visibility = View.VISIBLE
+                changebtn.visibility = View.VISIBLE
+                changebtn.setText(btnText[position])
+
             }
         }
 

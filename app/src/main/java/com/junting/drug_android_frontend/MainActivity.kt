@@ -15,7 +15,6 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.junting.drug_android_frontend.databinding.ActivityMainBinding
-import com.junting.drug_android_frontend.ui.todayReminder.TodayReminderViewModel
 
 
 class MainActivity : AppCompatActivity() {
@@ -23,18 +22,17 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
-    var googleIdToken = intent.getStringExtra("googleToken")
-
+    var receiveIntent : Intent? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        if (googleIdToken == null) {
-            val intent = Intent(this, WelcomePageActivity::class.java)
-            startActivity(intent)
-        }else{
+//        receiveIntent = intent
+        val idToken = receiveIntent?.getStringExtra("googleToken")
+
+        if (idToken != null) {
             val navView: BottomNavigationView = binding.navView
             // 設定顯示小紅點圖標
             navView.getOrCreateBadge(R.id.navigation_todayReminder).apply {
@@ -91,6 +89,9 @@ class MainActivity : AppCompatActivity() {
                 navController.popBackStack()
                 navController.navigate(R.id.navigation_pillBoxManagement)
             }
+        } else {
+            val newIntent = Intent(this, WelcomePageActivity::class.java)
+            startActivity(newIntent)
         }
 
     }
