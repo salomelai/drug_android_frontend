@@ -67,4 +67,8 @@ dependencies {
     //DragDropSwipeRecyclerview
     implementation 'com.ernestoyaquello.dragdropswiperecyclerview:drag-drop-swipe-recyclerview:1.1.1'
 
+    //Google Log In
+    implementation 'com.google.android.gms:play-services-auth:20.5.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 }

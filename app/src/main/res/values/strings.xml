@@ -31,4 +31,17 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
+    <string name="heading_one">歡迎使用 藥要好好吃</string>
+    <string name="heading_two">藥要好好吃</string>
+    <string name="heading_three">藥要好好吃</string>
+
+    <string name="description_one">請向右滑，繼續使用。</string>
+    <string name="description_two">註冊帳號，以獲得更佳的使用體驗。</string>
+    <string name="description_three">點選按鈕以配對裝置。</string>
+
+    <string name="btn_one">使用GOOGLE登錄</string>
+    <string name="btn_two">搜尋裝置</string>
+
+    <string name="web_client_id">810678051974-5217620qj2nrpdt0sogbg9d55jd0hg6s.apps.googleusercontent.com</string>
+
 </resources>
