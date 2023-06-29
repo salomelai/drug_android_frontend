@@ -30,8 +30,16 @@ class DrugRecordsViewAdapter(private val context: Context, private val viewModel
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val drugRecord: DrugRecord = viewModel.records.value!!.get(position)
+
         holder.drugItemViewBinding.tvDrugName.text = drugRecord.drug.name
-        holder.drugItemViewBinding.tvIndicationTag.text = drugRecord.indicationTag
+
+        if (drugRecord.indicationTag == "") {
+            holder.drugItemViewBinding.tvIndicationTag.visibility = View.GONE
+        }else{
+            holder.drugItemViewBinding.tvIndicationTag.visibility = View.VISIBLE
+            holder.drugItemViewBinding.tvIndicationTag.text = drugRecord.indicationTag
+        }
+
         if(drugRecord.frequency==0){
             holder.drugItemViewBinding.tvFrequencyDosage.text = "按需服用," + drugRecord.dosage.toString() + " 單位/次"
         }else{

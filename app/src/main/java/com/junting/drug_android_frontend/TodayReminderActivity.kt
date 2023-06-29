@@ -67,7 +67,7 @@ class TodayReminderActivity : AppCompatActivity() {
         viewModel.todayReminder.observe(this, Observer {
             Log.d("Observe todayReminder", "record: ${it.toString()}")
             bindingActionBarTakeRecordTodayReminder.tvDrugName.text = it.drug.name
-            bindingActionBarTakeRecordTodayReminder.tvStock.text = it.stock.toString()+" 顆"
+            bindingActionBarTakeRecordTodayReminder.tvStock.text = it.stock.toString()+" 單位"
             viewManager.setCellColor(it.position)
             binding.progressBar.visibility = View.GONE
         })

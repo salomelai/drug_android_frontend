@@ -35,10 +35,10 @@ class TodayReminderFragment : Fragment() {
             } else if (direction == OnItemSwipeListener.SwipeDirection.LEFT_TO_RIGHT) {
                 Log.d("onItemSwiped", "向右滑: $position, $item")
             }
-            updateTodayReminderBadge(viewAdapter.itemCount)
             // 處理項目被滑動的動作
             // 返回 false 表示滑動的項目應該從適配器的資料集中移除（預設行為）
             // 返回 true 表示停止滑動的項目自動從適配器的資料集中移除（在這種情況下，你需要自行手動更新資料集）
+            updateTodayReminderBadge(viewAdapter.itemCount)
             return false
         }
     }
@@ -147,7 +147,6 @@ class TodayReminderFragment : Fragment() {
             behindSwipedItemIconSecondaryDrawableId = R.drawable.ic_baseline_check_circle_24
             behindSwipedItemIconMargin = 60.0f
         }
-
     }
 
     fun updateTodayReminderBadge(number: Int) {
