@@ -89,10 +89,10 @@ class DrugInteractionActivity : AppCompatActivity() {
             }
 
             if (hasMajorInteraction) {
-                binding.tvMessage.text = "${drugbagInfo.drug.name} 會與以下 ${it.size} 種藥物產生嚴重交互作用，為了您的用藥安全，我們強烈建議您咨詢醫院專業人士。"
+                binding.tvMessage.text = "${drugbagInfo.drug.name}"+resources.getString(R.string.interaction_major_illustrate_first)+" ${it.size} "+resources.getString(R.string.interaction_major_illustrate_second)
                 binding.btnConfirm.visibility = View.GONE
             } else {
-                binding.tvMessage.text = "${drugbagInfo.drug.name} 會與以下 ${it.size} 種藥物產生交互作用，請確認是否繼續。"
+                binding.tvMessage.text = "${drugbagInfo.drug.name}"+resources.getString(R.string.interaction_not_major_illustrate_first)+" ${it.size} "+resources.getString(R.string.interaction_not_major_illustrate_second)
             }
 
             binding.progressBar.visibility = View.GONE

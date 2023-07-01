@@ -41,7 +41,7 @@ class ReturnSettingButtonSheet(viewModel: DrugRecordsViewModel) :
             requireContext(),
             binding.llLeft,
             binding.tvLeft,
-            "修改剩餘庫存提醒",
+            resources.getString(R.string.modify_stock_level_alert),
             true
         ) { text ->
             viewModel.setReturnSettingLeft(text.toInt())
@@ -51,7 +51,7 @@ class ReturnSettingButtonSheet(viewModel: DrugRecordsViewModel) :
         viewModel.record.observe(viewLifecycleOwner, Observer { record ->
             val left = record.returnSetting?.left
             val date = record.returnSetting?.date
-            val instruction = " * 當庫存剩餘$left 時的回診日期為 $date"
+            val instruction = resources.getString(R.string.stock_level_alert_first)+"$left"+resources.getString(R.string.stock_level_alert_second)+" $date"
             binding.tvInstruction.text = instruction
         })
     }

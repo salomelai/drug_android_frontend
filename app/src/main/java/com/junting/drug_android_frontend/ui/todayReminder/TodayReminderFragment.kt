@@ -93,7 +93,7 @@ class TodayReminderFragment : Fragment() {
 
     private fun showTimeRangeDialog() {
         val builder = MaterialAlertDialogBuilder(requireContext())
-        builder.setTitle("選擇時段")
+        builder.setTitle(resources.getString(R.string.select_time))
         builder.setItems(timeRanges) { _, index ->
             val selectedTimeRange = timeRanges[index]
             binding.inputEditText.setText(selectedTimeRange)
@@ -107,9 +107,9 @@ class TodayReminderFragment : Fragment() {
         val endIconView = inputLayout.findViewById<ImageView>(com.google.android.material.R.id.text_input_end_icon)
         endIconView?.setOnClickListener {
             val builder = MaterialAlertDialogBuilder(requireContext())
-            builder.setTitle("提示")
+            builder.setTitle(resources.getString(R.string.hint_title))
             builder.setMessage("XXXXXXXX")
-            builder.setPositiveButton("確定") { _, _ ->
+            builder.setPositiveButton(R.string.confirm) { _, _ ->
                 // Handle positive button click
                 binding.inputLayout.isEndIconVisible = false
             }

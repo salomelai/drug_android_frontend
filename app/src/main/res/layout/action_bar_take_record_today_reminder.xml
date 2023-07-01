@@ -18,7 +18,7 @@
         android:id="@+id/tv_stock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="存庫: 1"
+        android:text="@string/today_reminder_stock"
         android:textSize="15sp" />
 
 

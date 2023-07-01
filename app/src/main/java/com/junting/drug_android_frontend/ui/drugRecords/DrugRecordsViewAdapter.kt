@@ -33,6 +33,7 @@ class DrugRecordsViewAdapter(private val context: Context, private val viewModel
 
         holder.drugItemViewBinding.tvDrugName.text = drugRecord.drug.name
 
+
         if (drugRecord.indicationTag == "") {
             holder.drugItemViewBinding.tvIndicationTag.visibility = View.GONE
         }else{
@@ -41,9 +42,9 @@ class DrugRecordsViewAdapter(private val context: Context, private val viewModel
         }
 
         if(drugRecord.frequency==0){
-            holder.drugItemViewBinding.tvFrequencyDosage.text = "按需服用," + drugRecord.dosage.toString() + " 單位/次"
+            holder.drugItemViewBinding.tvFrequencyDosage.text = context.getString(R.string.as_needed) + "," + drugRecord.dosage.toString() + " "+context.getString(R.string.drug_record_dosage)
         }else{
-            holder.drugItemViewBinding.tvFrequencyDosage.text = drugRecord.frequency.toString() + " 次/天, " + drugRecord.dosage.toString() + " 單位/次"
+            holder.drugItemViewBinding.tvFrequencyDosage.text = drugRecord.frequency.toString() + " "+context.getString(R.string.drug_record_frequency)+", " + drugRecord.dosage.toString() + " "+context.getString(R.string.drug_record_dosage)
         }
 
         if (drugRecord.timeSlots.isEmpty()){

@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.R
 import com.junting.drug_android_frontend.databinding.DrugInteractionViewBinding
+//import com.junting.drug_android_frontend.R
 
 class DrugInteractionViewAdapter(
     private val context: Context,
@@ -41,7 +42,7 @@ class DrugInteractionViewAdapter(
 
         holder.drugInteractionViewBinding.tvCause.text = interactingDrug.cause
         if(interactingDrug.timeSlots.isEmpty()) {
-            holder.drugInteractionViewBinding.tvTimeSlots.text = "按需服用"
+            holder.drugInteractionViewBinding.tvTimeSlots.text = context.getString(R.string.as_needed)
         } else{
             holder.drugInteractionViewBinding.tvTimeSlots.text = interactingDrug.timeSlots.joinToString()
         }

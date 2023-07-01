@@ -1,5 +1,6 @@
 package com.junting.drug_android_frontend.ui.todayReminder
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat.startActivity
 import com.ernestoyaquello.dragdropswiperecyclerview.DragDropSwipeAdapter
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemSwipeListener
@@ -17,8 +19,10 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Collections
 import java.util.Locale
+import com.junting.drug_android_frontend.R
 
-class TodayReminderViewAdapter()
+
+class TodayReminderViewAdapter(private val context: Context)
     :DragDropSwipeAdapter<TodayReminder, TodayReminderViewAdapter.ViewHolder>(Collections.emptyList()) {
 
     class ViewHolder(private val binding: RemindItemViewBinding) : DragDropSwipeAdapter.ViewHolder(binding.root) {
@@ -42,10 +46,11 @@ class TodayReminderViewAdapter()
     }
 
     override fun onBindViewHolder(item: TodayReminder, viewHolder: TodayReminderViewAdapter.ViewHolder, position: Int) {
+
         // Here we update the contents of the view holder's views to reflect the item's data
         viewHolder.tvDrugName.text = item.drug.name
         viewHolder.tvTime.text = item.timeSlot
-        viewHolder.tvDosage.text = "劑量: "+item.dosage.toString()
+        viewHolder.tvDosage.text = context.getString(R.string.dosage)+": "+item.dosage.toString()
 
         val currentTime = Calendar.getInstance()
         val currentTimeString = SimpleDateFormat("HH:mm", Locale.getDefault()).format(currentTime.time)
@@ -63,6 +68,7 @@ class TodayReminderViewAdapter()
             startActivity(viewHolder.itemView.context, intent, null)
         }
     }
+
 
     override fun getViewHolder(itemLayout: View): ViewHolder {
         TODO("Not yet implemented")

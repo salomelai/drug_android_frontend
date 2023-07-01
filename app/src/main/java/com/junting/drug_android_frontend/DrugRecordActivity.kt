@@ -56,36 +56,36 @@ class DrugRecordActivity : AppCompatActivity() {
         )
 
 
-        DialogUtils.initTextViewEditDialog(this,binding.llDrugName, binding.tvDrugName,"修改藥物名稱",false) { text ->
+        DialogUtils.initTextViewEditDialog(this,binding.llDrugName, binding.tvDrugName,resources.getString(R.string.modify_drug_name),false) { text ->
             viewModel.setDrugName(text)
         }
-        DialogUtils.initTextViewEditDialog(this,binding.llHospital, binding.tvHospital, "修改醫院名稱",false){
+        DialogUtils.initTextViewEditDialog(this,binding.llHospital, binding.tvHospital, resources.getString(R.string.modify_hospital_name),false){
             text -> viewModel.setHospitalName(text)
         }
-        DialogUtils.initTextViewEditDialog(this,binding.llDepartment, binding.tvDepartment, "修改科別名稱",false){
+        DialogUtils.initTextViewEditDialog(this,binding.llDepartment, binding.tvDepartment, resources.getString(R.string.modify_department_name),false){
             text -> viewModel.setHospitalDepartment(text)
         }
-        DialogUtils.initTextViewEditDialog(this,binding.llPhoneExtension, binding.tvPhoneExtension, "修改電話與分機",true){
+        DialogUtils.initTextViewEditDialog(this,binding.llPhoneExtension, binding.tvPhoneExtension, resources.getString(R.string.modify_phone),true){
             text -> val parts = text.split("-")
             viewModel.setHospitalPhone(parts[0])
             viewModel.setExtension(parts[1])
         }
-        DialogUtils.initTextViewEditDialog(this,binding.llIndication, binding.tvIndication, "修改適應症",false){
+        DialogUtils.initTextViewEditDialog(this,binding.llIndication, binding.tvIndication, resources.getString(R.string.modify_indication),false){
             text -> viewModel.setIndication(text)
         }
-        DialogUtils.initTextViewEditDialog(this,binding.llIndicationTag, binding.tvIndicationTag, "修改適應症-標籤",false){
+        DialogUtils.initTextViewEditDialog(this,binding.llIndicationTag, binding.tvIndicationTag, resources.getString(R.string.modify_indication_tag),false){
                 text -> viewModel.setIndicationTag(text)
         }
-        DialogUtils.initTextViewEditDialog(this,binding.llSideEffect, binding.tvSideEffect, "修改副作用",false){
+        DialogUtils.initTextViewEditDialog(this,binding.llSideEffect, binding.tvSideEffect, resources.getString(R.string.modify_side_effect),false){
             text -> viewModel.setSideEffect(text)
         }
-        DialogUtils.initTextViewEditDialog(this,binding.llAppearance, binding.tvAppearance, "修改外觀",false){
+        DialogUtils.initTextViewEditDialog(this,binding.llAppearance, binding.tvAppearance, resources.getString(R.string.modify_appearance),false){
             text -> viewModel.setAppearance(text)
         }
-        DialogUtils.initTextViewEditDialog(this,binding.llDosage, binding.tvDosage, "修改劑量",true){
+        DialogUtils.initTextViewEditDialog(this,binding.llDosage, binding.tvDosage, resources.getString(R.string.modify_dosage),true){
             text -> viewModel.setDosage(text.toInt())
         }
-        DialogUtils.initTextViewEditDialog(this,binding.llStock, binding.tvStock, "修改庫存",true){
+        DialogUtils.initTextViewEditDialog(this,binding.llStock, binding.tvStock, resources.getString(R.string.modify_stock),true){
             text -> viewModel.setStock(text.toInt())
         }
         initOndemandCheckbox()
@@ -115,9 +115,9 @@ class DrugRecordActivity : AppCompatActivity() {
             R.id.action_delete -> {
                 // 处理点击删除按钮的逻辑
                 val alertDialog = MaterialAlertDialogBuilder(this)
-                    .setTitle("詢問")
-                    .setMessage("確認要刪除?")
-                    .setPositiveButton("確認") { dialog, _ ->
+                    .setTitle(resources.getString(R.string.window_question_title))
+                    .setMessage(resources.getString(R.string.drug_record_activity_question_message))
+                    .setPositiveButton(resources.getString(R.string.confirm)) { dialog, _ ->
                         // 在這裡執行刪除操作
                         val intent = Intent(this, MainActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -125,7 +125,7 @@ class DrugRecordActivity : AppCompatActivity() {
                         startActivity(intent)
                         dialog.dismiss()
                     }
-                    .setNegativeButton("取消") { dialog, _ ->
+                    .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
                         dialog.dismiss()
 
                     }
@@ -259,16 +259,16 @@ class DrugRecordActivity : AppCompatActivity() {
             }
 
             val builder = MaterialAlertDialogBuilder(this)
-            builder.setTitle("請選擇時間")
+            builder.setTitle(resources.getString(R.string.drug_record_select_time))
             builder.setItems(timeList.toTypedArray()) { dialog, which ->
                 val time = timeList[which]
 
                 // check if the time already exists
                 if (timeSlots.contains(time)) {
                     MaterialAlertDialogBuilder(this)
-                        .setTitle("警告")
-                        .setMessage("所選時間已存在。")
-                        .setPositiveButton("確定", null)
+                        .setTitle(resources.getString(R.string.warning_window_title))
+                        .setMessage(resources.getString(R.string.drug_record_activity_warning_message))
+                        .setPositiveButton(resources.getString(R.string.confirm), null)
                         .show()
                     return@setItems
                 }

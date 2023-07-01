@@ -61,7 +61,7 @@ class OnDemandActivity : AppCompatActivity() {
         viewModel.drugRecor.observe(this, Observer {
             Log.d("Observe todayReminder", "record: ${it.toString()}")
             bindingActionBarTakeRecordTodayReminder.tvDrugName.text = it.drug.name
-            bindingActionBarTakeRecordTodayReminder.tvStock.text = it.stock.toString()+" 單位"
+            bindingActionBarTakeRecordTodayReminder.tvStock.text = it.stock.toString()+" "+resources.getString(R.string.unit)
             viewManager.setCellColor(it.position)
             binding.progressBar.visibility = View.GONE
         })
@@ -95,7 +95,7 @@ class OnDemandActivity : AppCompatActivity() {
             this,
             binding.llDosage,
             binding.tvDosage,
-            "劑量",
+            resources.getString(R.string.dosage),
             true
         ) { text ->
             viewModel.setDosage(text.toInt())
@@ -108,9 +108,9 @@ class OnDemandActivity : AppCompatActivity() {
             val timePicker = MaterialTimePicker.Builder()
                 .setHour(hour)
                 .setMinute(minute)
-                .setTitleText("選擇服藥時間")
-                .setPositiveButtonText("確定")
-                .setNegativeButtonText("取消")
+                .setTitleText(resources.getString(R.string.on_demand_select_time))
+                .setPositiveButtonText(resources.getString(R.string.confirm))
+                .setNegativeButtonText(resources.getString(R.string.cancel))
                 .build()
 
 
@@ -160,9 +160,9 @@ class OnDemandActivity : AppCompatActivity() {
         parentView?.removeView(bindingPillBox.root)
 
         val dialog = MaterialAlertDialogBuilder(this)
-            .setTitle("已服用藥物")
+            .setTitle(resources.getString(R.string.taken_drug))
             .setView(bindingPillBox.root)
-            .setPositiveButton("確定") { dialog, which ->
+            .setPositiveButton(resources.getString(R.string.confirm)) { dialog, which ->
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 intent.putExtra("fragmentName", "TodayReminderFragment")

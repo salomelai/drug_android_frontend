@@ -50,7 +50,7 @@ class RrugRecordExpandableListAdapter internal constructor(
 
         val tvTimeSlots = convertView!!.findViewById<TextView>(R.id.tv_time_slots)
         if(interactingDrugs.get(expandedListPosition).timeSlots.isEmpty()) {
-            tvTimeSlots.text = "按需服用"
+            tvTimeSlots.text = context.getString(R.string.as_needed)
         } else{
             tvTimeSlots.text = interactingDrugs.get(expandedListPosition).timeSlots.joinToString()
         }

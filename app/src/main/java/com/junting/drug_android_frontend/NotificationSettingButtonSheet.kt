@@ -45,7 +45,7 @@ class NotificationSettingButtonSheet(viewModel: DrugRecordsViewModel) :
             requireContext(),
             binding.llRepeat,
             binding.tvRepeat,
-            "修改重複提醒次數",
+            resources.getString(R.string.modify_repetition_count),
             true
         ) { text ->
             viewModel.setNotificationSettingRepeat(text.toInt())
@@ -63,9 +63,9 @@ class NotificationSettingButtonSheet(viewModel: DrugRecordsViewModel) :
         // 使用 MaterialDatePicker 顯示日期選擇對話框
         val builder = MaterialDatePicker.Builder.datePicker()
         val picker = builder
-            .setTitleText("選擇開始服藥日期")
-            .setPositiveButtonText("確定")
-            .setNegativeButtonText("取消")
+            .setTitleText(resources.getString(R.string.select_start_date_for_medication))
+            .setPositiveButtonText(resources.getString(R.string.confirm))
+            .setNegativeButtonText(resources.getString(R.string.cancel))
             .build()
 
         // 設置選擇日期後的回調

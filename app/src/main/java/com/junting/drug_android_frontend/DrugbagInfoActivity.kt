@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.junting.drug_android_frontend.databinding.ActivityDrugbagInfoBinding
 import com.junting.drug_android_frontend.model.drugbag_info.DrugbagInformation
+//import com.junting.drug_android_frontend.R
 
 class DrugbagInfoActivity : AppCompatActivity() {
 
@@ -38,10 +39,10 @@ class DrugbagInfoActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         if (intent.getStringExtra("UglyText")?.isNotEmpty() == true) {
-            supportActionBar?.setTitle("修改藥袋資訊")
+            supportActionBar?.setTitle(resources.getString(R.string.modify_drugbag_info))
             initDrugbagInfoViewModel()
         } else {
-            supportActionBar?.setTitle("新增藥袋資訊")
+            supportActionBar?.setTitle(resources.getString(R.string.add_drugbag_info))
             unserInputDrugbagInfo()
         }
 
@@ -110,7 +111,7 @@ class DrugbagInfoActivity : AppCompatActivity() {
         binding.actvDosage.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
                 val selectedItem = parent.getItemAtPosition(position).toString()
-                Toast.makeText(this, "您選擇了：$selectedItem", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, resources.getString(R.string.select)+"：$selectedItem", Toast.LENGTH_SHORT).show()
                 viewModel.drugbagInfo.value?.let {
                     it.dosage = selectedItem.toInt()
                 }
@@ -192,7 +193,7 @@ class DrugbagInfoActivity : AppCompatActivity() {
         binding.actvFrequency.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
                 val selectedItem = parent.getItemAtPosition(position).toString()
-                Toast.makeText(this, "您選擇了：$selectedItem", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, resources.getString(R.string.select)+"：$selectedItem", Toast.LENGTH_SHORT).show()
                 viewModel.drugbagInfo.value?.let {
                     it.frequency = selectedItem.toInt()
                 }

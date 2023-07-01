@@ -19,7 +19,7 @@
         android:layout_gravity="center"
         android:orientation="vertical"
         android:layout_marginBottom="15dp"
-        android:text="拍攝"
+        android:text="@string/take_a_photo"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />

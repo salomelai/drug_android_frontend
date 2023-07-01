@@ -19,17 +19,17 @@
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="依藥物" />
+                android:text="@string/tab_drug" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="依時間" />
+                android:text="@string/tab_time" />
 
             <com.google.android.material.tabs.TabItem
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="圖表" />
+                android:text="@string/take_records_graph" />
 
         </com.google.android.material.tabs.TabLayout>
 

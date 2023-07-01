@@ -30,15 +30,15 @@ class StatusSpinnerAdapter(context: Context, private val options: Array<String>)
         when (options[position]) {
             "未知" -> {
                 iconImageView.setImageResource(R.drawable.ic_baseline_question_mark_24)
-                labelTextView.text = "未知"
+                labelTextView.text = context.getString(R.string.unknown)
             }
             "已服用" -> {
                 iconImageView.setImageResource(R.drawable.ic_baseline_check_circle_24)
-                labelTextView.text = "已服用"
+                labelTextView.text = context.getString(R.string.taken)
             }
             "未服用" -> {
                 iconImageView.setImageResource(R.drawable.ic_baseline_cancel_24)
-                labelTextView.text = "未服用"
+                labelTextView.text = context.getString(R.string.missed)
             }
         }
 

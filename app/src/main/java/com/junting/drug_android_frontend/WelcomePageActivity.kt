@@ -27,7 +27,6 @@ class WelcomePageActivity : AppCompatActivity() {
     private lateinit var mDotLayout: LinearLayout
     private lateinit var backbtn: Button
     private lateinit var nextbtn:Button
-    private lateinit var skipbtn:Button
     private lateinit var changebtn:Button
     private lateinit var dots: Array<TextView>
     private lateinit var viewPagerAdapter: ViewPagerAdapter
@@ -47,7 +46,6 @@ class WelcomePageActivity : AppCompatActivity() {
 
         backbtn = findViewById<Button>(R.id.wel_backBtn)
         nextbtn = findViewById<Button>(R.id.wel_nextBtn)
-        skipbtn = findViewById<Button>(R.id.wel_skipBtn)
         changebtn = findViewById<Button>(R.id.wel_changeBtn)
 
         mSlideViewPager = findViewById<ViewPager>(R.id.wel_slideViewPager)
@@ -65,11 +63,6 @@ class WelcomePageActivity : AppCompatActivity() {
             if (getitem(0) > 0) {
                 mSlideViewPager.setCurrentItem(getitem(-1), true)
             }
-        }
-        skipbtn.setOnClickListener {
-            val i = Intent(this, MainActivity::class.java)
-            startActivity(i)
-            finish()
         }
 
         nextbtn.setOnClickListener {

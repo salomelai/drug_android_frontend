@@ -12,5 +12,5 @@
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:text="這是次要條目" />
+        android:text="@string/ieci_illustrate" />
 </LinearLayout>

@@ -33,7 +33,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="劑量"
+                android:text="@string/dosage"
                 android:textStyle="bold" />
 
             <TextView
@@ -98,14 +98,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="取消" />
+                    android:text="@string/cancel" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_confirm"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="開啟藥盒" />
+                    android:text="@string/open_pillbox" />
 
             </LinearLayout>
         </LinearLayout>

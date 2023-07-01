@@ -18,6 +18,7 @@ import com.junting.drug_android_frontend.R
 import com.junting.drug_android_frontend.PhotoTakeActivity
 
 
+
 class DrugRecordsAllPage(context: Context, container: ViewGroup) {
 
     val view: View
@@ -67,19 +68,23 @@ class DrugRecordsAllPage(context: Context, container: ViewGroup) {
         }
     }
     private fun initFab(){
+
+
         fab.setOnClickListener(View.OnClickListener {
             val builder = MaterialAlertDialogBuilder(context)
-                .setTitle("詢問")
-                .setMessage("請問您要使用何種方式輸入藥品?")
-                .setPositiveButton("手動") { dialogInterface, i ->
+                .setTitle(context.getString(R.string.window_question_title))
+                .setMessage(context.getString(R.string.drug_record_question_message))
+                .setPositiveButton(context.getString(R.string.manual)) { dialogInterface, i ->
                     startActivity(context, Intent(context, DrugbagInfoActivity::class.java), null)
                     dialogInterface.dismiss()
                 }
-                .setNegativeButton("拍攝") { dialogInterface, i ->
+                .setNegativeButton(context.getString(R.string.take_a_photo)) { dialogInterface, i ->
                     startActivity(context, Intent(context, PhotoTakeActivity::class.java), null)
                 }
             builder.create()
             builder.show()
         })
     }
+
+
 }

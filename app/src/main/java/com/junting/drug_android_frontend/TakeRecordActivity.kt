@@ -62,9 +62,9 @@ class TakeRecordActivity : AppCompatActivity() {
             R.id.action_delete -> {
                 // 处理点击删除按钮的逻辑
                 val alertDialog = MaterialAlertDialogBuilder(this)
-                    .setTitle("詢問")
-                    .setMessage("確認要刪除?")
-                    .setPositiveButton("確認") { dialog, _ ->
+                    .setTitle(resources.getString(R.string.window_question_title))
+                    .setMessage(resources.getString(R.string.drug_record_activity_question_message))
+                    .setPositiveButton(resources.getString(R.string.confirm)) { dialog, _ ->
                         // 在這裡執行刪除操作
                         val intent = Intent(this, MainActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -72,7 +72,7 @@ class TakeRecordActivity : AppCompatActivity() {
                         startActivity(intent)
                         dialog.dismiss()
                     }
-                    .setNegativeButton("取消") { dialog, _ ->
+                    .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
                         dialog.dismiss()
 
                     }
@@ -135,9 +135,9 @@ class TakeRecordActivity : AppCompatActivity() {
             val timePicker = MaterialTimePicker.Builder()
                 .setHour(hour)
                 .setMinute(minute)
-                .setTitleText("選擇服藥時間")
-                .setPositiveButtonText("確定")
-                .setNegativeButtonText("取消")
+                .setTitleText(resources.getString(R.string.take_record_select_time))
+                .setPositiveButtonText(resources.getString(R.string.confirm))
+                .setNegativeButtonText(resources.getString(R.string.cancel))
                 .build()
 
 
@@ -160,8 +160,8 @@ class TakeRecordActivity : AppCompatActivity() {
             // 使用 MaterialDatePicker 顯示日期選擇對話框
             val builder = MaterialDatePicker.Builder.datePicker()
             val picker = builder
-                .setPositiveButtonText("確定")
-                .setNegativeButtonText("取消")
+                .setPositiveButtonText(resources.getString(R.string.confirm))
+                .setNegativeButtonText(resources.getString(R.string.cancel))
                 .build()
             // 設置選擇日期後的回調
             picker.addOnPositiveButtonClickListener { selection ->
