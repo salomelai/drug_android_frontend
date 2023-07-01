@@ -29,7 +29,7 @@ class OnDemandRecyclerViewAdapter(private val context: Context, private val view
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val drugRecord: DrugRecord = viewModel.onDemandDrugRecors.value!!.get(position)
         holder.onDemandItemViewBinding.tvDrugName.text = drugRecord.drug.name
-        holder.onDemandItemViewBinding.tvIndication.text = drugRecord.drug.indication
+        holder.onDemandItemViewBinding.tvIndicationTag.text = drugRecord.indicationTag
 
         holder.onDemandItemViewBinding.cardView.setOnClickListener {
             val intent = Intent(context, OnDemandActivity::class.java)

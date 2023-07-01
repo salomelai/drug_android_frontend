@@ -25,7 +25,8 @@
             android:id="@+id/ll_dosage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:background="?android:attr/selectableItemBackground"
             android:orientation="horizontal">
 
@@ -42,13 +43,25 @@
                 android:layout_height="wrap_content"
                 android:text="@{String.valueOf(viewModel.takeRecord.dosage)}" />
 
+            <TextView
+                android:id="@+id/tvUnit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="單位" />
+
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/list_divider" />
 
         <LinearLayout
             android:id="@+id/ll_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:background="?android:attr/selectableItemBackground"
             android:orientation="horizontal">
 
@@ -73,7 +86,8 @@
             android:id="@+id/ll_time_slot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:background="?android:attr/selectableItemBackground"
             android:orientation="horizontal">
 
@@ -93,11 +107,17 @@
 
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@drawable/list_divider" />
+
         <LinearLayout
             android:id="@+id/ll_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
+            android:paddingTop="15dp"
+            android:paddingBottom="15dp"
             android:background="?android:attr/selectableItemBackground"
             android:orientation="horizontal">
 

@@ -103,7 +103,7 @@ class TakeRecordsByDrugRecyclerViewAdapter(
 
         fun bind(takeRecord: TakeRecord) {
             // 根據需要設置藥物記錄項目的內容
-            dosageTextView.text = takeRecord.dosage.toString()+"顆"
+            dosageTextView.text = takeRecord.dosage.toString()+"單位"
             timeSlotTextView.text = takeRecord.timeSlot
             if (takeRecord.status == 0) {
                 statusImageView.setImageResource(R.drawable.ic_baseline_question_mark_24)

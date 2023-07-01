@@ -54,6 +54,11 @@ class DrugRecordsViewModel : ViewModel() {
         info.drug.indication = indication
         triggerUpdate(info)
     }
+    fun setIndicationTag(indicationTag: String) {
+        val info: DrugRecord = record.value!!
+        info.indicationTag = indicationTag
+        triggerUpdate(info)
+    }
 
     fun setSideEffect(sideEffect: String) {
         val info: DrugRecord = record.value!!

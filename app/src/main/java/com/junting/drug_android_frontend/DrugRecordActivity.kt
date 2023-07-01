@@ -73,6 +73,9 @@ class DrugRecordActivity : AppCompatActivity() {
         DialogUtils.initTextViewEditDialog(this,binding.llIndication, binding.tvIndication, "修改適應症",false){
             text -> viewModel.setIndication(text)
         }
+        DialogUtils.initTextViewEditDialog(this,binding.llIndicationTag, binding.tvIndicationTag, "修改適應症-標籤",false){
+                text -> viewModel.setIndicationTag(text)
+        }
         DialogUtils.initTextViewEditDialog(this,binding.llSideEffect, binding.tvSideEffect, "修改副作用",false){
             text -> viewModel.setSideEffect(text)
         }
