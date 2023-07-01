@@ -31,6 +31,9 @@
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
+    <!--  action_bar_take_record_today_reminder  -->
+    <string name="today_reminder_stock">存庫: </string>
+
     <string name="heading_one">歡迎使用 藥要好好吃</string>
     <string name="heading_two">藥要好好吃</string>
     <string name="heading_three">藥要好好吃</string>
