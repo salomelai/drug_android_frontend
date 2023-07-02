@@ -21,6 +21,7 @@ android {
 
         buildConfigField "String", "Dynamsoft_KEY", "\"${properties.getProperty('Dynamsoft_KEY')}\""
         buildConfigField "String", "Cloud_Vision_API", "\"${properties.getProperty('Cloud_Vision_API')}\""
+        buildConfigField "String", "Web_Client_Id", "\"${properties.getProperty('Web_Client_Id')}\""
     }
 
     buildTypes {

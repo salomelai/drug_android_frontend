@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">藥要好好吃</string>
-    <!--  google one tap  -->
-    <string name="web_client_id">810678051974-5217620qj2nrpdt0sogbg9d55jd0hg6s.apps.googleusercontent.com</string>
 
     <!-- 共用   -->
     <string name="add">新增</string>
