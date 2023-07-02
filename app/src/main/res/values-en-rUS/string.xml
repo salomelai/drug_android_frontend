@@ -149,6 +149,14 @@
     <string name="delete">Delete</string>
     <string name="pause">Pause</string>
     <string name="switch_ch_en">Chinese/English</string>
+    <string name="wel_page">Navigation Page</string>
+    <string name="add_one_new_record_page">Add Single Taken Record</string>
+    <string name="edit_drug_info_page">Edit Drug Information</string>
+    <string name="confirm_interaction_page">Interaction Confirmation</string>
+    <string name="edit_drugbag_info_page">Input/Modify Drug Bag Information</string>
+    <string name="take_photo_page">Take Photo for Drug Bag</string>
+    <string name="photo_confirmation_page">Photo Confirmation</string>
+    <string name="none">None</string>
 
 
 </resources>

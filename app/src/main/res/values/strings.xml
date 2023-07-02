@@ -1,5 +1,13 @@
 <resources>
+    <!-- AndroidManifest.xml  -->
     <string name="app_name">藥要好好吃</string>
+    <string name="wel_page">導覽頁面</string>
+    <string name="add_one_new_record_page">新增單筆服用紀錄</string>
+    <string name="edit_drug_info_page">編輯藥物資訊</string>
+    <string name="confirm_interaction_page">藥物交互作用確認</string>
+    <string name="edit_drugbag_info_page">輸入/修改藥袋資訊</string>
+    <string name="take_photo_page">藥袋拍攝</string>
+    <string name="photo_confirmation_page">照片確認</string>
 
     <!-- 共用   -->
     <string name="add">新增</string>
@@ -15,6 +23,9 @@
     <string name="title_drugRecords">藥物紀錄</string>
     <string name="title_takeRecords">服用紀錄</string>
     <string name="title_tools">小工具</string>
+
+    <!-- DateUtils.kt   -->
+    <string name="none">無</string>
 
     <!-- 藥物紀錄   -->
     <string name="tab_all">全部</string>

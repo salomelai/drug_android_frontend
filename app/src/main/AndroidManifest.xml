@@ -26,14 +26,14 @@
         <activity
             android:name=".WelcomePageActivity"
             android:exported="false"
-            android:label="歡迎頁面"/>
+            android:label="@string/wel_page"/>
         <activity
             android:name=".OnDemandActivity"
             android:exported="false" />
         <activity
             android:name=".OnDemandListActivity"
             android:exported="false"
-            android:label="新增單筆服用紀錄" />
+            android:label="@string/add_one_new_record_page" />
         <activity
             android:name=".TakeRecordActivity"
             android:exported="false" />
@@ -43,23 +43,23 @@
         <activity
             android:name=".DrugRecordActivity"
             android:exported="false"
-            android:label="編輯藥物資訊" />
+            android:label="@string/edit_drug_info_page" />
         <activity
             android:name=".DrugInteractionActivity"
             android:exported="false"
-            android:label="藥物交互作用確認" />
+            android:label="@string/confirm_interaction_page" />
         <activity
             android:name=".DrugbagInfoActivity"
             android:exported="false"
-            android:label="輸入/修改藥袋資訊" />
+            android:label="@string/edit_drugbag_info_page" />
         <activity
             android:name=".PhotoTakeActivity"
             android:exported="false"
-            android:label="藥袋拍攝" />
+            android:label="@string/take_photo_page" />
         <activity
             android:name=".PhotoResultActivity"
             android:exported="false"
-            android:label="照片確認" />
+            android:label="@string/photo_confirmation_page" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -7,6 +7,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.junting.drug_android_frontend.R
 import com.junting.drug_android_frontend.libs.listeners.OnEditListener
 
 object DialogUtils {
@@ -25,10 +26,10 @@ object DialogUtils {
             builder.setView(input)
 
             // 設定確認和取消按鈕
-            builder.setPositiveButton("確定") { dialog, which ->
+            builder.setPositiveButton(context.getString(R.string.confirm)) { dialog, which ->
                 listener.onEdit(input.text.toString())
             }
-            builder.setNegativeButton("取消") { dialog, which ->
+            builder.setNegativeButton(context.getString(R.string.cancel)) { dialog, which ->
                 dialog.cancel()
             }
 
