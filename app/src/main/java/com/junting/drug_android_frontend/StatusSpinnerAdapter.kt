@@ -28,17 +28,17 @@ class StatusSpinnerAdapter(context: Context, private val options: Array<String>)
 
         // 根據選項設定相對應的圖標和文字
         when (options[position]) {
-            "未知" -> {
+            context.getString(R.string.unknown)-> {
                 iconImageView.setImageResource(R.drawable.ic_baseline_question_mark_24)
-                labelTextView.text = "未知"
+                labelTextView.text = context.getString(R.string.unknown)
             }
-            "已服用" -> {
+            context.getString(R.string.taken) -> {
                 iconImageView.setImageResource(R.drawable.ic_baseline_check_circle_24)
-                labelTextView.text = "已服用"
+                labelTextView.text = context.getString(R.string.taken)
             }
-            "未服用" -> {
+            context.getString(R.string.missed) -> {
                 iconImageView.setImageResource(R.drawable.ic_baseline_cancel_24)
-                labelTextView.text = "未服用"
+                labelTextView.text = context.getString(R.string.missed)
             }
         }
 

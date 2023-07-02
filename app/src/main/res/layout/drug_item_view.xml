@@ -30,7 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:text="藥物英文學名"
+                android:text="@string/generic_name"
                 android:textStyle="bold" />
 
             <TextView
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:text="藥物適應症" />
+                android:text="@string/indication_tag" />
 
             <TextView
                 android:id="@+id/tv_frequency_dosage"
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:text="吃藥頻率  每次劑量" />
+                android:text="@string/frequency_dosage" />
 
             <TextView
                 android:id="@+id/tv_time_slots"
@@ -55,14 +55,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:text="吃藥時間點" />
+                android:text="@string/timings" />
 
             <com.google.android.material.chip.Chip
                 android:id="@+id/chip_stock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="false"
-                android:text="庫存" />
+                android:text="@string/stock" />
 
             <TextView
                 android:id="@+id/tv_hospital_department"
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
-                android:text="醫院名  科別名" />
+                android:text="@string/hospital_department" />
 
         </LinearLayout>
 

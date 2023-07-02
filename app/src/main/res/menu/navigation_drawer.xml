@@ -12,7 +12,7 @@
         <item
             android:id="@+id/nav_language"
             android:icon="@drawable/ic_outline_language_24"
-            android:title="中文/英文" />
+            android:title="@string/switch_ch_en" />
 
     </group>
 </menu>

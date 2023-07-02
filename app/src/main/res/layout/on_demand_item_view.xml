@@ -47,7 +47,7 @@
                         android:layout_marginBottom="10dp"
                         android:layout_weight="0.3"
                         android:gravity="center"
-                        android:text="按需要服用" />
+                        android:text="@string/as_needed" />
 
                     <TextView
                         android:layout_width="0dp"
@@ -81,7 +81,7 @@
                             android:layout_height="0dp"
                             android:layout_marginTop="10dp"
                             android:layout_weight="0.5"
-                            android:text="藥物名"
+                            android:text="@string/drug_record_drug_name"
                             android:textStyle="bold" />
 
                         <TextView
@@ -90,7 +90,7 @@
                             android:layout_height="0dp"
                             android:layout_marginBottom="10dp"
                             android:layout_weight="0.5"
-                            android:text="藥物適應症" />
+                            android:text="@string/indication" />
 
                     </LinearLayout>
 

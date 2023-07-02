@@ -1,6 +1,6 @@
 package com.junting.drug_android_frontend
 
-import android.R
+import android.R as MaterialR
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.junting.drug_android_frontend.databinding.ActivityDrugbagInfoBinding
 import com.junting.drug_android_frontend.model.drugbag_info.DrugbagInformation
+import com.junting.drug_android_frontend.R as MyAppR
 
 class DrugbagInfoActivity : AppCompatActivity() {
 
@@ -38,10 +39,10 @@ class DrugbagInfoActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         if (intent.getStringExtra("UglyText")?.isNotEmpty() == true) {
-            supportActionBar?.setTitle("修改藥袋資訊")
+            supportActionBar?.setTitle(resources.getString(MyAppR.string.modify_drugbag_info))
             initDrugbagInfoViewModel()
         } else {
-            supportActionBar?.setTitle("新增藥袋資訊")
+            supportActionBar?.setTitle(resources.getString(MyAppR.string.add_drugbag_info))
             unserInputDrugbagInfo()
         }
 
@@ -53,7 +54,7 @@ class DrugbagInfoActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.home -> {
+            MaterialR.id.home -> {
                 onBackPressed()
                 true
             }
@@ -103,14 +104,14 @@ class DrugbagInfoActivity : AppCompatActivity() {
             binding.actvDosage.setText(defaultValue.toString())
         }
         val dosageOption = arrayOf(1, 2, 3, 4, 5)
-        val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, dosageOption)
+        val adapter = ArrayAdapter(this, MaterialR.layout.simple_spinner_item, dosageOption)
         binding.actvDosage.setAdapter(adapter)
 
 
         binding.actvDosage.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
                 val selectedItem = parent.getItemAtPosition(position).toString()
-                Toast.makeText(this, "您選擇了：$selectedItem", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, resources.getString(MyAppR.string.select)+"：$selectedItem", Toast.LENGTH_SHORT).show()
                 viewModel.drugbagInfo.value?.let {
                     it.dosage = selectedItem.toInt()
                 }
@@ -186,13 +187,13 @@ class DrugbagInfoActivity : AppCompatActivity() {
             binding.actvFrequency.setText(defaultValue.toString())
         }
         val frequencyOption = arrayOf(1, 2, 3, 4, 5)
-        val adapter = ArrayAdapter(this, R.layout.simple_spinner_item, frequencyOption)
+        val adapter = ArrayAdapter(this, MaterialR.layout.simple_spinner_item, frequencyOption)
         binding.actvFrequency.setAdapter(adapter)
 
         binding.actvFrequency.onItemClickListener =
             AdapterView.OnItemClickListener { parent, view, position, id ->
                 val selectedItem = parent.getItemAtPosition(position).toString()
-                Toast.makeText(this, "您選擇了：$selectedItem", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, resources.getString(MyAppR.string.select)+"：$selectedItem", Toast.LENGTH_SHORT).show()
                 viewModel.drugbagInfo.value?.let {
                     it.frequency = selectedItem.toInt()
                 }

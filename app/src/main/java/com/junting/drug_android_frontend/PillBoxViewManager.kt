@@ -25,7 +25,7 @@ class PillBoxViewManager(private val binding: FragmentPillBoxManagementBinding, 
         drugName.visibility = View.VISIBLE
         chipStock.visibility = View.VISIBLE
         drugName.text = record.drug.name
-        chipStock.text = "庫存: " + record.stock.toString()
+        chipStock.text = context.getString(R.string.stock)+": " + record.stock.toString()
         if (record.stock > record.returnSetting.left) {
             chipStock.setChipBackgroundColorResource(R.color.md_theme_light_secondaryContainer)
         } else {
