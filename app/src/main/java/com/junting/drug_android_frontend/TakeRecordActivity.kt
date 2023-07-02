@@ -103,7 +103,7 @@ class TakeRecordActivity : AppCompatActivity() {
     }
     private fun initSpinner() {
         var isSpinnerInitialized = false
-        val options = arrayOf("未知", "已服用", "未服用")
+        val options = arrayOf(resources.getString(R.string.unknown), resources.getString(R.string.taken), resources.getString(R.string.missed))
         val adapter = StatusSpinnerAdapter(this, options)
         binding.spinnerStatus.adapter = adapter
         binding.spinnerStatus.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {

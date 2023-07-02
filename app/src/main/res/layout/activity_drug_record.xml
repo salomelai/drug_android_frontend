@@ -81,7 +81,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_outline_local_hospital_24"
                         android:drawablePadding="15dp"
-                        android:text="@string/hospital "
+                        android:text="@string/hospital"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -344,7 +344,8 @@
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:focusable="true"
-                        android:orientation="vertical"></LinearLayout>
+                        android:orientation="vertical">
+                    </LinearLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_time_slot_add"

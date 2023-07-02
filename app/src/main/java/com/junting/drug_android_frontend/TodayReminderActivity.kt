@@ -67,7 +67,7 @@ class TodayReminderActivity : AppCompatActivity() {
         viewModel.todayReminder.observe(this, Observer {
             Log.d("Observe todayReminder", "record: ${it.toString()}")
             bindingActionBarTakeRecordTodayReminder.tvDrugName.text = it.drug.name
-            bindingActionBarTakeRecordTodayReminder.tvStock.text = it.stock.toString()+" "+resources.getString(R.string.unit)
+            bindingActionBarTakeRecordTodayReminder.tvStock.text = resources.getString(R.string.stock)+":"+it.stock.toString()+" "+resources.getString(R.string.unit)
             viewManager.setCellColor(it.position)
             binding.progressBar.visibility = View.GONE
         })
@@ -110,7 +110,7 @@ class TodayReminderActivity : AppCompatActivity() {
             val timePicker = MaterialTimePicker.Builder()
                 .setHour(hour)
                 .setMinute(minute)
-                .setTitleText(resources.getString(R.string.on_demand_select_time))
+                .setTitleText(resources.getString(R.string.take_record_select_time))
                 .setPositiveButtonText(resources.getString(R.string.confirm))
                 .setNegativeButtonText(resources.getString(R.string.cancel))
                 .build()

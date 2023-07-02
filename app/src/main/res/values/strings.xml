@@ -8,6 +8,8 @@
     <string name="cancel">取消新增</string>
     <string name="still">仍要新增</string>
     <string name="confirm">確定</string>
+    <string name="delete">刪除</string>
+    <string name="pause">暫停</string>
 
     <!-- 主畫面   -->
     <string name="title_todayReminder">今日提醒</string>
@@ -163,6 +165,9 @@
 
     <!--   take_records_by_drug_item_view -->
     <string name="trbdiv_dosage">1 單位</string>
+
+    <!--  menu/navigation_drawer  -->
+    <string name="switch_ch_en">中文/英文</string>
     
 <!-- Java -->
     <!-- ui/drugRecords/DrugRecordsAllPage   -->
@@ -210,7 +215,6 @@
     <string name="select_start_date_for_medication">選擇開始服藥日期</string>
 
     <!--  OnDemandActivity  -->
-    <string name="on_demand_select_time">選擇服藥時間</string>
     <string name="taken_drug">已服用藥物</string>
 
     <!--  ReturnSettingButtonSheet  -->

@@ -35,7 +35,7 @@
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/ic_outline_notifications_24"
                     android:drawablePadding="15dp"
-                    android:text="@string/notification "
+                    android:text="@string/notification"
                     android:textStyle="bold" />
 
                 <Switch

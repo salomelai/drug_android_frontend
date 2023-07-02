@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
 //        receiveIntent = intent
         val idToken = receiveIntent?.getStringExtra("googleToken")
 
-        if (idToken != null) {
+//        if (idToken != null) {
             val navView: BottomNavigationView = binding.navView
             // 設定顯示小紅點圖標
             navView.getOrCreateBadge(R.id.navigation_todayReminder).apply {
@@ -119,10 +119,10 @@ class MainActivity : AppCompatActivity() {
                 navController.popBackStack()
                 navController.navigate(R.id.navigation_pillBoxManagement)
             }
-        } else {
-            val newIntent = Intent(this, WelcomePageActivity::class.java)
-            startActivity(newIntent)
-        }
+//        } else {
+//            val newIntent = Intent(this, WelcomePageActivity::class.java)
+//            startActivity(newIntent)
+//        }
 
 
 

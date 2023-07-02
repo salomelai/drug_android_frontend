@@ -66,7 +66,7 @@
     <string name="confirm">Confirm</string>
     <string name="phone_number">Phone Number</string>
     <string name="open_pillbox">Open Pillbox</string>
-    <string name="take_a_photo">Take a Photo</string>
+    <string name="take_a_photo">Shoot</string>
     <string name="date">Date</string>
     <string name="time">Time</string>
     <string name="status">Status</string>
@@ -139,7 +139,6 @@
     <string name="drug_record_activity_warning_message">The selected time has already existed.</string>
     <string name="modify_repetition_count">Modify Repetition Count</string>
     <string name="select_start_date_for_medication">Select Start Date For Medication</string>
-    <string name="on_demand_select_time">Select the time when you taking drug</string>
     <string name="taken_drug">Taken Drug(s)</string>
     <string name="modify_stock_level_alert">Modify Stock Level Alert</string>
     <string name="stock_level_alert_first">When there are</string>
@@ -147,6 +146,9 @@
     <string name="unknown">Unknown</string>
     <string name="taken">Taken</string>
     <string name="take_record_select_time">Select taking time</string>
+    <string name="delete">Delete</string>
+    <string name="pause">Pause</string>
+    <string name="switch_ch_en">Chinese/English</string>
 
 
 </resources>

@@ -52,7 +52,7 @@ class DrugRecordsViewAdapter(private val context: Context, private val viewModel
         }else{
             holder.drugItemViewBinding.tvTimeSlots.text = drugRecord.timeSlots.joinToString()
         }
-        holder.drugItemViewBinding.chipStock.text = "庫存: "+drugRecord.stock.toString()
+        holder.drugItemViewBinding.chipStock.text = context.getString(R.string.stock)+": "+drugRecord.stock.toString()
         holder.drugItemViewBinding.tvHospitalDepartment.text = drugRecord.hospital.name.toString() + ", " + drugRecord.hospital.department.toString()
 
         if (drugRecord.stock > drugRecord.returnSetting.left) {

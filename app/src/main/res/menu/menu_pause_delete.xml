@@ -4,11 +4,11 @@
 
     <item
         android:id="@+id/action_pause"
-        android:title="暫停"
+        android:title="@string/pause"
         app:showAsAction="never" />
     <item
         android:id="@+id/action_delete"
-        android:title="刪除"
+        android:title="@string/delete"
         app:showAsAction="never" />
 
 

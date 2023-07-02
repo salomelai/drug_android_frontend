@@ -47,7 +47,7 @@
                 android:id="@+id/tvUnit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="單位" />
+                android:text="@string/unit" />
 
         </LinearLayout>
 
