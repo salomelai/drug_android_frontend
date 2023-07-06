@@ -41,7 +41,7 @@ class TakeRecordsByTimeRecyclerViewAdapter(
 
         fun bind(takeRecord: TakeRecord) {
             drugNameTextView.text = takeRecord.drug.name
-            dosageTextView.text = takeRecord.dosage.toString()
+            dosageTextView.text = takeRecord.dosage.toString()+context.getString(R.string.unit)
             timeSlotTextView.text = takeRecord.timeSlot
             if (takeRecord.status == 0) {
                 statusImageView.setImageResource(R.drawable.ic_baseline_question_mark_24)
