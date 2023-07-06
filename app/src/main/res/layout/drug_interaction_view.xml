@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_outline_pill_24px"
                 android:drawablePadding="15dp"
-                android:text="藥物名稱: "
+                android:text="@string/drug_record_drug_name"
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_outline_bar_chart_24"
                 android:drawablePadding="15dp"
-                android:text="交互作用等級: "
+                android:text="@string/interaction_level"
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -72,14 +72,14 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_outline_lightbulb_24"
                 android:drawablePadding="15dp"
-                android:text="原因: "
+                android:text="@string/interaction_cause"
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_cause"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="互相影響療效或增加副作用的嚴重度" />
+                android:text="@string/cause_illustrate" />
         </LinearLayout>
 
         <LinearLayout
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/ic_outline_access_time_24"
                 android:drawablePadding="15dp"
-                android:text="服藥時間: "
+                android:text="@string/interaction_time"
                 android:textStyle="bold" />
 
             <androidx.appcompat.widget.AppCompatTextView

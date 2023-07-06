@@ -85,9 +85,9 @@ class DrugPositionButtonSheet(viewModel: DrugRecordsViewModel) : BottomSheetDial
         }
         cardView?.setOnLongClickListener { view ->
             val builder = MaterialAlertDialogBuilder(requireContext())
-            builder.setTitle("提示")
-            builder.setMessage("該格藥盒已開啟")
-            builder.setPositiveButton("確定") { _, _ ->
+            builder.setTitle(resources.getString(R.string.hint_title))
+            builder.setMessage(resources.getString(R.string.pillbox_management_hint_message))
+            builder.setPositiveButton(resources.getString(R.string.confirm)) { _, _ ->
                 // Handle positive button click
             }
             val alertDialog = builder.create()

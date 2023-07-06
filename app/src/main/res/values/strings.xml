@@ -1,8 +1,21 @@
 <resources>
+    <!-- AndroidManifest.xml  -->
     <string name="app_name">藥要好好吃</string>
+    <string name="wel_page">導覽頁面</string>
+    <string name="add_one_new_record_page">新增單筆服用紀錄</string>
+    <string name="edit_drug_info_page">編輯藥物資訊</string>
+    <string name="confirm_interaction_page">藥物交互作用確認</string>
+    <string name="edit_drugbag_info_page">輸入/修改藥袋資訊</string>
+    <string name="take_photo_page">藥袋拍攝</string>
+    <string name="photo_confirmation_page">照片確認</string>
 
     <!-- 共用   -->
     <string name="add">新增</string>
+    <string name="cancel">取消新增</string>
+    <string name="still">仍要新增</string>
+    <string name="confirm">確定</string>
+    <string name="delete">刪除</string>
+    <string name="pause">暫停</string>
 
     <!-- 主畫面   -->
     <string name="title_todayReminder">今日提醒</string>
@@ -10,6 +23,9 @@
     <string name="title_drugRecords">藥物紀錄</string>
     <string name="title_takeRecords">服用紀錄</string>
     <string name="title_tools">小工具</string>
+
+    <!-- DateUtils.kt   -->
+    <string name="none">無</string>
 
     <!-- 藥物紀錄   -->
     <string name="tab_all">全部</string>
@@ -25,4 +41,200 @@
     <string name="saturday">週六</string>
     <string name="sunday">週日</string>
 
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <!--  action_bar_take_record_today_reminder  -->
+    <string name="today_reminder_stock">存庫: </string>
+
+    <!--   activity_drug_interaction -->
+    <string name="interaction_major_call">撥打電話</string>
+
+    <!--  activity_drug_record  -->
+    <string name="drug_record_drug_name">藥物名稱</string>
+    <string name="drug_record_phone">電話(長按撥打)</string>
+    <string name="indication_tag">適應症-標籤</string>
+    <string name="add_timeSlot">新增服藥時間</string>
+    <string name="taking_notification_setting">吃藥警報設定</string>
+    <string name="return_notification_setting">回診警報設定</string>
+    <string name="drug_position">藥盒放置位置</string>
+
+    <!--  activity_drugbag_info  -->
+    <string name="required">*必填</string>
+    <string name="hospital">醫院</string>
+    <string name="department">科別</string>
+    <string name="phone_number">電話</string>
+    <string name="extension_number">分機</string>
+    <string name="indication">適應症</string>
+    <string name="side_effect">副作用</string>
+    <string name="appearance">外觀</string>
+    <string name="as_needed">按需要服用</string>
+    <string name="frequency">一天X次</string>
+    <string name="timings">服藥時間點</string>
+    <string name="before_meal">飯前</string>
+    <string name="after_meal">飯後</string>
+    <string name="with_meal">與食物併用</string>
+    <string name="at_bedtime">睡前</string>
+    <string name="dosage">劑量</string>
+    <string name="stock">庫存</string>
+
+    <!--  activity_on_demand  -->
+    <string name="open_pillbox">開啟藥盒</string>
+
+    <!--  activity_photo_take  -->
+    <string name="take_a_photo">拍攝</string>
+
+    <!--  activity_take_record  -->
+    <string name="date">日期</string>
+    <string name="time">時間</string>
+    <string name="status">狀態</string>
+
+    <!--   activity_today_reminder -->
+    <string name="unit">單位</string>
+    <string name="postpone_reminder">延後提醒</string>
+    
+    <!--  activity_welcome_page  -->
+    <string name="btn_one">使用GOOGLE登錄</string>
+    <string name="btn_two">搜尋裝置</string>
+    <string name="wel_back">上一步</string>
+    <string name="wel_next">下一步</string>
+
+    <!--  bottom_sheet_later  -->
+    <string name="late_10_min">晚10分鐘</string>
+    <string name="late_30_min">晚30分鐘</string>
+    <string name="late_45_min">晚45分鐘</string>
+    <string name="skip">略過</string>
+
+    <!--  bottom_sheet_notification  -->
+    <string name="notification">通知報警：</string>
+    <string name="start_date">開始服藥日期：</string>
+    <string name="repetition_count">重複提醒次數：</string>
+    
+    <!--  bottom_sheet_return_setting  -->
+    <string name="expected_return_visit_date">預計回診日期：</string>
+    <string name="stock_level_alert">剩餘庫存提醒：</string>
+
+    <!--  drop_down_item  -->
+    <string name="frequency_options">頻率選項數字</string>
+
+    <!--  drug_interaction_view  -->
+    <string name="interaction_level">交互作用等級</string>
+    <string name="interaction_cause">原因</string>
+    <string name="cause_illustrate">互相影響療效或增加副作用的嚴重度。</string>
+    <string name="interaction_time">服藥時間</string>
+    
+    <!--  drug_item_view  -->
+    <string name="generic_name">藥物英文學名</string>
+    <string name="frequency_dosage">吃藥頻率  每次劑量</string>
+    <string name="hospital_department">醫院名  科別名</string>
+
+    <!--  fragment_take_records  -->
+    <string name="tab_drug">依藥物</string>
+    <string name="tab_time">依時間</string>
+    <string name="take_records_graph">圖表</string>
+
+    <!--  fragment_today_reminder  -->
+    <string name="select_time">選擇時段</string>
+    <string name="add_single_taking_record">新增單筆服用紀錄</string>
+
+    <!--  instruction_background  -->
+    <string name="instruction_background_illustrate">綠色底代表此藥位置</string>
+
+    <!--  instruction_short_long  -->
+    <string name="isl_choose_drug_position">點擊空白格選擇位置</string>
+    <string name="isl_open_pillbox">長按開啟</string>
+
+    <!--   instruction_short_short -->
+    <string name="iss_add">短按新增</string>
+    <string name="iss_info">短按進入詳情</string>
+    <string name="iss_open_pillbox">長按開啟</string>
+
+    <!--   interaction_expandale_child_item -->
+    <string name="ieci_illustrate">這是次要條目</string>
+
+    <!--   interaction_expandale_group_item -->
+    <string name="iegi_illustrate">這是主要條目</string>
+
+    <!--   slider_layout  -->
+    <string name="heading_one">歡迎使用 藥要好好吃</string>
+    <string name="heading_two">藥要好好吃</string>
+    <string name="heading_three">藥要好好吃</string>
+    <string name="description_one">請向右滑，繼續使用。</string>
+    <string name="description_two">註冊帳號，以獲得更佳的使用體驗。</string>
+    <string name="description_three">點選按鈕以配對裝置。</string>
+
+    <!--  status_item_spinner  -->
+    <string name="missed">未服用</string>
+
+    <!--   take_records_by_drug_item_view -->
+    <string name="trbdiv_dosage">1 單位</string>
+
+    <!--  menu/navigation_drawer  -->
+    <string name="switch_ch_en">中文/英文</string>
+    
+<!-- Java -->
+    <!-- ui/drugRecords/DrugRecordsAllPage   -->
+    <string name="window_question_title">詢問</string>
+    <string name="drug_record_question_message">請問您要使用何種方式輸入藥品?</string>
+    <string name="manual">手動</string>
+
+    <!--  DrugRecordsViewAdapter  -->
+    <string name="drug_record_dosage">單位/次</string>
+    <string name="drug_record_frequency">次/天</string>
+
+    <!--  PillBoxManagementFragment  -->
+    <string name="hint_title">提示</string>
+    <string name="pillbox_management_hint_message">該格藥盒已開啟</string>
+    
+    <!--  DrugbagInfoActivity -->
+    <string name="modify_drugbag_info">修改藥袋資訊</string>
+    <string name="add_drugbag_info">新增藥袋資訊</string>
+    <string name="select">您選擇了</string>
+
+    <!--  DrugInteractionActivity  -->
+    <string name="interaction_major_illustrate_first">會與以下</string>
+    <string name="interaction_major_illustrate_second">種藥物產生嚴重交互作用，為了您的用藥安全，我們強烈建議您咨詢醫院專業人士。</string>
+    <string name="interaction_not_major_illustrate_first">會與以下</string>
+    <string name="interaction_not_major_illustrate_second">種藥物產生中度交互作用，請確認是否繼續。</string>
+
+    <!--  DrugRecordActivity -->
+    <string name="modify_drug_name">修改藥物名稱</string>
+    <string name="modify_hospital_name">修改醫院名稱</string>
+    <string name="modify_department_name">修改科別名稱</string>
+    <string name="modify_phone">修改電話與分機</string>
+    <string name="modify_indication">修改適應症</string>
+    <string name="modify_indication_tag">修改適應症-標籤</string>
+    <string name="modify_side_effect">修改副作用</string>
+    <string name="modify_appearance">修改外觀</string>
+    <string name="modify_dosage">修改劑量</string>
+    <string name="modify_stock">修改庫存</string>
+    <string name="drug_record_activity_question_message">確認要刪除?</string>
+    <string name="drug_record_select_time">請選擇時間</string>
+    <string name="warning_window_title">警告</string>
+    <string name="drug_record_activity_warning_message">所選時間已存在。</string>
+
+    <!--  NotificationSettingButtonSheet  -->
+    <string name="modify_repetition_count">修改重複提醒次數</string>
+    <string name="select_start_date_for_medication">選擇開始服藥日期</string>
+
+    <!--  OnDemandActivity  -->
+    <string name="taken_drug">已服用藥物</string>
+
+    <!--  ReturnSettingButtonSheet  -->
+    <string name="modify_stock_level_alert">修改剩餘庫存提醒</string>
+    <string name="stock_level_alert_first">當庫存剩餘</string>
+    <string name="stock_level_alert_second">時的回診日期為</string>
+    
+    <!--  StatusSpinnerAdapter  -->
+    <string name="unknown">未知</string>
+    <string name="taken">已服用</string>
+
+    <!--  TakeRecordActivity  -->
+    <string name="take_record_select_time">選擇服用時間</string>
 </resources>

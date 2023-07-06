@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="點擊空白格選擇位置"
+            android:text="@string/isl_choose_drug_position"
             android:gravity="center_horizontal"/>
 
     </LinearLayout>
@@ -41,7 +41,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="長按開啟"
+            android:text="@string/isl_open_pillbox"
             android:gravity="center_horizontal"/>
 
     </LinearLayout>

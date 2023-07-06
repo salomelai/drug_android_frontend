@@ -1,7 +1,9 @@
 package com.junting.drug_android_frontend.libs
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.util.Log
+import com.junting.drug_android_frontend.R
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
@@ -10,6 +12,7 @@ import java.util.Locale
 
 object DateUtils {
     fun calculateRemainingDate(
+        context: Context,
         timeSlots: List<String>,
         dosage: Int,
         stock: Int,
@@ -25,7 +28,7 @@ object DateUtils {
 
         // 計算剩餘天數
         if (timeSlots.isEmpty()) {
-            return "無"
+            return context.getString(R.string.none)
         }else if (dosage == 0 || (stock - left) <= 0){
             return dateFormat.format(currentDate)
         }

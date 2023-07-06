@@ -21,6 +21,7 @@ android {
 
         buildConfigField "String", "Dynamsoft_KEY", "\"${properties.getProperty('Dynamsoft_KEY')}\""
         buildConfigField "String", "Cloud_Vision_API", "\"${properties.getProperty('Cloud_Vision_API')}\""
+        buildConfigField "String", "Web_Client_Id", "\"${properties.getProperty('Web_Client_Id')}\""
     }
 
     buildTypes {
@@ -66,5 +67,9 @@ dependencies {
     implementation 'com.dynamsoft:dynamsoftcameraenhancer:3.0.3'
     //DragDropSwipeRecyclerview
     implementation 'com.ernestoyaquello.dragdropswiperecyclerview:drag-drop-swipe-recyclerview:1.1.1'
+
+    //Google Log In
+    implementation 'com.google.android.gms:play-services-auth:20.5.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
 
 }

@@ -34,7 +34,7 @@
                 android:layout_marginBottom="15dp"
                 android:hint="藥物名稱"
                 app:endIconMode="clear_text"
-                app:helperText="*必填"
+                app:helperText="@string/required"
                 app:helperTextTextColor="@color/design_default_color_error"
                 app:startIconDrawable="@drawable/ic_outline_pill_24px">
 
@@ -51,9 +51,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:hint="醫院"
+                android:hint="@string/hospital"
                 app:endIconMode="clear_text"
-                app:helperText="*必填"
+                app:helperText="@string/required"
                 app:helperTextTextColor="@color/design_default_color_error"
                 app:startIconDrawable="@drawable/ic_outline_local_hospital_24">
 
@@ -70,9 +70,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:hint="科別"
+                android:hint="@string/department"
                 app:endIconMode="clear_text"
-                app:helperText="*必填"
+                app:helperText="@string/required"
                 app:helperTextTextColor="@color/design_default_color_error"
                 app:startIconDrawable="@drawable/ic_stethoscope_24px">
 
@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
                     android:layout_weight="2"
-                    android:hint="電話"
+                    android:hint="@string/phone_number"
                     app:endIconMode="clear_text"
                     app:helperTextTextColor="@color/design_default_color_error"
                     app:startIconDrawable="@drawable/ic_outline_local_phone_24">
@@ -115,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
                     android:layout_weight="1"
-                    android:hint="分機"
+                    android:hint="@string/extension_number"
                     app:endIconMode="clear_text"
                     app:helperTextTextColor="@color/design_default_color_error">
 
@@ -136,7 +136,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:hint="適應症"
+                android:hint="@string/indication"
                 app:endIconMode="clear_text"
                 app:startIconDrawable="@drawable/ic_baseline_check_circle_outline_24">
 
@@ -153,7 +153,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:hint="副作用"
+                android:hint="@string/side_effect"
                 app:endIconMode="clear_text"
                 app:startIconDrawable="@drawable/ic_baseline_remove_circle_outline_24">
 
@@ -170,7 +170,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:hint="外觀"
+                android:hint="@string/appearance"
                 app:endIconMode="clear_text"
                 app:startIconDrawable="@drawable/ic_outline_remove_red_eye_24">
 
@@ -196,7 +196,7 @@
                     android:layout_weight="1"
                     android:drawableStart="@drawable/ic_touch_app_24px"
                     android:drawablePadding="15dp"
-                    android:text="按需要服用"
+                    android:text="@string/as_needed"
                     android:textStyle="bold" />
 
                 <CheckBox
@@ -214,8 +214,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:hint="一天X次"
-                app:helperText="*必填"
+                android:hint="@string/frequency"
+                app:helperText="@string/required"
                 app:helperTextTextColor="@color/design_default_color_error"
                 app:startIconDrawable="@drawable/ic_outline_calendar_today_24">
 
@@ -240,7 +240,7 @@
                     android:layout_height="wrap_content"
                     android:drawableStart="@drawable/ic_outline_restaurant_menu_24"
                     android:drawablePadding="15dp"
-                    android:text="服藥時機"
+                    android:text="@string/timings"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1" />
 
                 <LinearLayout
@@ -253,25 +253,25 @@
                         android:id="@+id/cb_before_meal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="飯前" />
+                        android:text="@string/before_meal" />
 
                     <CheckBox
                         android:id="@+id/cb_after_meal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="飯後" />
+                        android:text="@string/after_meal" />
 
                     <CheckBox
                         android:id="@+id/cb_with_food"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="與食物一起" />
+                        android:text="@string/with_meal" />
 
                     <CheckBox
                         android:id="@+id/cb_before_sleep"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="睡前" />
+                        android:text="@string/at_bedtime" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -282,8 +282,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:hint="劑量"
-                app:helperText="*必填"
+                android:hint="@string/dosage"
+                app:helperText="@string/required"
                 app:helperTextTextColor="@color/design_default_color_error"
                 app:startIconDrawable="@drawable/ic_outline_water_drop_24">
 
@@ -301,9 +301,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="15dp"
-                android:hint="庫存"
+                android:hint="@string/stock"
                 app:endIconMode="clear_text"
-                app:helperText="*必填"
+                app:helperText="@string/required"
                 app:helperTextTextColor="@color/design_default_color_error"
                 app:startIconDrawable="@drawable/ic_outline_inventory_2_24">
 
@@ -326,14 +326,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="取消" />
+                    android:text="@string/cancel" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_confirm"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="確定" />
+                    android:text="@string/confirm" />
 
             </LinearLayout>
 

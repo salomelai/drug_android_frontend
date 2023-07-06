@@ -49,7 +49,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_outline_pill_24px"
                         android:drawablePadding="15dp"
-                        android:text="藥物名稱: "
+                        android:text="@string/drug_record_drug_name"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -81,7 +81,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_outline_local_hospital_24"
                         android:drawablePadding="15dp"
-                        android:text="醫院: "
+                        android:text="@string/hospital"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -108,7 +108,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_stethoscope_24px"
                         android:drawablePadding="15dp"
-                        android:text="科別: "
+                        android:text="@string/department"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -135,7 +135,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_outline_local_phone_24"
                         android:drawablePadding="15dp"
-                        android:text="電話: (長按撥打)"
+                        android:text="@string/drug_record_phone"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -180,7 +180,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_baseline_check_circle_outline_24"
                         android:drawablePadding="15dp"
-                        android:text="適應症: "
+                        android:text="@string/indication"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -207,7 +207,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_baseline_check_circle_outline_24"
                         android:drawablePadding="15dp"
-                        android:text="適應症-標籤: "
+                        android:text="@string/indication_tag"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -239,7 +239,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_baseline_remove_circle_outline_24"
                         android:drawablePadding="15dp"
-                        android:text="副作用: "
+                        android:text="@string/side_effect"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -271,7 +271,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_outline_remove_red_eye_24"
                         android:drawablePadding="15dp"
-                        android:text="外觀: "
+                        android:text="@string/appearance"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -304,7 +304,7 @@
                         android:layout_weight="1"
                         android:drawableStart="@drawable/ic_touch_app_24px"
                         android:drawablePadding="15dp"
-                        android:text="按需要服用"
+                        android:text="@string/as_needed"
                         android:textStyle="bold" />
 
                     <CheckBox
@@ -335,7 +335,7 @@
                         android:layout_marginBottom="15dp"
                         android:drawableLeft="@drawable/ic_outline_access_time_24"
                         android:drawablePadding="15dp"
-                        android:text="時間: "
+                        android:text="@string/time"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -344,7 +344,8 @@
                         android:layout_height="wrap_content"
                         android:clickable="true"
                         android:focusable="true"
-                        android:orientation="vertical"></LinearLayout>
+                        android:orientation="vertical">
+                    </LinearLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_time_slot_add"
@@ -354,7 +355,7 @@
                         android:drawableRight="@drawable/ic_baseline_add_24"
                         android:paddingTop="15dp"
                         android:paddingBottom="15dp"
-                        android:text="新增服藥時間" />
+                        android:text="@string/add_timeSlot" />
                 </LinearLayout>
 
                 <View
@@ -375,7 +376,7 @@
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_outline_restaurant_menu_24"
                         android:drawablePadding="15dp"
-                        android:text="服藥時機"
+                        android:text="@string/timings"
                         android:textStyle="bold" />
 
                     <LinearLayout
@@ -388,25 +389,25 @@
                             android:id="@+id/cb_before_meal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="飯前" />
+                            android:text="@string/before_meal" />
 
                         <CheckBox
                             android:id="@+id/cb_after_meal"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="飯後" />
+                            android:text="@string/after_meal" />
 
                         <CheckBox
                             android:id="@+id/cb_with_food"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="與食物一起" />
+                            android:text="@string/with_meal" />
 
                         <CheckBox
                             android:id="@+id/cb_before_sleep"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="睡前" />
+                            android:text="@string/at_bedtime" />
 
                     </LinearLayout>
                 </LinearLayout>
@@ -432,7 +433,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_outline_water_drop_24"
                         android:drawablePadding="15dp"
-                        android:text="劑量:"
+                        android:text="@string/dosage"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -464,7 +465,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_outline_inventory_2_24"
                         android:drawablePadding="15dp"
-                        android:text="庫存: "
+                        android:text="@string/stock"
                         android:textStyle="bold" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -496,7 +497,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_outline_notifications_24"
                         android:drawablePadding="15dp"
-                        android:text="吃藥警報設定"
+                        android:text="@string/taking_notification_setting"
                         android:textStyle="bold" />
 
 
@@ -523,7 +524,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_outline_notifications_24"
                         android:drawablePadding="15dp"
-                        android:text="回診警報設定"
+                        android:text="@string/return_notification_setting"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -549,7 +550,7 @@
                         android:layout_height="wrap_content"
                         android:drawableLeft="@drawable/ic_outline_inbox_24"
                         android:drawablePadding="15dp"
-                        android:text="藥盒放置位置"
+                        android:text="@string/drug_position"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -570,14 +571,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="取消" />
+                        android:text="@string/cancel" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/btn_confirm"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="確定" />
+                        android:text="@string/confirm" />
 
                 </LinearLayout>
 

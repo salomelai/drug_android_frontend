@@ -91,9 +91,9 @@ class PillBoxManagementFragment : Fragment() {
         val cardView = cellView.findViewById<View>(R.id.card_view)
         cardView?.setOnClickListener {
             val builder = MaterialAlertDialogBuilder(requireContext())
-                .setTitle("詢問")
-                .setMessage("請問您要使用何種方式輸入藥品?")
-                .setPositiveButton("手動") { dialogInterface, i ->
+                .setTitle(resources.getString(R.string.window_question_title))
+                .setMessage(resources.getString(R.string.drug_record_question_message))
+                .setPositiveButton(resources.getString(R.string.manual)) { dialogInterface, i ->
                     ContextCompat.startActivity(
                         requireContext(),
                         Intent(context, DrugbagInfoActivity::class.java),
@@ -101,7 +101,7 @@ class PillBoxManagementFragment : Fragment() {
                     )
                     dialogInterface.dismiss()
                 }
-                .setNegativeButton("拍攝") { dialogInterface, i ->
+                .setNegativeButton(resources.getString(R.string.take_a_photo)) { dialogInterface, i ->
                     ContextCompat.startActivity(
                         requireContext(),
                         Intent(context, PhotoTakeActivity::class.java),
@@ -113,9 +113,9 @@ class PillBoxManagementFragment : Fragment() {
         }
         cardView?.setOnLongClickListener { view ->
             val builder = MaterialAlertDialogBuilder(requireContext())
-            builder.setTitle("提示")
-            builder.setMessage("該格藥盒已開啟")
-            builder.setPositiveButton("確定") { _, _ ->
+            builder.setTitle(resources.getString(R.string.hint_title))
+            builder.setMessage(resources.getString(R.string.pillbox_management_hint_message))
+            builder.setPositiveButton(resources.getString(R.string.confirm)) { _, _ ->
                 // Handle positive button click
             }
             val alertDialog = builder.create()

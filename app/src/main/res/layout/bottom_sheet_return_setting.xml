@@ -35,7 +35,7 @@
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/ic_outline_notifications_24"
                     android:drawablePadding="15dp"
-                    android:text="通知報警: "
+                    android:text="@string/notification"
                     android:textStyle="bold" />
 
                 <Switch
@@ -43,7 +43,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="@{viewModel.record.returnSetting.status}"
-                    android:onCheckedChanged="@{(buttonView, isChecked) -> viewModel.setReturnSettingStatus(isChecked)}"/>
+                    android:onCheckedChanged="@{(buttonView, isChecked) -> viewModel.setReturnSettingStatus(isChecked)}"
+                    tools:ignore="TouchTargetSizeCheck" />
 
             </LinearLayout>
 
@@ -70,7 +71,7 @@
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/ic_outline_stop_circle_24"
                     android:drawablePadding="15dp"
-                    android:text="預計回診日期: "
+                    android:text="@string/expected_return_visit_date"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -103,7 +104,7 @@
                     android:layout_weight="1"
                     android:drawableLeft="@drawable/ic_outline_inventory_2_24"
                     android:drawablePadding="15dp"
-                    android:text="剩餘庫存提醒: "
+                    android:text="@string/stock_level_alert"
                     android:textStyle="bold" />
 
                 <androidx.appcompat.widget.AppCompatTextView

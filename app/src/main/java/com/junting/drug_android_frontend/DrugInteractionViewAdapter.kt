@@ -4,8 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.R
+import com.google.android.material.R as MaterialR
 import com.junting.drug_android_frontend.databinding.DrugInteractionViewBinding
+import com.junting.drug_android_frontend.R as MyAppR
 
 class DrugInteractionViewAdapter(
     private val context: Context,
@@ -32,16 +33,16 @@ class DrugInteractionViewAdapter(
 
         holder.drugInteractionViewBinding.tvDegree.text = interactingDrug.degree
         if (interactingDrug.degree == "Major") {
-            holder.drugInteractionViewBinding.tvDegree.setTextColor(context.getColor(R.color.design_default_color_error))
+            holder.drugInteractionViewBinding.tvDegree.setTextColor(context.getColor(MaterialR.color.design_default_color_error))
         } else if (interactingDrug.degree == "Moderate") {
-            holder.drugInteractionViewBinding.tvDegree.setTextColor(context.getColor(R.color.design_default_color_primary))
+            holder.drugInteractionViewBinding.tvDegree.setTextColor(context.getColor(MaterialR.color.design_default_color_primary))
         }else if (interactingDrug.degree == "Minor") {
-            holder.drugInteractionViewBinding.tvDegree.setTextColor(context.getColor(R.color.design_default_color_secondary))
+            holder.drugInteractionViewBinding.tvDegree.setTextColor(context.getColor(MaterialR.color.design_default_color_secondary))
         }
 
         holder.drugInteractionViewBinding.tvCause.text = interactingDrug.cause
         if(interactingDrug.timeSlots.isEmpty()) {
-            holder.drugInteractionViewBinding.tvTimeSlots.text = "按需服用"
+            holder.drugInteractionViewBinding.tvTimeSlots.text = context.getString(MyAppR.string.as_needed)
         } else{
             holder.drugInteractionViewBinding.tvTimeSlots.text = interactingDrug.timeSlots.joinToString()
         }

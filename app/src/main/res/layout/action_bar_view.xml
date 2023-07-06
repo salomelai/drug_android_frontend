@@ -8,7 +8,7 @@
         android:id="@+id/action_bar_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="藥要好好吃"
+        android:text="@string/app_name"
         android:textSize="20sp"
         android:gravity="center">
     </TextView>

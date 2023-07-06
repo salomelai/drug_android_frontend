@@ -70,6 +70,8 @@ class TakeRecordsByDrugRecyclerViewAdapter(
     inner class DateViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val dateTextView: TextView = itemView.findViewById(android.R.id.text1)
 
+
+
         fun bind(date: String) {
             val inputFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
 
@@ -103,7 +105,7 @@ class TakeRecordsByDrugRecyclerViewAdapter(
 
         fun bind(takeRecord: TakeRecord) {
             // 根據需要設置藥物記錄項目的內容
-            dosageTextView.text = takeRecord.dosage.toString()+"單位"
+            dosageTextView.text = takeRecord.dosage.toString()+context.getString(R.string.unit)
             timeSlotTextView.text = takeRecord.timeSlot
             if (takeRecord.status == 0) {
                 statusImageView.setImageResource(R.drawable.ic_baseline_question_mark_24)
