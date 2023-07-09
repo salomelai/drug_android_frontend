@@ -1,13 +1,15 @@
 package com.junting.drug_android_frontend
 
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.core.view.iterator
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -15,7 +17,10 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.junting.drug_android_frontend.databinding.ActivityMainBinding
+import com.junting.drug_android_frontend.databinding.FontSizeDialogLayoutBinding
+import com.junting.drug_android_frontend.libs.FontSizeManager
 import com.junting.drug_android_frontend.libs.LanguageUtil
 import java.util.Locale
 
@@ -25,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
-    var receiveIntent : Intent? = null
+    var receiveIntent: Intent? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -36,36 +41,37 @@ class MainActivity : AppCompatActivity() {
         val idToken = receiveIntent?.getStringExtra("googleToken")
 
 //        if (idToken != null) {
-            val navView: BottomNavigationView = binding.navView
-            // 設定顯示小紅點圖標
-            navView.getOrCreateBadge(R.id.navigation_todayReminder).apply {
-                number = 0
-                isVisible = true
-            }
+        val navView: BottomNavigationView = binding.navView
+        // 設定顯示小紅點圖標
+        navView.getOrCreateBadge(R.id.navigation_todayReminder).apply {
+            number = 0
+            isVisible = true
+        }
 
-            navController = findNavController(R.id.nav_host_fragment_activity_main)
-            // Passing each menu ID as a set of Ids because each
-            // menu should be considered as top level destinations.
-            appBarConfiguration = AppBarConfiguration(
-                setOf(
-                    R.id.navigation_todayReminder, R.id.navigation_drugRecords,
-                    R.id.navigation_takeRecords, R.id.navigation_pillBoxManagement
-                )
+        navController = findNavController(R.id.nav_host_fragment_activity_main)
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_todayReminder, R.id.navigation_drugRecords,
+                R.id.navigation_takeRecords, R.id.navigation_pillBoxManagement
             )
-            setupActionBarWithNavController(navController, appBarConfiguration)
-            navView.setupWithNavController(navController)
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
 
 
-            // customize the action bar, whatever appearance you want it to be in action_bar_view
-            supportActionBar!!.setDisplayShowCustomEnabled(true)
-            supportActionBar!!.setCustomView(R.layout.action_bar_view)
+        // customize the action bar, whatever appearance you want it to be in action_bar_view
+        supportActionBar!!.setDisplayShowCustomEnabled(true)
+        supportActionBar!!.setCustomView(R.layout.action_bar_view)
 
-            // refresh the actionbar menu when change fragment
-            navController.addOnDestinationChangedListener { _: NavController, d: NavDestination, _: Bundle? ->
-                supportActionBar!!.customView.findViewById<TextView>(R.id.action_bar_title).text = d.label
-                supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-                supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_outline_menu_24)
-            }
+        // refresh the actionbar menu when change fragment
+        navController.addOnDestinationChangedListener { _: NavController, d: NavDestination, _: Bundle? ->
+            supportActionBar!!.customView.findViewById<TextView>(R.id.action_bar_title).text =
+                d.label
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+            supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_outline_menu_24)
+        }
 
 //        binding.drawerNav.menu.iterator().forEach { menuItem ->
 //            menuItem.setOnMenuItemClickListener { _ ->
@@ -86,47 +92,89 @@ class MainActivity : AppCompatActivity() {
 //                    startActivity(intent)
                     true
                 }
+
                 R.id.nav_language -> {
                     Log.d("drawerNav.", "nav_language")
                     // 在這裡處理點擊事件
                     //switchLanguage
                     //修改配置
-                    LanguageUtil.settingLanguage(this,LanguageUtil.getInstance())
+                    LanguageUtil.settingLanguage(this, LanguageUtil.getInstance())
                     binding.drawer.closeDrawer(GravityCompat.START)
                     //activity銷毀重建
                     this.recreate()
 
                     true
                 }
+
+                R.id.nav_fontSize -> {
+                    Log.d("drawerNav.", "nav_fontSize")
+                    // 在這裡處理點擊事件
+                    initFontSizeDialog()
+                    binding.drawer.closeDrawer(GravityCompat.START)
+                    true
+
+                }
+
                 else -> false
             }
         }
 
-            val fragmentName = intent.getStringExtra("fragmentName")
-            if(fragmentName=="TodayReminderFragment") {
-                navController.popBackStack()
-                navController.navigate(R.id.navigation_todayReminder)
-            }
-            else if (fragmentName == "DrugRecordsFragment") {
-                navController.popBackStack()
-                navController.navigate(R.id.navigation_drugRecords)
-            }
-            else if(fragmentName == "TakeRecordsFragment") {
-                navController.popBackStack()
-                navController.navigate(R.id.navigation_takeRecords)
-            }
-            else if(fragmentName == "PillBoxManagementFragment") {
-                navController.popBackStack()
-                navController.navigate(R.id.navigation_pillBoxManagement)
-            }
-//        } else {
-//            val newIntent = Intent(this, WelcomePageActivity::class.java)
-//            startActivity(newIntent)
-//        }
-
-
+        val fragmentName = intent.getStringExtra("fragmentName")
+        if (fragmentName == "TodayReminderFragment") {
+            navController.popBackStack()
+            navController.navigate(R.id.navigation_todayReminder)
+        } else if (fragmentName == "DrugRecordsFragment") {
+            navController.popBackStack()
+            navController.navigate(R.id.navigation_drugRecords)
+        } else if (fragmentName == "TakeRecordsFragment") {
+            navController.popBackStack()
+            navController.navigate(R.id.navigation_takeRecords)
+        } else if (fragmentName == "PillBoxManagementFragment") {
+            navController.popBackStack()
+            navController.navigate(R.id.navigation_pillBoxManagement)
+        }
 
     }
+
+    private fun initFontSizeDialog() {
+        val binding = FontSizeDialogLayoutBinding.inflate(layoutInflater)
+        val fontSizeSeekBar = binding.seekbar
+        fontSizeSeekBar.progress = FontSizeManager.getCurrentFontScaleIndex()
+
+        // 設置滑桿的監聽器
+        fontSizeSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+            override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
+                // 根據進度值調整字體大小
+                Log.d("fontSizeSeekBar", "fontScale: $FontSizeManager.getCurrentFontScaleIndex()")
+                FontSizeManager.setCurrentFontScaleIndex(progress)
+                setAppFontSize(FontSizeManager.getCurrentFontScale())
+            }
+
+            override fun onStartTrackingTouch(seekBar: SeekBar) {
+                // 滑桿觸摸開始時的處理
+            }
+
+            override fun onStopTrackingTouch(seekBar: SeekBar) {
+                // 滑桿觸摸結束時的處理
+            }
+        })
+
+        // 建立對話框
+        MaterialAlertDialogBuilder(this)
+            .setTitle("調整字體大小")
+            .setView(binding.root)
+            .setPositiveButton("確定") { dialog, _ ->
+                // 按下確定按鈕的處理
+                recreate() // 重新啟動 Activity 以應用新的字體大小設定
+                dialog.dismiss()
+            }
+            .setNegativeButton("取消") { dialog, _ ->
+                // 按下取消按鈕的處理
+                dialog.dismiss()
+            }
+            .show()
+    }
+
     fun initLanguageMenuItemTitle() {
         val currentLocale: Locale = resources.configuration.locales.get(0)
         val language: String = currentLocale.language
@@ -139,7 +187,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        Log.d("TAG","onRestoreInstanceState");
+        Log.d("TAG", "onRestoreInstanceState");
         activityReset();
     }
 
@@ -164,6 +212,13 @@ class MainActivity : AppCompatActivity() {
             else -> return super.onOptionsItemSelected(item)
         }
     }
+    private fun setAppFontSize(fontScale: Float) {
+        val configuration = resources.configuration
+        configuration.fontScale = fontScale
+        val metrics = resources.displayMetrics
+        resources.updateConfiguration(configuration, metrics)
+    }
+
     fun setTodayReminderBadge(number: Int) {
         val navView: BottomNavigationView = binding.navView
         val badge = navView.getOrCreateBadge(R.id.navigation_todayReminder)
