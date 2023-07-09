@@ -87,9 +87,8 @@ class MainActivity : AppCompatActivity() {
                     Log.d("drawerNav.", "nav_tools")
                     // 在這裡處理點擊事件
                     binding.drawer.closeDrawer(GravityCompat.START)
-                    //activity銷毀重建
-//                    val intent = Intent(this, SettingActivity::class.java)
-//                    startActivity(intent)
+                    val intent = Intent(this, InteractionSearchActivity::class.java)
+                    startActivity(intent)
                     true
                 }
 
