@@ -46,6 +46,7 @@
     <string name="interaction_not_major_illustrate_first">will moderately interact with the following</string>
     <string name="interaction_major_call">Make a Phone Call</string>
     <string name="cancel">Cancel</string>
+    <string name="dialog_cancel">Cancel</string>
     <string name="still">"Insist on adding "</string>
     <string name="required">*Required</string>
     <string name="hospital">Hospital</string>
@@ -159,6 +160,10 @@
     <string name="none">None</string>
     <string name="heading_four">Finish Setting</string>
     <string name="btn_four">Start using</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="adjust_text_size">Adjust Font Size</string>
+    <string name="sign_out_confirmation">Sign Out Confirmation</string>
+    <string name="sign_out_text">Are you sure you want to sign out?</string>
 
 
 </resources>

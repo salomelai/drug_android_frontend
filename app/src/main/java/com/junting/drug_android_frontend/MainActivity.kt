@@ -18,6 +18,7 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.navigation.NavigationView
 import com.junting.drug_android_frontend.databinding.ActivityMainBinding
 import com.junting.drug_android_frontend.databinding.FontSizeDialogLayoutBinding
 import com.junting.drug_android_frontend.libs.FontSizeManager
@@ -30,6 +31,9 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
+    private lateinit var navigationView: NavigationView
+    private lateinit var headerTextView: TextView
+    private var idToken: String? = null
 //    var receiveIntent: Intent? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val idToken = intent.getStringExtra("googleToken")
+        idToken = intent.getStringExtra("googleToken")
 
         if(idToken != null){
             val navView: BottomNavigationView = binding.navView
@@ -70,6 +74,18 @@ class MainActivity : AppCompatActivity() {
                     d.label
                 supportActionBar!!.setDisplayHomeAsUpEnabled(true)
                 supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_outline_menu_24)
+            }
+
+//          登出
+            navigationView = findViewById(R.id.drawer_nav)
+            headerTextView = navigationView.getHeaderView(0).findViewById(R.id.nav_sign_out)
+
+            // 設置文字底線效果
+            headerTextView.paintFlags = headerTextView.paintFlags
+
+            // 設置點擊監聽器
+            headerTextView.setOnClickListener {
+                showLogoutConfirmationDialog()
             }
 
 //        binding.drawerNav.menu.iterator().forEach { menuItem ->
@@ -164,14 +180,14 @@ class MainActivity : AppCompatActivity() {
 
         // 建立對話框
         MaterialAlertDialogBuilder(this)
-            .setTitle("調整字體大小")
+            .setTitle(resources.getString(R.string.adjust_text_size))
             .setView(binding.root)
-            .setPositiveButton("確定") { dialog, _ ->
+            .setPositiveButton(resources.getString(R.string.confirm)) { dialog, _ ->
                 // 按下確定按鈕的處理
                 recreate() // 重新啟動 Activity 以應用新的字體大小設定
                 dialog.dismiss()
             }
-            .setNegativeButton("取消") { dialog, _ ->
+            .setNegativeButton(resources.getString(R.string.dialog_cancel)) { dialog, _ ->
                 // 按下取消按鈕的處理
                 dialog.dismiss()
             }
@@ -227,5 +243,26 @@ class MainActivity : AppCompatActivity() {
         val badge = navView.getOrCreateBadge(R.id.navigation_todayReminder)
         badge.number = number
         badge.isVisible = true
+    }
+
+    private fun showLogoutConfirmationDialog() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(resources.getString(R.string.sign_out_confirmation))
+            .setMessage(resources.getString(R.string.sign_out_text))
+            .setPositiveButton(resources.getString(R.string.confirm)) { dialog, _ ->
+                // 點擊確定按鈕時執行登出操作
+                performLogout()
+                dialog.dismiss()
+            }
+            .setNegativeButton(resources.getString(R.string.dialog_cancel)) { dialog, _ ->
+                // 點擊取消按鈕時關閉對話框
+                dialog.dismiss()
+            }
+            .show()
+    }
+    private fun performLogout() {
+        idToken = null
+        startActivity(Intent(this@MainActivity, IntroductoryActivity::class.java))
+        finish()
     }
 }
