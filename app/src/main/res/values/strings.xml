@@ -22,6 +22,7 @@
     <string name="title_pillBoxManagement">藥盒管理</string>
     <string name="title_drugRecords">藥物紀錄</string>
     <string name="title_takeRecords">服用紀錄</string>
+    <string name="title_fontSize">字體大小</string>
     <string name="title_tools">小工具</string>
 
     <!-- DateUtils.kt   -->

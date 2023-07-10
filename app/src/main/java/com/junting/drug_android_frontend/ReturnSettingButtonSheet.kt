@@ -63,6 +63,7 @@ class ReturnSettingButtonSheet(viewModel: DrugRecordsViewModel) :
     }
     private fun calculateRemainingDate(): String{
         var remainingDate = DateUtils.calculateRemainingDate(
+            requireContext(),
             viewModel.record.value!!.timeSlots,
             viewModel.record.value!!.dosage,
             viewModel.record.value!!.stock,

@@ -10,6 +10,11 @@
             android:title="@string/title_tools" />
 
         <item
+            android:id="@+id/nav_fontSize"
+            android:icon="@drawable/ic_baseline_format_size_24"
+            android:title="@string/title_fontSize" />
+
+        <item
             android:id="@+id/nav_language"
             android:icon="@drawable/ic_outline_language_24"
             android:title="@string/switch_ch_en" />
