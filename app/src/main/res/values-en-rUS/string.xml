@@ -10,7 +10,10 @@
     <string name="title_drugRecords">Drugs</string>
     <string name="title_takeRecords">History</string>
     <string name="title_fontSize">Fontsize</string>
-    <string name="title_tools">Tools</string>
+    <string name="title_drug_interaction_lookup">Drug Interaction Lookup</string>
+    <string name="title_dual_drug_interaction_lookup">Dual Drug Interaction Lookup</string>
+    <string name="title_pill_box_bluetooth_search">Pill Box Bluetooth Search</string>
+    <string name="title_logout">Log out</string>
 
     <!-- 藥物紀錄   -->
     <string name="tab_all">All</string>

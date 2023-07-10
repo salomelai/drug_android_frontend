@@ -1,8 +1,6 @@
 package com.junting.drug_android_frontend
 
-import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -81,13 +79,14 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        }
         initLanguageMenuItemTitle()
+
         binding.drawerNav.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
-                R.id.nav_tools -> {
+                R.id.nav_drug_interaction_lookup -> {
                     Log.d("drawerNav.", "nav_tools")
                     // 在這裡處理點擊事件
                     binding.drawer.closeDrawer(GravityCompat.START)
-                    val intent = Intent(this, InteractionSearchActivity::class.java)
+                    val intent = Intent(this, MedicineSearchActivity::class.java)
                     startActivity(intent)
                     true
                 }
