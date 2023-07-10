@@ -10,14 +10,14 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.IntentSenderRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.text.HtmlCompat
 import androidx.viewpager.widget.ViewPager
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
-import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.common.api.ApiException
 import kotlin.math.abs
@@ -30,6 +30,7 @@ class IntroductoryActivity : AppCompatActivity() {
     private lateinit var viewList: ArrayList<View>
     private lateinit var dots: Array<TextView>
     private lateinit var mDotLayout: LinearLayout
+    private lateinit var googleIdToken:String
     private val MIN_SWIPE_DISTANCE = 150 // 右滑/左滑最小滑動距離
     private val MAX_SWIPE_DISTANCE = 300 // 右滑/左滑最大垂直滑動距離
     private var x1 = 0f
@@ -68,9 +69,8 @@ class IntroductoryActivity : AppCompatActivity() {
                     val credential = oneTapClient.getSignInCredentialFromIntent(result.data)
                     val idToken = credential.googleIdToken
                     if (idToken != null) {
-                        val receiveIntent = Intent(this, MainActivity::class.java)
-                        receiveIntent.putExtra("googleToken", idToken)
-                        startActivity(receiveIntent)
+                        googleIdToken = idToken
+//                        startActivity(receiveIntent)
                     }
                 } catch (e: ApiException) {
                     e.printStackTrace()
@@ -78,6 +78,8 @@ class IntroductoryActivity : AppCompatActivity() {
             }
         }
         //      google one tap end
+
+//      按鈕設定
 
         //      使用google 登入
         googleSignInBtn = viewList[1].findViewById(R.id.intro_google_Btn)
@@ -102,44 +104,19 @@ class IntroductoryActivity : AppCompatActivity() {
         //      開始使用程式
         nextBtn = viewList[3].findViewById(R.id.intro_next_Btn)
         nextBtn.setOnClickListener {
-            startActivity(Intent(this@IntroductoryActivity, MainActivity::class.java))
+            val receiveIntent = Intent(this, MainActivity::class.java)
+            receiveIntent.putExtra("googleToken", googleIdToken)
+            startActivity(receiveIntent)
             finish()
         }
+
+        mDotLayout = findViewById<View>(R.id.indicator_layout) as LinearLayout
         mViewPage.addOnPageChangeListener(viewListener)
         setUpindicator(0)
+
     }
 
 
-//    // Set click event
-//    private fun initStart() {
-//
-////      使用google 登入
-//        googleSignInBtn = viewList[1].findViewById(R.id.intro_google_Btn)
-//        googleSignInBtn.setOnClickListener {
-//            if (mViewPage.currentItem == 1) { // 當使用者處於 intro_page1的時候
-//                oneTapClient.beginSignIn(signUpRequest)
-//                    .addOnSuccessListener(
-//                        this
-//                    ) { result ->
-//                        val intentSenderRequest =
-//                            IntentSenderRequest.Builder(result.pendingIntent.intentSender).build()
-//                        activityResultLauncher.launch(intentSenderRequest)
-//                    }
-//                    .addOnFailureListener(
-//                        this
-//                    ) { e -> // No Google Accounts found. Just continue presenting the signed-out UI.
-//                        Log.d("TAG", e.localizedMessage)
-//                    }
-//             }
-//        }
-//
-////      開始使用程式
-//        nextBtn = viewList[3].findViewById(R.id.intro_next_Btn)
-//        nextBtn.setOnClickListener {
-//            startActivity(Intent(this@IntroductoryActivity, MainActivity::class.java))
-//            finish()
-//        }
-//    }
 
     private fun initAdapter() {
         val adapter = IntroductoryAdapter(viewList)
