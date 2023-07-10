@@ -98,10 +98,11 @@
     <!--   activity_today_reminder -->
     <string name="unit">單位</string>
     <string name="postpone_reminder">延後提醒</string>
-    
+
     <!--  activity_welcome_page  -->
     <string name="btn_one">使用GOOGLE登錄</string>
     <string name="btn_two">搜尋裝置</string>
+    <string name="btn_four">開始使用</string>
     <string name="wel_back">上一步</string>
     <string name="wel_next">下一步</string>
 
@@ -115,7 +116,7 @@
     <string name="notification">通知報警：</string>
     <string name="start_date">開始服藥日期：</string>
     <string name="repetition_count">重複提醒次數：</string>
-    
+
     <!--  bottom_sheet_return_setting  -->
     <string name="expected_return_visit_date">預計回診日期：</string>
     <string name="stock_level_alert">剩餘庫存提醒：</string>
@@ -128,7 +129,7 @@
     <string name="interaction_cause">原因</string>
     <string name="cause_illustrate">互相影響療效或增加副作用的嚴重度。</string>
     <string name="interaction_time">服藥時間</string>
-    
+
     <!--  drug_item_view  -->
     <string name="generic_name">藥物英文學名</string>
     <string name="frequency_dosage">吃藥頻率  每次劑量</string>
@@ -165,6 +166,7 @@
     <string name="heading_one">歡迎使用 藥要好好吃</string>
     <string name="heading_two">藥要好好吃</string>
     <string name="heading_three">藥要好好吃</string>
+    <string name="heading_four">完成設定</string>
     <string name="description_one">請向右滑，繼續使用。</string>
     <string name="description_two">註冊帳號，以獲得更佳的使用體驗。</string>
     <string name="description_three">點選按鈕以配對裝置。</string>
@@ -177,8 +179,8 @@
 
     <!--  menu/navigation_drawer  -->
     <string name="switch_ch_en">中文/英文</string>
-    
-<!-- Java -->
+
+    <!-- Java -->
     <!-- ui/drugRecords/DrugRecordsAllPage   -->
     <string name="window_question_title">詢問</string>
     <string name="drug_record_question_message">請問您要使用何種方式輸入藥品?</string>
@@ -191,7 +193,7 @@
     <!--  PillBoxManagementFragment  -->
     <string name="hint_title">提示</string>
     <string name="pillbox_management_hint_message">該格藥盒已開啟</string>
-    
+
     <!--  DrugbagInfoActivity -->
     <string name="modify_drugbag_info">修改藥袋資訊</string>
     <string name="add_drugbag_info">新增藥袋資訊</string>
@@ -230,7 +232,7 @@
     <string name="modify_stock_level_alert">修改剩餘庫存提醒</string>
     <string name="stock_level_alert_first">當庫存剩餘</string>
     <string name="stock_level_alert_second">時的回診日期為</string>
-    
+
     <!--  StatusSpinnerAdapter  -->
     <string name="unknown">未知</string>
     <string name="taken">已服用</string>

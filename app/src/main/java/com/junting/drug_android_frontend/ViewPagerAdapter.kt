@@ -16,9 +16,6 @@ import com.google.android.gms.auth.api.identity.SignInClient
 
 class ViewPagerAdapter(var context: Context) : PagerAdapter() {
 
-//  google one tap
-    lateinit var oneTapClient: SignInClient
-    lateinit var signUpRequest: BeginSignInRequest
 
     var images = intArrayOf(
         R.drawable.app_image,
