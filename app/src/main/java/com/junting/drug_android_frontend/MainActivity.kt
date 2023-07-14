@@ -1,8 +1,6 @@
 package com.junting.drug_android_frontend
 
-import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -88,25 +86,20 @@ class MainActivity : AppCompatActivity() {
                 showLogoutConfirmationDialog()
             }
 
-//        binding.drawerNav.menu.iterator().forEach { menuItem ->
-//            menuItem.setOnMenuItemClickListener { _ ->
-//                // navigate to other Activity or do something else
-//                binding.drawer.closeDrawer(GravityCompat.START)
-//                true
-//            }
-//        }
-            initLanguageMenuItemTitle()
-            binding.drawerNav.setNavigationItemSelectedListener { menuItem ->
-                when (menuItem.itemId) {
-                    R.id.nav_tools -> {
-                        Log.d("drawerNav.", "nav_tools")
-                        // 在這裡處理點擊事件
-                        binding.drawer.closeDrawer(GravityCompat.START)
-                        //activity銷毀重建
-//                    val intent = Intent(this, SettingActivity::class.java)
-//                    startActivity(intent)
-                        true
-                    }
+
+
+        initLanguageMenuItemTitle()
+
+        binding.drawerNav.setNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_drug_interaction_lookup -> {
+                    Log.d("drawerNav.", "nav_tools")
+                    // 在這裡處理點擊事件
+                    binding.drawer.closeDrawer(GravityCompat.START)
+                    val intent = Intent(this, MedicineSearchActivity::class.java)
+                    startActivity(intent)
+                    true
+                }
 
                     R.id.nav_language -> {
                         Log.d("drawerNav.", "nav_language")
