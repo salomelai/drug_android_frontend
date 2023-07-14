@@ -64,4 +64,6 @@
     <color name="wel_background">#A8D8B9</color>
     <color name="inactive">#a9a9a9</color>
     <color name="active">#7A9D86</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 </resources>

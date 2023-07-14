@@ -41,15 +41,15 @@
     <string name="description_one">Swipe right to continue using.</string>
     <string name="description_two">Register an account for a better experience.</string>
     <string name="description_three">Tap the button to pair the devices.</string>
-    <string name="btn_one">Login with GOOGLE</string>
+    <string name="btn_one">Sign in with Google</string>
     <string name="btn_two">Search device</string>
-    <string name="web_client_id">810678051974-5217620qj2nrpdt0sogbg9d55jd0hg6s.apps.googleusercontent.com</string>
     <string name="interaction_major_illustrate_first">will have serious interactions with the following</string>
     <string name="interaction_major_illustrate_second">drug(s). For your medication safety, we strongly recommend that you consult hospital professionals.</string>
     <string name="interaction_not_major_illustrate_second">drugs, you need to confirm whether to continue.</string>
     <string name="interaction_not_major_illustrate_first">will moderately interact with the following</string>
     <string name="interaction_major_call">Make a Phone Call</string>
     <string name="cancel">Cancel</string>
+    <string name="dialog_cancel">Cancel</string>
     <string name="still">"Insist on adding "</string>
     <string name="required">*Required</string>
     <string name="hospital">Hospital</string>
@@ -161,6 +161,12 @@
     <string name="take_photo_page">Take Photo for Drug Bag</string>
     <string name="photo_confirmation_page">Photo Confirmation</string>
     <string name="none">None</string>
+    <string name="heading_four">Finish Setting</string>
+    <string name="btn_four">Start using</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="adjust_text_size">Adjust Font Size</string>
+    <string name="sign_out_confirmation">Sign Out Confirmation</string>
+    <string name="sign_out_text">Are you sure you want to sign out?</string>
 
 
 </resources>

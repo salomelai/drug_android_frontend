@@ -40,4 +40,9 @@
     <style name="Theme.Drug_android_frontend.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="Theme.Drug_android_frontend.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <!-- intro page button setting -->
+    <style name="IntroductoryButtonStyle">
+        <item name="android:background">@drawable/introductory_button_background</item>
+    </style>
 </resources>

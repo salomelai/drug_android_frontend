@@ -12,6 +12,7 @@
     <!-- 共用   -->
     <string name="add">新增</string>
     <string name="cancel">取消新增</string>
+    <string name="dialog_cancel">取消</string>
     <string name="still">仍要新增</string>
     <string name="confirm">確定</string>
     <string name="delete">刪除</string>
@@ -106,6 +107,7 @@
     <!--  activity_welcome_page  -->
     <string name="btn_one">使用GOOGLE登錄</string>
     <string name="btn_two">搜尋裝置</string>
+    <string name="btn_four">開始使用</string>
     <string name="wel_back">上一步</string>
     <string name="wel_next">下一步</string>
 
@@ -169,6 +171,7 @@
     <string name="heading_one">歡迎使用 藥要好好吃</string>
     <string name="heading_two">藥要好好吃</string>
     <string name="heading_three">藥要好好吃</string>
+    <string name="heading_four">完成設定</string>
     <string name="description_one">請向右滑，繼續使用。</string>
     <string name="description_two">註冊帳號，以獲得更佳的使用體驗。</string>
     <string name="description_three">點選按鈕以配對裝置。</string>
@@ -181,6 +184,8 @@
 
     <!--  menu/navigation_drawer  -->
     <string name="switch_ch_en">中文/英文</string>
+    <string name="sign_out">登出</string>
+
 
     <!-- Java -->
     <!-- ui/drugRecords/DrugRecordsAllPage   -->
@@ -222,6 +227,12 @@
     <string name="drug_record_select_time">請選擇時間</string>
     <string name="warning_window_title">警告</string>
     <string name="drug_record_activity_warning_message">所選時間已存在。</string>
+
+    <!--  MainActivity  -->
+    <string name="adjust_text_size">調整字體大小</string>
+    <string name="sign_out_confirmation">登出確認</string>
+    <string name="sign_out_text">確定要登出嗎？</string>
+
 
     <!--  NotificationSettingButtonSheet  -->
     <string name="modify_repetition_count">修改重複提醒次數</string>

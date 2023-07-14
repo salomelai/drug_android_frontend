@@ -23,13 +23,27 @@
         android:theme="@style/Theme.Drug_android_frontend"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
+
+        <activity
+            android:name=".IntroductoryActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+
         <activity
             android:name=".MedicineSearchActivity"
             android:exported="false" />
-        <activity
-            android:name=".WelcomePageActivity"
-            android:exported="false"
-            android:label="@string/wel_page" />
+
         <activity
             android:name=".OnDemandActivity"
             android:exported="false" />
@@ -63,16 +77,7 @@
             android:name=".PhotoResultActivity"
             android:exported="false"
             android:label="@string/photo_confirmation_page" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:label="@string/app_name">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
     </application>
 
 </manifest>
