@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -20,6 +21,7 @@ import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.common.api.ApiException
+import com.junting.drug_android_frontend.libs.SharedPreferencesManager
 import kotlin.math.abs
 
 
@@ -30,7 +32,7 @@ class IntroductoryActivity : AppCompatActivity() {
     private lateinit var viewList: ArrayList<View>
     private lateinit var dots: Array<TextView>
     private lateinit var mDotLayout: LinearLayout
-    private lateinit var googleIdToken:String
+//    private lateinit var googleIdToken:String
     private val MIN_SWIPE_DISTANCE = 150 // 右滑/左滑最小滑動距離
     private val MAX_SWIPE_DISTANCE = 300 // 右滑/左滑最大垂直滑動距離
     private var x1 = 0f
@@ -42,11 +44,16 @@ class IntroductoryActivity : AppCompatActivity() {
     private lateinit var oneTapClient: SignInClient
     private lateinit var signUpRequest: BeginSignInRequest
 
+    private val sharedPreferencesManager by lazy {
+        SharedPreferencesManager(this)
+    }
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_introductory)
+        supportActionBar?.hide()
 
         initView()
         initAdapter()
@@ -69,8 +76,8 @@ class IntroductoryActivity : AppCompatActivity() {
                     val credential = oneTapClient.getSignInCredentialFromIntent(result.data)
                     val idToken = credential.googleIdToken
                     if (idToken != null) {
-                        googleIdToken = idToken
-//                        startActivity(receiveIntent)
+                        sharedPreferencesManager.saveGoogleIdToken(idToken)
+                        Log.d("TAG", "onCreate: $idToken")
                     }
                 } catch (e: ApiException) {
                     e.printStackTrace()
@@ -105,7 +112,7 @@ class IntroductoryActivity : AppCompatActivity() {
         nextBtn = viewList[3].findViewById(R.id.intro_next_Btn)
         nextBtn.setOnClickListener {
             val receiveIntent = Intent(this, MainActivity::class.java)
-            receiveIntent.putExtra("googleToken", googleIdToken)
+//            receiveIntent.putExtra("googleToken", googleIdToken)
             startActivity(receiveIntent)
             finish()
         }

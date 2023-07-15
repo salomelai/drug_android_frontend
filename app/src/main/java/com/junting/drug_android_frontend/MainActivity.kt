@@ -21,6 +21,7 @@ import com.junting.drug_android_frontend.databinding.ActivityMainBinding
 import com.junting.drug_android_frontend.databinding.FontSizeDialogLayoutBinding
 import com.junting.drug_android_frontend.libs.FontSizeManager
 import com.junting.drug_android_frontend.libs.LanguageUtil
+import com.junting.drug_android_frontend.libs.SharedPreferencesManager
 import java.util.Locale
 
 
@@ -31,60 +32,68 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var navigationView: NavigationView
     private lateinit var headerTextView: TextView
-    private var idToken: String? = null
-//    var receiveIntent: Intent? = null
+    private val sharedPreferencesManager by lazy {
+        SharedPreferencesManager(this)
+    }
+
+    //    var receiveIntent: Intent? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        idToken = intent.getStringExtra("googleToken")
+        val idToken = sharedPreferencesManager!!.getGoogleIdToken()
 
-        if(idToken != null){
-            val navView: BottomNavigationView = binding.navView
-            // 設定顯示小紅點圖標
-            navView.getOrCreateBadge(R.id.navigation_todayReminder).apply {
-                number = 0
-                isVisible = true
-            }
+        if (idToken == null) {
+            val intent = Intent(this, IntroductoryActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
 
-            navController = findNavController(R.id.nav_host_fragment_activity_main)
-            // Passing each menu ID as a set of Ids because each
-            // menu should be considered as top level destinations.
-            appBarConfiguration = AppBarConfiguration(
-                setOf(
-                    R.id.navigation_todayReminder, R.id.navigation_drugRecords,
-                    R.id.navigation_takeRecords, R.id.navigation_pillBoxManagement
-                )
+        val navView: BottomNavigationView = binding.navView
+        // 設定顯示小紅點圖標
+        navView.getOrCreateBadge(R.id.navigation_todayReminder).apply {
+            number = 0
+            isVisible = true
+        }
+
+        navController = findNavController(R.id.nav_host_fragment_activity_main)
+        // Passing each menu ID as a set of Ids because each
+        // menu should be considered as top level destinations.
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_todayReminder, R.id.navigation_drugRecords,
+                R.id.navigation_takeRecords, R.id.navigation_pillBoxManagement
             )
-            setupActionBarWithNavController(navController, appBarConfiguration)
-            navView.setupWithNavController(navController)
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
 
 
-            // customize the action bar, whatever appearance you want it to be in action_bar_view
-            supportActionBar!!.setDisplayShowCustomEnabled(true)
-            supportActionBar!!.setCustomView(R.layout.action_bar_view)
+        // customize the action bar, whatever appearance you want it to be in action_bar_view
+        supportActionBar!!.setDisplayShowCustomEnabled(true)
+        supportActionBar!!.setCustomView(R.layout.action_bar_view)
 
-            // refresh the actionbar menu when change fragment
-            navController.addOnDestinationChangedListener { _: NavController, d: NavDestination, _: Bundle? ->
-                supportActionBar!!.customView.findViewById<TextView>(R.id.action_bar_title).text =
-                    d.label
-                supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-                supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_outline_menu_24)
-            }
+        // refresh the actionbar menu when change fragment
+        navController.addOnDestinationChangedListener { _: NavController, d: NavDestination, _: Bundle? ->
+            supportActionBar!!.customView.findViewById<TextView>(R.id.action_bar_title).text =
+                d.label
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+            supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_outline_menu_24)
+        }
 
 //          登出
-            navigationView = findViewById(R.id.drawer_nav)
-            headerTextView = navigationView.getHeaderView(0).findViewById(R.id.nav_sign_out)
+        navigationView = findViewById(R.id.drawer_nav)
+        headerTextView = navigationView.getHeaderView(0).findViewById(R.id.nav_sign_out)
 
-            // 設置文字底線效果
-            headerTextView.paintFlags = headerTextView.paintFlags
+        // 設置文字底線效果
+        headerTextView.paintFlags = headerTextView.paintFlags
 
-            // 設置點擊監聽器
-            headerTextView.setOnClickListener {
-                showLogoutConfirmationDialog()
-            }
+        // 設置點擊監聽器
+        headerTextView.setOnClickListener {
+            showLogoutConfirmationDialog()
+        }
 
 
 
@@ -101,53 +110,51 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
 
-                    R.id.nav_language -> {
-                        Log.d("drawerNav.", "nav_language")
-                        // 在這裡處理點擊事件
-                        //switchLanguage
-                        //修改配置
-                        LanguageUtil.settingLanguage(this, LanguageUtil.getInstance())
-                        binding.drawer.closeDrawer(GravityCompat.START)
-                        //activity銷毀重建
-                        this.recreate()
+                R.id.nav_language -> {
+                    Log.d("drawerNav.", "nav_language")
+                    // 在這裡處理點擊事件
+                    //switchLanguage
+                    //修改配置
+                    LanguageUtil.settingLanguage(this, LanguageUtil.getInstance())
+                    binding.drawer.closeDrawer(GravityCompat.START)
+                    //activity銷毀重建
+                    this.recreate()
 
-                        true
-                    }
-
-                    R.id.nav_fontSize -> {
-                        Log.d("drawerNav.", "nav_fontSize")
-                        // 在這裡處理點擊事件
-                        initFontSizeDialog()
-                        binding.drawer.closeDrawer(GravityCompat.START)
-                        true
-
-                    }
-
-                    else -> false
+                    true
                 }
-            }
 
-            val fragmentName = intent.getStringExtra("fragmentName")
-            if (fragmentName == "TodayReminderFragment") {
-                navController.popBackStack()
-                navController.navigate(R.id.navigation_todayReminder)
-            } else if (fragmentName == "DrugRecordsFragment") {
-                navController.popBackStack()
-                navController.navigate(R.id.navigation_drugRecords)
-            } else if (fragmentName == "TakeRecordsFragment") {
-                navController.popBackStack()
-                navController.navigate(R.id.navigation_takeRecords)
-            } else if (fragmentName == "PillBoxManagementFragment") {
-                navController.popBackStack()
-                navController.navigate(R.id.navigation_pillBoxManagement)
+                R.id.nav_fontSize -> {
+                    Log.d("drawerNav.", "nav_fontSize")
+                    // 在這裡處理點擊事件
+                    initFontSizeDialog()
+                    binding.drawer.closeDrawer(GravityCompat.START)
+                    true
+
+                }
+
+                else -> false
             }
-        }else{
-            startActivity(Intent(this@MainActivity, IntroductoryActivity::class.java))
-            finish()
         }
 
+        val fragmentName = intent.getStringExtra("fragmentName")
+        if (fragmentName == "TodayReminderFragment") {
+            navController.popBackStack()
+            navController.navigate(R.id.navigation_todayReminder)
+        } else if (fragmentName == "DrugRecordsFragment") {
+            navController.popBackStack()
+            navController.navigate(R.id.navigation_drugRecords)
+        } else if (fragmentName == "TakeRecordsFragment") {
+            navController.popBackStack()
+            navController.navigate(R.id.navigation_takeRecords)
+        } else if (fragmentName == "PillBoxManagementFragment") {
+            navController.popBackStack()
+            navController.navigate(R.id.navigation_pillBoxManagement)
+        }
+
+
     }
-// out of onCreate
+
+    // out of onCreate
     private fun initFontSizeDialog() {
         val binding = FontSizeDialogLayoutBinding.inflate(layoutInflater)
         val fontSizeSeekBar = binding.seekbar
@@ -221,9 +228,11 @@ class MainActivity : AppCompatActivity() {
                 binding.drawer.openDrawer(GravityCompat.START)
                 return true
             }
+
             else -> return super.onOptionsItemSelected(item)
         }
     }
+
     private fun setAppFontSize(fontScale: Float) {
         val configuration = resources.configuration
         configuration.fontScale = fontScale
@@ -253,8 +262,9 @@ class MainActivity : AppCompatActivity() {
             }
             .show()
     }
+
     private fun performLogout() {
-        idToken = null
+        sharedPreferencesManager.clearGoogleIdToken()
         startActivity(Intent(this@MainActivity, IntroductoryActivity::class.java))
         finish()
     }
