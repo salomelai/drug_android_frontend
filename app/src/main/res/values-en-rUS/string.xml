@@ -9,11 +9,6 @@
     <string name="title_pillBoxManagement">PillBox</string>
     <string name="title_drugRecords">Drugs</string>
     <string name="title_takeRecords">History</string>
-    <string name="title_fontSize">Fontsize</string>
-    <string name="title_drug_interaction_lookup">Drug Interaction Lookup</string>
-    <string name="title_dual_drug_interaction_lookup">Dual Drug Interaction Lookup</string>
-    <string name="title_pill_box_bluetooth_search">Pill Box Bluetooth Search</string>
-    <string name="title_logout">Log out</string>
 
     <!-- 藥物紀錄   -->
     <string name="tab_all">All</string>
@@ -78,6 +73,7 @@
     <string name="postpone_reminder">Delay</string>
     <string name="wel_back">BACK</string>
     <string name="wel_next">NEXT</string>
+    <string name="btn_login_correct">successfully logged in</string>
     <string name="late_10_min">Delay by 10 minutes</string>
     <string name="late_30_min">Delay by 30 minutes</string>
     <string name="late_45_min">Delay by 45 minutes</string>
@@ -152,6 +148,10 @@
     <string name="take_record_select_time">Select taking time</string>
     <string name="delete">Delete</string>
     <string name="pause">Pause</string>
+    <string name="title_fontSize">Fontsize</string>
+    <string name="title_drug_interaction_lookup">Drug Interaction Lookup</string>
+    <string name="title_dual_drug_interaction_lookup">Dual Drug Interaction Lookup</string>
+    <string name="title_pill_box_bluetooth_search">Pill Box Bluetooth Search</string>
     <string name="switch_ch_en">Chinese/English</string>
     <string name="wel_page">Navigation Page</string>
     <string name="add_one_new_record_page">Add Single Taken Record</string>

@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.MenuItem
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
@@ -83,20 +84,6 @@ class MainActivity : AppCompatActivity() {
             supportActionBar!!.setHomeAsUpIndicator(R.drawable.ic_outline_menu_24)
         }
 
-//          登出
-        navigationView = findViewById(R.id.drawer_nav)
-        headerTextView = navigationView.getHeaderView(0).findViewById(R.id.nav_sign_out)
-
-        // 設置文字底線效果
-        headerTextView.paintFlags = headerTextView.paintFlags
-
-        // 設置點擊監聽器
-        headerTextView.setOnClickListener {
-            showLogoutConfirmationDialog()
-        }
-
-
-
         initLanguageMenuItemTitle()
 
         binding.drawerNav.setNavigationItemSelectedListener { menuItem ->
@@ -130,6 +117,14 @@ class MainActivity : AppCompatActivity() {
                     binding.drawer.closeDrawer(GravityCompat.START)
                     true
 
+                }
+
+                R.id.nav_logout -> {
+                    Log.d("drawerNav.", "nav_logout")
+                    // 在這裡處理點擊事件
+                    showLogoutConfirmationDialog()
+                    binding.drawer.closeDrawer(GravityCompat.START)
+                    true
                 }
 
                 else -> false

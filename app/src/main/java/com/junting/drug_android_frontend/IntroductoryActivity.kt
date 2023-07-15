@@ -29,10 +29,10 @@ class IntroductoryActivity : AppCompatActivity() {
     private lateinit var mViewPage: ViewPager
     private lateinit var nextBtn: Button
     private lateinit var googleSignInBtn: Button
+    private lateinit var introLoginCorrectBtn: Button
     private lateinit var viewList: ArrayList<View>
     private lateinit var dots: Array<TextView>
     private lateinit var mDotLayout: LinearLayout
-//    private lateinit var googleIdToken:String
     private val MIN_SWIPE_DISTANCE = 150 // 右滑/左滑最小滑動距離
     private val MAX_SWIPE_DISTANCE = 300 // 右滑/左滑最大垂直滑動距離
     private var x1 = 0f
@@ -57,6 +57,13 @@ class IntroductoryActivity : AppCompatActivity() {
 
         initView()
         initAdapter()
+
+        // init section
+        googleSignInBtn = viewList[1].findViewById(R.id.intro_google_Btn)
+        introLoginCorrectBtn = viewList[1].findViewById(R.id.intro_login_correct_Btn)
+        nextBtn = viewList[3].findViewById(R.id.intro_next_Btn)
+
+
         //      google one tap start
         oneTapClient = Identity.getSignInClient(this)
         signUpRequest = BeginSignInRequest.builder()
@@ -78,6 +85,8 @@ class IntroductoryActivity : AppCompatActivity() {
                     if (idToken != null) {
                         sharedPreferencesManager.saveGoogleIdToken(idToken)
                         Log.d("TAG", "onCreate: $idToken")
+                        introLoginCorrectBtn.visibility = View.VISIBLE
+                        googleSignInBtn.visibility = View.GONE
                     }
                 } catch (e: ApiException) {
                     e.printStackTrace()
@@ -89,7 +98,7 @@ class IntroductoryActivity : AppCompatActivity() {
 //      按鈕設定
 
         //      使用google 登入
-        googleSignInBtn = viewList[1].findViewById(R.id.intro_google_Btn)
+
         googleSignInBtn.setOnClickListener {
             if (mViewPage.currentItem == 1) { // 當使用者處於 intro_page1的時候
                 oneTapClient.beginSignIn(signUpRequest)
@@ -109,12 +118,16 @@ class IntroductoryActivity : AppCompatActivity() {
         }
 
         //      開始使用程式
-        nextBtn = viewList[3].findViewById(R.id.intro_next_Btn)
         nextBtn.setOnClickListener {
-            val receiveIntent = Intent(this, MainActivity::class.java)
-//            receiveIntent.putExtra("googleToken", googleIdToken)
-            startActivity(receiveIntent)
-            finish()
+            val idToken = sharedPreferencesManager.getGoogleIdToken()
+            if(idToken != null) {
+                val receiveIntent = Intent(this, MainActivity::class.java)
+                startActivity(receiveIntent)
+                finish()
+            }else{
+                Toast.makeText(this, "請先登入", Toast.LENGTH_SHORT).show()
+            }
+
         }
 
         mDotLayout = findViewById<View>(R.id.indicator_layout) as LinearLayout
