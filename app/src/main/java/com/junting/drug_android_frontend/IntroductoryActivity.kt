@@ -3,6 +3,7 @@ package com.junting.drug_android_frontend
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -22,6 +23,7 @@ import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.common.api.ApiException
 import com.junting.drug_android_frontend.libs.SharedPreferencesManager
+import org.json.JSONObject
 import kotlin.math.abs
 
 
@@ -39,7 +41,6 @@ class IntroductoryActivity : AppCompatActivity() {
     private var x2 = 0f
     private var y1 = 0f
     private var y2 = 0f
-
     //  google one tap
     private lateinit var oneTapClient: SignInClient
     private lateinit var signUpRequest: BeginSignInRequest
@@ -85,8 +86,26 @@ class IntroductoryActivity : AppCompatActivity() {
                     if (idToken != null) {
                         sharedPreferencesManager.saveGoogleIdToken(idToken)
                         Log.d("TAG", "onCreate: $idToken")
+                        val userEmail = credential.id
+                        sharedPreferencesManager.saveUserEmail(userEmail)
+                        Log.d("TAG", "We have : $userEmail")
+
+                        // Retrieve the profile picture URL from the Google ID token
+                        val idTokenComponents = idToken.split(".")
+                        if (idTokenComponents.size == 3) {
+                            val idTokenPayload =
+                                String(Base64.decode(idTokenComponents[1], Base64.DEFAULT))
+                            val jsonPayload = JSONObject(idTokenPayload)
+                            val userPictureUrl = jsonPayload.optString("picture")
+                            val userName = jsonPayload.optString("name")
+                            sharedPreferencesManager.savePictureUrl(userPictureUrl)
+                            Log.d("TAG", "We have : $userPictureUrl")
+                            sharedPreferencesManager.saveUserName(userName)
+                            Log.d("TAG", "We have : $userName")
+                        }
                         introLoginCorrectBtn.visibility = View.VISIBLE
                         googleSignInBtn.visibility = View.GONE
+
                     }
                 } catch (e: ApiException) {
                     e.printStackTrace()
@@ -121,8 +140,8 @@ class IntroductoryActivity : AppCompatActivity() {
         nextBtn.setOnClickListener {
             val idToken = sharedPreferencesManager.getGoogleIdToken()
             if(idToken != null) {
-                val receiveIntent = Intent(this, MainActivity::class.java)
-                startActivity(receiveIntent)
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
                 finish()
             }else{
                 Toast.makeText(this, "請先登入", Toast.LENGTH_SHORT).show()

@@ -1,9 +1,12 @@
 package com.junting.drug_android_frontend
 
+import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
@@ -18,11 +21,13 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.textview.MaterialTextView
 import com.junting.drug_android_frontend.databinding.ActivityMainBinding
 import com.junting.drug_android_frontend.databinding.FontSizeDialogLayoutBinding
 import com.junting.drug_android_frontend.libs.FontSizeManager
 import com.junting.drug_android_frontend.libs.LanguageUtil
 import com.junting.drug_android_frontend.libs.SharedPreferencesManager
+import com.squareup.picasso.Picasso
 import java.util.Locale
 
 
@@ -85,6 +90,25 @@ class MainActivity : AppCompatActivity() {
         }
 
         initLanguageMenuItemTitle()
+
+        //          get user information
+        // 获取 NavigationView
+        val navigationView: NavigationView = findViewById(R.id.drawer_nav)
+
+        // 获取头部视图
+        val headerView = navigationView.getHeaderView(0)
+
+        // 获取视图元素的引用
+        val imageView: ImageView = headerView.findViewById(R.id.signInImage)
+        val signInEmailTextView: TextView = headerView.findViewById(R.id.tvEmail_HeaderNavView)
+        val nameView: TextView = headerView.findViewById(R.id.tvName_HeaderNavView)
+        val receivedEmail = sharedPreferencesManager!!.getUserEmail()
+        val receivedUrl = sharedPreferencesManager!!.getPictureUrl()
+        val receivedName = sharedPreferencesManager!!.getUserName()
+        signInEmailTextView.text = receivedEmail
+        Picasso.get().load(receivedUrl).into(imageView)
+        nameView.text = receivedName
+
 
         binding.drawerNav.setNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
@@ -260,6 +284,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun performLogout() {
         sharedPreferencesManager.clearGoogleIdToken()
+        sharedPreferencesManager.clearPictureUrl()
+        sharedPreferencesManager.clearUserEmail()
+        sharedPreferencesManager.clearUserName()
         startActivity(Intent(this@MainActivity, IntroductoryActivity::class.java))
         finish()
     }
