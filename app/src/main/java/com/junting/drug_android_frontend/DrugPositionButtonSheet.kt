@@ -14,6 +14,7 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.junting.drug_android_frontend.databinding.FragmentPillBoxManagementBinding
 import com.junting.drug_android_frontend.model.drug_record.DrugRecord
+import com.junting.drug_android_frontend.services.BTServices.BluetoothSocket
 import com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsViewModel
 
 class DrugPositionButtonSheet(viewModel: DrugRecordsViewModel) : BottomSheetDialogFragment() {
@@ -85,6 +86,11 @@ class DrugPositionButtonSheet(viewModel: DrugRecordsViewModel) : BottomSheetDial
         }
         cardView?.setOnLongClickListener { view ->
             val builder = MaterialAlertDialogBuilder(requireContext())
+
+            // send bluetooth signals
+            val bs = BluetoothSocket()
+//            bs.openPillbox(selectedDrugPositionIdNumber)   // need to be fixed !!!! --> could not access to local variable above, bosh on 25, July, 2023
+
             builder.setTitle(resources.getString(R.string.hint_title))
             builder.setMessage(resources.getString(R.string.pillbox_management_hint_message))
             builder.setPositiveButton(resources.getString(R.string.confirm)) { _, _ ->
