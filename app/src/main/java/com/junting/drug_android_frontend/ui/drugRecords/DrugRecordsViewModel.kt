@@ -152,7 +152,7 @@ class DrugRecordsViewModel : ViewModel() {
             try {
                 records.value = drugRecordService.getDrugs()
             } catch (e: Exception) {
-                Log.d("DrugsViewModel", "fetch takeRecords failed")
+                Log.d("DrugsViewModel", "fetch DrugRecords failed")
                 Log.e("DrugsViewModel", e.toString())
             }
         }
@@ -164,7 +164,7 @@ class DrugRecordsViewModel : ViewModel() {
             try {
                 records.value = drugRecordService.getDrugs()
             } catch (e: Exception) {
-                Log.d("DrugsViewModel", "fetch takeRecords failed")
+                Log.d("DrugsViewModel", "fetch DrugRecords failed")
                 Log.e("DrugsViewModel", e.toString())
             }
         }
@@ -178,6 +178,73 @@ class DrugRecordsViewModel : ViewModel() {
             } catch (e: Exception) {
                 Log.d("EditDrugRecordViewModel", "fetch record id=${id} failed")
                 Log.e("EditDrugRecordViewModel", e.toString())
+            }
+        }
+    }
+
+    fun addDrugRecord(drugRecord: DrugRecord) {
+        viewModelScope.launch {
+            val drugRecordService = IDrugRecordService.getInstance()
+            try {
+                val response = drugRecordService.addDrugRecord(drugRecord)
+                if (response.isSuccessful) {
+                    Log.d("DrugRecordsViewModel", "add DrugRecord success")
+                    // 新增成功，可以在這裡處理相應的邏輯
+                    // 例如更新列表或跳轉到列表頁面等等
+                } else {
+                    Log.d("DrugRecordsViewModel", "add DrugRecord failed")
+                    // 新增失敗，可以在這裡處理相應的錯誤邏輯
+                    // 例如顯示錯誤訊息或重新嘗試等等
+                }
+            } catch (e: Exception) {
+                Log.d("DrugRecordsViewModel", "add DrugRecord failed")
+                Log.e("DrugRecordsViewModel", e.toString())
+                // 新增失敗，可以在這裡處理相應的錯誤邏輯
+                // 例如顯示錯誤訊息或重新嘗試等等
+            }
+        }
+    }
+
+    fun updateDrugRecordById(id: Int, drugRecord: DrugRecord) {
+        viewModelScope.launch {
+            val drugRecordService = IDrugRecordService.getInstance()
+            try {
+                val response = drugRecordService.updateDrugById(id, drugRecord)
+                if (response.isSuccessful) {
+                    Log.d("DrugRecordsViewModel", "update DrugRecord success")
+                    // 更新成功，可以在這裡處理相應的邏輯
+                    // 例如更新列表或跳轉到列表頁面等等
+                } else {
+                    Log.d("DrugRecordsViewModel", "update DrugRecord failed")
+                    // 更新失敗，可以在這裡處理相應的錯誤邏輯
+                    // 例如顯示錯誤訊息或重新嘗試等等
+                }
+            } catch (e: Exception) {
+                Log.d("DrugRecordsViewModel", "update DrugRecord failed")
+                Log.e("DrugRecordsViewModel", e.toString())
+                // 更新失敗，可以在這裡處理相應的錯誤邏輯
+                // 例如顯示錯誤訊息或重新嘗試等等
+            }
+        }
+    }
+
+    fun deleteDrugRecordById(id: Int) {
+        viewModelScope.launch {
+            val drugRecordService = IDrugRecordService.getInstance()
+            try {
+                val response = drugRecordService.deleteDrugById(id)
+                if (response.isSuccessful) {
+                    // 刪除成功，可以在這裡處理相應的邏輯
+                    // 例如更新列表或跳轉到列表頁面等等
+                } else {
+                    // 刪除失敗，可以在這裡處理相應的錯誤邏輯
+                    // 例如顯示錯誤訊息或重新嘗試等等
+                }
+            } catch (e: Exception) {
+                Log.d("DrugRecordsViewModel", "delete DrugRecord failed")
+                Log.e("DrugRecordsViewModel", e.toString())
+                // 刪除失敗，可以在這裡處理相應的錯誤邏輯
+                // 例如顯示錯誤訊息或重新嘗試等等
             }
         }
     }

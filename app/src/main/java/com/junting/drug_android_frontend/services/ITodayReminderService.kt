@@ -8,7 +8,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface ITodayReminderService {
-    @GET("todayReminders/")
+    @GET("todayReminders")
     suspend fun getTodayReminders(): List<TodayReminder>
 
     // 獲取指定 ID 的 TodayReminder
@@ -21,7 +21,7 @@ interface ITodayReminderService {
         fun getInstance(): ITodayReminderService {
             if (todayReminderService == null) {
                 todayReminderService = Retrofit.Builder()
-                    .baseUrl(DataApiConstants.BASE_URL)
+                    .baseUrl(DataApiConstants.BASE_URL_HEROKU)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build().create(ITodayReminderService::class.java)
             }

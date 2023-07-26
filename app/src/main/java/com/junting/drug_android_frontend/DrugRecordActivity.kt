@@ -95,10 +95,10 @@ class DrugRecordActivity : AppCompatActivity() {
         initButtonSheet(binding.llDrugPosition, DrugPositionButtonSheet(viewModel), "drugPosition")
         initButton()
         initPhoneLongClickCall()
-        //代表前一個動作一點選卡片
+
         drugRecordId = intent.getIntExtra("drugRecordId", 0)
         if (drugRecordId == 0) {
-            getObjFromPreviousActivity()
+            getObjFromPreviousActivity()  //代表前一個動作並非點選卡片
         } else {
             initDrugRecordViewModel()
         }
@@ -119,13 +119,20 @@ class DrugRecordActivity : AppCompatActivity() {
                     .setMessage(resources.getString(R.string.drug_record_activity_question_message))
                     .setPositiveButton(resources.getString(R.string.confirm)) { dialog, _ ->
                         // 在這裡執行刪除操作
+                        val drugRecordId = intent.getIntExtra("drugRecordId", 0)
+                        if (drugRecordId != 0) {
+                            // 呼叫 ViewModel 的刪除方法
+                            viewModel.deleteDrugRecordById(drugRecordId)
+                        }
+
+
                         val intent = Intent(this, MainActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         intent.putExtra("fragmentName", "DrugRecordsFragment")
                         startActivity(intent)
                         dialog.dismiss()
                     }
-                    .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+                    .setNegativeButton(resources.getString(R.string.dialog_cancel)) { dialog, _ ->
                         dialog.dismiss()
 
                     }
@@ -137,12 +144,12 @@ class DrugRecordActivity : AppCompatActivity() {
         }
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_pause_delete, menu)
+        menuInflater.inflate(R.menu.menu_delete, menu)
 
         // 根據條件控制菜單項目的顯示與隱藏
-//        val drugRecordId = intent.getIntExtra("drugRecordId", 0)
-//        val deleteMenuItem = menu?.findItem(R.id.action_delete)
-//        deleteMenuItem?.isVisible = drugRecordId != 0
+        val drugRecordId = intent.getIntExtra("drugRecordId", 0)
+        val deleteMenuItem = menu?.findItem(R.id.action_delete)
+        deleteMenuItem?.isVisible = drugRecordId != 0
 
         return true
     }
@@ -407,6 +414,22 @@ class DrugRecordActivity : AppCompatActivity() {
         }
         binding.btnConfirm.setOnClickListener {
             Log.d("DrugRecord",viewModel.record.value.toString())
+
+            drugRecordId = intent.getIntExtra("drugRecordId", 0)
+            if (drugRecordId == 0) {
+                // 新增 DrugRecord 的操作
+                val drugRecord = viewModel.record.value
+                if (drugRecord != null) {
+                    viewModel.addDrugRecord(drugRecord)
+                }
+            } else {
+                // 修改 DrugRecord 的操作
+                val drugRecord = viewModel.record.value
+                if (drugRecord != null) {
+                    viewModel.updateDrugRecordById(drugRecordId!!, drugRecord)
+                }
+            }
+
             val intent = Intent(this, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             intent.putExtra("fragmentName", "DrugRecordsFragment")

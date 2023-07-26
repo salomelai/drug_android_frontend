@@ -1,9 +1,7 @@
 package com.junting.drug_android_frontend.services
 
 import com.junting.drug_android_frontend.constants.DataApiConstants
-import com.junting.drug_android_frontend.model.cloud_vision.ImageAnnotateResponse
 import com.junting.drug_android_frontend.model.drugbag_info.DrugbagInformation
-import okhttp3.RequestBody
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
@@ -22,7 +20,7 @@ interface IDrugbagService {
         fun getInstance(): IDrugbagService {
             if (drugRecordService == null) {
                 drugRecordService = Retrofit.Builder()
-                    .baseUrl(DataApiConstants.BASE_URL)
+                    .baseUrl(DataApiConstants.BASE_URL_HEROKU)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build().create(IDrugbagService::class.java)
             }

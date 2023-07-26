@@ -16,7 +16,7 @@ interface IDrugInteractionService {
         fun getInstance(): IDrugInteractionService {
             if (drugInteractionService == null) {
                 drugInteractionService = Retrofit.Builder()
-                    .baseUrl(DataApiConstants.BASE_URL)
+                    .baseUrl(DataApiConstants.BASE_URL_HEROKU)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build().create(IDrugInteractionService::class.java)
             }

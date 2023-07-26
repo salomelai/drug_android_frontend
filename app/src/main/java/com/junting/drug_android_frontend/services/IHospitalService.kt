@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 
 interface IHospitalService {
-    @GET("hospitals/")
+    @GET("hospitals")
     suspend fun getHospitals(): List<Hospital>
 
 
@@ -16,7 +16,7 @@ interface IHospitalService {
         fun getInstance(): IHospitalService {
             if (hospitalService == null) {
                 hospitalService = Retrofit.Builder()
-                    .baseUrl(DataApiConstants.BASE_URL)
+                    .baseUrl(DataApiConstants.BASE_URL_HEROKU)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build().create(IHospitalService::class.java)
             }

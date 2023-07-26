@@ -51,11 +51,12 @@ class MainActivity : AppCompatActivity() {
 
         val idToken = sharedPreferencesManager!!.getGoogleIdToken()
 
-        if (idToken == null) {
-            val intent = Intent(this, IntroductoryActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
+        //這段暫時性關閉-俊霆，之後要打開
+//        if (idToken == null) {
+//            val intent = Intent(this, IntroductoryActivity::class.java)
+//            startActivity(intent)
+//            finish()
+//        }
 
         val navView: BottomNavigationView = binding.navView
         // 設定顯示小紅點圖標

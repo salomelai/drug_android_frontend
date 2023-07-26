@@ -116,4 +116,36 @@ class TakeRecordsViewModel : ViewModel(){
 
         _dateTimeSlotRecord.value = dateTimeSlotRecords
     }
+    fun updateTakeRecordById(id: Int, takeRecord: TakeRecord){
+        viewModelScope.launch {
+            val takeRecordService = ITakeRecordService.getInstance()
+            try {
+                val response = takeRecordService.updateTakeRecordById(id, takeRecord)
+                if (response.isSuccessful) {
+                    Log.d("TakeRecordsViewModel", "update takeRecord success")
+                } else {
+                    Log.d("TakeRecordsViewModel", "update takeRecord failed")
+                }
+            } catch (e: Exception) {
+                Log.d("TakeRecordsViewModel", "update takeRecord failed")
+                Log.e("TakeRecordsViewModel", e.toString())
+            }
+        }
+    }
+    fun deleteTakeRecordById(id: Int){
+        viewModelScope.launch {
+            val takeRecordService = ITakeRecordService.getInstance()
+            try {
+                val response = takeRecordService.deleteTakeRecordById(id)
+                if (response.isSuccessful) {
+                    Log.d("TakeRecordsViewModel", "delete takeRecord success")
+                } else {
+                    Log.d("TakeRecordsViewModel", "delete takeRecord failed")
+                }
+            } catch (e: Exception) {
+                Log.d("TakeRecordsViewModel", "delete takeRecord failed")
+                Log.e("TakeRecordsViewModel", e.toString())
+            }
+        }
+    }
 }

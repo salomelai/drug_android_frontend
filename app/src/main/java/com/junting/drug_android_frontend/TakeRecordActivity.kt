@@ -66,6 +66,8 @@ class TakeRecordActivity : AppCompatActivity() {
                     .setMessage(resources.getString(R.string.drug_record_activity_question_message))
                     .setPositiveButton(resources.getString(R.string.confirm)) { dialog, _ ->
                         // 在這裡執行刪除操作
+                        viewModel.deleteTakeRecordById(takeRecordId!!)
+
                         val intent = Intent(this, MainActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                         intent.putExtra("fragmentName", "TakeRecordsFragment")
@@ -189,6 +191,8 @@ class TakeRecordActivity : AppCompatActivity() {
             onBackPressed()
         }
         binding.btnConfirm.setOnClickListener{
+            viewModel.takeRecord.value?.let { it1 -> viewModel.updateTakeRecordById(it1.id, it1) }
+
             val intent = Intent(this, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             intent.putExtra("fragmentName", "TakeRecordsFragment")
