@@ -33,7 +33,7 @@ interface ITakeRecordService {
         fun getInstance(): ITakeRecordService {
             if (takeRecordService == null) {
                 takeRecordService = Retrofit.Builder()
-                    .baseUrl(DataApiConstants.BASE_URL_HEROKU)
+                    .baseUrl(DataApiConstants.BASE_URL_PYTHONANYWHERE)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build().create(ITakeRecordService::class.java)
             }

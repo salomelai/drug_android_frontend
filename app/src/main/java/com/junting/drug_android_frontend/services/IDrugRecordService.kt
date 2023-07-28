@@ -36,18 +36,18 @@ interface IDrugRecordService {
 
     // 更新指定 ID 的 DrugRecord
     @PUT("drugRecords/{id}")
-    suspend fun updateDrugById(@Path("id") id: Int, @Body drugRecord: DrugRecord): Response<DrugRecord>
+    suspend fun updateDrugRecordById(@Path("id") id: Int, @Body drugRecord: DrugRecord): Response<DrugRecord>
 
     // 刪除指定 ID 的 DrugRecord
     @DELETE("drugRecords/{id}")
-    suspend fun deleteDrugById(@Path("id") id: Int): Response<DrugRecord>
+    suspend fun deleteDrugRecordById(@Path("id") id: Int): Response<DrugRecord>
 
     companion object {
         var drugRecordService: IDrugRecordService? = null
         fun getInstance(): IDrugRecordService {
             if (drugRecordService == null) {
                 drugRecordService = Retrofit.Builder()
-                    .baseUrl(DataApiConstants.BASE_URL_HEROKU)
+                    .baseUrl(DataApiConstants.BASE_URL_PYTHONANYWHERE)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build().create(IDrugRecordService::class.java)
             }

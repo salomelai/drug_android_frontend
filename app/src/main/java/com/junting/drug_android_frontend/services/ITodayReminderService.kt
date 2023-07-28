@@ -21,7 +21,7 @@ interface ITodayReminderService {
         fun getInstance(): ITodayReminderService {
             if (todayReminderService == null) {
                 todayReminderService = Retrofit.Builder()
-                    .baseUrl(DataApiConstants.BASE_URL_HEROKU)
+                    .baseUrl(DataApiConstants.BASE_URL_PYTHONANYWHERE)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build().create(ITodayReminderService::class.java)
             }

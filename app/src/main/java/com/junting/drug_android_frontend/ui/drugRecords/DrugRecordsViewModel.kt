@@ -209,7 +209,7 @@ class DrugRecordsViewModel : ViewModel() {
         viewModelScope.launch {
             val drugRecordService = IDrugRecordService.getInstance()
             try {
-                val response = drugRecordService.updateDrugById(id, drugRecord)
+                val response = drugRecordService.updateDrugRecordById(id, drugRecord)
                 if (response.isSuccessful) {
                     Log.d("DrugRecordsViewModel", "update DrugRecord success")
                     // 更新成功，可以在這裡處理相應的邏輯
@@ -232,7 +232,7 @@ class DrugRecordsViewModel : ViewModel() {
         viewModelScope.launch {
             val drugRecordService = IDrugRecordService.getInstance()
             try {
-                val response = drugRecordService.deleteDrugById(id)
+                val response = drugRecordService.deleteDrugRecordById(id)
                 if (response.isSuccessful) {
                     // 刪除成功，可以在這裡處理相應的邏輯
                     // 例如更新列表或跳轉到列表頁面等等

@@ -16,7 +16,7 @@ interface IHospitalService {
         fun getInstance(): IHospitalService {
             if (hospitalService == null) {
                 hospitalService = Retrofit.Builder()
-                    .baseUrl(DataApiConstants.BASE_URL_HEROKU)
+                    .baseUrl(DataApiConstants.BASE_URL_PYTHONANYWHERE)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build().create(IHospitalService::class.java)
             }
