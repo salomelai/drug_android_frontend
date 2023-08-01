@@ -26,6 +26,9 @@ import com.junting.drug_android_frontend.model.today_reminder.TodayReminder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class TodayReminderFragment : Fragment() {
 
@@ -37,8 +40,26 @@ class TodayReminderFragment : Fragment() {
         override fun onItemSwiped(position: Int, direction: OnItemSwipeListener.SwipeDirection, item: TodayReminder): Boolean {
             if (direction == OnItemSwipeListener.SwipeDirection.RIGHT_TO_LEFT) {
                 Log.d("onItemSwiped", "向左滑: $position, $item")
+
+                val takeRecord = TakeRecord(
+                    todayReminderId = item.id,
+                    status = 2
+                )
+                viewModel.processTakeRecord(takeRecord)
+
             } else if (direction == OnItemSwipeListener.SwipeDirection.LEFT_TO_RIGHT) {
                 Log.d("onItemSwiped", "向右滑: $position, $item")
+
+                val currentTime = Calendar.getInstance()
+                val currentTimeString = SimpleDateFormat("HH:mm", Locale.getDefault()).format(currentTime.time)
+
+                val takeRecord = TakeRecord(
+                    todayReminderId = item.id,
+                    status = 1,
+                    dosage = item.dosage,
+                    timeSlot = currentTimeString
+                )
+//                viewModel.processTakeRecord(takeRecord)
             }
             // 處理項目被滑動的動作
             // 返回 false 表示滑動的項目應該從適配器的資料集中移除（預設行為）
@@ -123,10 +144,10 @@ class TodayReminderFragment : Fragment() {
 
             // 使用viewModelScope的IO上下文执行网络请求
             viewModel.viewModelScope.launch(Dispatchers.IO) {
-                val responseMessage = viewModel.processTakeRecord(takeRecord)
+                val responseMessage = viewModel.processTakeRecord(takeRecord).await()
                 val dialogMessage = when {
-                    responseMessage?.value?.success == true -> "{selectedTimeRange}區段之藥物服用成功"
-                    responseMessage?.value?.success == false && responseMessage.value?.errorCode == 1001 -> "未找到{selectedTimeRange}區段之藥物"
+                    responseMessage?.success == true -> "$selectedTimeRange 區段之藥物服用成功"
+                    responseMessage?.success == false && responseMessage.errorCode == 1001 -> "未找到 $selectedTimeRange 區段之藥物"
                     else -> "系統錯誤"
                 }
 
@@ -138,6 +159,11 @@ class TodayReminderFragment : Fragment() {
                     builder.setPositiveButton(R.string.confirm) { _, _ ->
                         // Handle positive button click
                         binding.inputLayout.isEndIconVisible = false
+
+                        val intent = Intent(requireContext(), MainActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        intent.putExtra("fragmentName", "TodayReminderFragment")
+                        startActivity(intent)
                     }
                     val alertDialog = builder.create()
                     alertDialog.show()

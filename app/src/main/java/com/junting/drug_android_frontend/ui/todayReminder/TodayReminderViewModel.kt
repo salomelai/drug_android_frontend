@@ -14,6 +14,8 @@ import com.junting.drug_android_frontend.model.today_reminder.TodayReminder
 import com.junting.drug_android_frontend.services.IDrugRecordService
 import com.junting.drug_android_frontend.services.ITakeRecordService
 import com.junting.drug_android_frontend.services.ITodayReminderService
+import kotlinx.coroutines.Deferred
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class TodayReminderViewModel : ViewModel() {
@@ -80,32 +82,30 @@ class TodayReminderViewModel : ViewModel() {
         }
     }
 
-    fun processTakeRecord(takeRecord: TakeRecord): MutableLiveData<ResponseMessage?> {
-        val resultLiveData = MutableLiveData<ResponseMessage?>()
-
-        viewModelScope.launch {
+    fun processTakeRecord(takeRecord: TakeRecord): Deferred<ResponseMessage?> {
+        return viewModelScope.async {
             val takeRecordService = ITakeRecordService.getInstance()
             try {
                 val response = takeRecordService.processTakeRecord(takeRecord)
                 if (response.isSuccessful) {
                     val message = response.body()
                     if (message != null) {
-                        resultLiveData.value = message
                         Log.d("TodayReminderViewModel", "process takeRecord success")
+                        message
                     } else {
                         // 处理ResponseMessage为null的情况
                         throw IllegalStateException("Response body is null")
                     }
                 } else {
                     Log.d("TodayReminderViewModel", "process takeRecord failed")
+                    null
                 }
             } catch (e: Exception) {
                 // 处理异常
                 Log.d("TodayReminderViewModel", "process TakeRecord failed")
                 Log.e("TodayReminderViewModel", e.toString())
+                null
             }
         }
-
-        return resultLiveData
     }
 }
