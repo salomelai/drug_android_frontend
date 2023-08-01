@@ -191,7 +191,9 @@ class TakeRecordActivity : AppCompatActivity() {
             onBackPressed()
         }
         binding.btnConfirm.setOnClickListener{
-            viewModel.takeRecord.value?.let { it1 -> viewModel.updateTakeRecordById(it1.id, it1) }
+            viewModel.takeRecord.value?.let { it1 ->
+                Log.d("updateTakeRecordById", "record: ${it1.toString()}")
+                viewModel.updateTakeRecordById(it1.id, it1) }
 
             val intent = Intent(this, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.viewModelScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemSwipeListener
@@ -19,8 +20,12 @@ import com.junting.drug_android_frontend.MainActivity
 import com.junting.drug_android_frontend.OnDemandListActivity
 import com.junting.drug_android_frontend.R
 import com.junting.drug_android_frontend.databinding.FragmentTodayReminderBinding
+import com.junting.drug_android_frontend.model.ResponseMessage
 import com.junting.drug_android_frontend.model.take_record.TakeRecord
 import com.junting.drug_android_frontend.model.today_reminder.TodayReminder
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class TodayReminderFragment : Fragment() {
 
@@ -106,16 +111,38 @@ class TodayReminderFragment : Fragment() {
 
         val endIconView = inputLayout.findViewById<ImageView>(com.google.android.material.R.id.text_input_end_icon)
         endIconView?.setOnClickListener {
-            val builder = MaterialAlertDialogBuilder(requireContext())
-            builder.setTitle(resources.getString(R.string.hint_title))
-            builder.setMessage("XXXXXXXX")
-            builder.setPositiveButton(R.string.confirm) { _, _ ->
-                // Handle positive button click
-                binding.inputLayout.isEndIconVisible = false
+            val selectedTimeRange = binding.inputEditText.text.toString()
+            Log.d("SelectedTimeRange", selectedTimeRange)
+
+            val firstTwoDigits = selectedTimeRange.substring(0, 2).trim().toInt()
+
+            val takeRecord = TakeRecord(
+                batchTime = firstTwoDigits,
+                status = 4
+            )
+
+            // 使用viewModelScope的IO上下文执行网络请求
+            viewModel.viewModelScope.launch(Dispatchers.IO) {
+                val responseMessage = viewModel.processTakeRecord(takeRecord)
+                val dialogMessage = when {
+                    responseMessage?.value?.success == true -> "{selectedTimeRange}區段之藥物服用成功"
+                    responseMessage?.value?.success == false && responseMessage.value?.errorCode == 1001 -> "未找到{selectedTimeRange}區段之藥物"
+                    else -> "系統錯誤"
+                }
+
+                // 使用Dispatchers.Main上下文更新UI
+                withContext(Dispatchers.Main) {
+                    val builder = MaterialAlertDialogBuilder(requireContext())
+                    builder.setTitle(resources.getString(R.string.hint_title))
+                    builder.setMessage(dialogMessage)
+                    builder.setPositiveButton(R.string.confirm) { _, _ ->
+                        // Handle positive button click
+                        binding.inputLayout.isEndIconVisible = false
+                    }
+                    val alertDialog = builder.create()
+                    alertDialog.show()
+                }
             }
-            val alertDialog = builder.create()
-            alertDialog.show()
-            true
         }
     }
 

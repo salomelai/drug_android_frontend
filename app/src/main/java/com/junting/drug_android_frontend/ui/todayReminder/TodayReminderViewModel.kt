@@ -1,13 +1,18 @@
 package com.junting.drug_android_frontend.ui.todayReminder
 
 import android.util.Log
+import android.widget.Toast
 import androidx.databinding.ObservableField
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.junting.drug_android_frontend.model.ResponseMessage
 import com.junting.drug_android_frontend.model.drug_record.DrugRecord
+import com.junting.drug_android_frontend.model.take_record.TakeRecord
 import com.junting.drug_android_frontend.model.today_reminder.TodayReminder
 import com.junting.drug_android_frontend.services.IDrugRecordService
+import com.junting.drug_android_frontend.services.ITakeRecordService
 import com.junting.drug_android_frontend.services.ITodayReminderService
 import kotlinx.coroutines.launch
 
@@ -16,20 +21,23 @@ class TodayReminderViewModel : ViewModel() {
     var todayReminders = MutableLiveData<List<TodayReminder>>()
     var todayReminder = MutableLiveData<TodayReminder>()
     var drugRecors = MutableLiveData<List<DrugRecord>>()
-    val actualTakingTime  = ObservableField<String>()
+    val actualTakingTime = ObservableField<String>()
 
     fun setDosage(dosage: Int) {
         val info: TodayReminder = todayReminder.value!!
         info.dosage = dosage
         triggerUpdate(info)
     }
+
     fun setTimeSlot(timeSlot: String) {
         val info: TodayReminder = todayReminder.value!!
         info.timeSlot = timeSlot
         triggerUpdate(info)
     }
+
     fun setActualTakingTime(actualTakingTime: String) {
         this.actualTakingTime.set(actualTakingTime)
+        Log.d("TodayReminderViewModel", "set actualTakingTime=${actualTakingTime}")
     }
 
     private fun triggerUpdate(newTodayReminder: TodayReminder) {
@@ -47,7 +55,8 @@ class TodayReminderViewModel : ViewModel() {
             }
         }
     }
-    fun fetchTodayReminderById(id:Int){
+
+    fun fetchTodayReminderById(id: Int) {
         viewModelScope.launch {
             val todayReminderService = ITodayReminderService.getInstance()
             try {
@@ -58,6 +67,7 @@ class TodayReminderViewModel : ViewModel() {
             }
         }
     }
+
     fun fetchDrugRecords() {
         viewModelScope.launch {
             val drugRecordService = IDrugRecordService.getInstance()
@@ -68,5 +78,34 @@ class TodayReminderViewModel : ViewModel() {
                 Log.e("TodayReminderViewModel", e.toString())
             }
         }
+    }
+
+    fun processTakeRecord(takeRecord: TakeRecord): MutableLiveData<ResponseMessage?> {
+        val resultLiveData = MutableLiveData<ResponseMessage?>()
+
+        viewModelScope.launch {
+            val takeRecordService = ITakeRecordService.getInstance()
+            try {
+                val response = takeRecordService.processTakeRecord(takeRecord)
+                if (response.isSuccessful) {
+                    val message = response.body()
+                    if (message != null) {
+                        resultLiveData.value = message
+                        Log.d("TodayReminderViewModel", "process takeRecord success")
+                    } else {
+                        // 处理ResponseMessage为null的情况
+                        throw IllegalStateException("Response body is null")
+                    }
+                } else {
+                    Log.d("TodayReminderViewModel", "process takeRecord failed")
+                }
+            } catch (e: Exception) {
+                // 处理异常
+                Log.d("TodayReminderViewModel", "process TakeRecord failed")
+                Log.e("TodayReminderViewModel", e.toString())
+            }
+        }
+
+        return resultLiveData
     }
 }

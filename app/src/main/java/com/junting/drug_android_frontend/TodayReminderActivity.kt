@@ -1,6 +1,7 @@
 package com.junting.drug_android_frontend
 
 import DialogUtils
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -16,6 +17,7 @@ import com.junting.drug_android_frontend.databinding.ActionBarTakeRecordTodayRem
 import com.junting.drug_android_frontend.databinding.ActivityTodayReminderBinding
 import com.junting.drug_android_frontend.databinding.BottomSheetLaterBinding
 import com.junting.drug_android_frontend.databinding.FragmentPillBoxManagementBinding
+import com.junting.drug_android_frontend.model.take_record.TakeRecord
 import com.junting.drug_android_frontend.ui.todayReminder.TodayReminderViewModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -173,13 +175,35 @@ class TodayReminderActivity : AppCompatActivity() {
             textView?.setOnClickListener {
                 addMinutesToActualTime(minutes)
                 bottomSheetDialog.dismiss()
-                finish()
+
+                var takeRecord = TakeRecord(
+                    todayReminderId = viewModel.todayReminder.value!!.id,
+                    status = 3,
+                    dosage = viewModel.todayReminder.value!!.dosage,
+                    timeSlot = viewModel.actualTakingTime.get()!!
+                )
+                viewModel.processTakeRecord(takeRecord)
+
+                val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.putExtra("fragmentName", "TodayReminderFragment")
+                startActivity(intent)
             }
         }
 
         binding.tvSkip.setOnClickListener {
             bottomSheetDialog.dismiss()
-            finish()
+
+            var takeRecord = TakeRecord(
+                todayReminderId = viewModel.todayReminder.value!!.id,
+                status = 2
+            )
+            viewModel.processTakeRecord(takeRecord)
+
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            intent.putExtra("fragmentName", "TodayReminderFragment")
+            startActivity(intent)
         }
 
         bottomSheetDialog.show()
@@ -192,7 +216,18 @@ class TodayReminderActivity : AppCompatActivity() {
             .setTitle(resources.getString(R.string.taken_drug))
             .setView(bindingPillBox.root)
             .setPositiveButton(resources.getString(R.string.confirm)) { dialog, which ->
-                finish()
+                var takeRecord = TakeRecord(
+                    todayReminderId = viewModel.todayReminder.value!!.id,
+                    status = 1,
+                    dosage = viewModel.todayReminder.value!!.dosage,
+                    timeSlot = viewModel.actualTakingTime.get()!!
+                )
+                viewModel.processTakeRecord(takeRecord)
+
+                val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.putExtra("fragmentName", "TodayReminderFragment")
+                startActivity(intent)
             }
             .create()
 
@@ -204,8 +239,12 @@ class TodayReminderActivity : AppCompatActivity() {
         val format = SimpleDateFormat("HH:mm", Locale.getDefault())
         val date = format.parse(viewModel.actualTakingTime.get()!!)!!
         val calendar = Calendar.getInstance()
-        calendar.time = date
-        calendar.add(Calendar.MINUTE, minutes)
+        if (date != null) {
+            calendar.time = date
+            calendar.add(Calendar.MINUTE, minutes)
+            val newTime = format.format(calendar.time)
+            viewModel.setActualTakingTime(newTime)
+        }
 
     }
 

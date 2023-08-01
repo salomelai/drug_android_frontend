@@ -38,7 +38,8 @@
         android:layout_height="wrap_content"
         app:divider="@drawable/list_divider"
         app:item_layout="@layout/remind_item_view"
-        app:layout_constraintTop_toBottomOf="@id/inputLayout" />
+        app:layout_constraintTop_toBottomOf="@id/inputLayout"
+        android:paddingBottom="60dp"/>
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/fab"
