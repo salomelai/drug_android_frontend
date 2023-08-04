@@ -41,13 +41,13 @@ class DrugRecordsViewAdapter(private val context: Context, private val viewModel
             holder.drugItemViewBinding.tvIndicationTag.text = drugRecord.indicationTag
         }
 
-        if(drugRecord.frequency==0){
+        if(drugRecord.onDemand == true){
             holder.drugItemViewBinding.tvFrequencyDosage.text = context.getString(R.string.as_needed) + "," + drugRecord.dosage.toString() + " "+context.getString(R.string.drug_record_dosage)
         }else{
             holder.drugItemViewBinding.tvFrequencyDosage.text = drugRecord.frequency.toString() + " "+context.getString(R.string.drug_record_frequency)+", " + drugRecord.dosage.toString() + " "+context.getString(R.string.drug_record_dosage)
         }
 
-        if (drugRecord.timeSlots.isEmpty()){
+        if (drugRecord.onDemand == true) {
             holder.drugItemViewBinding.tvTimeSlots.visibility = View.GONE
         }else{
             holder.drugItemViewBinding.tvTimeSlots.text = drugRecord.timeSlots.joinToString()

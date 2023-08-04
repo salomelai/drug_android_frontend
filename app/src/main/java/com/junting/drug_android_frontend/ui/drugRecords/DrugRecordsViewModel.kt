@@ -162,7 +162,18 @@ class DrugRecordsViewModel : ViewModel() {
         viewModelScope.launch {
             val drugRecordService = IDrugRecordService.getInstance()
             try {
-                records.value = drugRecordService.getDrugs()
+                records.value = drugRecordService.getDrugsByHospital(hospitalName)
+            } catch (e: Exception) {
+                Log.d("DrugsViewModel", "fetch DrugRecords failed")
+                Log.e("DrugsViewModel", e.toString())
+            }
+        }
+    }
+    fun fetchRecordsByDepartment(department: String) {
+        viewModelScope.launch {
+            val drugRecordService = IDrugRecordService.getInstance()
+            try {
+                records.value = drugRecordService.getDrugsByDepartment(department)
             } catch (e: Exception) {
                 Log.d("DrugsViewModel", "fetch DrugRecords failed")
                 Log.e("DrugsViewModel", e.toString())

@@ -12,6 +12,7 @@ class DrugRecordsPagerAdapter(context: Context): PagerAdapter() {
     private val context: Context
     private var allPage: DrugRecordsAllPage? = null
     private var hospitalPage: DrugRecordsHospitalPage? = null
+    private var departmentPage: DrugRecordsDepartmentPage? = null
 
     init {
         this.context = context
@@ -35,16 +36,20 @@ class DrugRecordsPagerAdapter(context: Context): PagerAdapter() {
             container.addView(hospitalPage!!.view)
             return hospitalPage!!.view
         } else {
-            val view: View =
-                LayoutInflater.from(context).inflate(R.layout.drug_records_department_tab, container, false)
-            container.addView(view)
-            return view
+            departmentPage = DrugRecordsDepartmentPage(context, container)
+            container.addView(departmentPage!!.view)
+            return departmentPage!!.view
         }
     }
 
     fun refreshHospitalPage() {
         hospitalPage?.initHospitalListAdapter()
         hospitalPage?.initHospitalListRecyclerView()
+    }
+
+    fun refreshDepartmentPage() {
+        departmentPage?.initDepartmentListAdapter()
+        departmentPage?.initDepartmentListRecyclerView()
     }
 
     override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {

@@ -19,8 +19,8 @@ class HospitalListViewModel : ViewModel() {
             try {
                 hospitals.value = hospitalService.getHospitals()
             } catch (e: Exception) {
-                Log.d("DrugsViewModel", e.toString())
-                Log.e("DrugsViewModel", e.stackTraceToString())
+                Log.d("HospitalListViewModel", e.toString())
+                Log.e("HospitalListViewModel", e.stackTraceToString())
             }
         }
     }

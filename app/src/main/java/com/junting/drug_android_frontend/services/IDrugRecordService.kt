@@ -23,12 +23,20 @@ interface IDrugRecordService {
     suspend fun getDrugById(@Path("id") id: Int): DrugRecord
 
     // 獲取指定名稱的 DrugRecords
-    @GET("drugRecords/")
+    @GET("drugRecords")
     suspend fun getDrugByName(@Query("drug.name") name: String): List<DrugRecord>
 
     // 獲取指定 onDemand 的 DrugRecords
-    @GET("drugRecords/")
+    @GET("drugRecords")
     suspend fun getDrugsByOnDemand(@Query("onDemand") onDemand: Boolean): List<DrugRecord>
+
+    // 獲取指定醫院 的 DrugRecords
+    @GET("drugRecords/hospitalName/{hospitalName}")
+    suspend fun getDrugsByHospital(@Path("hospitalName") hospitalName: String): List<DrugRecord>
+
+    // 獲取指科別 的 DrugRecords
+    @GET("drugRecords/departmentName/{department}")
+    suspend fun getDrugsByDepartment(@Path("department") department: String): List<DrugRecord>
 
     // 新增一筆 DrugRecord
     @POST("drugRecords")

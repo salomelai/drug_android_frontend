@@ -42,6 +42,9 @@ class DrugRecordsFragment : Fragment() {
                 if (tab.position == 1) {
                     drugRecordsPagerAdapter!!.refreshHospitalPage()
                 }
+                if (tab.position == 2) {
+                    drugRecordsPagerAdapter!!.refreshDepartmentPage()
+                }
             }
         })
     }
