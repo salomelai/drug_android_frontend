@@ -27,8 +27,8 @@ interface IDrugRecordService {
     suspend fun getDrugByName(@Query("drug.name") name: String): List<DrugRecord>
 
     // 獲取指定 onDemand 的 DrugRecords
-    @GET("drugRecords")
-    suspend fun getDrugsByOnDemand(@Query("onDemand") onDemand: Boolean): List<DrugRecord>
+    @GET("drugRecords/onDemand/{onDemand}")
+    suspend fun getDrugsByOnDemand(@Path("onDemand") onDemand: Boolean): List<DrugRecord>
 
     // 獲取指定醫院 的 DrugRecords
     @GET("drugRecords/hospitalName/{hospitalName}")

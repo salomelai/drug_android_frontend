@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.junting.drug_android_frontend.databinding.ActivityDrugbagInfoBinding
+import com.junting.drug_android_frontend.model.UglyText
 import com.junting.drug_android_frontend.model.drugbag_info.DrugbagInformation
 import com.junting.drug_android_frontend.R as MyAppR
 
@@ -21,6 +22,8 @@ class DrugbagInfoActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDrugbagInfoBinding
     private var viewModel: DrugbagInfoViewModel = DrugbagInfoViewModel()
     private var checkBoxes: Array<CheckBox> = arrayOf()
+    private var uglyText : UglyText? = null
+    private val testData :String = "\"9.5\\\\nOSO\\\\nAM\\\\n姓名: 胡雅涵\\\\n(Name)\\\\n病歷號碼:\\\\n年齡:\\\\n22378331\\\\n(Chart No.)\\\\n(Age)\\\\n科別: 內分泌暨新陳醫師:\\\\n(Department)\\\\n(Doctor)\\\\n亞長庚紀念醫院\\\\nCHANG GUNG MEMORIAL HOSPITAL\\\\n網址: http://www.cgmh.org.tw\\\\n【藥品外觀】\\\\n【使用方法】\\\\n【臨床用途】\\\\n【副作用】\\\\n【預約回診】\\\\n44\\\\n蔡松昇\\\\n2023/03/08 08:52:10 HA84\\\\n領藥號碼 No.\\\\n生日:\\\\n(Date of Birth)978/09/10\\\\n性別:\\\\n男\\\\n(Sex)\\\\n體重:\\\\n(Body Weight)\\\\nA 10144 桃園\\\\n調劑日期:\\\\n(Dispensing Date)\\\\n【藥 名】 517(Eltroxin,GSK) Thyroxine sodium 0.1mg/tab\\\\n1\\\\n商品名: Eltroxin 昂特欣\\\\n廠牌: Aspen Pharmacare\\\\n本品建議在 2023/05/10 前用完\\\\n2023/03/08\\\\n張家雯\\\\n藥師:\\\\n(Pharmacist)\\\\n21#*2+14\\\\n白色圓形錠劑·有GS 21C 與 100字樣\\\\n內服藥,口服\\\\n每天1次,早飯前服用,每次2粒,28天份\\\\n1甲狀腺機能減退症\\\\n體重下降,頭痛,胃腸不適,食慾增加\\\\n2023/03/09星期四·復健科鄭如艾醫師上午診23號\\\\n2023/03/27星期一·復健科陳建宏醫師下午診19號\\\\n56 PC\\\\n2-1\\\\n『本單含個人資料\""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,12 +41,14 @@ class DrugbagInfoActivity : AppCompatActivity() {
         )
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        if (intent.getStringExtra("UglyText")?.isNotEmpty() == true) {
+        if (intent.getStringExtra("UglyTextString")?.isNotEmpty() == true) {
+            uglyText = UglyText(intent.getStringExtra("UglyTextString")!!)  //創建UglyText物件
+//            uglyText!!.input_drugBagInformation = testData
             supportActionBar?.setTitle(resources.getString(MyAppR.string.modify_drugbag_info))
             initDrugbagInfoViewModel()
         } else {
             supportActionBar?.setTitle(resources.getString(MyAppR.string.add_drugbag_info))
-            unserInputDrugbagInfo()
+            userInputDrugbagInfo()
         }
 
         initOndemandCheckbox()
@@ -61,7 +66,7 @@ class DrugbagInfoActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-    private fun unserInputDrugbagInfo(){
+    private fun userInputDrugbagInfo(){
         viewModel.drugbagInfo.value = DrugbagInformation()
         initFrequencyDropdown(false)
         initDosageDropdown(false)
@@ -69,8 +74,10 @@ class DrugbagInfoActivity : AppCompatActivity() {
 
     private fun initDrugbagInfoViewModel() {
         binding.progressBar.visibility = View.VISIBLE
-        viewModel.fetchDrugbagInfo()
+//        viewModel.fetchDrugbagInfo()
+        viewModel.sendDrugbagInfo(uglyText = uglyText!!)
         viewModel.drugbagInfo.observe(this, Observer {
+            binding.cbOnDemand.isChecked = it.onDemand
 
             initFrequencyDropdown(true,it.frequency)
             for (i in it.timings) {
@@ -122,6 +129,7 @@ class DrugbagInfoActivity : AppCompatActivity() {
         binding.cbOnDemand.setOnCheckedChangeListener { _, isChecked ->
             binding.tilFrequency.visibility = if (isChecked) View.GONE else View.VISIBLE
             binding.llTimings.visibility = if (isChecked) View.GONE else View.VISIBLE
+            viewModel.setOnDemand(isChecked)
         }
 
     }

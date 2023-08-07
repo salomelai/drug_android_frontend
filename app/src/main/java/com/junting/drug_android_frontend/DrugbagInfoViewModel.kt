@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.junting.drug_android_frontend.model.UglyText
 import com.junting.drug_android_frontend.model.drug_record.DrugRecord
 import com.junting.drug_android_frontend.model.drugbag_info.DrugbagInformation
 import com.junting.drug_android_frontend.services.IDrugbagService
@@ -54,6 +55,11 @@ class DrugbagInfoViewModel : ViewModel() {
         info.drug.appearance = appearance
         triggerUpdate(info)
     }
+    fun setOnDemand(onDemand: Boolean) {
+        val info: DrugbagInformation = drugbagInfo.value!!
+        info.onDemand = onDemand
+        triggerUpdate(info)
+    }
     fun setStock(stockStr: String) {
         val info: DrugbagInformation = drugbagInfo.value!!
         val stock: Int? = stockStr.toIntOrNull()
@@ -79,6 +85,7 @@ class DrugbagInfoViewModel : ViewModel() {
     }
     private fun triggerUpdate(newDrugbagInfo: DrugbagInformation) {
         drugbagInfo.value = newDrugbagInfo
+        Log.d("DrugbagInfoViewModel", "triggerUpdate: ${drugbagInfo.value}")
     }
 
 
@@ -93,11 +100,11 @@ class DrugbagInfoViewModel : ViewModel() {
             }
         }
     }
-    fun sendDrugbagInfo(drugbagInfo: DrugbagInformation) {
+    fun sendDrugbagInfo(uglyText: UglyText) {
         viewModelScope.launch {
             val service = IDrugbagService.getInstance()
             try {
-                service.postDrugInfo(drugbagInfo)
+                drugbagInfo.value = service.postDrugInfo(uglyText)
             }catch (e: Exception) {
                 Log.e("DrugbagInfoViewModel", "Error: ${e.message}")
             }

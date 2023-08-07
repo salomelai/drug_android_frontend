@@ -203,7 +203,7 @@
                     android:id="@+id/cb_on_demand"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="@={viewModel.drugbagInfo.onDemand}" />
+                    />
 
             </LinearLayout>
 

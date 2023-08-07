@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.junting.drug_android_frontend.databinding.ActivityPhotoResultBinding
 import com.junting.drug_android_frontend.libs.BitmapUtils
+import com.junting.drug_android_frontend.model.UglyText
 import com.junting.drug_android_frontend.services.CloudVisionService
 import kotlinx.coroutines.launch
 
@@ -19,7 +20,6 @@ class PhotoResultActivity: AppCompatActivity() {
 
     private lateinit var binding: ActivityPhotoResultBinding
     private val viewModel: CloudVisionViewModel = CloudVisionViewModel()
-    private var UglyText : String= "empty QQ"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,12 +33,15 @@ class PhotoResultActivity: AppCompatActivity() {
 
         this.viewModel.text.observe(this, Observer {
             // handle your text result there
-            Toast.makeText(this, viewModel.text.value, Toast.LENGTH_SHORT).show()
-            UglyText = viewModel.text.value.toString()
+//            Toast.makeText(this, viewModel.text.value, Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "文字擷取成功", Toast.LENGTH_SHORT).show()
+            binding.progressBar.visibility = android.view.View.GONE
+            binding.tvLoading.visibility = android.view.View.GONE
+            binding.btnConfirm.isEnabled = true
         })
         binding.btnConfirm.setOnClickListener() {
             val intent = Intent(this, DrugbagInfoActivity::class.java)
-            intent.putExtra("UglyText", UglyText)
+            intent.putExtra("UglyTextString", viewModel.text.value)
             startActivity(intent)
         }
     }
