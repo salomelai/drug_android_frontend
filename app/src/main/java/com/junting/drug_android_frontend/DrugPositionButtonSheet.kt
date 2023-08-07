@@ -93,7 +93,7 @@ class DrugPositionButtonSheet(viewModel: DrugRecordsViewModel) : BottomSheetDial
 
             builder.setTitle(resources.getString(R.string.hint_title))
             builder.setMessage(resources.getString(R.string.pillbox_management_hint_message))
-            builder.setPositiveButton(resources.getString(R.string.confirm)) { _, _ ->
+            builder.setPositiveButton(resources.getString(R.string.close_pillbox)) { _, _ ->
                 // Handle positive button click
             }
             val alertDialog = builder.create()

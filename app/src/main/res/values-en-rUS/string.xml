@@ -65,6 +65,7 @@
     <string name="confirm">Confirm</string>
     <string name="phone_number">Phone Number</string>
     <string name="open_pillbox">Open Pillbox</string>
+    <string name="close_pillbox">Close Pillbox</string>
     <string name="take_a_photo">Shoot</string>
     <string name="date">Date</string>
     <string name="time">Time</string>

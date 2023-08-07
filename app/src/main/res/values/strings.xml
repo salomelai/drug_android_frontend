@@ -86,6 +86,7 @@
 
     <!--  activity_on_demand  -->
     <string name="open_pillbox">開啟藥盒</string>
+    <string name="close_pillbox">關閉藥盒</string>
 
     <!--  activity_photo_take  -->
     <string name="take_a_photo">拍攝</string>

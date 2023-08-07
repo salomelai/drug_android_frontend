@@ -215,7 +215,7 @@ class TodayReminderActivity : AppCompatActivity() {
         val dialog = MaterialAlertDialogBuilder(this)
             .setTitle(resources.getString(R.string.taken_drug))
             .setView(bindingPillBox.root)
-            .setPositiveButton(resources.getString(R.string.confirm)) { dialog, which ->
+            .setPositiveButton(resources.getString(R.string.close_pillbox)) { dialog, which ->
                 var takeRecord = TakeRecord(
                     todayReminderId = viewModel.todayReminder.value!!.id,
                     status = 1,
