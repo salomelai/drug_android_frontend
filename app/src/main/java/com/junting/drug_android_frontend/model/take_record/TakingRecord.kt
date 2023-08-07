@@ -3,6 +3,7 @@ package com.junting.drug_android_frontend.model.take_record
 import java.io.Serializable
 
 data class TakeRecord(
+    var drugRecordId: Int = 0,
     var todayReminderId: Int = 0,
     var date: String = "",
     var dosage: Int = 0,

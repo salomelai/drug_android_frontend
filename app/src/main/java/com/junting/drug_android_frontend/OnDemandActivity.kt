@@ -15,6 +15,7 @@ import com.google.android.material.timepicker.MaterialTimePicker
 import com.junting.drug_android_frontend.databinding.ActionBarTakeRecordTodayReminderBinding
 import com.junting.drug_android_frontend.databinding.ActivityOnDemandBinding
 import com.junting.drug_android_frontend.databinding.FragmentPillBoxManagementBinding
+import com.junting.drug_android_frontend.model.take_record.TakeRecord
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -58,7 +59,7 @@ class OnDemandActivity : AppCompatActivity() {
     private fun initViewModel() {
         binding.progressBar.visibility = View.VISIBLE
         viewModel.fetchDrugRecordById(drugRecordId!!)
-        viewModel.drugRecor.observe(this, Observer {
+        viewModel.drugRecord.observe(this, Observer {
             Log.d("Observe todayReminder", "record: ${it.toString()}")
             bindingActionBarTakeRecordTodayReminder.tvDrugName.text = it.drug.name
             bindingActionBarTakeRecordTodayReminder.tvStock.text = resources.getString(R.string.stock)+"："+it.stock.toString()+" "+resources.getString(R.string.unit)
@@ -163,6 +164,14 @@ class OnDemandActivity : AppCompatActivity() {
             .setTitle(resources.getString(R.string.taken_drug))
             .setView(bindingPillBox.root)
             .setPositiveButton(resources.getString(R.string.confirm)) { dialog, which ->
+                var takeRecord = TakeRecord(
+                    drugRecordId = viewModel.drugRecord.value!!.id,
+                    status = 3,
+                    dosage = viewModel.drugRecord.value!!.dosage,
+                    timeSlot = viewModel.actualTakingTime.get()!!
+                )
+                viewModel.processTakeRecord(takeRecord)
+
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 intent.putExtra("fragmentName", "TodayReminderFragment")

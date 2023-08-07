@@ -59,12 +59,21 @@ class TodayReminderFragment : Fragment() {
                     dosage = item.dosage,
                     timeSlot = currentTimeString
                 )
-//                viewModel.processTakeRecord(takeRecord)
+                viewModel.viewModelScope.launch {
+                    val responseMessage = viewModel.processTakeRecord(takeRecord).await()
+                    if (responseMessage != null) {
+                        // 成功處理 TakeRecord
+                        viewModel.fetchTodayReminders()
+                    } else {
+                        // 處理失敗
+                        // ... 處理失敗的邏輯 ...
+                    }
+                }
             }
             // 處理項目被滑動的動作
             // 返回 false 表示滑動的項目應該從適配器的資料集中移除（預設行為）
             // 返回 true 表示停止滑動的項目自動從適配器的資料集中移除（在這種情況下，你需要自行手動更新資料集）
-            updateTodayReminderBadge(viewAdapter.itemCount)
+//            updateTodayReminderBadge(viewAdapter.itemCount)
             return false
         }
     }
@@ -181,6 +190,7 @@ class TodayReminderFragment : Fragment() {
         binding.progressBar.visibility = View.VISIBLE
         viewModel.fetchTodayReminders()
         viewModel.todayReminders.observe(context as AppCompatActivity, Observer {
+            updateTodayReminderBadge(it.size)
             viewAdapter!!.update(it)
             binding.progressBar.visibility = View.GONE
         })
