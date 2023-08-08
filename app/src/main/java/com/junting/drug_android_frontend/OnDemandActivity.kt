@@ -8,14 +8,19 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.viewModelScope
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.junting.drug_android_frontend.databinding.ActionBarTakeRecordTodayReminderBinding
 import com.junting.drug_android_frontend.databinding.ActivityOnDemandBinding
 import com.junting.drug_android_frontend.databinding.FragmentPillBoxManagementBinding
 import com.junting.drug_android_frontend.model.take_record.TakeRecord
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -166,11 +171,26 @@ class OnDemandActivity : AppCompatActivity() {
             .setPositiveButton(resources.getString(R.string.close_pillbox)) { dialog, which ->
                 var takeRecord = TakeRecord(
                     drugRecordId = viewModel.drugRecord.value!!.id,
-                    status = 3,
+                    status = 5,
                     dosage = viewModel.drugRecord.value!!.dosage,
                     timeSlot = viewModel.actualTakingTime.get()!!
                 )
-                viewModel.processTakeRecord(takeRecord)
+
+                viewModel.viewModelScope.launch(Dispatchers.IO) {
+                    val responseMessage = viewModel.processTakeRecord(takeRecord).await()
+                    if (responseMessage != null) {
+                        runOnUiThread(Runnable {
+                            Toast.makeText(this@OnDemandActivity, "服用成功", Toast.LENGTH_SHORT).show()
+                        })
+                        // 成功處理 TakeRecord
+                    } else {
+                        // 處理失敗
+                        runOnUiThread(Runnable {
+                            Toast.makeText(this@OnDemandActivity, "服用失敗", Toast.LENGTH_SHORT).show()
+                        })
+                        // ... 處理失敗的邏輯 ...
+                    }
+                }
 
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

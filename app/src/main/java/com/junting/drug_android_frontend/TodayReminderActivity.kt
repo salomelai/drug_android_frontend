@@ -8,8 +8,10 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.lifecycle.viewModelScope
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.timepicker.MaterialTimePicker
@@ -19,6 +21,8 @@ import com.junting.drug_android_frontend.databinding.BottomSheetLaterBinding
 import com.junting.drug_android_frontend.databinding.FragmentPillBoxManagementBinding
 import com.junting.drug_android_frontend.model.take_record.TakeRecord
 import com.junting.drug_android_frontend.ui.todayReminder.TodayReminderViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -182,7 +186,21 @@ class TodayReminderActivity : AppCompatActivity() {
                     dosage = viewModel.todayReminder.value!!.dosage,
                     timeSlot = viewModel.actualTakingTime.get()!!
                 )
-                viewModel.processTakeRecord(takeRecord)
+                viewModel.viewModelScope.launch(Dispatchers.IO) {
+                    val responseMessage = viewModel.processTakeRecord(takeRecord).await()
+                    if (responseMessage != null) {
+                        runOnUiThread(Runnable {
+                            Toast.makeText(this@TodayReminderActivity, "已延後${minutes}分鐘", Toast.LENGTH_SHORT).show()
+                        })
+                        // 成功處理 TakeRecord
+                    } else {
+                        // 處理失敗
+                        runOnUiThread(Runnable {
+                            Toast.makeText(this@TodayReminderActivity, "系統錯誤", Toast.LENGTH_SHORT).show()
+                        })
+                        // ... 處理失敗的邏輯 ...
+                    }
+                }
 
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -198,7 +216,21 @@ class TodayReminderActivity : AppCompatActivity() {
                 todayReminderId = viewModel.todayReminder.value!!.id,
                 status = 2
             )
-            viewModel.processTakeRecord(takeRecord)
+            viewModel.viewModelScope.launch(Dispatchers.IO) {
+                val responseMessage = viewModel.processTakeRecord(takeRecord).await()
+                if (responseMessage != null) {
+                    runOnUiThread(Runnable {
+                        Toast.makeText(this@TodayReminderActivity, "已略過", Toast.LENGTH_SHORT).show()
+                    })
+                    // 成功處理 TakeRecord
+                } else {
+                    // 處理失敗
+                    runOnUiThread(Runnable {
+                        Toast.makeText(this@TodayReminderActivity, "系統錯誤", Toast.LENGTH_SHORT).show()
+                    })
+                    // ... 處理失敗的邏輯 ...
+                }
+            }
 
             val intent = Intent(this, MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
@@ -222,7 +254,21 @@ class TodayReminderActivity : AppCompatActivity() {
                     dosage = viewModel.todayReminder.value!!.dosage,
                     timeSlot = viewModel.actualTakingTime.get()!!
                 )
-                viewModel.processTakeRecord(takeRecord)
+                viewModel.viewModelScope.launch(Dispatchers.IO) {
+                    val responseMessage = viewModel.processTakeRecord(takeRecord).await()
+                    if (responseMessage != null) {
+                        runOnUiThread(Runnable {
+                            Toast.makeText(this@TodayReminderActivity, "服用成功", Toast.LENGTH_SHORT).show()
+                        })
+                        // 成功處理 TakeRecord
+                    } else {
+                        // 處理失敗
+                        runOnUiThread(Runnable {
+                            Toast.makeText(this@TodayReminderActivity, "系統錯誤", Toast.LENGTH_SHORT).show()
+                        })
+                        // ... 處理失敗的邏輯 ...
+                    }
+                }
 
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)

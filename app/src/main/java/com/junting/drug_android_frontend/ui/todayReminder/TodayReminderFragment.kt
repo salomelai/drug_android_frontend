@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -45,7 +46,18 @@ class TodayReminderFragment : Fragment() {
                     todayReminderId = item.id,
                     status = 2
                 )
-                viewModel.processTakeRecord(takeRecord)
+                viewModel.viewModelScope.launch {
+                    val responseMessage = viewModel.processTakeRecord(takeRecord).await()
+                    if (responseMessage != null) {
+                        Toast.makeText(requireContext(), "已略過", Toast.LENGTH_SHORT).show()
+                        // 成功處理 TakeRecord
+                        viewModel.fetchTodayReminders()
+                    } else {
+                        // 處理失敗
+                        Toast.makeText(requireContext(), "系統錯誤", Toast.LENGTH_SHORT).show()
+                        // ... 處理失敗的邏輯 ...
+                    }
+                }
 
             } else if (direction == OnItemSwipeListener.SwipeDirection.LEFT_TO_RIGHT) {
                 Log.d("onItemSwiped", "向右滑: $position, $item")
@@ -62,10 +74,12 @@ class TodayReminderFragment : Fragment() {
                 viewModel.viewModelScope.launch {
                     val responseMessage = viewModel.processTakeRecord(takeRecord).await()
                     if (responseMessage != null) {
+                        Toast.makeText(requireContext(), "服用成功", Toast.LENGTH_SHORT).show()
                         // 成功處理 TakeRecord
                         viewModel.fetchTodayReminders()
                     } else {
                         // 處理失敗
+                        Toast.makeText(requireContext(), "系統錯誤", Toast.LENGTH_SHORT).show()
                         // ... 處理失敗的邏輯 ...
                     }
                 }
@@ -145,10 +159,13 @@ class TodayReminderFragment : Fragment() {
             Log.d("SelectedTimeRange", selectedTimeRange)
 
             val firstTwoDigits = selectedTimeRange.substring(0, 2).trim().toInt()
+            val currentTime = Calendar.getInstance()
+            val currentTimeString = SimpleDateFormat("HH:mm", Locale.getDefault()).format(currentTime.time)
 
             val takeRecord = TakeRecord(
                 batchTime = firstTwoDigits,
-                status = 4
+                status = 4,
+                timeSlot = currentTimeString
             )
 
             // 使用viewModelScope的IO上下文执行网络请求
