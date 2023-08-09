@@ -20,7 +20,6 @@ import com.junting.drug_android_frontend.databinding.FragmentPillBoxManagementBi
 import com.junting.drug_android_frontend.model.take_record.TakeRecord
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -31,7 +30,7 @@ class OnDemandActivity : AppCompatActivity() {
     private lateinit var bindingActionBarTakeRecordTodayReminder: ActionBarTakeRecordTodayReminderBinding
     var drugRecordId: Int? = null
     private var viewModel: OnDemandViewModel = OnDemandViewModel()
-    private lateinit var viewManager: PillBoxViewManager
+    private lateinit var pillBoxViewManager: PillBoxViewManager
     private val positions = (1..9).toList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +41,7 @@ class OnDemandActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         setContentView(binding.root)
-        viewManager = PillBoxViewManager(bindingPillBox,this) // Initialize the view manager
+        pillBoxViewManager = PillBoxViewManager(bindingPillBox,this) // Initialize the view manager
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowCustomEnabled(true)
@@ -56,7 +55,7 @@ class OnDemandActivity : AppCompatActivity() {
             initViewModel()
         }
         // 隱藏所有藥物位置
-        positions.forEach { i -> viewManager.hideCell(i,positions) }
+        positions.forEach { i -> pillBoxViewManager.hideCell(i,positions) }
         initActualTime()
         initButton()
         initClickableTextView()
@@ -68,7 +67,7 @@ class OnDemandActivity : AppCompatActivity() {
             Log.d("Observe todayReminder", "record: ${it.toString()}")
             bindingActionBarTakeRecordTodayReminder.tvDrugName.text = it.drug.name
             bindingActionBarTakeRecordTodayReminder.tvStock.text = resources.getString(R.string.stock)+"："+it.stock.toString()+" "+resources.getString(R.string.unit)
-            viewManager.setCellColor(it.position)
+            pillBoxViewManager.setCellColor(it.position)
             binding.progressBar.visibility = View.GONE
         })
         viewModel.fetchDrugRecords()
@@ -77,18 +76,18 @@ class OnDemandActivity : AppCompatActivity() {
             // 遍历记录并更新 UI
             for (record in it) {
                 when (record.position) {
-                    1 -> viewManager.showCell(1, record,false)
-                    2 -> viewManager.showCell(2, record,false)
-                    3 -> viewManager.showCell(3, record,false)
-                    4 -> viewManager.showCell(4, record,false)
-                    5 -> viewManager.showCell(5, record,false)
-                    6 -> viewManager.showCell(6, record,false)
-                    7 -> viewManager.showCell(7, record,false)
-                    8 -> viewManager.showCell(8, record,false)
-                    9 -> viewManager.showCell(9, record,false)
+                    1 -> pillBoxViewManager.showCell(1, record,false)
+                    2 -> pillBoxViewManager.showCell(2, record,false)
+                    3 -> pillBoxViewManager.showCell(3, record,false)
+                    4 -> pillBoxViewManager.showCell(4, record,false)
+                    5 -> pillBoxViewManager.showCell(5, record,false)
+                    6 -> pillBoxViewManager.showCell(6, record,false)
+                    7 -> pillBoxViewManager.showCell(7, record,false)
+                    8 -> pillBoxViewManager.showCell(8, record,false)
+                    9 -> pillBoxViewManager.showCell(9, record,false)
                 }
             }
-            positions.forEach { i -> viewManager.closeProgressBar(i) }
+            positions.forEach { i -> pillBoxViewManager.closeProgressBar(i) }
         })
 
         val inflater = LayoutInflater.from(this)
@@ -162,45 +161,47 @@ class OnDemandActivity : AppCompatActivity() {
 
 
     private fun showConfirmDialog() {
-        val parentView = bindingPillBox.root.parent as? ViewGroup
-        parentView?.removeView(bindingPillBox.root)
+        var takeRecord = TakeRecord(
+            drugRecordId = viewModel.drugRecord.value!!.id,
+            status = 5,
+            dosage = viewModel.drugRecord.value!!.dosage,
+            timeSlot = viewModel.actualTakingTime.get()!!
+        )
+        Log.d("TakeRecord", "takeRecord: ${takeRecord.toString()}")
 
-        val dialog = MaterialAlertDialogBuilder(this)
-            .setTitle(resources.getString(R.string.taken_drug))
-            .setView(bindingPillBox.root)
-            .setPositiveButton(resources.getString(R.string.close_pillbox)) { dialog, which ->
-                var takeRecord = TakeRecord(
-                    drugRecordId = viewModel.drugRecord.value!!.id,
-                    status = 5,
-                    dosage = viewModel.drugRecord.value!!.dosage,
-                    timeSlot = viewModel.actualTakingTime.get()!!
-                )
-                Log.d("TakeRecord", "takeRecord: ${takeRecord.toString()}")
+        viewModel.viewModelScope.launch(Dispatchers.IO) {
+            val responseMessage = viewModel.processTakeRecord(takeRecord).await()
+            if (responseMessage != null) {
+                runOnUiThread(Runnable {
+                    Toast.makeText(this@OnDemandActivity, "服用成功", Toast.LENGTH_SHORT).show()
 
-                viewModel.viewModelScope.launch(Dispatchers.IO) {
-                    val responseMessage = viewModel.processTakeRecord(takeRecord).await()
-                    if (responseMessage != null) {
-                        runOnUiThread(Runnable {
-                            Toast.makeText(this@OnDemandActivity, "服用成功", Toast.LENGTH_SHORT).show()
-                        })
-                        // 成功處理 TakeRecord
-                    } else {
-                        // 處理失敗
-                        runOnUiThread(Runnable {
-                            Toast.makeText(this@OnDemandActivity, "服用失敗", Toast.LENGTH_SHORT).show()
-                        })
-                        // ... 處理失敗的邏輯 ...
-                    }
-                }
+                    val parentView = bindingPillBox.root.parent as? ViewGroup
+                    parentView?.removeView(bindingPillBox.root)
 
-                val intent = Intent(this, MainActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                intent.putExtra("fragmentName", "TodayReminderFragment")
-                startActivity(intent)
+                    val builder = MaterialAlertDialogBuilder(this@OnDemandActivity)
+                        .setTitle(resources.getString(R.string.taken_drug))
+                        .setView(bindingPillBox.root)
+                        .setPositiveButton(resources.getString(R.string.close_pillbox)) { dialog, which ->
+
+
+                            val intent = Intent(this@OnDemandActivity, MainActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            intent.putExtra("fragmentName", "TodayReminderFragment")
+                            startActivity(intent)
+                        }
+                        .create()
+
+                    builder.show()
+                })
+                // 成功處理 TakeRecord
+            } else {
+                // 處理失敗
+                runOnUiThread(Runnable {
+                    Toast.makeText(this@OnDemandActivity, "服用失敗", Toast.LENGTH_SHORT).show()
+                })
+                // ... 處理失敗的邏輯 ...
             }
-            .create()
-
-        dialog.show()
+        }
     }
 
 

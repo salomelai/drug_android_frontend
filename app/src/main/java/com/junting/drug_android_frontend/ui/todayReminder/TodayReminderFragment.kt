@@ -19,9 +19,10 @@ import com.ernestoyaquello.dragdropswiperecyclerview.listener.OnItemSwipeListene
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.junting.drug_android_frontend.MainActivity
 import com.junting.drug_android_frontend.OnDemandListActivity
+import com.junting.drug_android_frontend.PillBoxViewManager
 import com.junting.drug_android_frontend.R
+import com.junting.drug_android_frontend.databinding.FragmentPillBoxManagementBinding
 import com.junting.drug_android_frontend.databinding.FragmentTodayReminderBinding
-import com.junting.drug_android_frontend.model.ResponseMessage
 import com.junting.drug_android_frontend.model.take_record.TakeRecord
 import com.junting.drug_android_frontend.model.today_reminder.TodayReminder
 import kotlinx.coroutines.Dispatchers
@@ -34,11 +35,19 @@ import java.util.Locale
 class TodayReminderFragment : Fragment() {
 
     private var _binding: FragmentTodayReminderBinding? = null
+    private lateinit var bindingPillBox: FragmentPillBoxManagementBinding
     private lateinit var viewAdapter: TodayReminderViewAdapter
     private lateinit var viewManager: RecyclerView.LayoutManager
     private var viewModel: TodayReminderViewModel = TodayReminderViewModel()
+    private lateinit var pillBoxViewManager: PillBoxViewManager
+    private val positions = (1..9).toList()
+
     private val onItemSwipeListener = object : OnItemSwipeListener<TodayReminder> {
-        override fun onItemSwiped(position: Int, direction: OnItemSwipeListener.SwipeDirection, item: TodayReminder): Boolean {
+        override fun onItemSwiped(
+            position: Int,
+            direction: OnItemSwipeListener.SwipeDirection,
+            item: TodayReminder,
+        ): Boolean {
             if (direction == OnItemSwipeListener.SwipeDirection.RIGHT_TO_LEFT) {
                 Log.d("onItemSwiped", "向左滑: $position, $item")
 
@@ -63,7 +72,8 @@ class TodayReminderFragment : Fragment() {
                 Log.d("onItemSwiped", "向右滑: $position, $item")
 
                 val currentTime = Calendar.getInstance()
-                val currentTimeString = SimpleDateFormat("HH:mm", Locale.getDefault()).format(currentTime.time)
+                val currentTimeString =
+                    SimpleDateFormat("HH:mm", Locale.getDefault()).format(currentTime.time)
 
                 val takeRecord = TakeRecord(
                     todayReminderId = item.id,
@@ -76,6 +86,22 @@ class TodayReminderFragment : Fragment() {
                     if (responseMessage != null) {
                         Toast.makeText(requireContext(), "服用成功", Toast.LENGTH_SHORT).show()
                         // 成功處理 TakeRecord
+
+                        val parentView = bindingPillBox.root.parent as? ViewGroup
+                        parentView?.removeView(bindingPillBox.root)
+                        pillBoxViewManager.setCellColor(item.position)
+
+                        val dialog = MaterialAlertDialogBuilder(requireContext())
+                            .setTitle(resources.getString(R.string.taken_drug))
+                            .setView(bindingPillBox.root)
+                            .setPositiveButton(resources.getString(R.string.close_pillbox)) { dialog, which ->
+
+                            }
+                            .create()
+
+                        dialog.show()
+
+
                         viewModel.fetchTodayReminders()
                     } else {
                         // 處理失敗
@@ -105,7 +131,15 @@ class TodayReminderFragment : Fragment() {
     ): View {
 
         _binding = FragmentTodayReminderBinding.inflate(inflater, container, false)
+        bindingPillBox = FragmentPillBoxManagementBinding.inflate(layoutInflater)
         val root: View = binding.root
+        pillBoxViewManager =
+            PillBoxViewManager(bindingPillBox, requireContext()) // Initialize the view manager
+
+        // 隱藏所有藥物位置
+        positions.forEach { i -> pillBoxViewManager.hideCell(i, positions) }
+
+
         initRecyclerView()
         initRecyclerViewModel()
         initChooseTime()
@@ -114,6 +148,9 @@ class TodayReminderFragment : Fragment() {
         // 設定 onItemSwipeListener
         binding.list.swipeListener = onItemSwipeListener
 
+        val inflater = LayoutInflater.from(requireContext())
+        val instructionLayout = inflater.inflate(R.layout.instruction_background, bindingPillBox.llInstruction, false)
+        bindingPillBox.llInstruction.addView(instructionLayout)
         return root
     }
 
@@ -150,17 +187,20 @@ class TodayReminderFragment : Fragment() {
         }
         builder.create().show()
     }
-    private fun initCheckIcon(){
+
+    private fun initCheckIcon() {
         val inputLayout = binding.inputLayout
 
-        val endIconView = inputLayout.findViewById<ImageView>(com.google.android.material.R.id.text_input_end_icon)
+        val endIconView =
+            inputLayout.findViewById<ImageView>(com.google.android.material.R.id.text_input_end_icon)
         endIconView?.setOnClickListener {
             val selectedTimeRange = binding.inputEditText.text.toString()
             Log.d("SelectedTimeRange", selectedTimeRange)
 
             val firstTwoDigits = selectedTimeRange.substring(0, 2).trim().toInt()
             val currentTime = Calendar.getInstance()
-            val currentTimeString = SimpleDateFormat("HH:mm", Locale.getDefault()).format(currentTime.time)
+            val currentTimeString =
+                SimpleDateFormat("HH:mm", Locale.getDefault()).format(currentTime.time)
 
             val takeRecord = TakeRecord(
                 batchTime = firstTwoDigits,
@@ -171,29 +211,42 @@ class TodayReminderFragment : Fragment() {
 
             // 使用viewModelScope的IO上下文执行网络请求
             viewModel.viewModelScope.launch(Dispatchers.IO) {
-                val responseMessage = viewModel.processTakeRecord(takeRecord).await()
-                val dialogMessage = when {
-                    responseMessage?.success == true -> "$selectedTimeRange 區段之藥物服用成功"
-                    responseMessage?.success == false && responseMessage.errorCode == 1001 -> "未找到 $selectedTimeRange 區段之藥物"
-                    else -> "系統錯誤"
-                }
+                try {
+                    val responseMessage = viewModel.processTakeRecord(takeRecord).await()
 
-                // 使用Dispatchers.Main上下文更新UI
-                withContext(Dispatchers.Main) {
-                    val builder = MaterialAlertDialogBuilder(requireContext())
-                    builder.setTitle(resources.getString(R.string.hint_title))
-                    builder.setMessage(dialogMessage)
-                    builder.setPositiveButton(R.string.confirm) { _, _ ->
-                        // Handle positive button click
-                        binding.inputLayout.isEndIconVisible = false
+                    withContext(Dispatchers.Main) {
+                        if (responseMessage != null && responseMessage.success) {
+                            val builder = MaterialAlertDialogBuilder(requireContext())
+                                .setTitle(resources.getString(R.string.taken_drug))
+                                .setMessage("$selectedTimeRange 區段之藥物服用成功")
+                                .setView(bindingPillBox.root)
+                                .setPositiveButton(resources.getString(R.string.close_pillbox)) { dialog, which ->
+                                    // Handle positive button click
+                                    binding.inputLayout.isEndIconVisible = false
+                                }
+                                .create()
 
-                        val intent = Intent(requireContext(), MainActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        intent.putExtra("fragmentName", "TodayReminderFragment")
-                        startActivity(intent)
+                            builder.show()
+                            viewModel.fetchTodayReminders()
+
+                        } else if (responseMessage != null && !responseMessage.success) {
+                            val dialogMessage = when {
+                                responseMessage.errorCode == 1001 -> "未找到 $selectedTimeRange 區段之藥物"
+                                else -> "系統錯誤"
+                            }
+                            val builder = MaterialAlertDialogBuilder(requireContext())
+                                .setTitle(resources.getString(R.string.hint_title))
+                                .setMessage(dialogMessage)
+                                .setPositiveButton(R.string.confirm) { _, _ ->
+                                    // Handle positive button click
+                                    binding.inputLayout.isEndIconVisible = false
+                                }.create()
+                            builder.show()
+                        }
                     }
-                    val alertDialog = builder.create()
-                    alertDialog.show()
+                } catch (e: Exception) {
+                    // 处理异常情况
+                    e.printStackTrace()
                 }
             }
         }
@@ -211,6 +264,26 @@ class TodayReminderFragment : Fragment() {
             updateTodayReminderBadge(it.size)
             viewAdapter!!.update(it)
             binding.progressBar.visibility = View.GONE
+        })
+
+        viewModel.fetchDrugRecords()
+        viewModel.drugRecors.observe(viewLifecycleOwner, Observer {
+
+            // 遍历记录并更新 UI
+            for (record in it) {
+                when (record.position) {
+                    1 -> pillBoxViewManager.showCell(1, record, false)
+                    2 -> pillBoxViewManager.showCell(2, record, false)
+                    3 -> pillBoxViewManager.showCell(3, record, false)
+                    4 -> pillBoxViewManager.showCell(4, record, false)
+                    5 -> pillBoxViewManager.showCell(5, record, false)
+                    6 -> pillBoxViewManager.showCell(6, record, false)
+                    7 -> pillBoxViewManager.showCell(7, record, false)
+                    8 -> pillBoxViewManager.showCell(8, record, false)
+                    9 -> pillBoxViewManager.showCell(9, record, false)
+                }
+            }
+            positions.forEach { i -> pillBoxViewManager.closeProgressBar(i) }
         })
     }
 
@@ -234,6 +307,7 @@ class TodayReminderFragment : Fragment() {
         val mainActivity: MainActivity = activity as MainActivity
         mainActivity.setTodayReminderBadge(number) // 設定小紅點圖標數字
     }
+
     private fun initFab() {
         binding.fab.setOnClickListener {
             val intent = Intent(context, OnDemandListActivity::class.java)

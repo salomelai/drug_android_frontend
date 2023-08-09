@@ -12,16 +12,13 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.chip.Chip
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.junting.drug_android_frontend.DrugRecordActivity
 import com.junting.drug_android_frontend.DrugbagInfoActivity
 import com.junting.drug_android_frontend.PhotoTakeActivity
 import com.junting.drug_android_frontend.PillBoxViewManager
 import com.junting.drug_android_frontend.R
 import com.junting.drug_android_frontend.databinding.FragmentPillBoxManagementBinding
-import com.junting.drug_android_frontend.model.drug_record.DrugRecord
 import com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsViewModel
 
 class PillBoxManagementFragment : Fragment() {
@@ -31,7 +28,7 @@ class PillBoxManagementFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-    private lateinit var viewManager: PillBoxViewManager
+    private lateinit var pillBoxViewManager: PillBoxViewManager
     private val positions = (1..9).toList()
 
     override fun onCreateView(
@@ -43,7 +40,7 @@ class PillBoxManagementFragment : Fragment() {
 
         _binding = FragmentPillBoxManagementBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        viewManager = PillBoxViewManager(binding,requireContext()) // Initialize the view manager
+        pillBoxViewManager = PillBoxViewManager(binding,requireContext()) // Initialize the view manager
 
         // 隱藏所有藥物位置
         positions.forEach { i -> initCell(i) }
@@ -56,18 +53,18 @@ class PillBoxManagementFragment : Fragment() {
             for (record in it) {
                 Log.d("PillBoxManagementFragment", "record: $record")
                 when (record.position) {
-                    1 -> viewManager.showCell(1, record, true)
-                    2 -> viewManager.showCell(2, record, true)
-                    3 -> viewManager.showCell(3, record, true)
-                    4 -> viewManager.showCell(4, record,true)
-                    5 -> viewManager.showCell(5, record,true)
-                    6 -> viewManager.showCell(6, record,true)
-                    7 -> viewManager.showCell(7, record,true)
-                    8 -> viewManager.showCell(8, record,true)
-                    9 -> viewManager.showCell(9, record,true)
+                    1 -> pillBoxViewManager.showCell(1, record, true)
+                    2 -> pillBoxViewManager.showCell(2, record, true)
+                    3 -> pillBoxViewManager.showCell(3, record, true)
+                    4 -> pillBoxViewManager.showCell(4, record,true)
+                    5 -> pillBoxViewManager.showCell(5, record,true)
+                    6 -> pillBoxViewManager.showCell(6, record,true)
+                    7 -> pillBoxViewManager.showCell(7, record,true)
+                    8 -> pillBoxViewManager.showCell(8, record,true)
+                    9 -> pillBoxViewManager.showCell(9, record,true)
                 }
             }
-            positions.forEach { i -> viewManager.closeProgressBar(i) }
+            positions.forEach { i -> pillBoxViewManager.closeProgressBar(i) }
         })
 
         val inflater = LayoutInflater.from(context)
@@ -77,7 +74,7 @@ class PillBoxManagementFragment : Fragment() {
         return root
     }
     fun initCell(drugPositionId: Int) {
-        val cellResourceId = viewManager.getResourceIdByPosition(drugPositionId)
+        val cellResourceId = pillBoxViewManager.getResourceIdByPosition(drugPositionId)
         val cellView = binding.root.findViewById<View>(cellResourceId)
         val drugIcon = cellView?.findViewById<ImageView>(R.id.iv_drug_icon)!!
         val chipStock = cellView.findViewById<Chip>(R.id.chip_stock)!!
