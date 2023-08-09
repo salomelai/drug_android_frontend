@@ -164,6 +164,7 @@ class TodayReminderActivity : AppCompatActivity() {
         val binding = BottomSheetLaterBinding.inflate(layoutInflater)
         val view = binding.root
         bottomSheetDialog.setContentView(view)
+        binding.tvDelayYouChoose.text ="依據您選定的時間: ${viewModel.actualTakingTime.get()}"
 
 
         val delayMinutes = listOf(10, 30, 45)
@@ -207,6 +208,38 @@ class TodayReminderActivity : AppCompatActivity() {
                 intent.putExtra("fragmentName", "TodayReminderFragment")
                 startActivity(intent)
             }
+        }
+        binding.tvDelayYouChoose.setOnClickListener {
+            bottomSheetDialog.dismiss()
+
+            var takeRecord = TakeRecord(
+                todayReminderId = viewModel.todayReminder.value!!.id,
+                status = 3,
+                dosage = viewModel.todayReminder.value!!.dosage,
+                timeSlot = viewModel.actualTakingTime.get()!!
+            )
+            Log.d("takeRecord", takeRecord.toString())
+
+            viewModel.viewModelScope.launch(Dispatchers.IO) {
+                val responseMessage = viewModel.processTakeRecord(takeRecord).await()
+                if (responseMessage != null) {
+                    runOnUiThread(Runnable {
+                        Toast.makeText(this@TodayReminderActivity, "已延後到${takeRecord.timeSlot}", Toast.LENGTH_SHORT).show()
+                    })
+                    // 成功處理 TakeRecord
+                } else {
+                    // 處理失敗
+                    runOnUiThread(Runnable {
+                        Toast.makeText(this@TodayReminderActivity, "系統錯誤", Toast.LENGTH_SHORT).show()
+                    })
+                    // ... 處理失敗的邏輯 ...
+                }
+            }
+
+            val intent = Intent(this, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            intent.putExtra("fragmentName", "TodayReminderFragment")
+            startActivity(intent)
         }
 
         binding.tvSkip.setOnClickListener {

@@ -41,7 +41,7 @@
     <string name="interaction_major_illustrate_first">will have serious interactions with the following</string>
     <string name="interaction_major_illustrate_second">drug(s). For your medication safety, we strongly recommend that you consult hospital professionals.</string>
     <string name="interaction_not_major_illustrate_second">drugs, you need to confirm whether to continue.</string>
-    <string name="interaction_not_major_illustrate_first">will moderately interact with the following</string>
+    <string name="interaction_not_major_illustrate_first">will interact with the following</string>
     <string name="interaction_major_call">Make a Phone Call</string>
     <string name="cancel">Cancel</string>
     <string name="dialog_cancel">Cancel</string>
@@ -168,6 +168,8 @@
     <string name="adjust_text_size">Adjust Font Size</string>
     <string name="sign_out_confirmation">Sign Out Confirmation</string>
     <string name="sign_out_text">Are you sure you want to sign out?</string>
+    <string name="interaction_no_interaction_second">will not interact with any medications you are taking</string>
+    <string name="interaction_no_interaction_first">"Great, "</string>
 
 
 </resources>

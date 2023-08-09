@@ -167,6 +167,7 @@ class TodayReminderFragment : Fragment() {
                 status = 4,
                 timeSlot = currentTimeString
             )
+            Log.d("TakeRecord", takeRecord.toString())
 
             // 使用viewModelScope的IO上下文执行网络请求
             viewModel.viewModelScope.launch(Dispatchers.IO) {
