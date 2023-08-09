@@ -175,6 +175,7 @@ class OnDemandActivity : AppCompatActivity() {
                     dosage = viewModel.drugRecord.value!!.dosage,
                     timeSlot = viewModel.actualTakingTime.get()!!
                 )
+                Log.d("TakeRecord", "takeRecord: ${takeRecord.toString()}")
 
                 viewModel.viewModelScope.launch(Dispatchers.IO) {
                     val responseMessage = viewModel.processTakeRecord(takeRecord).await()

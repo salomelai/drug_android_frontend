@@ -11,11 +11,11 @@ import kotlinx.coroutines.launch
 class DrugInteractionViewModel : ViewModel() {
     var drugInteractions = MutableLiveData<List<InteractingDrug>>()
 
-    fun fetchDrugInteraction() {
+    fun fetchDrugInteraction(drugName: String) {
         viewModelScope.launch {
             val service = IDrugInteractionService.getInstance()
             try {
-                drugInteractions.value = service.getInteractingDrugs()
+                drugInteractions.value = service.getInteractingDrugs(drugName)
             } catch (e: Exception) {
                 Log.d("DrugInteractionViewModel", "Error: ${e.message}")
             }

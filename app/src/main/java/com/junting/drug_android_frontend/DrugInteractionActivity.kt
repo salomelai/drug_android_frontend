@@ -28,14 +28,14 @@ class DrugInteractionActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        initRecyclerViewModel()
-        initRecyclerView()
-        initButton()
-
         if (intent.getSerializableExtra("drugbagInfo") != null) {
             drugbagInfo = intent.getSerializableExtra("drugbagInfo") as DrugbagInformation
             Log.d("DrugbagInfo obj", drugbagInfo.toString())
         }
+
+        initRecyclerViewModel()
+        initRecyclerView()
+        initButton()
     }
 
     private fun initButton() {
@@ -81,14 +81,19 @@ class DrugInteractionActivity : AppCompatActivity() {
     private fun initRecyclerViewModel() {
         binding.progressBar.visibility = View.VISIBLE
         viewModel = DrugInteractionViewModel()
-        viewModel.fetchDrugInteraction()
+        viewModel.fetchDrugInteraction(drugbagInfo.drug.name)
         viewModel.drugInteractions.observe(this, Observer {
             viewAdapter.notifyDataSetChanged()
             val hasMajorInteraction = it.any { drugInteraction ->
                 drugInteraction.degree == "Major"
             }
 
-            if (hasMajorInteraction) {
+            if(it.isEmpty()) {
+                binding.tvMessage.text = resources.getString(R.string.interaction_no_interaction_first)+" ${drugbagInfo.drug.name} "+resources.getString(R.string.interaction_no_interaction_second)
+                binding.btnCall.visibility = View.GONE
+                binding.btnConfirm.text = resources.getString(R.string.add)
+            }
+            else if (hasMajorInteraction) {
                 binding.tvMessage.text = "${drugbagInfo.drug.name}"+resources.getString(R.string.interaction_major_illustrate_first)+" ${it.size} "+resources.getString(R.string.interaction_major_illustrate_second)
                 binding.btnConfirm.visibility = View.GONE
             } else {

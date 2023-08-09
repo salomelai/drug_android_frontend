@@ -49,7 +49,7 @@ class DrugRecordActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         checkBoxes = arrayOf<CheckBox>(
-            binding.cbAfterMeal,
+            binding.cbBeforeMeal,
             binding.cbAfterMeal,
             binding.cbWithFood,
             binding.cbBeforeSleep

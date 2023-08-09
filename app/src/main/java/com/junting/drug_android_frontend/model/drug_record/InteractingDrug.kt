@@ -7,5 +7,6 @@ data class InteractingDrug(
     val id: Int = 0,
     val degree: String = "",
     val name: String = "",
-    val timeSlots: List<String> = emptyList()
+    val timeSlots: List<String> = emptyList(),
+    val duplicate: Boolean = false
 ): Serializable
