@@ -3,6 +3,7 @@ package com.junting.drug_android_frontend
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Parcel
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -15,6 +16,8 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.junting.drug_android_frontend.databinding.ActivityDrugRecordBinding
 import com.junting.drug_android_frontend.model.drug_record.DrugRecord
@@ -23,6 +26,9 @@ import com.junting.drug_android_frontend.model.drugbag_info.DrugbagInformation
 import com.junting.drug_android_frontend.ui.libs.ExpandableListUtils
 import java.util.*
 import com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsViewModel
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class DrugRecordActivity : AppCompatActivity() {
 
@@ -90,11 +96,13 @@ class DrugRecordActivity : AppCompatActivity() {
         }
         initOndemandCheckbox()
         initTimingsCheckbox()
-        initButtonSheet(binding.llNotificationSetting, NotificationSettingButtonSheet(viewModel), "notificationSetting")
+//        initButtonSheet(binding.llNotificationSetting, NotificationSettingButtonSheet(viewModel), "notificationSetting")
         initButtonSheet(binding.llReturnSetting, ReturnSettingButtonSheet(viewModel), "returnSetting")
         initButtonSheet(binding.llDrugPosition, DrugPositionButtonSheet(viewModel), "drugPosition")
         initButton()
         initPhoneLongClickCall()
+        showDatePickerDialog()
+
 
         drugRecordId = intent.getIntExtra("drugRecordId", 0)
         if (drugRecordId == 0) {
@@ -221,6 +229,14 @@ class DrugRecordActivity : AppCompatActivity() {
             for (i in it.timings) {
                 checkBoxes[i].isChecked = true
             }
+            val dateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+            val startDate = dateFormat.parse(viewModel.record.value?.notificationSetting?.startDate)
+            val today = Calendar.getInstance().time
+            if (startDate.before(today) || startDate.compareTo(today) <= 0) {
+                // startDate 早于或等于今天
+                binding.llDate.setOnClickListener(null)  //取消點擊事件
+            }
+
             binding.progressBar.visibility = GONE
         })
     }
@@ -387,10 +403,14 @@ class DrugRecordActivity : AppCompatActivity() {
             if (isChecked) {
                 binding.llOuterborderTimeSlot.visibility = GONE
                 binding.llTimings.visibility = GONE
+                binding.llReturnSetting.visibility = GONE
+                binding.llDate.visibility = GONE
                 viewModel.setOnDemand(true)
             } else {
                 binding.llOuterborderTimeSlot.visibility = View.VISIBLE
                 binding.llTimings.visibility = View.VISIBLE
+                binding.llReturnSetting.visibility = View.VISIBLE
+                binding.llDate.visibility = View.VISIBLE
                 viewModel.setOnDemand(false)
             }
         }
@@ -403,6 +423,56 @@ class DrugRecordActivity : AppCompatActivity() {
         }
         binding.expandableListInteraction!!.setAdapter(adapter)
         ExpandableListUtils.setupExpandHeight(binding.expandableListInteraction!!, adapter!!)
+    }
+    private fun showDatePickerDialog() {
+        binding.llDate.setOnClickListener(View.OnClickListener {
+            // 使用 MaterialDatePicker 顯示日期選擇對話框
+            val today = MaterialDatePicker.todayInUtcMilliseconds()
+            // 設置日期範圍限制，禁止用戶選擇今天以前的日期
+            val constraintsBuilder = CalendarConstraints.Builder()
+                .setValidator(object : CalendarConstraints.DateValidator {
+                    override fun isValid(date: Long): Boolean {
+                        return date >= today
+                    }
+
+                    override fun writeToParcel(dest: Parcel, flags: Int) {
+                        // Not needed for this example
+                    }
+
+                    override fun describeContents(): Int {
+                        return 0
+                    }
+                })
+                .build()
+
+
+            val builder = MaterialDatePicker.Builder.datePicker()
+
+            val picker = builder
+                .setTitleText(resources.getString(R.string.select_start_date_for_medication))
+                .setPositiveButtonText(resources.getString(R.string.confirm))
+                .setNegativeButtonText(resources.getString(R.string.cancel))
+                .setCalendarConstraints(constraintsBuilder)  // 使用上述的日期範圍限制
+                .build()
+
+            // 設置選擇日期後的回調
+            picker.addOnPositiveButtonClickListener { selection ->
+                // 取得選擇的日期
+                val selectedDate = Date(selection)
+
+                // 格式化日期
+                val dateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+                val formattedDate = dateFormat.format(selectedDate)
+
+                // 更新 tv_start_date 的文字
+//            binding.tvStartDate.text = formattedDate
+                viewModel.setNotificationSettingStartDate(formattedDate)
+            }
+
+            // 顯示 MaterialDatePicker 對話框
+            picker.show(supportFragmentManager, picker.toString())
+        })
+
     }
 
     private fun initButton() {

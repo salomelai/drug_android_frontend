@@ -11,6 +11,9 @@ import com.junting.drug_android_frontend.DrugRecordActivity
 import com.junting.drug_android_frontend.R
 import com.junting.drug_android_frontend.databinding.DrugItemViewBinding
 import com.junting.drug_android_frontend.model.drug_record.DrugRecord
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class DrugRecordsViewAdapter(private val context: Context, private val viewModel: DrugRecordsViewModel) :
     RecyclerView.Adapter<DrugRecordsViewAdapter.MyViewHolder>() {
@@ -61,10 +64,22 @@ class DrugRecordsViewAdapter(private val context: Context, private val viewModel
             holder.drugItemViewBinding.chipStock.setChipBackgroundColorResource(R.color.md_theme_dark_error)
         }
 
-        if( drugRecord.notificationSetting.status == true ) {
-            holder.drugItemViewBinding.ivNotification.setImageResource(R.drawable.ic_outline_notifications_24)
+//        if( drugRecord.notificationSetting.status == true ) {
+//            holder.drugItemViewBinding.ivNotification.setImageResource(R.drawable.ic_outline_notifications_24)
+//        }else{
+//            holder.drugItemViewBinding.ivNotification.setImageResource(R.drawable.ic_outline_notifications_off_24)
+//        }
+        val dateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+        val startDate = dateFormat.parse(drugRecord.notificationSetting?.startDate)
+        val today = Calendar.getInstance().time
+        if(drugRecord.onDemand==true){
+            holder.drugItemViewBinding.ivNotification.setImageResource(R.drawable.ic_outline_play_circle_24)
+        }
+        else if  ( startDate.after(today) || startDate.compareTo(today) >= 0) {
+            // startDate 早于或等于今天
+            holder.drugItemViewBinding.ivNotification.setImageResource(R.drawable.outline_pause_circle_24)
         }else{
-            holder.drugItemViewBinding.ivNotification.setImageResource(R.drawable.ic_outline_notifications_off_24)
+            holder.drugItemViewBinding.ivNotification.setImageResource(R.drawable.ic_outline_play_circle_24)
         }
 
 

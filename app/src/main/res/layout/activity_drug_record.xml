@@ -482,7 +482,7 @@
                     android:background="@drawable/list_divider" />
 
                 <LinearLayout
-                    android:id="@+id/ll_notification_setting"
+                    android:id="@+id/ll_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="?android:attr/selectableItemBackground"
@@ -495,10 +495,16 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_outline_notifications_24"
+                        android:drawableLeft="@drawable/ic_baseline_calendar_month_24"
                         android:drawablePadding="15dp"
-                        android:text="@string/taking_notification_setting"
+                        android:text="@string/start_date"
                         android:textStyle="bold" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@{String.valueOf(viewModel.record.notificationSetting.startDate)}"/>
 
 
                 </LinearLayout>
