@@ -1,15 +1,13 @@
 package com.junting.drug_android_frontend
 
-import android.content.Context
+import android.content.BroadcastReceiver
 import android.content.Intent
-import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.SeekBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.navigation.NavController
@@ -21,14 +19,14 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.textview.MaterialTextView
 import com.junting.drug_android_frontend.databinding.ActivityMainBinding
 import com.junting.drug_android_frontend.databinding.FontSizeDialogLayoutBinding
 import com.junting.drug_android_frontend.libs.FontSizeManager
 import com.junting.drug_android_frontend.libs.LanguageUtil
 import com.junting.drug_android_frontend.libs.SharedPreferencesManager
+import com.junting.drug_android_frontend.ui.libs.updater.UpdateUIHelper
 import com.squareup.picasso.Picasso
-import java.util.Locale
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -38,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var navigationView: NavigationView
     private lateinit var headerTextView: TextView
+    private lateinit var setTodayReminderBadgeReceiver: BroadcastReceiver
     private val sharedPreferencesManager by lazy {
         SharedPreferencesManager(this)
     }
@@ -170,8 +169,7 @@ class MainActivity : AppCompatActivity() {
             navController.popBackStack()
             navController.navigate(R.id.navigation_pillBoxManagement)
         }
-
-
+        setupUpdateUIListener()
     }
 
     // out of onCreate
@@ -290,5 +288,17 @@ class MainActivity : AppCompatActivity() {
         sharedPreferencesManager.clearUserName()
         startActivity(Intent(this@MainActivity, IntroductoryActivity::class.java))
         finish()
+    }
+
+    private fun setupUpdateUIListener() {
+        setTodayReminderBadgeReceiver =
+            UpdateUIHelper.listenInt(baseContext, "setTodayReminderBadge") { t ->
+            setTodayReminderBadge(t)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        UpdateUIHelper.unListen(baseContext, setTodayReminderBadgeReceiver)
     }
 }
