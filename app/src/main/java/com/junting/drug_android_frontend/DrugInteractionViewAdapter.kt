@@ -40,7 +40,7 @@ class DrugInteractionViewAdapter(
             holder.drugInteractionViewBinding.tvDegree.setTextColor(context.getColor(MaterialR.color.design_default_color_secondary))
         }
 
-        holder.drugInteractionViewBinding.tvCause.text = interactingDrug.cause
+//        holder.drugInteractionViewBinding.tvCause.text = interactingDrug.cause
         if(interactingDrug.timeSlots.isEmpty()) {
             holder.drugInteractionViewBinding.tvTimeSlots.text = context.getString(MyAppR.string.as_needed)
         } else{

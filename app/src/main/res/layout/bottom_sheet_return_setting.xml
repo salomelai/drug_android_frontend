@@ -21,71 +21,33 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:paddingTop="15dp"-->
+<!--                android:paddingBottom="15dp"-->
+<!--                android:gravity="center_vertical"-->
+<!--                android:orientation="horizontal">-->
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableLeft="@drawable/ic_outline_notifications_24"
-                    android:drawablePadding="15dp"
-                    android:text="@string/notification"
-                    android:textStyle="bold" />
+<!--                <androidx.appcompat.widget.AppCompatTextView-->
+<!--                    android:layout_width="0dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_weight="1"-->
+<!--                    android:drawableLeft="@drawable/ic_outline_notifications_24"-->
+<!--                    android:drawablePadding="15dp"-->
+<!--                    android:text="@string/notification"-->
+<!--                    android:textStyle="bold" />-->
 
-                <Switch
-                    android:id="@+id/switch_status"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="@{viewModel.record.returnSetting.status}"
-                    android:onCheckedChanged="@{(buttonView, isChecked) -> viewModel.setReturnSettingStatus(isChecked)}"
-                    tools:ignore="TouchTargetSizeCheck" />
+<!--                <Switch-->
+<!--                    android:id="@+id/switch_status"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:checked="@{viewModel.record.returnSetting.status}"-->
+<!--                    android:onCheckedChanged="@{(buttonView, isChecked) -> viewModel.setReturnSettingStatus(isChecked)}"-->
+<!--                    tools:ignore="TouchTargetSizeCheck" />-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@drawable/list_divider" />
-
-            <LinearLayout
-                android:id="@+id/ll_date"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:paddingBottom="15dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:clickable="true"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawableLeft="@drawable/ic_outline_stop_circle_24"
-                    android:drawablePadding="15dp"
-                    android:text="@string/expected_return_visit_date"
-                    android:textStyle="bold" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@{viewModel.record.returnSetting.date}" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@drawable/list_divider" />
 
             <LinearLayout
                 android:id="@+id/ll_left"
@@ -122,6 +84,41 @@
                 android:background="@drawable/list_divider" />
 
             <LinearLayout
+                android:id="@+id/ll_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/ic_baseline_calendar_month_24"
+                    android:drawablePadding="15dp"
+                    android:text="@string/expected_return_visit_date"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.record.returnSetting.date}" />
+
+            </LinearLayout>
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@drawable/list_divider" />
+
+            <LinearLayout
                 android:id="@+id/ll_instruction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -136,7 +133,9 @@
                     android:layout_weight="1"
                     android:drawablePadding="15dp"
                     android:text=""
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    />
 
 
             </LinearLayout>

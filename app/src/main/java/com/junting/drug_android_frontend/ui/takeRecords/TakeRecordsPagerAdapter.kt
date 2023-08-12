@@ -19,7 +19,7 @@ class TakeRecordsPagerAdapter(context: Context): PagerAdapter() {
     }
 
     override fun getCount(): Int {
-        return 3
+        return 2
     }
 
     override fun isViewFromObject(view: View, `object`: Any): Boolean {
@@ -35,12 +35,16 @@ class TakeRecordsPagerAdapter(context: Context): PagerAdapter() {
             takeRecordsByTimePage = TakeRecordsByTimePage(context, container)
             container.addView(takeRecordsByTimePage!!.view)
             return takeRecordsByTimePage!!.view
-        } else {
-            val view: View =
-                LayoutInflater.from(context).inflate(R.layout.take_records_chart_tab, container, false)
-            container.addView(view)
-            return view
         }
+//        else {
+//            val view: View =
+//                LayoutInflater.from(context).inflate(R.layout.take_records_chart_tab, container, false)
+//            container.addView(view)
+//            return view
+//        }
+        // 虚拟返回值，因为在此分支没有实际返回对象
+        return Unit
+
     }
 
 

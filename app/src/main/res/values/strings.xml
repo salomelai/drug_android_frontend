@@ -62,7 +62,7 @@
     <string name="indication_tag">適應症-標籤</string>
     <string name="add_timeSlot">新增服藥時間</string>
     <string name="taking_notification_setting">吃藥警報設定</string>
-    <string name="return_notification_setting">回診警報設定</string>
+    <string name="return_notification_setting">回診日期計算器</string>
     <string name="drug_position">藥盒放置位置</string>
 
     <!--  activity_drugbag_info  -->
@@ -121,7 +121,7 @@
 
     <!--  bottom_sheet_return_setting  -->
     <string name="expected_return_visit_date">預計回診日期：</string>
-    <string name="stock_level_alert">剩餘庫存提醒：</string>
+    <string name="stock_level_alert">剩餘庫存為X時：</string>
 
     <!--  drop_down_item  -->
     <string name="frequency_options">頻率選項數字</string>
@@ -245,9 +245,9 @@
     <string name="taken_drug">已服用藥物</string>
 
     <!--  ReturnSettingButtonSheet  -->
-    <string name="modify_stock_level_alert">修改剩餘庫存提醒</string>
+    <string name="modify_stock_level_alert">修改剩餘庫存</string>
     <string name="stock_level_alert_first">當庫存剩餘</string>
-    <string name="stock_level_alert_second">時的回診日期為</string>
+    <string name="stock_level_alert_second">時的日期為</string>
 
     <!--  StatusSpinnerAdapter  -->
     <string name="unknown">未知</string>

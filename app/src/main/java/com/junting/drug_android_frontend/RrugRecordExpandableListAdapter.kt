@@ -35,8 +35,8 @@ class RrugRecordExpandableListAdapter internal constructor(
         val tvDrugName = convertView!!.findViewById<TextView>(R.id.tv_drug_name)
         tvDrugName.text = interactingDrugs.get(expandedListPosition).name
 
-        val tvCause = convertView!!.findViewById<TextView>(R.id.tv_cause)
-        tvCause.text = interactingDrugs.get(expandedListPosition).cause
+//        val tvCause = convertView!!.findViewById<TextView>(R.id.tv_cause)
+//        tvCause.text = interactingDrugs.get(expandedListPosition).cause
 
         val tvDegree = convertView!!.findViewById<TextView>(R.id.tv_degree)
         tvDegree.text = interactingDrugs.get(expandedListPosition).degree

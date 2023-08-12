@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/navigation_todayReminder"
-        android:icon="@drawable/ic_outline_calendar_today_24"
+        android:icon="@drawable/ic_baseline_calendar_month_24"
         android:title="@string/title_todayReminder"
         app:showAsAction="always"/>
 

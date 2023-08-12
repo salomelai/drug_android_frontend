@@ -522,7 +522,7 @@
                     <androidx.appcompat.widget.AppCompatTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_outline_notifications_24"
+                        android:drawableLeft="@drawable/ic_baseline_calculate_24"
                         android:drawablePadding="15dp"
                         android:text="@string/return_notification_setting"
                         android:textStyle="bold" />

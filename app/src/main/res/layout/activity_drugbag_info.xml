@@ -217,7 +217,7 @@
                 android:hint="@string/frequency"
                 app:helperText="@string/required"
                 app:helperTextTextColor="@color/design_default_color_error"
-                app:startIconDrawable="@drawable/ic_outline_calendar_today_24">
+                app:startIconDrawable="@drawable/ic_baseline_calendar_month_24">
 
                 <AutoCompleteTextView
                     android:id="@+id/actv_frequency"
