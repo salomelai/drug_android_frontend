@@ -97,7 +97,7 @@ class TodayReminderFragment : Fragment() {
                             .setTitle(resources.getString(R.string.taken_drug))
                             .setView(bindingPillBox.root)
                             .setPositiveButton(resources.getString(R.string.close_pillbox)) { dialog, which ->
-
+                                Log.d("Bosh here", "close pillbox position: ${item.position}")
                             }
                             .create()
 
@@ -151,7 +151,8 @@ class TodayReminderFragment : Fragment() {
         binding.list.swipeListener = onItemSwipeListener
 
         val inflater = LayoutInflater.from(requireContext())
-        val instructionLayout = inflater.inflate(R.layout.instruction_background, bindingPillBox.llInstruction, false)
+        val instructionLayout =
+            inflater.inflate(R.layout.instruction_background, bindingPillBox.llInstruction, false)
         bindingPillBox.llInstruction.addView(instructionLayout)
         return root
     }
@@ -212,39 +213,43 @@ class TodayReminderFragment : Fragment() {
             Log.d("TakeRecord", takeRecord.toString())
 
             // 使用viewModelScope的IO上下文执行网络请求
-            viewModel.viewModelScope.launch(Dispatchers.IO) {
+            viewModel.viewModelScope.launch() {
                 try {
                     val responseMessage = viewModel.processTakeRecord(takeRecord).await()
 
-                    withContext(Dispatchers.Main) {
-                        if (responseMessage != null && responseMessage.success) {
-                            val builder = MaterialAlertDialogBuilder(requireContext())
-                                .setTitle(resources.getString(R.string.taken_drug))
-                                .setMessage("$selectedTimeRange 區段之藥物服用成功")
-                                .setView(bindingPillBox.root)
-                                .setPositiveButton(resources.getString(R.string.close_pillbox)) { dialog, which ->
-                                    // Handle positive button click
-                                    binding.inputLayout.isEndIconVisible = false
-                                }
-                                .create()
+                    if (responseMessage != null && responseMessage.success) {
 
-                            builder.show()
-                            viewModel.fetchTodayReminders()
-
-                        } else if (responseMessage != null && !responseMessage.success) {
-                            val dialogMessage = when {
-                                responseMessage.errorCode == 1001 -> "未找到 $selectedTimeRange 區段之藥物"
-                                else -> "系統錯誤"
-                            }
-                            val builder = MaterialAlertDialogBuilder(requireContext())
-                                .setTitle(resources.getString(R.string.hint_title))
-                                .setMessage(dialogMessage)
-                                .setPositiveButton(R.string.confirm) { _, _ ->
-                                    // Handle positive button click
-                                    binding.inputLayout.isEndIconVisible = false
-                                }.create()
-                            builder.show()
+                        for(p in responseMessage.positions) {
+                            pillBoxViewManager.setCellColor(p)
                         }
+
+                        val builder = MaterialAlertDialogBuilder(requireContext())
+                            .setTitle(resources.getString(R.string.taken_drug))
+                            .setMessage("$selectedTimeRange 區段之藥物服用成功")
+                            .setView(bindingPillBox.root)
+                            .setPositiveButton(resources.getString(R.string.close_pillbox)) { dialog, which ->
+                                Log.d("Bosh here", "close pillbox positions: ${responseMessage.positions}")
+                                // Handle positive button click
+                                binding.inputLayout.isEndIconVisible = false
+                            }
+                            .create()
+
+                        builder.show()
+                        viewModel.fetchTodayReminders()
+
+                    } else if (responseMessage != null && !responseMessage.success) {
+                        val dialogMessage = when {
+                            responseMessage.errorCode == 1001 -> "未找到 $selectedTimeRange 區段之藥物"
+                            else -> "系統錯誤"
+                        }
+                        val builder = MaterialAlertDialogBuilder(requireContext())
+                            .setTitle(resources.getString(R.string.hint_title))
+                            .setMessage(dialogMessage)
+                            .setPositiveButton(R.string.confirm) { _, _ ->
+                                // Handle positive button click
+                                binding.inputLayout.isEndIconVisible = false
+                            }.create()
+                        builder.show()
                     }
                 } catch (e: Exception) {
                     // 处理异常情况

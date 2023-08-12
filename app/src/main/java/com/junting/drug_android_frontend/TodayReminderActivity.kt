@@ -40,11 +40,12 @@ class TodayReminderActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityTodayReminderBinding.inflate(layoutInflater)
         bindingPillBox = FragmentPillBoxManagementBinding.inflate(layoutInflater)
-        bindingActionBarTakeRecordTodayReminder = ActionBarTakeRecordTodayReminderBinding.inflate(layoutInflater)
+        bindingActionBarTakeRecordTodayReminder =
+            ActionBarTakeRecordTodayReminderBinding.inflate(layoutInflater)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         setContentView(binding.root)
-        pillBoxViewManager = PillBoxViewManager(bindingPillBox,this) // Initialize the view manager
+        pillBoxViewManager = PillBoxViewManager(bindingPillBox, this) // Initialize the view manager
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowCustomEnabled(true)
@@ -58,22 +59,27 @@ class TodayReminderActivity : AppCompatActivity() {
             initViewModel()
         }
         // 隱藏所有藥物位置
-        positions.forEach { i -> pillBoxViewManager.hideCell(i,positions) }
+        positions.forEach { i -> pillBoxViewManager.hideCell(i, positions) }
         initActualTime()
         initButton()
         initClickableTextView()
 
         val inflater = LayoutInflater.from(this)
-        val instructionLayout = inflater.inflate(R.layout.instruction_background, bindingPillBox.llInstruction, false)
+        val instructionLayout =
+            inflater.inflate(R.layout.instruction_background, bindingPillBox.llInstruction, false)
         bindingPillBox.llInstruction.addView(instructionLayout)
     }
+
     private fun initViewModel() {
         binding.progressBar.visibility = View.VISIBLE
         viewModel.fetchTodayReminderById(todayReminderId!!)
         viewModel.todayReminder.observe(this, Observer {
             Log.d("Observe todayReminder", "record: ${it.toString()}")
             bindingActionBarTakeRecordTodayReminder.tvDrugName.text = it.drug.name
-            bindingActionBarTakeRecordTodayReminder.tvStock.text = resources.getString(R.string.stock)+":"+it.stock.toString()+" "+resources.getString(R.string.unit)
+            bindingActionBarTakeRecordTodayReminder.tvStock.text =
+                resources.getString(R.string.stock) + ":" + it.stock.toString() + " " + resources.getString(
+                    R.string.unit
+                )
             pillBoxViewManager.setCellColor(it.position)
             binding.progressBar.visibility = View.GONE
         })
@@ -83,15 +89,15 @@ class TodayReminderActivity : AppCompatActivity() {
             // 遍历记录并更新 UI
             for (record in it) {
                 when (record.position) {
-                    1 -> pillBoxViewManager.showCell(1, record,false)
-                    2 -> pillBoxViewManager.showCell(2, record,false)
-                    3 -> pillBoxViewManager.showCell(3, record,false)
-                    4 -> pillBoxViewManager.showCell(4, record,false)
-                    5 -> pillBoxViewManager.showCell(5, record,false)
-                    6 -> pillBoxViewManager.showCell(6, record,false)
-                    7 -> pillBoxViewManager.showCell(7, record,false)
-                    8 -> pillBoxViewManager.showCell(8, record,false)
-                    9 -> pillBoxViewManager.showCell(9, record,false)
+                    1 -> pillBoxViewManager.showCell(1, record, false)
+                    2 -> pillBoxViewManager.showCell(2, record, false)
+                    3 -> pillBoxViewManager.showCell(3, record, false)
+                    4 -> pillBoxViewManager.showCell(4, record, false)
+                    5 -> pillBoxViewManager.showCell(5, record, false)
+                    6 -> pillBoxViewManager.showCell(6, record, false)
+                    7 -> pillBoxViewManager.showCell(7, record, false)
+                    8 -> pillBoxViewManager.showCell(8, record, false)
+                    9 -> pillBoxViewManager.showCell(9, record, false)
                 }
             }
             positions.forEach { i -> pillBoxViewManager.closeProgressBar(i) }
@@ -153,7 +159,7 @@ class TodayReminderActivity : AppCompatActivity() {
         binding.btnLater.setOnClickListener {
             showDelayBottomSheet()
         }
-        binding.btnConfirm.setOnClickListener{
+        binding.btnConfirm.setOnClickListener {
             showConfirmDialog()
         }
     }
@@ -164,7 +170,7 @@ class TodayReminderActivity : AppCompatActivity() {
         val binding = BottomSheetLaterBinding.inflate(layoutInflater)
         val view = binding.root
         bottomSheetDialog.setContentView(view)
-        binding.tvDelayYouChoose.text ="依據您選定的時間: ${viewModel.actualTakingTime.get()}"
+        binding.tvDelayYouChoose.text = "依據您選定的時間: ${viewModel.actualTakingTime.get()}"
 
 
         val delayMinutes = listOf(10, 30, 45)
@@ -187,18 +193,22 @@ class TodayReminderActivity : AppCompatActivity() {
                     dosage = viewModel.todayReminder.value!!.dosage,
                     timeSlot = viewModel.actualTakingTime.get()!!
                 )
-                viewModel.viewModelScope.launch(Dispatchers.IO) {
+                viewModel.viewModelScope.launch() {
                     val responseMessage = viewModel.processTakeRecord(takeRecord).await()
                     if (responseMessage != null) {
-                        runOnUiThread(Runnable {
-                            Toast.makeText(this@TodayReminderActivity, "已延後${minutes}分鐘", Toast.LENGTH_SHORT).show()
-                        })
+                        Toast.makeText(
+                            this@TodayReminderActivity,
+                            "已延後${minutes}分鐘",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         // 成功處理 TakeRecord
                     } else {
                         // 處理失敗
-                        runOnUiThread(Runnable {
-                            Toast.makeText(this@TodayReminderActivity, "系統錯誤", Toast.LENGTH_SHORT).show()
-                        })
+                        Toast.makeText(
+                            this@TodayReminderActivity,
+                            "系統錯誤",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         // ... 處理失敗的邏輯 ...
                     }
                 }
@@ -220,18 +230,19 @@ class TodayReminderActivity : AppCompatActivity() {
             )
             Log.d("takeRecord", takeRecord.toString())
 
-            viewModel.viewModelScope.launch(Dispatchers.IO) {
+            viewModel.viewModelScope.launch() {
                 val responseMessage = viewModel.processTakeRecord(takeRecord).await()
                 if (responseMessage != null) {
-                    runOnUiThread(Runnable {
-                        Toast.makeText(this@TodayReminderActivity, "已延後到${takeRecord.timeSlot}", Toast.LENGTH_SHORT).show()
-                    })
+                    Toast.makeText(
+                        this@TodayReminderActivity,
+                        "已延後到${takeRecord.timeSlot}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     // 成功處理 TakeRecord
                 } else {
                     // 處理失敗
-                    runOnUiThread(Runnable {
-                        Toast.makeText(this@TodayReminderActivity, "系統錯誤", Toast.LENGTH_SHORT).show()
-                    })
+                    Toast.makeText(this@TodayReminderActivity, "系統錯誤", Toast.LENGTH_SHORT)
+                        .show()
                     // ... 處理失敗的邏輯 ...
                 }
             }
@@ -249,18 +260,16 @@ class TodayReminderActivity : AppCompatActivity() {
                 todayReminderId = viewModel.todayReminder.value!!.id,
                 status = 2
             )
-            viewModel.viewModelScope.launch(Dispatchers.IO) {
+            viewModel.viewModelScope.launch() {
                 val responseMessage = viewModel.processTakeRecord(takeRecord).await()
                 if (responseMessage != null) {
-                    runOnUiThread(Runnable {
-                        Toast.makeText(this@TodayReminderActivity, "已略過", Toast.LENGTH_SHORT).show()
-                    })
+                    Toast.makeText(this@TodayReminderActivity, "已略過", Toast.LENGTH_SHORT)
+                        .show()
                     // 成功處理 TakeRecord
                 } else {
                     // 處理失敗
-                    runOnUiThread(Runnable {
-                        Toast.makeText(this@TodayReminderActivity, "系統錯誤", Toast.LENGTH_SHORT).show()
-                    })
+                    Toast.makeText(this@TodayReminderActivity, "系統錯誤", Toast.LENGTH_SHORT)
+                        .show()
                     // ... 處理失敗的邏輯 ...
                 }
             }
@@ -273,6 +282,7 @@ class TodayReminderActivity : AppCompatActivity() {
 
         bottomSheetDialog.show()
     }
+
     private fun showConfirmDialog() {
         var takeRecord = TakeRecord(
             todayReminderId = viewModel.todayReminder.value!!.id,
@@ -280,32 +290,32 @@ class TodayReminderActivity : AppCompatActivity() {
             dosage = viewModel.todayReminder.value!!.dosage,
             timeSlot = viewModel.actualTakingTime.get()!!
         )
-        viewModel.viewModelScope.launch(Dispatchers.IO) {
+        viewModel.viewModelScope.launch() {
             var responseMessage = viewModel.processTakeRecord(takeRecord).await()
-            runOnUiThread(Runnable {
-                if (responseMessage != null) {
-                    Toast.makeText(this@TodayReminderActivity, "服用成功", Toast.LENGTH_SHORT).show()
+            if (responseMessage != null) {
+                Toast.makeText(this@TodayReminderActivity, "服用成功", Toast.LENGTH_SHORT).show()
 
-                    val parentView = bindingPillBox.root.parent as? ViewGroup
-                    parentView?.removeView(bindingPillBox.root)
+                val parentView = bindingPillBox.root.parent as? ViewGroup
+                parentView?.removeView(bindingPillBox.root)
 
-                    val dialog = MaterialAlertDialogBuilder(this@TodayReminderActivity)
-                        .setTitle(resources.getString(R.string.taken_drug))
-                        .setView(bindingPillBox.root)
-                        .setPositiveButton(resources.getString(R.string.close_pillbox)) { dialog, which ->
-                            val intent = Intent(this@TodayReminderActivity, MainActivity::class.java)
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                            intent.putExtra("fragmentName", "TodayReminderFragment")
-                            startActivity(intent)
-                        }
-                        .create()
+                val dialog = MaterialAlertDialogBuilder(this@TodayReminderActivity)
+                    .setTitle(resources.getString(R.string.taken_drug))
+                    .setView(bindingPillBox.root)
+                    .setPositiveButton(resources.getString(R.string.close_pillbox)) { dialog, which ->
+                        Log.d("Bosh here", "close pillbox position: ${viewModel.todayReminder.value!!.position}")
 
-                    dialog.show()
-                } else {
-                    Toast.makeText(this@TodayReminderActivity, "系統錯誤", Toast.LENGTH_SHORT).show()
-                    // ... 處理失敗的邏輯 ...
-                }
-            })
+                        val intent = Intent(this@TodayReminderActivity, MainActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        intent.putExtra("fragmentName", "TodayReminderFragment")
+                        startActivity(intent)
+                    }
+                    .create()
+
+                dialog.show()
+            } else {
+                Toast.makeText(this@TodayReminderActivity, "系統錯誤", Toast.LENGTH_SHORT).show()
+                // ... 處理失敗的邏輯 ...
+            }
         }
 
     }

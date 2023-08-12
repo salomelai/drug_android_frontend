@@ -182,7 +182,7 @@ class OnDemandActivity : AppCompatActivity() {
                         .setTitle(resources.getString(R.string.taken_drug))
                         .setView(bindingPillBox.root)
                         .setPositiveButton(resources.getString(R.string.close_pillbox)) { dialog, which ->
-
+                            Log.d("Bosh here", "close pillbox position: ${viewModel.drugRecord.value!!.position}")
 
                             val intent = Intent(this@OnDemandActivity, MainActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
