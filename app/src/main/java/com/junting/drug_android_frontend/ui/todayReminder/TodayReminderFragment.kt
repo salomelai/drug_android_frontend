@@ -1,5 +1,6 @@
 package com.junting.drug_android_frontend.ui.todayReminder
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +26,7 @@ import com.junting.drug_android_frontend.databinding.FragmentPillBoxManagementBi
 import com.junting.drug_android_frontend.databinding.FragmentTodayReminderBinding
 import com.junting.drug_android_frontend.model.take_record.TakeRecord
 import com.junting.drug_android_frontend.model.today_reminder.TodayReminder
+import com.junting.drug_android_frontend.ui.libs.updater.UpdateUIHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -303,9 +305,16 @@ class TodayReminderFragment : Fragment() {
         }
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        viewModel.todayReminders.observe(context as AppCompatActivity, Observer {
+            UpdateUIHelper.notify(context, "setTodayReminderBadge", it.size)
+        })
+    }
+
     fun updateTodayReminderBadge(number: Int) {
-        val mainActivity: MainActivity = activity as MainActivity
-        mainActivity.setTodayReminderBadge(number) // 設定小紅點圖標數字
+        val mainActivity: MainActivity? = activity as? MainActivity
+        mainActivity?.setTodayReminderBadge(number) // 設定小紅點圖標數字
     }
 
     private fun initFab() {
