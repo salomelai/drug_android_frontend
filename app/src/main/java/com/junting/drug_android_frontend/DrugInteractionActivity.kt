@@ -11,7 +11,9 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.junting.drug_android_frontend.databinding.ActivityDrugInteractionBinding
+import com.junting.drug_android_frontend.libs.SharedPreferencesManager
 import com.junting.drug_android_frontend.model.drugbag_info.DrugbagInformation
+import com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsViewModel
 
 class DrugInteractionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDrugInteractionBinding
@@ -20,6 +22,7 @@ class DrugInteractionActivity : AppCompatActivity() {
     private lateinit var viewModel: DrugInteractionViewModel
 
     private lateinit var drugbagInfo: DrugbagInformation
+    private lateinit var sharedPreferencesManager : SharedPreferencesManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +30,9 @@ class DrugInteractionActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        // Initialize sharedPreferencesManager here
+        sharedPreferencesManager = SharedPreferencesManager(this)
 
         if (intent.getSerializableExtra("drugbagInfo") != null) {
             drugbagInfo = intent.getSerializableExtra("drugbagInfo") as DrugbagInformation
@@ -36,6 +42,10 @@ class DrugInteractionActivity : AppCompatActivity() {
         initRecyclerViewModel()
         initRecyclerView()
         initButton()
+        val flag = checkDuplicate()
+        if(flag==true){
+            binding.tvWarning.visibility = View.VISIBLE
+        }
     }
 
     private fun initButton() {
@@ -103,4 +113,13 @@ class DrugInteractionActivity : AppCompatActivity() {
             binding.progressBar.visibility = View.GONE
         })
     }
+    private fun checkDuplicate(): Boolean {
+        val drugNames = sharedPreferencesManager.getDrugNames()
+        Log.d("drugNames", drugNames.toString())
+        sharedPreferencesManager.getDrugNames()?.let {
+            return it.contains(drugbagInfo.drug.name)
+        }
+        return false
+    }
+
 }

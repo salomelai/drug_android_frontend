@@ -44,21 +44,34 @@
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp">
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_outline_pill_24px"
-                        android:drawablePadding="15dp"
-                        android:text="@string/drug_record_drug_name"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableLeft="@drawable/ic_outline_pill_24px"
+                            android:drawablePadding="15dp"
+                            android:text="@string/drug_record_drug_name"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/required"
+                            android:textColor="@color/design_default_color_error" />
+                    </LinearLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_drug_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@{viewModel.record.drug.name}" />
-
                 </LinearLayout>
+
 
                 <View
                     android:layout_width="match_parent"
@@ -76,21 +89,34 @@
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp">
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_outline_local_hospital_24"
-                        android:drawablePadding="15dp"
-                        android:text="@string/hospital"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableLeft="@drawable/ic_outline_local_hospital_24"
+                            android:drawablePadding="15dp"
+                            android:text="@string/hospital"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="*必填"
+                            android:textColor="@color/design_default_color_error" />
+                    </LinearLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_hospital"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@{viewModel.record.hospital.name}" />
-
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/ll_department"
@@ -103,21 +129,34 @@
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp">
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_stethoscope_24px"
-                        android:drawablePadding="15dp"
-                        android:text="@string/department"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableLeft="@drawable/ic_stethoscope_24px"
+                            android:drawablePadding="15dp"
+                            android:text="@string/department"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="*必填"
+                            android:textColor="@color/design_default_color_error" />
+                    </LinearLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_department"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@{viewModel.record.hospital.department}" />
-
                 </LinearLayout>
+
 
                 <LinearLayout
                     android:id="@+id/ll_phone_extension"
@@ -328,15 +367,28 @@
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tv_time_slot_title"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="15dp"
-                        android:drawableLeft="@drawable/ic_outline_access_time_24"
-                        android:drawablePadding="15dp"
-                        android:text="@string/time"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tv_time_slot_title"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:layout_marginBottom="15dp"
+                            android:drawableLeft="@drawable/ic_outline_access_time_24"
+                            android:drawablePadding="15dp"
+                            android:text="@string/time"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="*必填"
+                            android:textColor="@color/design_default_color_error" />
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/ll_time_slot"
@@ -357,6 +409,7 @@
                         android:paddingBottom="15dp"
                         android:text="@string/add_timeSlot" />
                 </LinearLayout>
+
 
                 <View
                     android:layout_width="match_parent"
@@ -428,13 +481,26 @@
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp">
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_outline_water_drop_24"
-                        android:drawablePadding="15dp"
-                        android:text="@string/dosage"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableLeft="@drawable/ic_outline_water_drop_24"
+                            android:drawablePadding="15dp"
+                            android:text="@string/dosage"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="*必填"
+                            android:textColor="@color/design_default_color_error" />
+                    </LinearLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_dosage"
@@ -443,6 +509,7 @@
                         android:text="@{String.valueOf(viewModel.record.dosage)}" />
 
                 </LinearLayout>
+
 
                 <View
                     android:layout_width="match_parent"
@@ -460,13 +527,27 @@
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp">
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_outline_inventory_2_24"
-                        android:drawablePadding="15dp"
-                        android:text="@string/stock"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableLeft="@drawable/ic_outline_inventory_2_24"
+                            android:drawablePadding="15dp"
+                            android:text="@string/stock"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="*必填"
+                            android:textColor="@color/design_default_color_error" />
+
+                    </LinearLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_stock"
@@ -475,6 +556,7 @@
                         android:text="@{String.valueOf(viewModel.record.stock)}" />
 
                 </LinearLayout>
+
 
                 <View
                     android:layout_width="match_parent"
@@ -492,13 +574,27 @@
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp">
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_baseline_calendar_month_24"
-                        android:drawablePadding="15dp"
-                        android:text="@string/start_date"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableLeft="@drawable/ic_baseline_calendar_month_24"
+                            android:drawablePadding="15dp"
+                            android:text="@string/start_date"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="*必填"
+                            android:textColor="@color/design_default_color_error" />
+
+                    </LinearLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tv_date"
@@ -506,8 +602,8 @@
                         android:layout_height="wrap_content"
                         android:text="@{String.valueOf(viewModel.record.notificationSetting.startDate)}"/>
 
-
                 </LinearLayout>
+
 
                 <View
                     android:layout_width="match_parent"
@@ -551,15 +647,30 @@
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp">
 
-                    <androidx.appcompat.widget.AppCompatTextView
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:drawableLeft="@drawable/ic_outline_inbox_24"
-                        android:drawablePadding="15dp"
-                        android:text="@string/drug_position"
-                        android:textStyle="bold" />
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawableLeft="@drawable/ic_outline_inbox_24"
+                            android:drawablePadding="15dp"
+                            android:text="@string/drug_position"
+                            android:textStyle="bold" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="*必填"
+                            android:textColor="@color/design_default_color_error" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
+
 
                 <View
                     android:layout_width="match_parent"

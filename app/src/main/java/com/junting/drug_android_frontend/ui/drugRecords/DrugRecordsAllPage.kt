@@ -2,10 +2,12 @@ package com.junting.drug_android_frontend.ui.drugRecords
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.Observer
@@ -16,7 +18,7 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.junting.drug_android_frontend.DrugbagInfoActivity
 import com.junting.drug_android_frontend.R
 import com.junting.drug_android_frontend.PhotoTakeActivity
-
+import com.junting.drug_android_frontend.libs.SharedPreferencesManager
 
 
 class DrugRecordsAllPage(context: Context, container: ViewGroup) {
@@ -32,7 +34,7 @@ class DrugRecordsAllPage(context: Context, container: ViewGroup) {
 
     private val viewModel: DrugRecordsViewModel
 
-
+    private val sharedPreferencesManager = SharedPreferencesManager(context)
 
     init {
         this.context = context
@@ -53,6 +55,18 @@ class DrugRecordsAllPage(context: Context, container: ViewGroup) {
         this.viewModel.fetchRecordsByAll()
         this.viewModel.records.observe(context as AppCompatActivity, Observer {
             recyclerViewAdapter!!.notifyDataSetChanged()
+
+            // Create a set to store drug names
+            val drugNamesSet = mutableSetOf<String>()
+
+            // Iterate through fetched records
+            for (record in it) {
+                // Add the drug name to the set
+                drugNamesSet.add(record.drug.name)
+            }
+            Log.d("drugNamesSet", drugNamesSet.toString())
+            sharedPreferencesManager.saveOrUpdateDrugNames(drugNamesSet)
+
             progressBar.visibility = View.GONE
         })
     }

@@ -489,26 +489,49 @@ class DrugRecordActivity : AppCompatActivity() {
         }
         binding.btnConfirm.setOnClickListener {
             Log.d("DrugRecord",viewModel.record.value.toString())
-
-            drugRecordId = intent.getIntExtra("drugRecordId", 0)
-            if (drugRecordId == 0) {
-                // 新增 DrugRecord 的操作
-                val drugRecord = viewModel.record.value
-                if (drugRecord != null) {
-                    viewModel.addDrugRecord(drugRecord)
-                }
-            } else {
-                // 修改 DrugRecord 的操作
-                val drugRecord = viewModel.record.value
-                if (drugRecord != null) {
-                    viewModel.updateDrugRecordById(drugRecordId!!, drugRecord)
-                }
+            val dialogMessage = when {
+                viewModel.record.value?.drug?.name.isNullOrEmpty() -> "藥物名稱不可為空"
+                viewModel.record.value?.hospital?.name.isNullOrEmpty() -> "醫院名稱不可為空"
+                viewModel.record.value?.hospital?.department.isNullOrEmpty() -> "科別名稱不可為空"
+                viewModel.record.value?.timeSlots?.isEmpty() == true -> "吃藥時間不可為空"
+                viewModel.record.value?.dosage == 0 -> "劑量不可為0或空"
+                viewModel.record.value?.stock!! < (viewModel.record.value?.dosage)!!.times((viewModel.record.value?.frequency!!)) -> "藥袋數量不足，請確認藥袋數量是否足夠"
+                viewModel.record.value?.position == 0 -> "藥盒放置位置不可為空"
+                else -> "OK"
             }
 
-            val intent = Intent(this, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            intent.putExtra("fragmentName", "DrugRecordsFragment")
-            startActivity(intent)
+            if(dialogMessage != "OK"){
+                val builder = MaterialAlertDialogBuilder(this)
+                    .setTitle(resources.getString(R.string.warning_window_title))
+                    .setMessage(dialogMessage)
+                    .setPositiveButton(resources.getString(R.string.confirm)) { dialog, which ->
+                        // Handle positive button click
+
+                    }
+                    .create()
+
+                builder.show()
+            }else{
+                drugRecordId = intent.getIntExtra("drugRecordId", 0)
+                if (drugRecordId == 0) {
+                    // 新增 DrugRecord 的操作
+                    val drugRecord = viewModel.record.value
+                    if (drugRecord != null) {
+                        viewModel.addDrugRecord(drugRecord)
+                    }
+                } else {
+                    // 修改 DrugRecord 的操作
+                    val drugRecord = viewModel.record.value
+                    if (drugRecord != null) {
+                        viewModel.updateDrugRecordById(drugRecordId!!, drugRecord)
+                    }
+                }
+
+                val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                intent.putExtra("fragmentName", "DrugRecordsFragment")
+                startActivity(intent)
+            }
         }
     }
 }

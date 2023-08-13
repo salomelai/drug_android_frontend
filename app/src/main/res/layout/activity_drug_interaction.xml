@@ -28,6 +28,23 @@
         android:layout_height="1dp"
         android:background="@drawable/list_divider" />
 
+    <TextView
+        android:id="@+id/tv_warning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/ic_outline_warning_amber_24"
+        android:textColor="@color/design_default_color_error"
+        android:text="偵測到該藥物已在既有藥物內，將會覆蓋，已新加入為主!!!"
+        android:textAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+        android:visibility="gone">
+
+    </TextView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@drawable/list_divider" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"

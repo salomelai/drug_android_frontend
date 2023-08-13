@@ -71,4 +71,13 @@ class SharedPreferencesManager(private val context: Context) {
         editor.remove("PICTURE_URL")
         editor.apply()
     }
+
+    fun saveOrUpdateDrugNames(drugNames: Set<String>){
+        val editor = sharedPreferences.edit()
+        editor.putStringSet("DRUG_NAMES", drugNames)
+        editor.apply()
+    }
+    fun getDrugNames(): Set<String>? {
+        return sharedPreferences.getStringSet("DRUG_NAMES", null)
+    }
 }
