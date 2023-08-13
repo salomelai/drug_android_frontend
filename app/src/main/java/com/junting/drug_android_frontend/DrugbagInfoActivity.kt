@@ -12,6 +12,7 @@ import android.widget.CheckBox
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.junting.drug_android_frontend.databinding.ActivityDrugbagInfoBinding
 import com.junting.drug_android_frontend.model.UglyText
 import com.junting.drug_android_frontend.model.drugbag_info.DrugbagInformation
@@ -98,11 +99,35 @@ class DrugbagInfoActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.btnConfirm.setOnClickListener {
-            val intent = Intent(this, DrugInteractionActivity::class.java)
-            viewModel.drugbagInfo.value?.let {
-                intent.putExtra("drugbagInfo", it)
+            val dialogMessage = when {
+                viewModel.drugbagInfo.value?.drug?.name.isNullOrEmpty() -> "藥物名稱不可為空"
+                viewModel.drugbagInfo.value?.hospital?.name.isNullOrEmpty() -> "醫院名稱不可為空"
+                viewModel.drugbagInfo.value?.hospital?.department.isNullOrEmpty() -> "科別名稱不可為空"
+                viewModel.drugbagInfo.value?.frequency == 0 -> "頻率(一天X次)不可為0或空"
+                viewModel.drugbagInfo.value?.dosage == 0 -> "劑量不可為0或空"
+                viewModel.drugbagInfo.value?.stock!! < (viewModel.drugbagInfo.value?.dosage)!!.times((viewModel.drugbagInfo.value?.frequency!!)) -> "藥袋數量不足，請確認藥袋數量是否足夠"
+                else -> "OK"
             }
-            startActivity(intent)
+
+            if(dialogMessage != "OK"){
+
+                val builder = MaterialAlertDialogBuilder(this)
+                    .setTitle(resources.getString(MyAppR.string.warning_window_title))
+                    .setMessage(dialogMessage)
+                    .setPositiveButton(resources.getString(MyAppR.string.confirm)) { dialog, which ->
+                        // Handle positive button click
+
+                    }
+                    .create()
+
+                builder.show()
+            }else{
+                val intent = Intent(this, DrugInteractionActivity::class.java)
+                viewModel.drugbagInfo.value?.let {
+                    intent.putExtra("drugbagInfo", it)
+                }
+                startActivity(intent)
+            }
         }
     }
 

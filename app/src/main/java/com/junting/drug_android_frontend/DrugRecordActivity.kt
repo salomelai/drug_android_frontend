@@ -42,6 +42,9 @@ class DrugRecordActivity : AppCompatActivity() {
 
     private var drugRecordId: Int? = null
 
+    val dateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+    val today = Calendar.getInstance().time
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -215,6 +218,9 @@ class DrugRecordActivity : AppCompatActivity() {
             }
             viewModel.setDosage(drugbagInfo.dosage)
             viewModel.setStock(drugbagInfo.stock)
+
+            val formattedToday = dateFormat.format(today)
+            viewModel.setNotificationSettingStartDate(formattedToday)  //預設開始日期為今天
         }
     }
 
@@ -229,9 +235,8 @@ class DrugRecordActivity : AppCompatActivity() {
             for (i in it.timings) {
                 checkBoxes[i].isChecked = true
             }
-            val dateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
+
             val startDate = dateFormat.parse(viewModel.record.value?.notificationSetting?.startDate)
-            val today = Calendar.getInstance().time
             if (startDate.before(today) || startDate.compareTo(today) <= 0) {
                 // startDate 早于或等于今天
                 binding.llDate.setOnClickListener(null)  //取消點擊事件
