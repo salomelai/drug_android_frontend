@@ -4,15 +4,14 @@ package com.junting.drug_android_frontend.services.BTServices;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class BluetoothSocket extends Activity {
+public class BluetoothSocket{
 
-    private BluetoothSocket mmSocket;
-    private OutputStream mmOutputStream;
-
+    SerialSocket ss = new SerialSocket();
 
     // calling this function to send the message to the device
     public void openPillbox(String cellPosition) {
@@ -23,36 +22,28 @@ public class BluetoothSocket extends Activity {
 
         String message = "";
         switch(cellPosition){
-            case "1":
-            message = "1";
-            case "2":
-            message = "3";
-            case "3":
-            message = "5";
-            case "4":
-            message = "7";
-            case "5":
-            message = "9";
-            case "6":
-            message = "11";
             case "7":
-            message = "13";
+            message = "b";break;
             case "8":
-            message = "15";
+            message = "d";break;
             case "9":
-            message = "17";
+            message = "f";break;
+            case "4":
+            message = "h";break;
+            case "5":
+            message = "j";break;
+            case "6":
+            message = "l";break;
+            case "1":
+            message = "n";break;
+            case "2":
+            message = "p";break;
+            case "3":
+            message = "r";break;
         }
-
         try {
-            BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-            BluetoothDevice device = bluetoothAdapter.getRemoteDevice("78:21:84:8C:A6:92"); //MAC address of the device
-
-            SerialSocket ss = new SerialSocket(device);
-            ss.run();
-
             byte[] messageBytes = message.getBytes();
             ss.write(messageBytes);
-
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -66,36 +57,29 @@ public class BluetoothSocket extends Activity {
 
         String message = "";
         switch(cellPosition){
-            case "1":
-            message = "2";
-            case "2":
-            message = "4";
-            case "3":
-            message = "6";
-            case "4":
-            message = "8";
-            case "5":
-            message = "10";
-            case "6":
-            message = "12";
             case "7":
-            message = "14";
+            message = "a";break;
             case "8":
-            message = "16";
+            message = "c";break;
             case "9":
-            message = "18";
+            message = "e";break;
+            case "4":
+            message = "g";break;
+            case "5":
+            message = "i";break;
+            case "6":
+            message = "k";break;
+            case "1":
+            message = "m";break;
+            case "2":
+            message = "o";break;
+            case "3":
+            message = "q";break;
         }
-
         try {
-            BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-            BluetoothDevice device = bluetoothAdapter.getRemoteDevice("78:21:84:8C:A6:92"); //MAC address of the device
-
-            SerialSocket ss = new SerialSocket(device);
-            ss.run();
-
             byte[] messageBytes = message.getBytes();
             ss.write(messageBytes);
-
+            ss.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

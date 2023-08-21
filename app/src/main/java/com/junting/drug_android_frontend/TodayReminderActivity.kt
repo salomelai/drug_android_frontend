@@ -20,6 +20,7 @@ import com.junting.drug_android_frontend.databinding.ActivityTodayReminderBindin
 import com.junting.drug_android_frontend.databinding.BottomSheetLaterBinding
 import com.junting.drug_android_frontend.databinding.FragmentPillBoxManagementBinding
 import com.junting.drug_android_frontend.model.take_record.TakeRecord
+import com.junting.drug_android_frontend.services.BTServices.BluetoothSocket
 import com.junting.drug_android_frontend.ui.todayReminder.TodayReminderViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -293,6 +294,10 @@ class TodayReminderActivity : AppCompatActivity() {
         viewModel.viewModelScope.launch() {
             var responseMessage = viewModel.processTakeRecord(takeRecord).await()
             if (responseMessage != null) {
+
+                val bs = BluetoothSocket()
+                bs.openPillbox(viewModel.todayReminder.value!!.position.toString())
+
                 Toast.makeText(this@TodayReminderActivity, "服用成功", Toast.LENGTH_SHORT).show()
 
                 val parentView = bindingPillBox.root.parent as? ViewGroup
@@ -303,6 +308,8 @@ class TodayReminderActivity : AppCompatActivity() {
                     .setView(bindingPillBox.root)
                     .setPositiveButton(resources.getString(R.string.close_pillbox)) { dialog, which ->
                         Log.d("Bosh here", "close pillbox position: ${viewModel.todayReminder.value!!.position}")
+
+                        bs.closePillbox(viewModel.todayReminder.value!!.position.toString())
 
                         val intent = Intent(this@TodayReminderActivity, MainActivity::class.java)
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
