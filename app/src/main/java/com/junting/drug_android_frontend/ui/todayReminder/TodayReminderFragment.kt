@@ -242,9 +242,7 @@ class TodayReminderFragment : Fragment() {
                             .setPositiveButton(resources.getString(R.string.close_pillbox)) { dialog, which ->
                                 Log.d("Bosh here", "close pillbox positions: ${responseMessage.positions}")
                                 // Handle positive button click
-                                for (p in responseMessage.positions) {
-                                    bs.closePillbox(p.toString())
-                                }
+                                bs.closeMutiplePillbox(responseMessage.positions.toIntArray())
 
                                 binding.inputLayout.isEndIconVisible = false
                             }

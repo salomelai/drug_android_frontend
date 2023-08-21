@@ -85,4 +85,38 @@ public class BluetoothSocket{
         }
     }
 
+    public void closeMutiplePillbox(int[] arr){
+        for (int i=0; i< arr.length; i++){
+            String position = String.valueOf(arr[i]);
+            String message = "";
+            switch(position){
+                case "7":
+                    message = "a";break;
+                case "8":
+                    message = "c";break;
+                case "9":
+                    message = "e";break;
+                case "4":
+                    message = "g";break;
+                case "5":
+                    message = "i";break;
+                case "6":
+                    message = "k";break;
+                case "1":
+                    message = "m";break;
+                case "2":
+                    message = "o";break;
+                case "3":
+                    message = "q";break;
+            }
+            try {
+                byte[] messageBytes = message.getBytes();
+                ss.write(messageBytes);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        ss.close();
+    }
+
 }
