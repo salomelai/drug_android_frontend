@@ -81,15 +81,15 @@ class DrugPositionButtonSheet(viewModel: DrugRecordsViewModel) : BottomSheetDial
         cardView?.setOnLongClickListener { view ->
             val builder = MaterialAlertDialogBuilder(requireContext())
 
-            // send bluetooth signals
-            val bs = BluetoothSocket()
-//            bs.openPillbox(selectedDrugPositionIdNumber)   // need to be fixed !!!! --> could not access to local variable above, bosh on 25, July, 2023
+            var bs = BluetoothSocket()
+            bs.openPillbox(position.toString())
 
             builder.setTitle(resources.getString(R.string.hint_title))
             builder.setMessage(resources.getString(R.string.pillbox_management_hint_message))
             builder.setPositiveButton(resources.getString(R.string.close_pillbox)) { _, _ ->
                 Log.d("Bosh here", "close pillbox position: ${position}")
                 // Handle positive button click
+                bs.closePillbox(position.toString())
             }
             val alertDialog = builder.create()
             alertDialog.show()

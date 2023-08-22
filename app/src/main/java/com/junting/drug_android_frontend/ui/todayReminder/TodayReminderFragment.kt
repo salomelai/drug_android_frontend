@@ -26,6 +26,7 @@ import com.junting.drug_android_frontend.databinding.FragmentPillBoxManagementBi
 import com.junting.drug_android_frontend.databinding.FragmentTodayReminderBinding
 import com.junting.drug_android_frontend.model.take_record.TakeRecord
 import com.junting.drug_android_frontend.model.today_reminder.TodayReminder
+import com.junting.drug_android_frontend.services.BTServices.BluetoothSocket
 import com.junting.drug_android_frontend.ui.libs.updater.UpdateUIHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -86,6 +87,10 @@ class TodayReminderFragment : Fragment() {
                 viewModel.viewModelScope.launch {
                     val responseMessage = viewModel.processTakeRecord(takeRecord).await()
                     if (responseMessage != null) {
+
+                        val bs = BluetoothSocket()
+                        bs.openPillbox(item.position.toString())
+
                         Toast.makeText(requireContext(), "服用成功", Toast.LENGTH_SHORT).show()
                         // 成功處理 TakeRecord
 
@@ -98,6 +103,8 @@ class TodayReminderFragment : Fragment() {
                             .setView(bindingPillBox.root)
                             .setPositiveButton(resources.getString(R.string.close_pillbox)) { dialog, which ->
                                 Log.d("Bosh here", "close pillbox position: ${item.position}")
+
+                                bs.closePillbox(item.position.toString())
                             }
                             .create()
 
@@ -223,6 +230,11 @@ class TodayReminderFragment : Fragment() {
                             pillBoxViewManager.setCellColor(p)
                         }
 
+                        val bs = BluetoothSocket()
+                        for (p in responseMessage.positions){
+                            bs.openPillbox(p.toString())
+                        }
+
                         val builder = MaterialAlertDialogBuilder(requireContext())
                             .setTitle(resources.getString(R.string.taken_drug))
                             .setMessage("$selectedTimeRange 區段之藥物服用成功")
@@ -230,6 +242,8 @@ class TodayReminderFragment : Fragment() {
                             .setPositiveButton(resources.getString(R.string.close_pillbox)) { dialog, which ->
                                 Log.d("Bosh here", "close pillbox positions: ${responseMessage.positions}")
                                 // Handle positive button click
+                                bs.closeMutiplePillbox(responseMessage.positions.toIntArray())
+
                                 binding.inputLayout.isEndIconVisible = false
                             }
                             .create()

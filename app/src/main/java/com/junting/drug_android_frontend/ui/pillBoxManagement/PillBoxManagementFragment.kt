@@ -19,6 +19,7 @@ import com.junting.drug_android_frontend.PhotoTakeActivity
 import com.junting.drug_android_frontend.PillBoxViewManager
 import com.junting.drug_android_frontend.R
 import com.junting.drug_android_frontend.databinding.FragmentPillBoxManagementBinding
+import com.junting.drug_android_frontend.services.BTServices.BluetoothSocket
 import com.junting.drug_android_frontend.ui.drugRecords.DrugRecordsViewModel
 
 class PillBoxManagementFragment : Fragment() {
@@ -110,11 +111,16 @@ class PillBoxManagementFragment : Fragment() {
         }
         cardView?.setOnLongClickListener { view ->
             val builder = MaterialAlertDialogBuilder(requireContext())
+
+            val bs = BluetoothSocket()
+            bs.openPillbox(drugPositionId.toString())
+
             builder.setTitle(resources.getString(R.string.hint_title))
             builder.setMessage(resources.getString(R.string.pillbox_management_hint_message))
             builder.setPositiveButton(resources.getString(R.string.close_pillbox)) { _, _ ->
                 Log.d("Bosh here", "close pillbox position: ${drugPositionId}")
 
+                bs.closePillbox(drugPositionId.toString())
                 // Handle positive button click
             }
             val alertDialog = builder.create()

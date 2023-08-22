@@ -18,6 +18,7 @@ import com.junting.drug_android_frontend.databinding.ActionBarTakeRecordTodayRem
 import com.junting.drug_android_frontend.databinding.ActivityOnDemandBinding
 import com.junting.drug_android_frontend.databinding.FragmentPillBoxManagementBinding
 import com.junting.drug_android_frontend.model.take_record.TakeRecord
+import com.junting.drug_android_frontend.services.BTServices.BluetoothSocket
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -173,6 +174,10 @@ class OnDemandActivity : AppCompatActivity() {
             val responseMessage = viewModel.processTakeRecord(takeRecord).await()
             if (responseMessage != null) {
                 runOnUiThread(Runnable {
+
+                    val bs = BluetoothSocket()
+                    bs.openPillbox(viewModel.drugRecord.value!!.position.toString())
+
                     Toast.makeText(this@OnDemandActivity, "服用成功", Toast.LENGTH_SHORT).show()
 
                     val parentView = bindingPillBox.root.parent as? ViewGroup
@@ -183,6 +188,8 @@ class OnDemandActivity : AppCompatActivity() {
                         .setView(bindingPillBox.root)
                         .setPositiveButton(resources.getString(R.string.close_pillbox)) { dialog, which ->
                             Log.d("Bosh here", "close pillbox position: ${viewModel.drugRecord.value!!.position}")
+
+                            bs.closePillbox(viewModel.drugRecord.value!!.position.toString())
 
                             val intent = Intent(this@OnDemandActivity, MainActivity::class.java)
                             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
