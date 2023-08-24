@@ -10,13 +10,15 @@ import java.util.UUID;
 public class SerialSocket{
 
     private static final UUID BLUETOOTH_SPP = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
-    private BluetoothSocket socket;
+    public BluetoothSocket socket;
 
     public SerialSocket() {
         run();
     }
     void write(byte[] data) throws IOException {
-        socket.getOutputStream().write(data);
+        if (socket != null){
+            socket.getOutputStream().write(data);
+        }
     }
     public void close(){
         try {
@@ -35,6 +37,7 @@ public class SerialSocket{
             socket.connect();
         }
         catch (Exception e) {
+            socket = null;
             e.printStackTrace();
         }
     }

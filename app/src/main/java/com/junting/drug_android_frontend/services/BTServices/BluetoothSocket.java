@@ -1,17 +1,13 @@
 package com.junting.drug_android_frontend.services.BTServices;
 
 
-import android.app.Activity;
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
-import android.util.Log;
+
 
 import java.io.IOException;
-import java.io.OutputStream;
 
 public class BluetoothSocket{
 
-    SerialSocket ss = new SerialSocket();
+    public SerialSocket ss = new SerialSocket();
 
     // calling this function to send the message to the device
     public void openPillbox(String cellPosition) {
