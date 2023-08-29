@@ -99,13 +99,20 @@ class DrugbagInfoActivity : AppCompatActivity() {
             startActivity(intent)
         }
         binding.btnConfirm.setOnClickListener {
+            val stock = viewModel.drugbagInfo.value?.stock ?: 0
+            val dosage = viewModel.drugbagInfo.value?.dosage ?: 0
+            val frequency = viewModel.drugbagInfo.value?.frequency ?: 0
+            val isOnDemand = viewModel.drugbagInfo.value?.onDemand ?: false
+
             val dialogMessage = when {
                 viewModel.drugbagInfo.value?.drug?.name.isNullOrEmpty() -> "藥物名稱不可為空"
                 viewModel.drugbagInfo.value?.hospital?.name.isNullOrEmpty() -> "醫院名稱不可為空"
                 viewModel.drugbagInfo.value?.hospital?.department.isNullOrEmpty() -> "科別名稱不可為空"
-                viewModel.drugbagInfo.value?.frequency == 0 -> "頻率(一天X次)不可為0或空"
-                viewModel.drugbagInfo.value?.dosage == 0 -> "劑量不可為0或空"
-                viewModel.drugbagInfo.value?.stock!! < (viewModel.drugbagInfo.value?.dosage)!!.times((viewModel.drugbagInfo.value?.frequency!!)) -> "藥袋數量不足，請確認藥袋數量是否足夠"
+                (!isOnDemand && frequency == 0) -> "頻率(一天X次)不可為0或空"
+                dosage == 0 -> "劑量不可為0或空"
+                stock == 0 -> "庫存不可為0或空"
+                (!isOnDemand && stock < (dosage * frequency)) -> "藥袋數量不足，請確認藥袋數量是否足夠"
+                ( isOnDemand && stock < dosage ) -> "藥袋數量不足，請確認藥袋數量是否足夠"
                 else -> "OK"
             }
 

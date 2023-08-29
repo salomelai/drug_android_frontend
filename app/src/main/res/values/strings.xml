@@ -1,6 +1,6 @@
 <resources>
     <!-- AndroidManifest.xml  -->
-    <string name="app_name">藥要好好吃</string>
+    <string name="app_name">安專ˊ呷藥啊</string>
     <string name="wel_page">導覽頁面</string>
     <string name="add_one_new_record_page">新增單筆服用紀錄</string>
     <string name="edit_drug_info_page">編輯藥物資訊</string>
@@ -165,9 +165,9 @@
     <string name="iegi_illustrate">這是主要條目</string>
 
     <!--   slider_layout  -->
-    <string name="heading_one">歡迎使用 藥要好好吃</string>
-    <string name="heading_two">藥要好好吃</string>
-    <string name="heading_three">藥要好好吃</string>
+    <string name="heading_one">歡迎使用 安專ˊ呷藥啊</string>
+    <string name="heading_two">安專ˊ呷藥啊</string>
+    <string name="heading_three">安專ˊ呷藥啊</string>
     <string name="heading_four">完成設定</string>
     <string name="description_one">請向右滑，繼續使用。</string>
     <string name="description_two">註冊帳號，以獲得更佳的使用體驗。</string>
