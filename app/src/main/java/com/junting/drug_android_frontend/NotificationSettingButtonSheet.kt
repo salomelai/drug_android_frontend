@@ -65,7 +65,7 @@ class NotificationSettingButtonSheet(viewModel: DrugRecordsViewModel) :
         val picker = builder
             .setTitleText(resources.getString(R.string.select_start_date_for_medication))
             .setPositiveButtonText(resources.getString(R.string.confirm))
-            .setNegativeButtonText(resources.getString(R.string.cancel))
+            .setNegativeButtonText(resources.getString(R.string.dialog_cancel))
             .build()
 
         // 設置選擇日期後的回調

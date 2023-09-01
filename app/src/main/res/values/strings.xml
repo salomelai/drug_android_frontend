@@ -213,7 +213,7 @@
     <string name="interaction_not_major_illustrate_first">會與以下</string>
     <string name="interaction_not_major_illustrate_second">種藥物產生交互作用，請確認是否繼續。</string>
     <string name="interaction_no_interaction_first">太好了!!!，</string>
-    <string name="interaction_no_interaction_second">不會與任何在服藥物產稱交互作用</string>
+    <string name="interaction_no_interaction_second">不會與任何在服藥物產生交互作用</string>
 
     <!--  DrugRecordActivity -->
     <string name="modify_drug_name">修改藥物名稱</string>

@@ -456,7 +456,7 @@ class DrugRecordActivity : AppCompatActivity() {
             val picker = builder
                 .setTitleText(resources.getString(R.string.select_start_date_for_medication))
                 .setPositiveButtonText(resources.getString(R.string.confirm))
-                .setNegativeButtonText(resources.getString(R.string.cancel))
+                .setNegativeButtonText(resources.getString(R.string.dialog_cancel))
                 .setCalendarConstraints(constraintsBuilder)  // 使用上述的日期範圍限制
                 .build()
 
