@@ -74,7 +74,7 @@ class TakeRecordActivity : AppCompatActivity() {
                         startActivity(intent)
                         dialog.dismiss()
                     }
-                    .setNegativeButton(resources.getString(R.string.cancel)) { dialog, _ ->
+                    .setNegativeButton(resources.getString(R.string.dialog_cancel)) { dialog, _ ->
                         dialog.dismiss()
 
                     }
@@ -139,7 +139,7 @@ class TakeRecordActivity : AppCompatActivity() {
                 .setMinute(minute)
                 .setTitleText(resources.getString(R.string.take_record_select_time))
                 .setPositiveButtonText(resources.getString(R.string.confirm))
-                .setNegativeButtonText(resources.getString(R.string.cancel))
+                .setNegativeButtonText(resources.getString(R.string.dialog_cancel))
                 .build()
 
 
@@ -163,7 +163,7 @@ class TakeRecordActivity : AppCompatActivity() {
             val builder = MaterialDatePicker.Builder.datePicker()
             val picker = builder
                 .setPositiveButtonText(resources.getString(R.string.confirm))
-                .setNegativeButtonText(resources.getString(R.string.cancel))
+                .setNegativeButtonText(resources.getString(R.string.dialog_cancel))
                 .build()
             // 設置選擇日期後的回調
             picker.addOnPositiveButtonClickListener { selection ->
