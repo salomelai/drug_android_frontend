@@ -29,7 +29,7 @@ object DialogUtils {
             builder.setPositiveButton(context.getString(R.string.confirm)) { dialog, which ->
                 listener.onEdit(input.text.toString())
             }
-            builder.setNegativeButton(context.getString(R.string.cancel)) { dialog, which ->
+            builder.setNegativeButton(context.getString(R.string.dialog_cancel)) { dialog, which ->
                 dialog.cancel()
             }
 

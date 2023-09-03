@@ -11,16 +11,6 @@
             android:title="@string/title_drug_interaction_lookup" />
 
         <item
-            android:id="@+id/nav_dual_drug_interaction_lookup"
-            android:icon="@drawable/ic_outline_shuffle_24"
-            android:title="@string/title_dual_drug_interaction_lookup" />
-
-        <item
-            android:id="@+id/nav_pill_box_bluetooth_search"
-            android:icon="@drawable/ic_baseline_bluetooth_searching_24"
-            android:title="@string/title_pill_box_bluetooth_search" />
-
-        <item
             android:id="@+id/nav_fontSize"
             android:icon="@drawable/ic_baseline_format_size_24"
             android:title="@string/title_fontSize" />

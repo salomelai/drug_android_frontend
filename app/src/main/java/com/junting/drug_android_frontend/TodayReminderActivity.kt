@@ -125,7 +125,7 @@ class TodayReminderActivity : AppCompatActivity() {
                 .setMinute(minute)
                 .setTitleText(resources.getString(R.string.take_record_select_time))
                 .setPositiveButtonText(resources.getString(R.string.confirm))
-                .setNegativeButtonText(resources.getString(R.string.cancel))
+                .setNegativeButtonText(resources.getString(R.string.dialog_cancel))
                 .build()
 
 
